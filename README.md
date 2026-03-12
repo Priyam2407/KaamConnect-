@@ -51,4 +51,4 @@ kaamconnect/
 - **Auth**: JWT (jsonwebtoken)
 - **Payments**: Razorpay
 - **Real-time**: Socket.IO
-- **AI Chat**: Claude claude-haiku-4-5-20251001 (optional)
+- **AI Chat**: Auto bot
