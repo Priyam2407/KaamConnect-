@@ -112,7 +112,7 @@ a{text-decoration:none;color:inherit}
       </div>
     </div>
     <div id="alertBox" style="display:none"></div>
-    <div class="fg"><label class="fl">Email Address</label><div class="fw"><input class="fi" type="email" id="email" placeholder="Enter Your Email" autocomplete="email"><i class="bi bi-envelope fi-ico"></i></div></div>
+    <div class="fg"><label class="fl">Email Address</label><div class="fw"><input class="fi" type="email" id="email" placeholder="enter your email" autocomplete="email"><i class="bi bi-envelope fi-ico"></i></div></div>
     <div class="fg"><label class="fl">Password</label><div class="fw"><input class="fi" type="password" id="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()"><i class="bi bi-lock fi-ico"></i><button class="eye-btn" type="button" onclick="togglePw()"><i class="bi bi-eye" id="eyeI"></i></button></div></div>
     <div class="opts-row"><label class="remember"><input type="checkbox" id="rem"> Remember me</label><a href="#" class="forgot">Forgot password?</a></div>
     <button class="submit-btn" id="loginBtn" onclick="login()"><i class="bi bi-box-arrow-in-right"></i> Sign In <i class="bi bi-arrow-repeat spin" id="sp"></i></button>
@@ -121,6 +121,8 @@ a{text-decoration:none;color:inherit}
 </div>
 <script>
 
+function togglePw(){const p=document.getElementById('password'),i=document.getElementById('eyeI');p.type=p.type==='password'?'text':'password';i.className=p.type==='password'?'bi bi-eye':'bi bi-eye-slash'}
+function showAlert(t,m){const b=document.getElementById('alertBox');b.style.display='flex';b.className='alert '+(t==='error'?'ae':'as');b.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`}
 async function login(){
   const email=document.getElementById('email').value.trim(),pass=document.getElementById('password').value;
   if(!email||!pass){showAlert('error','Please enter your email and password');return}
