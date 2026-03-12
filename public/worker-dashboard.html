@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worker Dashboard — KaamConnect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--forest-2);display:flex;flex-direction:column;z-index:100;overflow:hidden}
+.sb-bg{position:absolute;top:-60px;left:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
+.sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff}
+.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
+.sb-logo-txt span{color:var(--saffron-2)}
+.sb-nav{flex:1;padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
+.sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .22s;border:1px solid transparent}
+.sb-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.sb-item.active{background:var(--saffron);color:#fff;box-shadow:0 4px 16px rgba(232,96,28,.35)}
+.sb-item i{font-size:17px;flex-shrink:0}
+.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:12px 0}
+.sb-user{padding:18px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.sb-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-uname{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-urole{font-size:11px;color:rgba(255,255,255,.4)}
+.sb-logout{margin-left:auto;background:rgba(255,255,255,.08);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
+.sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
+.main{margin-left:256px;min-height:100vh}
+.topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.content{padding:32px 36px}
+.welcome-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;position:relative;overflow:hidden}
+.wb-orb{position:absolute;bottom:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.wb-h{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.wb-p{font-size:14px;color:rgba(255,255,255,.55)}
+.verify-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:100px;font-size:12.5px;font-weight:700;flex-shrink:0;position:relative;z-index:1}
+.v-yes{background:rgba(74,222,128,.2);border:1px solid rgba(74,222,128,.3);color:#4ADE80}
+.v-no{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.25);color:#FBBF24}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
+.stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
+.stat-ico.orange{background:var(--saffron-pale)}.stat-ico.green{background:var(--sage-light)}.stat-ico.blue{background:#EFF6FF}.stat-ico.gold{background:#FEF9C3}
+.stat-n{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
+.stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-head h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.jobs-list{display:flex;flex-direction:column;gap:14px}
+.job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px 22px;display:flex;align-items:center;gap:18px;transition:all .25s}
+.job-card:hover{border-color:rgba(232,96,28,.15);box-shadow:0 6px 24px rgba(15,25,35,.06)}
+.jc-ico{width:48px;height:48px;border-radius:13px;background:var(--cream);display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.jc-info{flex:1;min-width:0}
+.jc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest);margin-bottom:4px}
+.jc-meta{font-size:12.5px;color:var(--ink-40);display:flex;flex-wrap:wrap;gap:14px}
+.jc-meta span{display:flex;align-items:center;gap:4px}
+.jc-price{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest);flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:100px;font-size:11.5px;font-weight:700}
+.badge-pending{background:#FEF9C3;color:#A16207}.badge-accepted{background:#DBEAFE;color:#1D4ED8}.badge-inprogress{background:#EDE9FE;color:#7C3AED}.badge-completed{background:var(--sage-light);color:var(--sage)}.badge-cancelled{background:#FEE2E2;color:#B91C1C}.badge-paid{background:#F0FDF4;color:#15803D}
+.jc-actions{display:flex;gap:8px;flex-shrink:0}
+.jc-btn{padding:8px 14px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.jc-accept{background:var(--sage);border:none;color:#fff}
+.jc-accept:hover{background:var(--forest)}
+.jc-progress{background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.25);color:var(--saffron)}
+.jc-progress:hover{background:var(--saffron);color:#fff}
+.jc-complete{background:var(--sage-light);border:1.5px solid rgba(61,122,110,.25);color:var(--sage)}
+.jc-complete:hover{background:var(--sage);color:#fff}
+.empty-state{text-align:center;padding:56px 24px;color:var(--ink-40)}
+.empty-state i{font-size:40px;opacity:.25;display:block;margin-bottom:14px}
+.empty-state h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
+.spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.earnings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
+.earn-card{background:var(--forest);border-radius:16px;padding:28px;position:relative;overflow:hidden}
+.earn-card::after{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
+.earn-card h4{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}
+.earn-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1.5px}
+.earn-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:8px}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-bg"></div>
+  <div class="sb-logo"><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
+  <nav class="sb-nav">
+    <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
+    <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> My Jobs</div>
+    <div class="sb-item" onclick="showTab('earnings')"><i class="bi bi-wallet2"></i> Earnings</div>
+    <div class="sb-divider"></div>
+    <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
+  </nav>
+  <div class="sb-user">
+    <div class="sb-av" id="sbAv">W</div>
+    <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole" id="sbSkill">Worker</div></div>
+    <button class="sb-logout" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
+  </div>
+</aside>
+<div class="main">
+  <div class="topbar"><div class="topbar-title" id="topbarTitle">Overview</div></div>
+  <div class="content">
+    <!-- OVERVIEW -->
+    <div id="tab-overview">
+      <div class="welcome-banner">
+        <div class="wb-orb"></div>
+        <div><div class="wb-h">Hello, <span id="wbName">Worker</span>! 🛠️</div><div class="wb-p">Check your pending job requests below.</div></div>
+        <div class="verify-badge" id="verifyBadge"><i class="bi bi-circle-fill" style="font-size:8px"></i> Checking…</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-ico orange">📋</div><div class="stat-n" id="st-total">—</div><div class="stat-l">Total Jobs</div></div>
+        <div class="stat-card"><div class="stat-ico green">✅</div><div class="stat-n" id="st-done">—</div><div class="stat-l">Completed</div></div>
+        <div class="stat-card"><div class="stat-ico blue">⏳</div><div class="stat-n" id="st-pend">—</div><div class="stat-l">Pending</div></div>
+        <div class="stat-card"><div class="stat-ico gold">⭐</div><div class="stat-n" id="st-rating">—</div><div class="stat-l">Avg Rating</div></div>
+      </div>
+      <div class="sec-head"><h2>Pending Requests</h2></div>
+      <div id="pendingJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+    <!-- JOBS -->
+    <div id="tab-jobs" style="display:none">
+      <div class="jobs-list" id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+    <!-- EARNINGS -->
+    <div id="tab-earnings" style="display:none">
+      <div class="earnings-grid">
+        <div class="earn-card"><h4>Total Earnings</h4><div class="earn-num" id="totalEarnings">₹0</div><div class="earn-sub">Lifetime earnings</div></div>
+        <div class="earn-card"><h4>This Month</h4><div class="earn-num" id="monthlyEarnings">₹0</div><div class="earn-sub">Current month</div></div>
+      </div>
+      <div class="sec-head"><h2>Completed Jobs</h2></div>
+      <div id="earningsJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const TOKEN=localStorage.getItem('kc_token');
+const USER=JSON.parse(localStorage.getItem('kc_user')||'{}');
+if(!TOKEN||USER.role!=='worker'){location.href='login.html';}
+document.getElementById('sbName').textContent=USER.name||'Worker';
+document.getElementById('sbSkill').textContent=(USER.skill||'Worker').charAt(0).toUpperCase()+(USER.skill||'').slice(1);
+document.getElementById('sbAv').textContent=(USER.name||'W')[0].toUpperCase();
+document.getElementById('wbName').textContent=(USER.name||'').split(' ')[0]||'Worker';
+const API=h=>fetch(h,{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
+const statusBadge={pending:'badge-pending',accepted:'badge-accepted',in_progress:'badge-inprogress',completed:'badge-completed',cancelled:'badge-cancelled',paid:'badge-paid'};
+const statusLabel={pending:'Pending',accepted:'Accepted',in_progress:'In Progress',completed:'Completed',cancelled:'Cancelled',paid:'Paid ✅'};
+
+function showTab(t){
+  document.querySelectorAll('[id^=tab-]').forEach(el=>el.style.display='none');
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).style.display='block';
+  document.querySelectorAll('.sb-item')[['overview','jobs','earnings'].indexOf(t)]?.classList.add('active');
+  const titles={overview:'Overview',jobs:'My Jobs',earnings:'Earnings'};
+  document.getElementById('topbarTitle').textContent=titles[t]||t;
+  if(t==='overview')loadOverview();
+  if(t==='jobs')loadAllJobs();
+  if(t==='earnings')loadEarnings();
+}
+
+async function loadOverview(){
+  const d=await API('/api/workers/stats');
+  if(d.success){
+    const s=d.stats;
+    document.getElementById('st-total').textContent=s.total||0;
+    document.getElementById('st-done').textContent=s.completed||0;
+    document.getElementById('st-pend').textContent=s.pending||0;
+    document.getElementById('st-rating').textContent=(s.avg_rating||0);
+  }
+  // Verify badge
+  const vb=document.getElementById('verifyBadge');
+  if(USER.verified){vb.className='verify-badge v-yes';vb.innerHTML='<i class="bi bi-patch-check-fill"></i> Verified';}
+  else{vb.className='verify-badge v-no';vb.innerHTML='<i class="bi bi-hourglass-split"></i> Pending Verification';}
+
+  const pj=await API('/api/workers/jobs?status=pending&limit=10');
+  const el=document.getElementById('pendingJobs');
+  if(pj.jobs?.length){el.innerHTML=`<div class="jobs-list">${pj.jobs.map(pendingCard).join('')}</div>`;}
+  else el.innerHTML='<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending requests</h3><p>New job requests will appear here.</p></div>';
+}
+
+function pendingCard(j){
+  const em=skillEmoji[j.skill]||'🛠️';
+  const cname=j.customerId?.name||'Customer';
+  return `<div class="job-card">
+    <div class="jc-ico">${em}</div>
+    <div class="jc-info">
+      <div class="jc-title">${j.title||j.skill||'Job'}</div>
+      <div class="jc-meta">
+        <span><i class="bi bi-person"></i> ${cname}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
+        <span><i class="bi bi-currency-rupee"></i> ₹${j.price||0}</span>
+      </div>
+    </div>
+    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:11px;color:var(--ink-40);font-weight:400">(yours)</span></div>
+    <div class="jc-actions">
+      <button class="jc-btn jc-accept" onclick="updateStatus('${j._id}','accepted')"><i class="bi bi-check-lg"></i> Accept</button>
+    </div>
+  </div>`;
+}
+
+function jobCard(j){
+  const em=skillEmoji[j.skill]||'🛠️';
+  const cname=j.customerId?.name||'Customer';
+  const st=j.status;
+  let actions='';
+  if(st==='accepted')actions=`<button class="jc-btn jc-progress" onclick="updateStatus('${j._id}','in_progress')">Start Work</button>`;
+  if(st==='in_progress')actions=`<button class="jc-btn jc-complete" onclick="updateStatus('${j._id}','completed')">Mark Done</button>`;
+  return `<div class="job-card">
+    <div class="jc-ico">${em}</div>
+    <div class="jc-info">
+      <div class="jc-title">${j.title||j.skill||'Job'}</div>
+      <div class="jc-meta">
+        <span><i class="bi bi-person"></i> ${cname}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
+        <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
+      </div>
+    </div>
+    <div class="jc-price">₹${j.workerAmount||0}</div>
+    <span class="badge ${statusBadge[st]||''}">${statusLabel[st]||st}</span>
+    ${actions?`<div class="jc-actions">${actions}</div>`:''}
+  </div>`;
+}
+
+async function loadAllJobs(){
+  const el=document.getElementById('allJobs');
+  const d=await API('/api/workers/jobs?limit=50');
+  if(d.jobs?.length)el.innerHTML=`<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`;
+  else el.innerHTML='<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Accept job requests to see them here.</p></div>';
+}
+
+async function loadEarnings(){
+  const d=await API('/api/workers/earnings');
+  if(d.success){
+    document.getElementById('totalEarnings').textContent='₹'+((d.totalEarnings||0)/100).toFixed(0)*100;
+    document.getElementById('monthlyEarnings').textContent='₹'+((d.monthlyEarnings||0)/100).toFixed(0)*100;
+  }
+  const jobs=await API('/api/workers/jobs?status=completed&limit=50');
+  const el=document.getElementById('earningsJobs');
+  if(jobs.jobs?.length)el.innerHTML=`<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`;
+  else el.innerHTML='<div class="empty-state"><i class="bi bi-wallet2"></i><h3>No completed jobs</h3><p>Completed jobs will show here.</p></div>';
+}
+
+async function updateStatus(jobId,status){
+  const d=await fetch('/api/workers/job-status',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:jobId,status})}).then(r=>r.json());
+  if(d.success)loadOverview();
+  else alert(d.message||'Update failed');
+}
+function logout(){localStorage.removeItem('kc_token');localStorage.removeItem('kc_user');location.href='login.html';}
+loadOverview();
+</script>
+</body>
+</html>

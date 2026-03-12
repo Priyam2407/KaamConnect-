@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaamConnect — India's Trusted Worker Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --saffron: #E8601C;
+  --saffron-2: #F0783A;
+  --saffron-pale: #FEF0E8;
+  --saffron-light: #FDE0CF;
+  --forest: #1A3C34;
+  --forest-2: #24524A;
+  --sage: #3D7A6E;
+  --sage-light: #E5F0EE;
+  --cream: #FAF7F2;
+  --white: #FFFFFF;
+  --ink: #0F1923;
+  --ink-70: rgba(15,25,35,.7);
+  --ink-40: rgba(15,25,35,.4);
+  --ink-12: rgba(15,25,35,.12);
+  --ink-06: rgba(15,25,35,.06);
+  --gold: #C9941A;
+  --gold-pale: #FEF7E0;
+  --r: 16px;
+  --r-sm: 10px;
+  --sh-sm: 0 2px 12px rgba(15,25,35,.06);
+  --sh: 0 8px 32px rgba(15,25,35,.08);
+  --sh-lg: 0 20px 64px rgba(15,25,35,.10);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}ul{list-style:none}button,input,select,textarea{font-family:inherit}
+
+/* ── NOISE TEXTURE ── */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:0;transition:all .4s}
+#nav.pinned{background:rgba(250,247,242,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--ink-06)}
+.nav-in{max-width:1200px;margin:0 auto;padding:0 40px;height:72px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(232,96,28,.35);flex-shrink:0}
+.logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:var(--forest);letter-spacing:-.4px}
+.logo-txt span{color:var(--saffron)}
+.nav-menu{display:flex;align-items:center;gap:32px}
+.nav-menu a{font-size:14px;font-weight:500;color:var(--ink-70);letter-spacing:.1px;transition:color .2s}
+.nav-menu a:hover{color:var(--saffron)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.n-ghost{padding:9px 20px;border:1.5px solid var(--ink-12);border-radius:var(--r-sm);font-size:13.5px;font-weight:600;color:var(--ink-70);background:transparent;cursor:pointer;transition:all .2s}
+.n-ghost:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
+.n-solid{padding:10px 22px;background:var(--saffron);border:none;border-radius:var(--r-sm);font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,96,28,.3)}
+.n-solid:hover{background:var(--saffron-2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,96,28,.38)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:var(--forest);position:relative;display:flex;flex-direction:column;overflow:hidden}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hbg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
+.hbg-orb1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.18) 0%,transparent 65%);top:-200px;right:-100px}
+.hbg-orb2{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.25) 0%,transparent 65%);bottom:-100px;left:-80px}
+.hbg-orb3{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,148,26,.12) 0%,transparent 65%);top:40%;left:40%}
+
+.hero-body{max-width:1200px;margin:0 auto;width:100%;padding:140px 40px 80px;flex:1;display:grid;grid-template-columns:1fr 420px;gap:70px;align-items:center;position:relative;z-index:1}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:6px 16px;margin-bottom:28px}
+.badge-pulse{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 10px rgba(74,222,128,.6);animation:pulse-glow 2s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 10px rgba(74,222,128,.6)}50%{box-shadow:0 0 20px rgba(74,222,128,.9)}}
+.badge-txt{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.3px}
+
+.hero-h{font-family:'Instrument Serif',serif;font-size:clamp(50px,6vw,82px);line-height:1.01;color:#fff;margin-bottom:22px;letter-spacing:-2px}
+.hero-h em{font-style:italic;color:var(--saffron-2)}
+
+.hero-p{font-size:17px;color:rgba(255,255,255,.6);line-height:1.8;font-weight:300;max-width:460px;margin-bottom:44px}
+
+.hero-search{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:10px;margin-bottom:28px;backdrop-filter:blur(12px)}
+.hs-select,.hs-input{border:none;outline:none;background:transparent;color:#fff;font-size:14.5px;font-weight:400}
+.hs-select{color:rgba(255,255,255,.6);cursor:pointer;font-size:14px}
+.hs-select option{color:var(--ink);background:#fff}
+.hs-input{flex:1;min-width:0}
+.hs-input::placeholder{color:rgba(255,255,255,.35)}
+.hs-div{width:1px;height:22px;background:rgba(255,255,255,.15);flex-shrink:0}
+.hs-btn{padding:12px 22px;background:var(--saffron);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;flex-shrink:0;transition:all .2s;box-shadow:0 4px 16px rgba(232,96,28,.4)}
+.hs-btn:hover{background:var(--saffron-2)}
+
+.hero-trust{display:flex;flex-wrap:wrap;gap:20px}
+.ht{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55)}
+.ht i{color:#4ADE80;font-size:13px}
+
+/* Hero right panel */
+.hero-panel{position:relative;height:500px}
+.hp-card{position:absolute;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:22px;transition:all .3s}
+.hp-card:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.2);transform:translateY(-4px)}
+
+.hp1{top:0;left:10px;width:220px;animation:float1 8s ease-in-out infinite}
+.hp2{top:10px;right:0;width:155px;padding:18px;animation:float2 9.5s ease-in-out infinite}
+.hp3{bottom:50px;right:10px;width:210px;animation:float3 7.5s ease-in-out infinite}
+.hp4{bottom:190px;left:0;width:165px;padding:18px;animation:float1 10s ease-in-out infinite reverse}
+
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes float3{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+.hp-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--saffron-pale),var(--saffron-light));display:grid;place-items:center;font-size:20px;margin-bottom:12px}
+.hp-skill{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px}
+.hp-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.hp-name i{color:#4ADE80;font-size:11px}
+.hp-loc{font-size:12px;color:rgba(255,255,255,.45)}
+.hp-stars{color:#FBBF24;font-size:12px;margin-top:8px}
+.hp-avail{display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:600;color:#4ADE80;margin-top:9px}
+.hp-bignum{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:#fff;line-height:1}
+.hp-numlbl{font-size:11px;color:rgba(255,255,255,.45);margin-top:5px}
+.hp-bar{height:3px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:12px;overflow:hidden}
+.hp-barfill{height:100%;width:74%;background:linear-gradient(90deg,var(--saffron),var(--saffron-2));border-radius:3px}
+.hp-jobs{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px}
+.hp-jobs b{color:#fff}
+
+/* ── HERO STATS RIBBON ── */
+.hero-ribbon{background:var(--forest-2);border-top:1px solid rgba(255,255,255,.06)}
+.ribbon-in{max-width:1200px;margin:0 auto;padding:26px 40px;display:flex;gap:56px;align-items:center;position:relative;z-index:1}
+.rib-item{flex-shrink:0}
+.rib-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:-1.5px;line-height:1}
+.rib-lbl{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;font-weight:400}
+.rib-sep{width:1px;background:rgba(255,255,255,.08);align-self:stretch}
+
+/* ── TICKER ── */
+.ticker{background:var(--saffron);padding:12px 0;overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{display:inline-flex;align-items:center;gap:12px;padding:0 28px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.8);white-space:nowrap}
+.t-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
+
+/* ── SEARCH PANE ── */
+#searchPane{display:none;background:var(--white);border-bottom:1px solid var(--ink-06)}
+.pane-in{max-width:1200px;margin:0 auto;padding:52px 40px}
+
+/* ── SECTIONS ── */
+.section{padding:100px 0}
+.section.alt{background:var(--white)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow::before{content:'';width:20px;height:2px;background:var(--saffron);border-radius:2px}
+.section-h{font-family:'Instrument Serif',serif;font-size:clamp(36px,4.5vw,58px);font-weight:400;color:var(--forest);line-height:1.06;letter-spacing:-1.5px}
+.section-h em{font-style:italic;color:var(--saffron)}
+.section-p{font-size:16.5px;color:var(--ink-70);line-height:1.78;font-weight:300;max-width:460px;margin-top:14px}
+
+/* ── SERVICES ── */
+.svc-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:24px;flex-wrap:wrap}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:28px 24px 24px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.svc-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--saffron),var(--saffron-2));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.svc-card:hover{border-color:rgba(232,96,28,.2);transform:translateY(-6px);box-shadow:var(--sh-lg)}
+.svc-card:hover::before{transform:scaleX(1)}
+.svc-ico{font-size:30px;display:block;margin-bottom:18px}
+.svc-cnt{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--saffron);margin-bottom:7px}
+.svc-name{font-family:'Syne',sans-serif;font-weight:700;font-size:15.5px;color:var(--forest);margin-bottom:6px}
+.svc-desc{font-size:13px;color:var(--ink-40);line-height:1.6}
+.svc-arr{position:absolute;top:22px;right:22px;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink-06);display:grid;place-items:center;font-size:12px;color:var(--ink-40);transition:all .3s}
+.svc-card:hover .svc-arr{background:var(--saffron);border-color:var(--saffron);color:#fff;transform:rotate(-45deg)}
+
+/* ── HOW IT WORKS ── */
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center}
+.how-steps{margin-top:44px;display:flex;flex-direction:column;gap:6px}
+.how-step{display:flex;gap:20px;padding:20px;border-radius:14px;border:1.5px solid transparent;cursor:default;transition:all .25s}
+.how-step:hover{background:var(--cream);border-color:var(--ink-06);box-shadow:var(--sh-sm)}
+.how-num{width:44px;height:44px;border-radius:13px;background:var(--sage-light);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--sage);flex-shrink:0;transition:all .25s}
+.how-step:hover .how-num{background:var(--saffron);color:#fff}
+.how-step h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--forest);margin-bottom:6px}
+.how-step p{font-size:13.5px;color:var(--ink-70);line-height:1.65}
+.app-mock{background:var(--forest);border-radius:24px;padding:28px;position:relative;overflow:hidden;box-shadow:var(--sh-lg)}
+.am-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--forest) 0%,var(--forest-2) 100%)}
+.am-orb{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%);top:-40px;right:-40px}
+.am-content{position:relative;z-index:1}
+.am-head{display:flex;align-items:center;gap:12px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.am-av{width:46px;height:46px;border-radius:14px;background:var(--saffron-pale);display:grid;place-items:center;font-size:22px}
+.am-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff}
+.am-role{font-size:11.5px;color:rgba(255,255,255,.4)}
+.am-badge{margin-left:auto;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:600;color:#4ADE80}
+.am-job{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:14px;margin-bottom:12px}
+.am-jt{font-weight:700;font-size:13.5px;color:#fff;margin-bottom:4px}
+.am-jm{font-size:11.5px;color:rgba(255,255,255,.4);display:flex;gap:16px}
+.am-btn{width:100%;padding:13px;background:var(--saffron);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
+.am-btn:hover{background:var(--saffron-2)}
+
+/* ── WORKERS SECTION ── */
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
+.fchip{padding:8px 18px;border-radius:100px;font-size:13.5px;font-weight:600;border:1.5px solid var(--ink-12);background:var(--white);color:var(--ink-70);cursor:pointer;transition:all .22s}
+.fchip:hover{border-color:var(--saffron);color:var(--saffron)}
+.fchip.on{background:var(--saffron);border-color:var(--saffron);color:#fff}
+.workers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.wcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);overflow:hidden;transition:all .3s;position:relative}
+.wcard:hover{transform:translateY(-5px);box-shadow:var(--sh-lg);border-color:rgba(232,96,28,.15)}
+.wcard-header{background:linear-gradient(135deg,var(--forest) 0%,var(--forest-2) 100%);padding:24px;display:flex;gap:14px;align-items:center;position:relative;overflow:hidden}
+.wcard-header::after{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.25),transparent 65%)}
+.wc-av{width:50px;height:50px;border-radius:14px;background:var(--saffron-pale);display:grid;place-items:center;font-size:22px;flex-shrink:0;z-index:1}
+.wc-skill{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;z-index:1}
+.wc-name{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:700;color:#fff;z-index:1;display:flex;align-items:center;gap:5px}
+.wc-name i{color:#4ADE80;font-size:11px}
+.wc-loc{font-size:12px;color:rgba(255,255,255,.5);z-index:1}
+.wcard-body{padding:18px 20px}
+.wc-rating{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.wc-stars{color:#FBBF24;font-size:12.5px}
+.wc-rnum{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--forest)}
+.wc-rjobs{font-size:12px;color:var(--ink-40)}
+.wc-bio{font-size:13px;color:var(--ink-70);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
+.wcard-foot{padding:14px 20px;border-top:1px solid var(--ink-06);display:flex;gap:9px}
+.btn-hire{flex:1;padding:10px;border-radius:9px;background:var(--saffron);border:none;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}
+.btn-hire:hover{background:var(--saffron-2)}
+.btn-view{padding:10px 14px;border-radius:9px;border:1.5px solid var(--ink-12);font-size:13.5px;font-weight:600;color:var(--ink-70);background:transparent;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
+.btn-view:hover{border-color:var(--saffron);color:var(--saffron)}
+.workers-empty{grid-column:1/-1;text-align:center;padding:64px 24px}
+.workers-empty i{font-size:40px;opacity:.2;display:block;margin-bottom:14px;color:var(--forest)}
+.workers-empty h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px}
+.workers-empty p{font-size:14px;color:var(--ink-40)}
+.spin-loader{grid-column:1/-1;display:flex;justify-content:center;padding:56px;color:var(--saffron);font-size:28px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── NUMBERS BAND ── */
+.nums-band{background:var(--forest);padding:72px 0}
+.nums-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.nm-item{padding:0 30px}
+.nm-item+.nm-item{border-left:1px solid rgba(255,255,255,.08)}
+.nm-num{font-family:'Syne',sans-serif;font-size:54px;font-weight:800;color:#fff;line-height:1;letter-spacing:-2px}
+.nm-lbl{font-size:14px;color:rgba(255,255,255,.5);margin-top:8px}
+
+/* ── TESTIMONIALS ── */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+.tcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:28px;position:relative;transition:all .3s}
+.tcard:hover{border-color:rgba(232,96,28,.2);box-shadow:var(--sh-lg);transform:translateY(-4px)}
+.tcard-quote{font-family:'Instrument Serif',serif;font-size:40px;color:var(--saffron);line-height:.7;margin-bottom:16px;opacity:.6}
+.tcard-text{font-size:14.5px;color:var(--ink-70);line-height:1.75;margin-bottom:22px;font-style:italic;font-family:'Instrument Serif',serif}
+.tcard-person{display:flex;align-items:center;gap:12px}
+.tcp-av{width:40px;height:40px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.tcp-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--forest)}
+.tcp-role{font-size:12px;color:var(--ink-40)}
+.tcp-stars{margin-left:auto;color:#FBBF24;font-size:13px}
+
+/* ── CTA SECTION ── */
+.cta-section{background:linear-gradient(135deg,var(--saffron) 0%,#C94A0A 100%);padding:100px 0;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.07)}
+.cta-section::after{content:'';position:absolute;bottom:-100px;right:-60px;width:500px;height:500px;border-radius:50%;background:rgba(0,0,0,.08)}
+.cta-inner{text-align:center;position:relative;z-index:1}
+.cta-inner h2{font-family:'Instrument Serif',serif;font-size:clamp(38px,5vw,64px);color:#fff;line-height:1.06;letter-spacing:-1.5px;margin-bottom:16px}
+.cta-inner p{font-size:17px;color:rgba(255,255,255,.7);max-width:440px;margin:0 auto 40px;line-height:1.7}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-primary{padding:14px 32px;background:#fff;border:none;border-radius:11px;font-size:15px;font-weight:700;color:var(--saffron);cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.2)}
+.cta-outline{padding:14px 32px;background:transparent;border:2px solid rgba(255,255,255,.4);border-radius:11px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
+.cta-outline:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:72px 0 40px}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px}
+.footer-brand .logo-txt{color:#fff}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;margin-top:14px;max-width:230px}
+.footer-social{display:flex;gap:10px;margin-top:22px}
+.fs-icon{width:36px;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:14px;transition:all .2s;cursor:pointer}
+.fs-icon:hover{border-color:var(--saffron);color:var(--saffron);background:rgba(232,96,28,.1)}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
+.footer-col ul li{margin-bottom:11px}
+.footer-col ul li a{font-size:14px;color:rgba(255,255,255,.5);transition:color .2s}
+.footer-col ul li a:hover{color:rgba(255,255,255,.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.footer-bottom p{font-size:13px;color:rgba(255,255,255,.3)}
+.footer-bottom a{font-size:13px;color:rgba(255,255,255,.35);transition:color .2s}
+.footer-bottom a:hover{color:rgba(255,255,255,.7)}
+
+/* ── MODALS ── */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.65);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--white);border-radius:22px;padding:0;max-width:500px;width:100%;box-shadow:0 32px 80px rgba(15,25,35,.2);overflow:hidden;animation:modalIn .3s ease}
+@keyframes modalIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{background:var(--forest);padding:28px 32px;position:relative}
+.modal-head h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff}
+.modal-head p{font-size:14px;color:rgba(255,255,255,.5);margin-top:4px}
+.modal-close{position:absolute;top:24px;right:28px;background:rgba(255,255,255,.1);border:none;width:32px;height:32px;border-radius:50%;color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.modal-close:hover{background:rgba(255,255,255,.2)}
+.modal-body{padding:32px}
+.m-worker-info{display:flex;align-items:center;gap:16px;background:var(--cream);border-radius:14px;padding:16px;margin-bottom:28px}
+.mwi-av{width:52px;height:52px;border-radius:14px;background:var(--sage-light);display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.mwi-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--forest)}
+.mwi-skill{font-size:13px;color:var(--ink-40)}
+.fg{margin-bottom:16px}
+.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
+.fw{position:relative}
+.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-size:14.5px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s}
+.fi:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
+.fi::placeholder{color:var(--ink-40);font-weight:300}
+.fi-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:14px;pointer-events:none;transition:color .2s}
+.fw:focus-within .fi-ico{color:var(--saffron)}
+textarea.fi{min-height:80px;resize:vertical;padding:12px 14px;padding-left:14px}
+.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-actions{display:flex;gap:10px;margin-top:24px}
+.m-cancel{flex:1;padding:13px;border:1.5px solid var(--ink-12);border-radius:10px;font-size:14px;font-weight:600;color:var(--ink-70);background:transparent;cursor:pointer;transition:all .2s}
+.m-cancel:hover{border-color:var(--ink-40)}
+.m-submit{flex:2;padding:13px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,96,28,.3);display:flex;align-items:center;justify-content:center;gap:7px}
+.m-submit:hover{background:var(--saffron-2);transform:translateY(-1px)}
+.m-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.spin-sm{display:none;animation:spin .8s linear infinite}
+.alert{padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.alert-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
+.alert-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+
+/* ── CHATBOT ── */
+.chat-fab{position:fixed;bottom:32px;right:32px;z-index:700;background:var(--saffron);width:60px;height:60px;border-radius:50%;border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 8px 28px rgba(232,96,28,.45);transition:all .3s;display:flex;align-items:center;justify-content:center}
+.chat-fab:hover{background:var(--saffron-2);transform:scale(1.08);box-shadow:0 12px 36px rgba(232,96,28,.5)}
+.chat-bubble{position:absolute;top:-42px;right:0;background:var(--forest);color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:12px;border-bottom-right-radius:4px;white-space:nowrap;box-shadow:var(--sh)}
+.chat-bubble::after{content:'';position:absolute;bottom:-6px;right:14px;border:6px solid transparent;border-top-color:var(--forest);border-bottom:none}
+.chat-win{position:fixed;bottom:110px;right:32px;width:360px;background:var(--white);border-radius:20px;box-shadow:0 24px 72px rgba(15,25,35,.15);z-index:700;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--ink-06);animation:chatIn .3s ease}
+@keyframes chatIn{from{transform:translateY(20px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+.chat-win.open{display:flex}
+.cw-head{background:var(--forest);padding:18px 20px;display:flex;align-items:center;gap:12px}
+.cw-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.cw-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff}
+.cw-status{font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px}
+.cw-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80}
+.cw-close{margin-left:auto;background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;font-size:14px;cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.cw-close:hover{background:rgba(255,255,255,.2)}
+.cw-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;max-height:320px;min-height:200px}
+.cw-msg{max-width:80%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.6;animation:msgIn .2s ease}
+@keyframes msgIn{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.cw-msg.bot{background:var(--cream);color:var(--ink);border-bottom-left-radius:4px;align-self:flex-start}
+.cw-msg.user{background:var(--saffron);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.cw-chips{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:7px}
+.cw-chip{padding:6px 13px;border:1.5px solid var(--ink-12);border-radius:100px;font-size:12.5px;font-weight:600;color:var(--ink-70);cursor:pointer;background:var(--cream);transition:all .2s;white-space:nowrap}
+.cw-chip:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
+.cw-input{padding:14px 16px;border-top:1px solid var(--ink-06);display:flex;gap:10px;align-items:center}
+.cw-txt{flex:1;border:1.5px solid var(--ink-12);border-radius:10px;padding:9px 14px;font-size:13.5px;color:var(--ink);background:var(--cream);outline:none;transition:border-color .2s;resize:none}
+.cw-txt:focus{border-color:var(--saffron);background:var(--white)}
+.cw-send{background:var(--saffron);border:none;width:36px;height:36px;border-radius:9px;color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
+.cw-send:hover{background:var(--saffron-2)}
+
+@media(max-width:900px){
+  .hero-body{grid-template-columns:1fr;gap:40px;padding:110px 24px 60px}
+  .hero-panel{display:none}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+  .how-grid{grid-template-columns:1fr;gap:48px}
+  .workers-grid{grid-template-columns:repeat(2,1fr)}
+  .tgrid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .nav-menu{display:none}
+  .nav-in{padding:0 24px}
+  .wrap{padding:0 24px}
+  .nums-grid{grid-template-columns:repeat(2,1fr);gap:32px}
+  .nm-item+.nm-item{border-left:none}
+  .ribbon-in{gap:32px;padding:24px}
+}
+@media(max-width:540px){
+  .svc-grid{grid-template-columns:1fr}
+  .workers-grid{grid-template-columns:1fr}
+  .chat-win{width:calc(100vw - 32px);right:16px;bottom:100px}
+  .chat-fab{right:16px;bottom:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-in">
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><i class="bi bi-tools"></i></div>
+      <div class="logo-txt">Kaam<span>Connect</span></div>
+    </a>
+    <div class="nav-menu">
+      <a href="#services">Services</a>
+      <a href="#how">How It Works</a>
+      <a href="#workers">Workers</a>
+      <a href="#about">About</a>
+    </div>
+    <div class="nav-cta">
+      <button class="n-ghost" onclick="location.href='login.html'">Sign In</button>
+      <button class="n-solid" onclick="location.href='register.html'">Get Started</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hbg-grid"></div>
+    <div class="hbg-orb1"></div>
+    <div class="hbg-orb2"></div>
+    <div class="hbg-orb3"></div>
+  </div>
+  <div class="hero-body">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <div class="badge-pulse"></div>
+        <span class="badge-txt">200 verified workers • Live now</span>
+      </div>
+      <h1 class="hero-h">India's most trusted<br><em>worker marketplace</em></h1>
+      <p class="hero-p">Book verified electricians, plumbers, painters and more in your city — fast, safe, and guaranteed.</p>
+      <div class="hero-search">
+        <select class="hs-select" id="heroSkill">
+          <option value="">All Services</option>
+          <option value="electrician">⚡ Electrician</option>
+          <option value="plumber">🔧 Plumber</option>
+          <option value="painter">🎨 Painter</option>
+          <option value="carpenter">🪚 Carpenter</option>
+          <option value="labour">👷 Labour</option>
+          <option value="mason">🧱 Mason</option>
+          <option value="ac technician">❄️ AC Technician</option>
+          <option value="driver">🚗 Driver</option>
+        </select>
+        <div class="hs-div"></div>
+        <input class="hs-input" type="text" id="heroLocation" placeholder="Enter your city…" onkeydown="if(event.key==='Enter')heroSearch()">
+        <button class="hs-btn" onclick="heroSearch()"><i class="bi bi-search"></i> Search</button>
+      </div>
+      <div class="hero-trust">
+        <div class="ht"><i class="bi bi-shield-fill-check"></i> Admin-verified workers</div>
+        <div class="ht"><i class="bi bi-clock-fill"></i> Book in 2 minutes</div>
+        <div class="ht"><i class="bi bi-lock-fill"></i> Pay after job done</div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hp-card hp1">
+        <div class="hp-avatar">⚡</div>
+        <div class="hp-skill">Electrician</div>
+        <div class="hp-name">Rajesh Kumar <i class="bi bi-patch-check-fill"></i></div>
+        <div class="hp-loc"><i class="bi bi-geo-alt"></i> Ludhiana, Punjab</div>
+        <div class="hp-stars">★★★★★</div>
+        <div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div>
+      </div>
+      <div class="hp-card hp2">
+        <div class="hp-bignum" id="liveJobs">100+</div>
+        <div class="hp-numlbl">Jobs Completed</div>
+        <div class="hp-bar"><div class="hp-barfill"></div></div>
+        <div class="hp-jobs" style="margin-top:10px"><b>47</b> active today</div>
+      </div>
+      <div class="hp-card hp3">
+        <div class="hp-avatar">🎨</div>
+        <div class="hp-skill">Painter</div>
+        <div class="hp-name">Amit Singh <i class="bi bi-patch-check-fill"></i></div>
+        <div class="hp-loc"><i class="bi bi-geo-alt"></i> Delhi</div>
+        <div class="hp-stars">★★★★★</div>
+        <div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div>
+      </div>
+      <div class="hp-card hp4">
+        <div class="hp-bignum">4.8</div>
+        <div class="hp-numlbl">Average Rating</div>
+        <div class="hp-stars" style="margin-top:10px;font-size:18px">★★★★★</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-ribbon">
+    <div class="ribbon-in">
+      <div class="rib-item"><div class="rib-num" id="statCustomers">2,847</div><div class="rib-lbl">Happy Customers</div></div>
+      <div class="rib-sep"></div>
+      <div class="rib-item"><div class="rib-num" id="statWorkers">50</div><div class="rib-lbl">Verified Workers</div></div>
+      <div class="rib-sep"></div>
+      <div class="rib-item"><div class="rib-num" id="statJobs">15,832</div><div class="rib-lbl">Jobs Completed</div></div>
+      <div class="rib-sep"></div>
+      <div class="rib-item"><div class="rib-num">4.8★</div><div class="rib-lbl">Average Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="t-item">⚡ Electricians<div class="t-dot"></div></span>
+    <span class="t-item">🔧 Plumbers<div class="t-dot"></div></span>
+    <span class="t-item">🎨 Painters<div class="t-dot"></div></span>
+    <span class="t-item">🪚 Carpenters<div class="t-dot"></div></span>
+    <span class="t-item">🧱 Masons<div class="t-dot"></div></span>
+    <span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span>
+    <span class="t-item">👷 Labour<div class="t-dot"></div></span>
+    <span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
+    <span class="t-item">⚡ Electricians<div class="t-dot"></div></span>
+    <span class="t-item">🔧 Plumbers<div class="t-dot"></div></span>
+    <span class="t-item">🎨 Painters<div class="t-dot"></div></span>
+    <span class="t-item">🪚 Carpenters<div class="t-dot"></div></span>
+    <span class="t-item">🧱 Masons<div class="t-dot"></div></span>
+    <span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span>
+    <span class="t-item">👷 Labour<div class="t-dot"></div></span>
+    <span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
+  </div>
+</div>
+
+<!-- SEARCH PANE -->
+<div id="searchPane">
+  <div class="pane-in">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+      <h3 style="font-family:'Syne',sans-serif;font-size:22px;color:var(--forest)">Search Results</h3>
+      <button onclick="closeSearch()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-40)"><i class="bi bi-x"></i></button>
+    </div>
+    <div class="workers-grid" id="searchResults">
+      <div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="svc-top">
+      <div>
+        <div class="eyebrow">Our Services</div>
+        <h2 class="section-h">Every skill you<br>need, <em>right here</em></h2>
+        <p class="section-p">From quick fixes to big projects — find verified professionals in your city within minutes.</p>
+      </div>
+      <button class="n-solid" onclick="location.href='register.html'" style="flex-shrink:0">Browse All →</button>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card" onclick="quickSearch('electrician')"><i class="bi bi-x-circle svc-arr"></i><div style="position:relative;z-index:1"><span class="svc-ico">⚡</span><div class="svc-cnt">124 workers</div><div class="svc-name">Electrician</div><div class="svc-desc">Wiring, fuse fixes, appliance repair, panel work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('plumber')"><div style="position:relative;z-index:1"><span class="svc-ico">🔧</span><div class="svc-cnt">89 workers</div><div class="svc-name">Plumber</div><div class="svc-desc">Pipe fitting, leaks, bathroom renovation</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('painter')"><div style="position:relative;z-index:1"><span class="svc-ico">🎨</span><div class="svc-cnt">156 workers</div><div class="svc-name">Painter</div><div class="svc-desc">Interior, exterior, texture and wallpaper</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('carpenter')"><div style="position:relative;z-index:1"><span class="svc-ico">🪚</span><div class="svc-cnt">78 workers</div><div class="svc-name">Carpenter</div><div class="svc-desc">Furniture, doors, cabinets, custom woodwork</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('mason')"><div style="position:relative;z-index:1"><span class="svc-ico">🧱</span><div class="svc-cnt">63 workers</div><div class="svc-name">Mason</div><div class="svc-desc">Tiling, plastering, construction work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('ac technician')"><div style="position:relative;z-index:1"><span class="svc-ico">❄️</span><div class="svc-cnt">47 workers</div><div class="svc-name">AC Technician</div><div class="svc-desc">Installation, servicing, gas refill</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('labour')"><div style="position:relative;z-index:1"><span class="svc-ico">👷</span><div class="svc-cnt">210 workers</div><div class="svc-name">Labour</div><div class="svc-desc">Shifting, heavy lifting, site assistance</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+      <div class="svc-card" onclick="quickSearch('driver')"><div style="position:relative;z-index:1"><span class="svc-ico">🚗</span><div class="svc-cnt">54 workers</div><div class="svc-name">Driver</div><div class="svc-desc">Daily hire, outstation, part-time driving</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section alt" id="how">
+  <div class="wrap">
+    <div class="how-grid">
+      <div>
+        <div class="eyebrow">How It Works</div>
+        <h2 class="section-h">Done in <em>four</em><br>simple steps</h2>
+        <div class="how-steps">
+          <div class="how-step"><div class="how-num">01</div><div><h3>Search by skill & city</h3><p>Filter verified workers by service type and your location. See ratings, reviews and availability at a glance.</p></div></div>
+          <div class="how-step"><div class="how-num">02</div><div><h3>View profiles & pick</h3><p>Browse detailed worker profiles with experience, past jobs, verified reviews and pricing information.</p></div></div>
+          <div class="how-step"><div class="how-num">03</div><div><h3>Book instantly</h3><p>Confirm your job request with date, time and description. Worker gets notified in real time.</p></div></div>
+          <div class="how-step"><div class="how-num">04</div><div><h3>Pay only after completion</h3><p>Secure escrow via Razorpay — your money is released to the worker only after the job is done to your satisfaction.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="app-mock">
+          <div class="am-bg"></div>
+          <div class="am-orb"></div>
+          <div class="am-content">
+            <div class="am-head">
+              <div class="am-av">🔧</div>
+              <div>
+                <div class="am-name">Suresh Sharma</div>
+                <div class="am-role">⭐ 4.6 · Plumber · Chandigarh</div>
+              </div>
+              <div class="am-badge">Online</div>
+            </div>
+            <div class="am-job">
+              <div class="am-jt">🚿 Bathroom pipe repair</div>
+              <div class="am-jm"><span><i class="bi bi-calendar3"></i> Today, 3 PM</span><span><i class="bi bi-geo-alt"></i> Sector 17</span></div>
+            </div>
+            <div class="am-job" style="background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.2)">
+              <div class="am-jt" style="color:#4ADE80">✅ Job Accepted</div>
+              <div class="am-jm"><span>Worker is on the way</span></div>
+            </div>
+            <button class="am-btn"><i class="bi bi-chat-dots"></i> Message Worker</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKERS -->
+<section class="section" id="workers">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:20px">
+      <div>
+        <div class="eyebrow">Verified Workers</div>
+        <h2 class="section-h">Meet our top<br><em>professionals</em></h2>
+      </div>
+      <p class="section-p" style="margin:0;max-width:300px">All workers are admin-verified with ID and background checks.</p>
+    </div>
+    <div class="filter-row" id="workerFilters">
+      <button class="fchip on" data-skill="all" onclick="filterWorkers(this,'all')">All Workers</button>
+      <button class="fchip" data-skill="electrician" onclick="filterWorkers(this,'electrician')">⚡ Electrician</button>
+      <button class="fchip" data-skill="plumber" onclick="filterWorkers(this,'plumber')">🔧 Plumber</button>
+      <button class="fchip" data-skill="painter" onclick="filterWorkers(this,'painter')">🎨 Painter</button>
+      <button class="fchip" data-skill="carpenter" onclick="filterWorkers(this,'carpenter')">🪚 Carpenter</button>
+    </div>
+    <div class="workers-grid" id="workersGrid">
+      <div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS BAND -->
+<div class="nums-band">
+  <div class="wrap">
+    <div class="nums-grid">
+      <div class="nm-item"><div class="nm-num" id="nb1">2,847</div><div class="nm-lbl">Happy Customers</div></div>
+      <div class="nm-item"><div class="nm-num" id="nb2">743+</div><div class="nm-lbl">Verified Workers</div></div>
+      <div class="nm-item"><div class="nm-num" id="nb3">15K+</div><div class="nm-lbl">Jobs Completed</div></div>
+      <div class="nm-item"><div class="nm-num">10%</div><div class="nm-lbl">Platform Fee Only</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section alt" id="about">
+  <div class="wrap">
+    <div class="eyebrow">Testimonials</div>
+    <h2 class="section-h">What our users <em>say</em></h2>
+    <div class="tgrid">
+      <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">Found a certified electrician in under 5 minutes. He arrived on time, fixed the issue, and the whole payment was handled safely. Brilliant service.</p><div class="tcard-person"><div class="tcp-av">👩</div><div><div class="tcp-name">Priya Sharma</div><div class="tcp-role">Customer · Ludhiana</div></div><div class="tcp-stars">★★★★★</div></div></div>
+      <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">As a plumber, KaamConnect gives me consistent work. I've completed 98 jobs and my earnings have doubled since joining. Highly recommend to any skilled worker.</p><div class="tcard-person"><div class="tcp-av">👨</div><div><div class="tcp-name">Suresh Sharma</div><div class="tcp-role">Worker · Chandigarh</div></div><div class="tcp-stars">★★★★★</div></div></div>
+      <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">The escrow payment system is a game changer. I only paid after I was satisfied with the painting work. Finally a platform that protects the customer.</p><div class="tcard-person"><div class="tcp-av">👨‍💼</div><div><div class="tcp-name">Arjun Mehta</div><div class="tcp-role">Customer · Delhi</div></div><div class="tcp-stars">★★★★★</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="wrap">
+    <div class="cta-inner">
+      <h2>Ready to get started?<br>Join India today.</h2>
+      <p>Thousands of customers and workers trust KaamConnect every day. It's free to join.</p>
+      <div class="cta-btns">
+        <button class="cta-primary" onclick="location.href='register.html'">Find a Worker →</button>
+        <button class="cta-outline" onclick="location.href='register.html?role=worker'">Join as Worker</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><div class="logo-mark"><i class="bi bi-tools"></i></div><div class="logo-txt">Kaam<span>Connect</span></div></div>
+        <p>India's trusted marketplace connecting skilled workers with customers — since 2026.</p>
+        <div class="footer-social">
+          <div class="fs-icon"><i class="bi bi-twitter-x"></i></div>
+          <div class="fs-icon"><i class="bi bi-instagram"></i></div>
+          <div class="fs-icon"><i class="bi bi-facebook"></i></div>
+          <div class="fs-icon"><i class="bi bi-linkedin"></i></div>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul><li><a href="#">Find Workers</a></li><li><a href="#">How It Works</a></li><li><a href="#">Pricing</a></li><li><a href="#">Safety</a></li></ul></div>
+      <div class="footer-col"><h4>For Workers</h4><ul><li><a href="register.html">Join as Worker</a></li><li><a href="#">Worker Guidelines</a></li><li><a href="#">Earnings</a></li><li><a href="#">Verification</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KaamConnect. All rights reserved.</p>
+      <div style="display:flex;gap:24px"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- HIRE MODAL -->
+<div class="modal-backdrop" id="hireModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Book This Worker</h3>
+      <p>Fill in job details and confirm</p>
+      <button class="modal-close" onclick="closeModal()"><i class="bi bi-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <div id="modalAlert" style="display:none"></div>
+      <div class="m-worker-info" id="modalWorkerInfo"></div>
+      <input type="hidden" id="modalWorkerId">
+      <div class="fi-row">
+        <div class="fg"><label class="fl">Service Type</label><div class="fw"><input class="fi" type="text" id="jobSkill" placeholder="e.g. Electrical repair"><i class="bi bi-tools fi-ico"></i></div></div>
+        <div class="fg"><label class="fl">Budget (₹)</label><div class="fw"><input class="fi" type="number" id="jobPrice" placeholder="500" min="100"><i class="bi bi-currency-rupee fi-ico"></i></div></div>
+      </div>
+      <div class="fg"><label class="fl">Location / Address</label><div class="fw"><input class="fi" type="text" id="jobLocation" placeholder="Street, City"><i class="bi bi-geo-alt fi-ico"></i></div></div>
+      <div class="fi-row">
+        <div class="fg"><label class="fl">Date</label><div class="fw"><input class="fi" type="date" id="jobDate"><i class="bi bi-calendar3 fi-ico"></i></div></div>
+        <div class="fg"><label class="fl">Time</label><div class="fw"><input class="fi" type="time" id="jobTime"><i class="bi bi-clock fi-ico"></i></div></div>
+      </div>
+      <div class="fg"><label class="fl">Description</label><textarea class="fi" id="jobDesc" placeholder="Describe the work needed…" style="padding-left:14px"></textarea></div>
+      <div class="modal-actions">
+        <button class="m-cancel" onclick="closeModal()">Cancel</button>
+        <button class="m-submit" id="submitJob" onclick="submitJob()"><i class="bi bi-check-circle-fill"></i> Confirm Booking <i class="bi bi-arrow-repeat spin-sm" id="jobSpin"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()">
+  <i class="bi bi-chat-dots-fill" id="chatIcon"></i>
+  <div class="chat-bubble" id="chatBubble">Need help? 👋</div>
+</button>
+<div class="chat-win" id="chatWin">
+  <div class="cw-head">
+    <div class="cw-av">🤖</div>
+    <div><div class="cw-name">KaamBot</div><div class="cw-status"><div class="cw-dot"></div> Online</div></div>
+    <button class="cw-close" onclick="toggleChat()"><i class="bi bi-x"></i></button>
+  </div>
+  <div class="cw-msgs" id="chatMsgs">
+    <div class="cw-msg bot">Namaste! 🙏 I'm KaamBot. How can I help you find a skilled worker today?</div>
+  </div>
+  <div class="cw-chips" id="chatChips">
+    <span class="cw-chip" onclick="sendChip(this)">Find Electrician</span>
+    <span class="cw-chip" onclick="sendChip(this)">How it works?</span>
+    <span class="cw-chip" onclick="sendChip(this)">Pricing info</span>
+  </div>
+  <div class="cw-input">
+    <input class="cw-txt" type="text" id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="cw-send" onclick="sendChat()"><i class="bi bi-send-fill"></i></button>
+  </div>
+</div>
+
+<script>
+// NAV SCROLL
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('pinned',scrollY>30)});
+
+// LOAD ANALYTICS
+(async()=>{
+  try{
+    const r=await fetch('/api/analytics/platform');
+    const d=await r.json();
+    if(d.success){
+      document.getElementById('statCustomers').textContent=d.customers.toLocaleString('en-IN');
+      document.getElementById('statWorkers').textContent=d.workers.toLocaleString('en-IN');
+      document.getElementById('statJobs').textContent=d.completedJobs.toLocaleString('en-IN');
+      document.getElementById('nb1').textContent=d.customers.toLocaleString('en-IN');
+      document.getElementById('nb2').textContent=d.workers.toLocaleString('en-IN')+'+';
+      document.getElementById('nb3').textContent=d.completedJobs>999?Math.round(d.completedJobs/1000)+'K+':d.completedJobs;
+    }
+  }catch{}
+})();
+
+// WORKER CARD BUILDER
+const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
+function buildStars(r){return '★'.repeat(Math.round(r))+'☆'.repeat(5-Math.round(r))}
+function workerCard(w){
+  const em=skillEmoji[w.skill]||'🛠️';
+  const vBadge=w.verified?'<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>':'';
+  return `<div class="wcard">
+    <div class="wcard-header">
+      <div class="wc-av">${em}</div>
+      <div>
+        <div class="wc-skill">${w.skill||'Worker'}</div>
+        <div class="wc-name">${w.name} ${vBadge}</div>
+        <div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div>
+      </div>
+    </div>
+    <div class="wcard-body">
+      <div class="wc-rating"><span class="wc-stars">${buildStars(w.rating||0)}</span><span class="wc-rnum">${(w.rating||0).toFixed(1)}</span><span class="wc-rjobs">(${w.totalJobs||0} jobs)</span></div>
+      <div class="wc-bio">${w.bio||'Experienced professional ready to help.'}</div>
+    </div>
+    <div class="wcard-foot">
+      <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Worker'}','${em}')"><i class="bi bi-calendar-check"></i> Book Now</button>
+      <button class="btn-view" onclick="viewProfile('${w._id}')"><i class="bi bi-person"></i> Profile</button>
+    </div>
+  </div>`;
+}
+
+// LOAD WORKERS
+let allWorkers=[];
+async function loadWorkers(skill='all'){
+  const grid=document.getElementById('workersGrid');
+  grid.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  try{
+    const url='/api/workers/find'+(skill&&skill!=='all'?`?skill=${skill}`:'');
+    const r=await fetch(url);const d=await r.json();
+    allWorkers=d.workers||[];
+    if(!allWorkers.length){grid.innerHTML='<div class="workers-empty"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>';return;}
+    grid.innerHTML=allWorkers.slice(0,6).map(workerCard).join('');
+  }catch{grid.innerHTML='<div class="workers-empty"><i class="bi bi-wifi-off"></i><h3>Could not load workers</h3><p>Make sure the server is running</p></div>';}
+}
+loadWorkers();
+function filterWorkers(el,skill){
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');loadWorkers(skill);
+}
+
+// HERO SEARCH
+function heroSearch(){
+  const skill=document.getElementById('heroSkill').value;
+  const loc=document.getElementById('heroLocation').value.trim();
+  doSearch(skill,loc);
+}
+function quickSearch(skill){
+  document.getElementById('heroSkill').value=skill;
+  doSearch(skill,'');
+  document.querySelector('#services').scrollIntoView({behavior:'smooth'});
+}
+async function doSearch(skill,location){
+  const pane=document.getElementById('searchPane');
+  const grid=document.getElementById('searchResults');
+  pane.style.display='block';
+  grid.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  let url='/api/workers/find?';
+  if(skill&&skill!=='all')url+=`skill=${skill}&`;
+  if(location)url+=`location=${encodeURIComponent(location)}`;
+  try{
+    const r=await fetch(url);const d=await r.json();
+    const workers=d.workers||[];
+    grid.innerHTML=workers.length?workers.map(workerCard).join(''):'<div class="workers-empty"><i class="bi bi-search"></i><h3>No workers found</h3><p>Try a different search</p></div>';
+  }catch{grid.innerHTML='<div class="workers-empty"><i class="bi bi-wifi-off"></i><h3>Server not reachable</h3><p>Is the server running?</p></div>';}
+  pane.scrollIntoView({behavior:'smooth'});
+}
+function closeSearch(){document.getElementById('searchPane').style.display='none';}
+
+// HIRE MODAL
+function openHire(id,name,skill,em){
+  const token=localStorage.getItem('kc_token');
+  if(!token){alert('Please sign in to book a worker.');location.href='login.html';return;}
+  document.getElementById('modalWorkerId').value=id;
+  document.getElementById('modalWorkerInfo').innerHTML=`<div class="mwi-av">${em}</div><div><div class="mwi-name">${name}</div><div class="mwi-skill">${skill}</div></div>`;
+  document.getElementById('jobSkill').value=skill;
+  document.getElementById('hireModal').classList.add('open');
+}
+function closeModal(){document.getElementById('hireModal').classList.remove('open');document.getElementById('modalAlert').style.display='none';}
+function showModalAlert(t,m){const a=document.getElementById('modalAlert');a.style.display='flex';a.className='alert '+(t==='error'?'alert-err':'alert-ok');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
+async function submitJob(){
+  const wid=document.getElementById('modalWorkerId').value;
+  const skill=document.getElementById('jobSkill').value.trim();
+  const price=document.getElementById('jobPrice').value;
+  const location=document.getElementById('jobLocation').value.trim();
+  const date=document.getElementById('jobDate').value;
+  const time=document.getElementById('jobTime').value;
+  const desc=document.getElementById('jobDesc').value.trim();
+  if(!skill||!price||!location){showModalAlert('error','Please fill in service, price and location.');return;}
+  const btn=document.getElementById('submitJob'),sp=document.getElementById('jobSpin');
+  btn.disabled=true;sp.style.display='inline-block';
+  try{
+    const r=await fetch('/api/jobs/create',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('kc_token')},body:JSON.stringify({worker_id:wid,skill,price:parseFloat(price),location,description:desc,scheduled_date:date||null,scheduled_time:time||null})});
+    const d=await r.json();
+    if(d.success){showModalAlert('success','Job booked! Check your dashboard.');setTimeout(closeModal,2000);}
+    else showModalAlert('error',d.message||'Booking failed. Please try again.');
+  }catch{showModalAlert('error','Server error. Is it running?');}
+  btn.disabled=false;sp.style.display='none';
+}
+function viewProfile(id){location.href='login.html';}
+document.getElementById('hireModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+// CHATBOT
+let chatOpen=false;
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatWin').classList.toggle('open',chatOpen);
+  document.getElementById('chatIcon').className=chatOpen?'bi bi-x-lg':'bi bi-chat-dots-fill';
+  document.getElementById('chatBubble').style.display=chatOpen?'none':'block';
+}
+setTimeout(()=>{document.getElementById('chatBubble').style.animation='none';},5000);
+function addMsg(txt,who){
+  const box=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='cw-msg '+who;d.textContent=txt;box.appendChild(d);
+  box.scrollTop=box.scrollHeight;
+}
+function setChips(arr){
+  const c=document.getElementById('chatChips');
+  c.innerHTML=arr.map(s=>`<span class="cw-chip" onclick="sendChip(this)">${s}</span>`).join('');
+}
+async function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';addMsg(msg,'user');
+  try{
+    const r=await fetch('/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
+    const d=await r.json();
+    if(d.success){addMsg(d.response,'bot');if(d.suggestions)setChips(d.suggestions);}
+    else addMsg('Sorry, I could not understand that. Please try again.','bot');
+  }catch{addMsg('Server is offline. Please check if the app is running.','bot');}
+}
+function sendChip(el){
+  document.getElementById('chatInput').value=el.textContent;sendChat();
+}
+</script>
+</body>
+</html>

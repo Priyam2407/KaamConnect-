@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — KaamConnect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--ink);display:flex;flex-direction:column;z-index:100;overflow:hidden}
+.sb-bg{position:absolute;bottom:-80px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.12),transparent 65%);pointer-events:none}
+.sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff}
+.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
+.sb-logo-txt span{color:var(--saffron-2)}
+.sb-section{padding:10px 12px 4px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25)}
+.sb-nav{flex:1;padding:12px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
+.sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;transition:all .22s}
+.sb-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.sb-item.active{background:var(--saffron);color:#fff;box-shadow:0 4px 16px rgba(232,96,28,.35)}
+.sb-item i{font-size:17px;flex-shrink:0}
+.sb-divider{height:1px;background:rgba(255,255,255,.06);margin:10px 0}
+.sb-user{padding:18px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.sb-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-uname{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:#fff}
+.sb-urole{font-size:11px;color:rgba(255,255,255,.35)}
+.sb-logout{margin-left:auto;background:rgba(255,255,255,.07);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.45);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
+.sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
+.main{margin-left:256px;min-height:100vh}
+.topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.seed-btn{padding:9px 18px;background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.25);border-radius:9px;font-size:13px;font-weight:600;color:var(--saffron);cursor:pointer;transition:all .2s}
+.seed-btn:hover{background:var(--saffron);color:#fff}
+.content{padding:32px 36px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px}
+.stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
+.stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
+.si-o{background:var(--saffron-pale)}.si-g{background:var(--sage-light)}.si-b{background:#EFF6FF}.si-gold{background:#FEF9C3}.si-r{background:#FEE2E2}.si-p{background:#F3E8FF}
+.stat-n{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
+.stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+.panel{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;overflow:hidden}
+.panel-head{padding:18px 22px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
+.panel-head h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--forest)}
+.panel-body{padding:4px 0;max-height:420px;overflow-y:auto}
+.user-row{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--ink-06);transition:background .2s}
+.user-row:hover{background:var(--cream)}
+.user-row:last-child{border-bottom:none}
+.ur-av{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:17px;font-weight:700;flex-shrink:0;color:#fff}
+.av-admin{background:var(--ink)}.av-worker{background:var(--sage)}.av-customer{background:var(--saffron)}
+.ur-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest);display:flex;align-items:center;gap:5px}
+.ur-sub{font-size:12px;color:var(--ink-40)}
+.ur-actions{margin-left:auto;display:flex;gap:7px;flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700}
+.badge-verified{background:var(--sage-light);color:var(--sage)}.badge-unverified{background:#FEF9C3;color:#A16207}.badge-active{background:#DBEAFE;color:#1D4ED8}.badge-inactive{background:#FEE2E2;color:#B91C1C}
+.badge-pending{background:#FEF9C3;color:#A16207}.badge-completed{background:var(--sage-light);color:var(--sage)}.badge-cancelled{background:#FEE2E2;color:#B91C1C}.badge-accepted{background:#DBEAFE;color:#1D4ED8}
+.action-btn{padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+.btn-verify{background:var(--sage-light);color:var(--sage)}
+.btn-verify:hover{background:var(--sage);color:#fff}
+.btn-toggle{background:var(--saffron-pale);color:var(--saffron)}
+.btn-toggle:hover{background:var(--saffron);color:#fff}
+.job-row{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--ink-06);transition:background .2s}
+.job-row:hover{background:var(--cream)}
+.job-row:last-child{border-bottom:none}
+.jr-ico{width:38px;height:38px;border-radius:10px;background:var(--cream);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.jr-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
+.jr-meta{font-size:12px;color:var(--ink-40)}
+.jr-price{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--forest);margin-left:auto;flex-shrink:0}
+.empty-state{text-align:center;padding:48px 24px;color:var(--ink-40)}
+.empty-state i{font-size:36px;opacity:.2;display:block;margin-bottom:12px}
+.empty-state p{font-size:14px}
+.spin-loader{display:flex;justify-content:center;padding:36px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.revenue-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
+.rev-card{background:var(--forest);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+.rev-card::after{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
+.rev-card h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px}
+.rev-num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;line-height:1}
+.rev-sub{font-size:12px;color:rgba(255,255,255,.35);margin-top:7px}
+.search-bar{padding:12px 22px 12px;border-bottom:1px solid var(--ink-06)}
+.search-bar input{width:100%;padding:9px 14px;border:1.5px solid var(--ink-12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s}
+.search-bar input:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.08)}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sb-bg"></div>
+  <div class="sb-logo"><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
+  <nav class="sb-nav">
+    <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
+    <div class="sb-item" onclick="showTab('workers')"><i class="bi bi-people-fill"></i> Workers</div>
+    <div class="sb-item" onclick="showTab('customers')"><i class="bi bi-person-fill"></i> Customers</div>
+    <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> All Jobs</div>
+    <div class="sb-item" onclick="showTab('revenue')"><i class="bi bi-graph-up-arrow"></i> Revenue</div>
+    <div class="sb-divider"></div>
+    <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
+  </nav>
+  <div class="sb-user">
+    <div class="sb-av">A</div>
+    <div><div class="sb-uname" id="sbName">Admin</div><div class="sb-urole">Super Admin</div></div>
+    <button class="sb-logout" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
+  </div>
+</aside>
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Overview</div>
+    <button class="seed-btn" onclick="seedData()"><i class="bi bi-database-fill-add"></i> Seed Demo Data</button>
+  </div>
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div id="tab-overview">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-ico si-b">👤</div><div class="stat-n" id="st-cust">—</div><div class="stat-l">Total Customers</div></div>
+        <div class="stat-card"><div class="stat-ico si-g">🛠️</div><div class="stat-n" id="st-work">—</div><div class="stat-l">Total Workers</div></div>
+        <div class="stat-card"><div class="stat-ico si-gold">💰</div><div class="stat-n" id="st-rev">—</div><div class="stat-l">Total Revenue</div></div>
+        <div class="stat-card"><div class="stat-ico si-o">📋</div><div class="stat-n" id="st-jobs">—</div><div class="stat-l">Total Jobs</div></div>
+        <div class="stat-card"><div class="stat-ico si-r">⏳</div><div class="stat-n" id="st-pend">—</div><div class="stat-l">Pending Jobs</div></div>
+        <div class="stat-card"><div class="stat-ico si-p">🔍</div><div class="stat-n" id="st-verif">—</div><div class="stat-l">Pending Verifications</div></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h3>Recent Workers</h3><a href="#" onclick="showTab('workers')" style="font-size:13px;color:var(--saffron);font-weight:600">View All →</a></div>
+          <div class="panel-body" id="recentWorkers"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Recent Jobs</h3><a href="#" onclick="showTab('jobs')" style="font-size:13px;color:var(--saffron);font-weight:600">View All →</a></div>
+          <div class="panel-body" id="recentJobsList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKERS -->
+    <div id="tab-workers" style="display:none">
+      <div class="panel">
+        <div class="panel-head"><h3>All Workers</h3></div>
+        <div class="search-bar"><input type="text" id="workerSearch" placeholder="Search by name or email…" oninput="searchUsers('worker')"></div>
+        <div class="panel-body" id="workersList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS -->
+    <div id="tab-customers" style="display:none">
+      <div class="panel">
+        <div class="panel-head"><h3>All Customers</h3></div>
+        <div class="search-bar"><input type="text" id="customerSearch" placeholder="Search by name or email…" oninput="searchUsers('customer')"></div>
+        <div class="panel-body" id="customersList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+      </div>
+    </div>
+
+    <!-- JOBS -->
+    <div id="tab-jobs" style="display:none">
+      <div class="panel">
+        <div class="panel-head"><h3>All Jobs</h3></div>
+        <div class="panel-body" id="jobsList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+      </div>
+    </div>
+
+    <!-- REVENUE -->
+    <div id="tab-revenue" style="display:none">
+      <div class="revenue-cards">
+        <div class="rev-card"><h4>Total Revenue</h4><div class="rev-num" id="revTotal">₹0</div><div class="rev-sub">All time</div></div>
+        <div class="rev-card"><h4>This Month</h4><div class="rev-num" id="revMonthly">₹0</div><div class="rev-sub">Current month</div></div>
+      </div>
+      <div class="panel"><div class="panel-head"><h3>Revenue History</h3></div><div class="panel-body" id="revHistory"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const TOKEN=localStorage.getItem('kc_token');
+const USER=JSON.parse(localStorage.getItem('kc_user')||'{}');
+if(!TOKEN||USER.role!=='admin'){location.href='login.html';}
+document.getElementById('sbName').textContent=USER.name||'Admin';
+const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
+const AUTH=h=>fetch(h,{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+const AUTHPOST=(h,b)=>fetch(h,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(b)}).then(r=>r.json());
+
+function showTab(t){
+  document.querySelectorAll('[id^=tab-]').forEach(el=>el.style.display='none');
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).style.display='block';
+  const order=['overview','workers','customers','jobs','revenue'];
+  document.querySelectorAll('.sb-item')[order.indexOf(t)]?.classList.add('active');
+  const titles={overview:'Overview',workers:'Workers',customers:'Customers',jobs:'All Jobs',revenue:'Revenue'};
+  document.getElementById('topbarTitle').textContent=titles[t]||t;
+  if(t==='overview')loadOverview();
+  if(t==='workers')loadUsers('worker','workersList');
+  if(t==='customers')loadUsers('customer','customersList');
+  if(t==='jobs')loadJobs();
+  if(t==='revenue')loadRevenue();
+}
+
+async function loadOverview(){
+  const d=await AUTH('/api/admin/dashboard');
+  if(d.success){
+    const s=d.stats;
+    document.getElementById('st-cust').textContent=(s.totalCustomers||0).toLocaleString('en-IN');
+    document.getElementById('st-work').textContent=(s.totalWorkers||0).toLocaleString('en-IN');
+    document.getElementById('st-jobs').textContent=(s.totalJobs||0).toLocaleString('en-IN');
+    document.getElementById('st-pend').textContent=(s.pendingJobs||0).toLocaleString('en-IN');
+    document.getElementById('st-verif').textContent=(s.pendingVerifications||0).toLocaleString('en-IN');
+    document.getElementById('st-rev').textContent='₹'+(s.totalRevenue||0).toLocaleString('en-IN');
+  }
+  // Recent workers
+  const wd=await AUTH('/api/admin/users?role=worker&limit=5');
+  const rw=document.getElementById('recentWorkers');
+  if(wd.users?.length)rw.innerHTML=wd.users.map(userRow).join('');
+  else rw.innerHTML='<div class="empty-state"><i class="bi bi-people"></i><p>No workers found</p></div>';
+  // Recent jobs
+  const jd=await AUTH('/api/admin/jobs?limit=5');
+  const rj=document.getElementById('recentJobsList');
+  if(jd.jobs?.length)rj.innerHTML=jd.jobs.map(jobRow).join('');
+  else rj.innerHTML='<div class="empty-state"><i class="bi bi-briefcase"></i><p>No jobs found</p></div>';
+}
+
+function userRow(u){
+  const initials=(u.name||'U')[0].toUpperCase();
+  const avClass=u.role==='admin'?'av-admin':u.role==='worker'?'av-worker':'av-customer';
+  const verifiedBadge=u.role==='worker'?`<span class="badge ${u.verified?'badge-verified':'badge-unverified'}">${u.verified?'Verified':'Unverified'}</span>`:'';
+  const verifyBtn=u.role==='worker'&&!u.verified?`<button class="action-btn btn-verify" onclick="verifyWorker('${u._id}')"><i class="bi bi-patch-check-fill"></i> Verify</button>`:'';
+  const toggleBtn=`<button class="action-btn btn-toggle" onclick="toggleUser('${u._id}',${!u.isActive})">${u.isActive?'Deactivate':'Activate'}</button>`;
+  return `<div class="user-row">
+    <div class="ur-av ${avClass}">${initials}</div>
+    <div><div class="ur-name">${u.name||'Unknown'} ${verifiedBadge}</div><div class="ur-sub">${u.email} · ${u.skill||u.role}</div></div>
+    <div class="ur-actions">${verifyBtn}${toggleBtn}</div>
+  </div>`;
+}
+
+function jobRow(j){
+  const em=skillEmoji[j.skill]||'🛠️';
+  const stMap={pending:'badge-pending',accepted:'badge-accepted',in_progress:'badge-accepted',completed:'badge-completed',cancelled:'badge-cancelled',paid:'badge-completed'};
+  return `<div class="job-row">
+    <div class="jr-ico">${em}</div>
+    <div><div class="jr-title">${j.title||j.skill||'Job'}</div><div class="jr-meta">${j.customerId?.name||'Customer'} → ${j.workerId?.name||'Worker'}</div></div>
+    <span class="badge ${stMap[j.status]||''}">${j.status}</span>
+    <div class="jr-price">₹${j.price||0}</div>
+  </div>`;
+}
+
+async function loadUsers(role,elId){
+  const el=document.getElementById(elId);
+  const d=await AUTH(`/api/admin/users?role=${role}&limit=50`);
+  if(d.users?.length)el.innerHTML=d.users.map(userRow).join('');
+  else el.innerHTML='<div class="empty-state"><i class="bi bi-people"></i><p>No users found</p></div>';
+}
+
+async function searchUsers(role){
+  const q=document.getElementById(role+'Search').value.trim();
+  const elId=role+'sList';
+  const el=document.getElementById(elId);
+  const d=await AUTH(`/api/admin/users?role=${role}&search=${encodeURIComponent(q)}&limit=50`);
+  if(d.users?.length)el.innerHTML=d.users.map(userRow).join('');
+  else el.innerHTML='<div class="empty-state"><i class="bi bi-search"></i><p>No results found</p></div>';
+}
+
+async function loadJobs(){
+  const el=document.getElementById('jobsList');
+  const d=await AUTH('/api/admin/jobs?limit=50');
+  if(d.jobs?.length)el.innerHTML=d.jobs.map(jobRow).join('');
+  else el.innerHTML='<div class="empty-state"><i class="bi bi-briefcase"></i><p>No jobs found</p></div>';
+}
+
+async function loadRevenue(){
+  const d=await AUTH('/api/admin/revenue');
+  if(d.success){
+    document.getElementById('revTotal').textContent='₹'+(d.totalRevenue||0).toLocaleString('en-IN');
+    document.getElementById('revMonthly').textContent='₹'+(d.monthlyRevenue||0).toLocaleString('en-IN');
+    const el=document.getElementById('revHistory');
+    if(d.revenueChart?.length){
+      el.innerHTML=d.revenueChart.map(r=>`<div class="job-row">
+        <div class="jr-ico">📅</div>
+        <div><div class="jr-title">${r._id}</div><div class="jr-meta">${r.transactions} transactions</div></div>
+        <div class="jr-price">₹${(r.revenue||0).toLocaleString('en-IN')}</div>
+      </div>`).join('');
+    }else el.innerHTML='<div class="empty-state"><i class="bi bi-graph-up"></i><p>No revenue data yet</p></div>';
+  }
+}
+
+async function verifyWorker(id){
+  const d=await AUTHPOST('/api/admin/verify-worker',{worker_id:id});
+  if(d.success){alert('Worker verified!');loadOverview();}
+  else alert(d.message||'Failed');
+}
+async function toggleUser(id,active){
+  const d=await fetch('/api/admin/user-status',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({user_id:id,is_active:active})}).then(r=>r.json());
+  if(d.success){loadOverview();showTab('workers');}
+  else alert(d.message||'Failed');
+}
+async function seedData(){
+  if(!confirm('Seed demo data into the database?'))return;
+  const d=await fetch('/api/admin/seed',{method:'POST'}).then(r=>r.json());
+  alert(d.message||(d.success?'Seeded!':'Failed'));
+  if(d.success)loadOverview();
+}
+function logout(){localStorage.removeItem('kc_token');localStorage.removeItem('kc_user');location.href='login.html';}
+loadOverview();
+</script>
+</body>
+</html>
