@@ -24,16 +24,6 @@ npm run dev      # development with auto-reload
 http://localhost:5000
 ```
 
-### 5. Seed demo data (first time)
-Click **"Seed Demo Data"** button in the Admin Dashboard, or POST to `/api/admin/seed`
-
-## 🔐 Demo Credentials (after seeding)
-
-| Role     | Email                     | Password  |
-|----------|---------------------------|-----------|
-| Admin    | admin@kaamconnect.com     | admin123  |
-| Customer | priya@example.com         | admin123  |
-| Worker   | rajesh@example.com        | admin123  |
 
 ## 🐛 Bugs Fixed in v4
 
