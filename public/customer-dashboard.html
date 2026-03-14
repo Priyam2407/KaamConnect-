@@ -6,20 +6,22 @@
 <title>My Dashboard — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
 :root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
 a{text-decoration:none;color:inherit}
-
-/* SIDEBAR */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--forest);display:flex;flex-direction:column;z-index:100;overflow:hidden}
 .sb-bg{position:absolute;bottom:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
 .sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
 .sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;flex-shrink:0}
-.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff;letter-spacing:-.3px}
+.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
 .sb-logo-txt span{color:var(--saffron-2)}
 .sb-nav{flex:1;padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
 .sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .22s;border:1px solid transparent}
@@ -33,8 +35,6 @@ a{text-decoration:none;color:inherit}
 .sb-urole{font-size:11px;color:rgba(255,255,255,.4)}
 .sb-logout{margin-left:auto;background:rgba(255,255,255,.08);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
 .sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
-
-/* MAIN */
 .main{margin-left:256px;min-height:100vh;display:flex;flex-direction:column}
 .topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:50}
 .topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
@@ -43,33 +43,27 @@ a{text-decoration:none;color:inherit}
 .notif-btn:hover{border-color:var(--saffron);color:var(--saffron)}
 .notif-badge{position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:var(--saffron);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:grid;place-items:center;border:2px solid var(--white)}
 .content{flex:1;padding:32px 36px}
-
-/* WELCOME BANNER */
+.toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:var(--forest);color:#fff;padding:14px 18px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;box-shadow:0 8px 28px rgba(15,25,35,.2);pointer-events:all;animation:toastIn .3s ease;max-width:320px}
+.toast.removing{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
 .welcome-banner{background:linear-gradient(135deg,var(--forest) 0%,var(--forest-2) 100%);border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;position:relative;overflow:hidden}
 .wb-orb{position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%);pointer-events:none}
 .wb-h{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
 .wb-p{font-size:14px;color:rgba(255,255,255,.5)}
 .wb-btn{padding:11px 22px;background:var(--saffron);border:none;border-radius:10px;font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;flex-shrink:0;position:relative;z-index:1}
 .wb-btn:hover{background:var(--saffron-2);transform:translateY(-1px)}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
 .stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
 .stat-card:hover{border-color:rgba(232,96,28,.2);transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
 .stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
-.stat-ico.orange{background:var(--saffron-pale)}
-.stat-ico.green{background:var(--sage-light)}
-.stat-ico.blue{background:#EFF6FF}
-.stat-ico.gold{background:#FEF9C3}
+.stat-ico.orange{background:var(--saffron-pale)}.stat-ico.green{background:var(--sage-light)}.stat-ico.blue{background:#EFF6FF}.stat-ico.gold{background:#FEF9C3}
 .stat-n{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
 .stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
-
-/* SECTION HEADER */
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .sec-head h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
 .sec-head a{font-size:13.5px;font-weight:600;color:var(--saffron);cursor:pointer}
-
-/* JOB CARDS */
 .jobs-list{display:flex;flex-direction:column;gap:14px}
 .job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px 22px;display:flex;align-items:center;gap:20px;transition:all .25s}
 .job-card:hover{border-color:rgba(232,96,28,.15);box-shadow:0 6px 24px rgba(15,25,35,.06)}
@@ -80,37 +74,27 @@ a{text-decoration:none;color:inherit}
 .jc-meta span{display:flex;align-items:center;gap:4px}
 .jc-price{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest)}
 .jc-actions{display:flex;gap:8px;flex-shrink:0}
-.jc-btn{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.jc-btn{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.jc-btn:disabled{opacity:.5;cursor:not-allowed}
 .jc-cancel{border:1.5px solid var(--ink-12);background:transparent;color:var(--ink-40)}
-.jc-cancel:hover{border-color:#DC2626;color:#DC2626;background:#FEF2F2}
+.jc-cancel:hover:not(:disabled){border-color:#DC2626;color:#DC2626;background:#FEF2F2}
 .jc-review{border:1.5px solid var(--ink-12);background:transparent;color:var(--sage)}
-.jc-review:hover{border-color:var(--sage);background:var(--sage-light)}
-
-/* STATUS BADGES */
+.jc-review:hover:not(:disabled){border-color:var(--sage);background:var(--sage-light)}
 .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:100px;font-size:11.5px;font-weight:700}
-.badge-pending{background:#FEF9C3;color:#A16207}
-.badge-accepted{background:#DBEAFE;color:#1D4ED8}
-.badge-inprogress{background:#EDE9FE;color:#7C3AED}
-.badge-completed{background:var(--sage-light);color:var(--sage)}
-.badge-cancelled{background:#FEE2E2;color:#B91C1C}
-.badge-paid{background:#F0FDF4;color:#15803D}
+.badge-pending{background:#FEF9C3;color:#A16207}.badge-accepted{background:#DBEAFE;color:#1D4ED8}.badge-inprogress{background:#EDE9FE;color:#7C3AED}.badge-completed{background:var(--sage-light);color:var(--sage)}.badge-cancelled{background:#FEE2E2;color:#B91C1C}.badge-paid{background:#F0FDF4;color:#15803D}
 .empty-state{text-align:center;padding:56px 24px;color:var(--ink-40)}
 .empty-state i{font-size:40px;opacity:.25;display:block;margin-bottom:14px}
 .empty-state h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
-.empty-state p{font-size:14px}
 .spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* FIND WORKERS SECTION */
 .workers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .wcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;overflow:hidden;transition:all .28s}
 .wcard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(15,25,35,.09);border-color:rgba(232,96,28,.15)}
 .wcard-head{background:linear-gradient(135deg,var(--forest),var(--forest-2));padding:20px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden}
 .wcard-head::after{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%)}
 .wc-av{width:44px;height:44px;border-radius:12px;background:var(--saffron-pale);display:grid;place-items:center;font-size:20px;flex-shrink:0;z-index:1}
-.wc-skill{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);z-index:1}
 .wc-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;z-index:1;display:flex;align-items:center;gap:4px}
-.wc-name i{color:#4ADE80;font-size:10px}
+.wc-skill{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);z-index:1}
 .wc-loc{font-size:11.5px;color:rgba(255,255,255,.45);z-index:1}
 .wcard-body{padding:16px 18px}
 .wc-rating{display:flex;align-items:center;gap:7px;margin-bottom:9px}
@@ -119,14 +103,11 @@ a{text-decoration:none;color:inherit}
 .wcard-foot{padding:12px 18px;border-top:1px solid var(--ink-06);display:flex;gap:8px}
 .btn-hire{flex:1;padding:9px;border-radius:8px;background:var(--saffron);border:none;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-hire:hover{background:var(--saffron-2)}
-
-/* PROFILE PAGE */
 .profile-layout{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
 .profile-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;overflow:hidden}
 .profile-card-top{background:linear-gradient(135deg,var(--forest),var(--forest-2));padding:32px 24px;text-align:center;position:relative;overflow:hidden}
 .profile-card-top::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05)}
-.profile-avatar-wrap{position:relative;display:inline-block;margin-bottom:16px}
-.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.2);margin:0 auto}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.2);margin:0 auto 16px}
 .profile-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
 .profile-email{font-size:13px;color:rgba(255,255,255,.5);position:relative;z-index:1}
 .profile-card-info{padding:20px 24px}
@@ -135,8 +116,6 @@ a{text-decoration:none;color:inherit}
 .pci-icon{width:34px;height:34px;border-radius:9px;background:var(--cream);display:grid;place-items:center;font-size:14px;color:var(--saffron);flex-shrink:0}
 .pci-label{font-size:11px;font-weight:700;color:var(--ink-40);letter-spacing:.5px;text-transform:uppercase}
 .pci-value{font-size:14px;font-weight:600;color:var(--forest)}
-
-/* PROFILE FORM */
 .profile-form-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;overflow:hidden}
 .pfc-head{padding:22px 28px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
 .pfc-head h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--forest)}
@@ -146,7 +125,7 @@ a{text-decoration:none;color:inherit}
 .pfc-body{padding:28px}
 .form-section{display:none}
 .form-section.active{display:block}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .fg{margin-bottom:18px}
 .fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
 .fw{position:relative}
@@ -158,7 +137,7 @@ a{text-decoration:none;color:inherit}
 textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 .fi-no-icon{padding-left:14px}
 .save-btn{padding:13px 28px;background:var(--saffron);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,96,28,.28);display:inline-flex;align-items:center;gap:8px}
-.save-btn:hover{background:var(--saffron-2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,96,28,.36)}
+.save-btn:hover{background:var(--saffron-2);transform:translateY(-1px)}
 .save-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 .pw-bars{display:flex;gap:4px;margin-top:8px}
 .pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
@@ -167,8 +146,6 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 .danger-zone p{font-size:13px;color:#991B1B;opacity:.7;margin-bottom:16px}
 .danger-btn{padding:10px 20px;background:#FEE2E2;border:1.5px solid #FECACA;border-radius:9px;font-size:13px;font-weight:700;color:#B91C1C;cursor:pointer;transition:all .2s}
 .danger-btn:hover{background:#DC2626;color:#fff;border-color:#DC2626}
-
-/* MODAL */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.6);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
 .modal-backdrop.open{display:flex}
 .modal{background:var(--white);border-radius:20px;max-width:460px;width:100%;overflow:hidden;animation:mIn .3s ease}
@@ -180,23 +157,21 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 .star-row{display:flex;gap:8px;margin:16px 0 22px;justify-content:center}
 .star-btn{font-size:36px;background:none;border:none;cursor:pointer;color:var(--ink-12);transition:all .2s;line-height:1}
 .star-btn.on,.star-btn:hover{color:#FBBF24;transform:scale(1.15)}
-.m-submit{width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
+.m-submit{width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .m-submit:hover{background:var(--saffron-2)}
 .alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
 .spin-sm{display:none;animation:spin .8s linear infinite}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.workers-grid{grid-template-columns:1fr 1fr}.profile-layout{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<div class="toast-wrap" id="toastWrap"></div>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-bg"></div>
-  <div class="sb-logo">
-    <div class="sb-logo-mark"><i class="bi bi-tools"></i></div>
-    <div class="sb-logo-txt">Kaam<span>Connect</span></div>
-  </div>
+  <div class="sb-logo"><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
   <nav class="sb-nav">
     <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
     <div class="sb-item" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</div>
@@ -206,34 +181,26 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
     <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
   </nav>
   <div class="sb-user">
-    <div class="sb-av" id="sbAv">P</div>
+    <div class="sb-av" id="sbAv">C</div>
     <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole">Customer</div></div>
-    <button class="sb-logout" onclick="logout()" title="Sign out"><i class="bi bi-box-arrow-right"></i></button>
+    <button class="sb-logout" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
   </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">Overview</div>
     <div class="topbar-right">
-      <button class="notif-btn" onclick="showTab('jobs')">
-        <i class="bi bi-bell"></i>
-        <div class="notif-badge" id="notifBadge" style="display:none">0</div>
-      </button>
-      <!-- Profile avatar in topbar -->
-      <div onclick="showTab('profile')" style="width:38px;height:38px;border-radius:10px;background:var(--saffron);display:grid;place-items:center;font-family:Syne,sans-serif;font-size:15px;font-weight:700;color:#fff;cursor:pointer" id="topbarAv">P</div>
+      <button class="notif-btn" onclick="showTab('jobs')" title="My Jobs"><i class="bi bi-bell"></i><div class="notif-badge" id="notifBadge" style="display:none">0</div></button>
+      <div onclick="showTab('profile')" style="width:38px;height:38px;border-radius:10px;background:var(--saffron);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;cursor:pointer" id="topbarAv">C</div>
     </div>
   </div>
   <div class="content">
 
-    <!-- OVERVIEW TAB -->
+    <!-- OVERVIEW -->
     <div id="tab-overview">
       <div class="welcome-banner">
-        <div>
-          <div class="wb-h">Welcome back, <span id="wbName">there</span>! 👋</div>
-          <div class="wb-p">Ready to book your next service?</div>
-        </div>
+        <div><div class="wb-h">Welcome back, <span id="wbName">there</span>! 👋</div><div class="wb-p">Ready to book your next service?</div></div>
         <div class="wb-orb"></div>
         <button class="wb-btn" onclick="showTab('find')"><i class="bi bi-search"></i> Find a Worker</button>
       </div>
@@ -247,7 +214,7 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
       <div id="recentJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
-    <!-- FIND WORKERS TAB -->
+    <!-- FIND WORKERS -->
     <div id="tab-find" style="display:none">
       <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
         <select id="fskill" class="fi fi-no-icon" style="padding:11px 14px;max-width:180px;border:1.5px solid var(--ink-12);background:var(--white)">
@@ -262,50 +229,32 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
           <option value="driver">🚗 Driver</option>
         </select>
         <input id="floc" type="text" class="fi fi-no-icon" placeholder="City / Location" style="padding:11px 14px;max-width:220px;border:1.5px solid var(--ink-12);background:var(--white)">
-        <button onclick="searchWorkers()" style="padding:11px 22px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer"><i class="bi bi-search"></i> Search</button>
+        <button onclick="loadWorkers()" style="padding:11px 22px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer"><i class="bi bi-search"></i> Search</button>
       </div>
       <div class="workers-grid" id="workersGrid"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
-    <!-- JOBS TAB -->
+    <!-- MY JOBS -->
     <div id="tab-jobs" style="display:none">
-      <div class="jobs-list" id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+      <div id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PROFILE TAB — NEW                          -->
-    <!-- ═══════════════════════════════════════════ -->
+    <!-- PROFILE -->
     <div id="tab-profile" style="display:none">
       <div class="profile-layout">
-
-        <!-- LEFT: Profile Summary Card -->
         <div class="profile-card">
           <div class="profile-card-top">
-            <div class="profile-avatar" id="profileAvatar">P</div>
+            <div class="profile-avatar" id="profileAvatar">C</div>
             <div class="profile-name" id="profileName">—</div>
             <div class="profile-email" id="profileEmail">—</div>
           </div>
           <div class="profile-card-info">
-            <div class="pci-row">
-              <div class="pci-icon"><i class="bi bi-phone"></i></div>
-              <div><div class="pci-label">Phone</div><div class="pci-value" id="profilePhone">Not set</div></div>
-            </div>
-            <div class="pci-row">
-              <div class="pci-icon"><i class="bi bi-geo-alt"></i></div>
-              <div><div class="pci-label">Location</div><div class="pci-value" id="profileLocation">Not set</div></div>
-            </div>
-            <div class="pci-row">
-              <div class="pci-icon"><i class="bi bi-calendar3"></i></div>
-              <div><div class="pci-label">Member Since</div><div class="pci-value" id="profileJoined">—</div></div>
-            </div>
-            <div class="pci-row">
-              <div class="pci-icon"><i class="bi bi-briefcase"></i></div>
-              <div><div class="pci-label">Total Jobs</div><div class="pci-value" id="profileJobs">0</div></div>
-            </div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-phone"></i></div><div><div class="pci-label">Phone</div><div class="pci-value" id="profilePhone">Not set</div></div></div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-geo-alt"></i></div><div><div class="pci-label">Location</div><div class="pci-value" id="profileLocation">Not set</div></div></div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-calendar3"></i></div><div><div class="pci-label">Member Since</div><div class="pci-value" id="profileJoined">—</div></div></div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-briefcase"></i></div><div><div class="pci-label">Total Jobs</div><div class="pci-value" id="profileJobs">0</div></div></div>
           </div>
         </div>
-
-        <!-- RIGHT: Edit Form -->
         <div class="profile-form-card">
           <div class="pfc-head">
             <h3>Account Settings</h3>
@@ -315,88 +264,26 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
             </div>
           </div>
           <div class="pfc-body">
-
-            <!-- PERSONAL INFO FORM -->
             <div class="form-section active" id="fs-info">
               <div id="infoAlert" style="display:none"></div>
               <div class="form-row">
-                <div class="fg">
-                  <label class="fl">Full Name</label>
-                  <div class="fw">
-                    <input class="fi" type="text" id="editName" placeholder="Your full name">
-                    <i class="bi bi-person fi-ico"></i>
-                  </div>
-                </div>
-                <div class="fg">
-                  <label class="fl">Phone Number</label>
-                  <div class="fw">
-                    <input class="fi" type="text" id="editPhone" placeholder="10-digit mobile number">
-                    <i class="bi bi-phone fi-ico"></i>
-                  </div>
-                </div>
+                <div class="fg"><label class="fl">Full Name</label><div class="fw"><input class="fi" type="text" id="editName" placeholder="Your full name"><i class="bi bi-person fi-ico"></i></div></div>
+                <div class="fg"><label class="fl">Phone Number</label><div class="fw"><input class="fi" type="text" id="editPhone" placeholder="10-digit number"><i class="bi bi-phone fi-ico"></i></div></div>
               </div>
-              <div class="fg">
-                <label class="fl">Email Address</label>
-                <div class="fw">
-                  <input class="fi" type="email" id="editEmail" placeholder="your@email.com" disabled style="opacity:.6;cursor:not-allowed">
-                  <i class="bi bi-envelope fi-ico"></i>
-                </div>
-                <div style="font-size:11.5px;color:var(--ink-40);margin-top:6px"><i class="bi bi-info-circle"></i> Email cannot be changed</div>
-              </div>
-              <div class="fg">
-                <label class="fl">City / Location</label>
-                <div class="fw">
-                  <input class="fi" type="text" id="editLocation" placeholder="e.g. Ludhiana, Punjab">
-                  <i class="bi bi-geo-alt fi-ico"></i>
-                </div>
-              </div>
-              <div class="fg">
-                <label class="fl">Bio / About You <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-                <textarea class="fi fi-no-icon" id="editBio" placeholder="Tell workers a bit about yourself or your typical needs…"></textarea>
-              </div>
-              <div style="display:flex;justify-content:flex-end;gap:10px">
-                <button class="save-btn" onclick="saveProfile()" id="saveInfoBtn">
-                  <i class="bi bi-check-circle-fill"></i> Save Changes
-                  <i class="bi bi-arrow-repeat spin-sm" id="saveInfoSpin"></i>
-                </button>
+              <div class="fg"><label class="fl">Email Address</label><div class="fw"><input class="fi" type="email" id="editEmail" disabled style="opacity:.6;cursor:not-allowed"><i class="bi bi-envelope fi-ico"></i></div><div style="font-size:11.5px;color:var(--ink-40);margin-top:6px"><i class="bi bi-info-circle"></i> Email cannot be changed</div></div>
+              <div class="fg"><label class="fl">City / Location</label><div class="fw"><input class="fi" type="text" id="editLocation" placeholder="e.g. Ludhiana, Punjab"><i class="bi bi-geo-alt fi-ico"></i></div></div>
+              <div class="fg"><label class="fl">Bio <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><textarea class="fi fi-no-icon" id="editBio" placeholder="Tell workers about yourself…"></textarea></div>
+              <div style="display:flex;justify-content:flex-end">
+                <button class="save-btn" onclick="saveProfile()" id="saveInfoBtn"><i class="bi bi-check-circle-fill"></i> Save Changes <i class="bi bi-arrow-repeat spin-sm" id="saveInfoSpin"></i></button>
               </div>
             </div>
-
-            <!-- PASSWORD FORM -->
             <div class="form-section" id="fs-password">
               <div id="pwAlert" style="display:none"></div>
-              <div class="fg">
-                <label class="fl">Current Password</label>
-                <div class="fw">
-                  <input class="fi" type="password" id="currentPw" placeholder="Enter your current password">
-                  <i class="bi bi-lock fi-ico"></i>
-                </div>
-              </div>
-              <div class="fg">
-                <label class="fl">New Password</label>
-                <div class="fw">
-                  <input class="fi" type="password" id="newPw" placeholder="Min 6 characters" oninput="checkPwStrength(this.value)">
-                  <i class="bi bi-lock-fill fi-ico"></i>
-                </div>
-                <div class="pw-bars">
-                  <div class="pw-bar" id="pwb1"></div>
-                  <div class="pw-bar" id="pwb2"></div>
-                  <div class="pw-bar" id="pwb3"></div>
-                  <div class="pw-bar" id="pwb4"></div>
-                </div>
-              </div>
-              <div class="fg">
-                <label class="fl">Confirm New Password</label>
-                <div class="fw">
-                  <input class="fi" type="password" id="confirmPw" placeholder="Repeat new password">
-                  <i class="bi bi-shield-lock fi-ico"></i>
-                </div>
-              </div>
+              <div class="fg"><label class="fl">Current Password</label><div class="fw"><input class="fi" type="password" id="currentPw" placeholder="Enter current password"><i class="bi bi-lock fi-ico"></i></div></div>
+              <div class="fg"><label class="fl">New Password</label><div class="fw"><input class="fi" type="password" id="newPw" placeholder="Min 6 characters" oninput="checkPwStrength(this.value)"><i class="bi bi-lock-fill fi-ico"></i></div><div class="pw-bars"><div class="pw-bar" id="pwb1"></div><div class="pw-bar" id="pwb2"></div><div class="pw-bar" id="pwb3"></div><div class="pw-bar" id="pwb4"></div></div></div>
+              <div class="fg"><label class="fl">Confirm New Password</label><div class="fw"><input class="fi" type="password" id="confirmPw" placeholder="Repeat new password"><i class="bi bi-shield-lock fi-ico"></i></div></div>
               <div style="display:flex;justify-content:flex-end">
-                <button class="save-btn" onclick="changePassword()" id="savePwBtn">
-                  <i class="bi bi-shield-fill-check"></i> Update Password
-                  <i class="bi bi-arrow-repeat spin-sm" id="savePwSpin"></i>
-                </button>
+                <button class="save-btn" onclick="changePassword()" id="savePwBtn"><i class="bi bi-shield-fill-check"></i> Update Password <i class="bi bi-arrow-repeat spin-sm" id="savePwSpin"></i></button>
               </div>
               <div style="margin-top:28px">
                 <div class="danger-zone">
@@ -406,12 +293,10 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-    <!-- END PROFILE TAB -->
 
   </div>
 </div>
@@ -422,8 +307,8 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
     <div class="modal-head"><h3>Leave a Review</h3><button class="modal-close" onclick="closeReview()"><i class="bi bi-x"></i></button></div>
     <div class="modal-body">
       <div id="reviewAlert" style="display:none"></div>
-      <div style="text-align:center;margin-bottom:8px"><p style="font-size:14px;color:var(--ink-40)">How would you rate this service?</p></div>
-      <div class="star-row" id="starRow">
+      <p style="font-size:14px;color:var(--ink-40);text-align:center;margin-bottom:4px">How would you rate this service?</p>
+      <div class="star-row">
         <button class="star-btn" data-v="1" onclick="setRating(1)">★</button>
         <button class="star-btn" data-v="2" onclick="setRating(2)">★</button>
         <button class="star-btn" data-v="3" onclick="setRating(3)">★</button>
@@ -431,10 +316,8 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
         <button class="star-btn" data-v="5" onclick="setRating(5)">★</button>
       </div>
       <div class="fg"><label class="fl">Your Review</label><textarea class="fi fi-no-icon" id="reviewText" placeholder="Share your experience…"></textarea></div>
-      <input type="hidden" id="reviewJobId">
-      <input type="hidden" id="reviewWorkerId">
-      <input type="hidden" id="reviewRating" value="0">
-      <button class="m-submit" onclick="submitReview()">Submit Review</button>
+      <input type="hidden" id="reviewJobId"><input type="hidden" id="reviewWorkerId"><input type="hidden" id="reviewRating" value="0">
+      <button class="m-submit" onclick="submitReview()"><i class="bi bi-send-fill"></i> Submit Review</button>
     </div>
   </div>
 </div>
@@ -467,320 +350,232 @@ const TOKEN = localStorage.getItem('kc_token');
 let USER = JSON.parse(localStorage.getItem('kc_user') || '{}');
 if (!TOKEN || USER.role !== 'customer') { location.href = 'login.html'; }
 
-// ── INIT ──────────────────────────────────────────────────
 function initUI() {
-  document.getElementById('sbName').textContent = USER.name || 'Customer';
-  document.getElementById('sbAv').textContent = (USER.name || 'C')[0].toUpperCase();
-  document.getElementById('topbarAv').textContent = (USER.name || 'C')[0].toUpperCase();
-  document.getElementById('wbName').textContent = (USER.name || '').split(' ')[0] || 'there';
+  document.getElementById('sbName').textContent   = USER.name || 'Customer';
+  document.getElementById('sbAv').textContent     = (USER.name||'C')[0].toUpperCase();
+  document.getElementById('topbarAv').textContent = (USER.name||'C')[0].toUpperCase();
+  document.getElementById('wbName').textContent   = (USER.name||'').split(' ')[0] || 'there';
 }
 initUI();
 
-const API = h => fetch(h, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
-const skillEmoji = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
+const API = url => fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
+const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
 const statusBadge = { pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
 const statusLabel = { pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
 
-// ── TABS ──────────────────────────────────────────────────
+function showToast(msg, ico='✅', dur=4000) {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div'); t.className = 'toast';
+  t.innerHTML = `<span style="font-size:18px">${ico}</span><span style="flex:1">${msg}</span><button style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:15px" onclick="this.parentElement.remove()">✕</button>`;
+  wrap.appendChild(t);
+  setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, dur);
+}
+
 function showTab(t) {
   document.querySelectorAll('[id^=tab-]').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
   document.getElementById('tab-' + t).style.display = 'block';
-  const order = ['overview', 'find', 'jobs', 'profile'];
+  const order = ['overview','find','jobs','profile'];
   document.querySelectorAll('.sb-item')[order.indexOf(t)]?.classList.add('active');
   const titles = { overview:'Overview', find:'Find Workers', jobs:'My Jobs', profile:'My Profile' };
   document.getElementById('topbarTitle').textContent = titles[t] || t;
-  if (t === 'overview') loadOverview();
-  if (t === 'jobs') loadAllJobs();
-  if (t === 'find') loadWorkers();
-  if (t === 'profile') loadProfile();
+  if (t==='overview') loadOverview();
+  if (t==='jobs')     loadAllJobs();
+  if (t==='find')     loadWorkers();
+  if (t==='profile')  loadProfile();
 }
 
-// ── OVERVIEW ──────────────────────────────────────────────
 async function loadOverview() {
-  const d = await API('/api/jobs/stats');
-  if (d.success) {
-    document.getElementById('st-total').textContent = d.stats.total || 0;
-    document.getElementById('st-done').textContent = d.stats.completed || 0;
-    document.getElementById('st-pend').textContent = d.stats.pending || 0;
-    document.getElementById('st-spent').textContent = d.stats.totalSpent ? '₹' + (d.stats.totalSpent / 1000).toFixed(1) + 'K' : '₹0';
-  }
+  try {
+    const d = await API('/api/jobs/stats');
+    if (d.success) {
+      document.getElementById('st-total').textContent = d.stats.total || 0;
+      document.getElementById('st-done').textContent  = d.stats.completed || 0;
+      document.getElementById('st-pend').textContent  = d.stats.pending || 0;
+      document.getElementById('st-spent').textContent = d.stats.totalSpent ? '₹'+Math.round(d.stats.totalSpent) : '₹0';
+      const p = d.stats.pending || 0;
+      const badge = document.getElementById('notifBadge');
+      badge.style.display = p > 0 ? 'grid' : 'none';
+      badge.textContent = p;
+    }
+  } catch(e) {}
   const jobs = await API('/api/jobs/customer?limit=3');
   const el = document.getElementById('recentJobs');
-  if (jobs.success && jobs.jobs.length) {
-    el.innerHTML = `<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`;
-  } else {
-    el.innerHTML = '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Book your first worker to get started!</p></div>';
-  }
+  el.innerHTML = (jobs.success && jobs.jobs?.length)
+    ? `<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`
+    : '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Book your first worker to get started!</p></div>';
 }
 
 function jobCard(j) {
-  const em = skillEmoji[j.skill] || '🛠️';
+  const em    = skillEmoji[j.skill] || '🛠️';
   const wName = j.workerId?.name || 'Worker';
-  const st = j.status;
-  const actions = st === 'pending'
-    ? `<button class="jc-btn jc-cancel" onclick="cancelJob('${j._id}')">Cancel</button>`
-    : st === 'completed'
-    ? `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${j.workerId?._id||''}')">Review</button>`
-    : '';
-  return `<div class="job-card">
+  const st    = j.status;
+  let actions = '';
+  if (st === 'pending')   actions = `<button class="jc-btn jc-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
+  if (st === 'completed') actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${j.workerId?._id||''}')"><i class="bi bi-star"></i> Review</button>`;
+  return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
-      <div class="jc-title">${j.title || j.skill || 'Job'}</div>
+      <div class="jc-title">${j.title||j.skill||'Job'}</div>
       <div class="jc-meta">
         <span><i class="bi bi-person"></i> ${wName}</span>
-        <span><i class="bi bi-geo-alt"></i> ${j.location || '—'}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
         <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
       </div>
     </div>
-    <div class="jc-price">₹${j.price || 0}</div>
-    <span class="badge ${statusBadge[st] || ''}">${statusLabel[st] || st}</span>
-    ${actions ? `<div class="jc-actions">${actions}</div>` : ''}
+    <div class="jc-price">₹${j.price||0}</div>
+    <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
+    ${actions?`<div class="jc-actions">${actions}</div>`:''}
   </div>`;
 }
 
 async function loadAllJobs() {
   const el = document.getElementById('allJobs');
+  el.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
   const d = await API('/api/jobs/customer?limit=50');
-  if (d.success && d.jobs.length) {
-    el.innerHTML = `<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`;
+  el.innerHTML = (d.success && d.jobs?.length)
+    ? `<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`
+    : '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Your job history will appear here.</p></div>';
+}
+
+async function cancelJob(id, btn) {
+  if (!confirm('Cancel this job?')) return;
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i>'; }
+  const d = await fetch('/api/jobs/cancel/'+id,{method:'PUT',headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+  if (d.success) {
+    const badge = document.getElementById('badge-'+id);
+    if (badge) { badge.className='badge badge-cancelled'; badge.textContent='Cancelled'; }
+    if (btn) btn.closest('.jc-actions').innerHTML = '';
+    showToast('Job cancelled.','🗑️');
+    loadOverview();
   } else {
-    el.innerHTML = '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Your job history will appear here.</p></div>';
+    if (btn) { btn.disabled=false; btn.innerHTML='<i class="bi bi-x-circle"></i> Cancel'; }
+    showToast(d.message||'Cancel failed','❌');
   }
 }
 
-async function cancelJob(id) {
-  if (!confirm('Cancel this job?')) return;
-  const d = await fetch('/api/jobs/cancel/' + id, { method: 'PUT', headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
-  if (d.success) { loadAllJobs(); loadOverview(); }
-  else alert(d.message || 'Cancel failed');
-}
-
-// ── WORKERS ───────────────────────────────────────────────
 async function loadWorkers() {
   const skill = document.getElementById('fskill').value;
-  const loc = document.getElementById('floc').value.trim();
-  const grid = document.getElementById('workersGrid');
+  const loc   = document.getElementById('floc').value.trim();
+  const grid  = document.getElementById('workersGrid');
   grid.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
   let url = '/api/workers/find?';
   if (skill) url += `skill=${skill}&`;
-  if (loc) url += `location=${encodeURIComponent(loc)}`;
-  const d = await fetch(url).then(r => r.json());
-  if (d.workers?.length) {
-    grid.innerHTML = d.workers.map(w => `<div class="wcard">
-      <div class="wcard-head">
-        <div class="wc-av">${skillEmoji[w.skill] || '🛠️'}</div>
-        <div>
-          <div class="wc-skill">${w.skill || 'worker'}</div>
-          <div class="wc-name">${w.name}${w.verified ? ' <i class="bi bi-patch-check-fill"></i>' : ''}</div>
-          <div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location || 'India'}</div>
-        </div>
-      </div>
-      <div class="wcard-body">
-        <div class="wc-rating"><span class="wc-stars">${'★'.repeat(Math.round(w.rating||0))}${'☆'.repeat(5-Math.round(w.rating||0))}</span> <b>${(w.rating||0).toFixed(1)}</b> (${w.totalJobs||0})</div>
-        <div class="wc-bio">${w.bio || 'Experienced professional.'}</div>
-      </div>
-      <div class="wcard-foot">
-        <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Work'}','${skillEmoji[w.skill]||'🛠️'}')"><i class="bi bi-calendar-check"></i> Book Now</button>
-      </div>
-    </div>`).join('');
-  } else {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try different filters</p></div>';
+  if (loc)   url += `location=${encodeURIComponent(loc)}`;
+  try {
+    const d = await fetch(url).then(r=>r.json());
+    grid.innerHTML = d.workers?.length
+      ? d.workers.map(w=>`<div class="wcard">
+          <div class="wcard-head">
+            <div class="wc-av">${skillEmoji[w.skill]||'🛠️'}</div>
+            <div style="z-index:1">
+              <div class="wc-skill">${w.skill||'worker'}</div>
+              <div class="wc-name">${w.name}${w.verified?'<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>':''}</div>
+              <div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div>
+            </div>
+          </div>
+          <div class="wcard-body">
+            <div class="wc-rating"><span class="wc-stars">${'★'.repeat(Math.round(w.rating||0))}${'☆'.repeat(5-Math.round(w.rating||0))}</span> <b>${(w.rating||0).toFixed(1)}</b> (${w.totalJobs||0})</div>
+            <div class="wc-bio">${w.bio||'Experienced professional.'}</div>
+          </div>
+          <div class="wcard-foot">
+            <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Work'}','${skillEmoji[w.skill]||'🛠️'}')"><i class="bi bi-calendar-check"></i> Book Now</button>
+          </div>
+        </div>`).join('')
+      : '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try different filters</p></div>';
+  } catch(e) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-wifi-off"></i><h3>Connection error</h3><p>Is the server running?</p></div>';
   }
 }
-function searchWorkers() { loadWorkers(); }
-loadWorkers();
 
-// ── HIRE ──────────────────────────────────────────────────
-function openHire(id, name, skill, em) {
+function openHire(id,name,skill,em) {
   document.getElementById('hireWorkerId').value = id;
-  document.getElementById('hireWorkerInfo').innerHTML = `
-    <div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:22px;flex-shrink:0">${em}</div>
-    <div><div style="font-family:Syne,sans-serif;font-weight:700;font-size:15px;color:var(--forest)">${name}</div><div style="font-size:13px;color:var(--ink-40)">${skill}</div></div>`;
+  document.getElementById('hireWorkerInfo').innerHTML = `<div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:22px;flex-shrink:0">${em}</div><div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest)">${name}</div><div style="font-size:13px;color:var(--ink-40)">${skill}</div></div>`;
   document.getElementById('hireSkill').value = skill;
+  document.getElementById('hireAlert').style.display = 'none';
   document.getElementById('hireModal').classList.add('open');
 }
 function closeHire() { document.getElementById('hireModal').classList.remove('open'); }
 async function confirmHire() {
-  const wid = document.getElementById('hireWorkerId').value;
-  const skill = document.getElementById('hireSkill').value.trim();
-  const price = document.getElementById('hirePrice').value;
-  const location = document.getElementById('hireLocation').value.trim();
-  if (!skill || !price || !location) { showHireAlert('error', 'Please fill all required fields'); return; }
-  const d = await fetch('/api/jobs/create', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-    body: JSON.stringify({ worker_id: wid, skill, price: parseFloat(price), location, description: document.getElementById('hireDesc').value.trim(), scheduled_date: document.getElementById('hireDate').value || null, scheduled_time: document.getElementById('hireTime').value || null })
-  }).then(r => r.json());
-  if (d.success) { showHireAlert('ok', 'Job booked successfully!'); setTimeout(() => { closeHire(); showTab('jobs'); }, 1500); }
-  else showHireAlert('error', d.message || 'Booking failed');
+  const wid=document.getElementById('hireWorkerId').value, skill=document.getElementById('hireSkill').value.trim(), price=document.getElementById('hirePrice').value, loc=document.getElementById('hireLocation').value.trim();
+  if (!skill||!price||!loc) { showHA('error','Please fill all required fields'); return; }
+  const d = await fetch('/api/jobs/create',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({worker_id:wid,skill,price:parseFloat(price),location:loc,description:document.getElementById('hireDesc').value.trim(),scheduled_date:document.getElementById('hireDate').value||null,scheduled_time:document.getElementById('hireTime').value||null})}).then(r=>r.json());
+  if (d.success) { showHA('ok','Job booked! Worker has been notified.'); setTimeout(()=>{closeHire();showTab('jobs');},1500); }
+  else showHA('error',d.message||'Booking failed');
 }
-function showHireAlert(t, m) {
-  const a = document.getElementById('hireAlert');
-  a.style.display = 'flex'; a.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
-  a.innerHTML = `<i class="bi bi-${t === 'error' ? 'exclamation-circle' : 'check-circle-fill'}"></i> ${m}`;
-}
-document.getElementById('hireModal').addEventListener('click', e => { if (e.target === document.getElementById('hireModal')) closeHire(); });
+function showHA(t,m){const a=document.getElementById('hireAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
+document.getElementById('hireModal').addEventListener('click',e=>{if(e.target===document.getElementById('hireModal'))closeHire();});
 
-// ── REVIEW ────────────────────────────────────────────────
-function openReview(jobId, workerId) {
-  document.getElementById('reviewJobId').value = jobId;
-  document.getElementById('reviewWorkerId').value = workerId;
-  document.getElementById('reviewRating').value = 0;
-  setRating(0);
+function openReview(jobId,workerId) {
+  document.getElementById('reviewJobId').value=jobId; document.getElementById('reviewWorkerId').value=workerId;
+  document.getElementById('reviewRating').value=0; document.getElementById('reviewText').value='';
+  document.getElementById('reviewAlert').style.display='none'; setRating(0);
   document.getElementById('reviewModal').classList.add('open');
 }
-function closeReview() { document.getElementById('reviewModal').classList.remove('open'); }
-function setRating(v) {
-  document.getElementById('reviewRating').value = v;
-  document.querySelectorAll('.star-btn').forEach(b => { b.classList.toggle('on', parseInt(b.dataset.v) <= v); });
+function closeReview(){document.getElementById('reviewModal').classList.remove('open');}
+function setRating(v){document.getElementById('reviewRating').value=v;document.querySelectorAll('.star-btn').forEach(b=>b.classList.toggle('on',parseInt(b.dataset.v)<=v));}
+async function submitReview(){
+  const rating=parseInt(document.getElementById('reviewRating').value);
+  if(!rating){showRA('error','Please select a rating');return;}
+  const d=await fetch('/api/jobs/review',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:document.getElementById('reviewJobId').value,worker_id:document.getElementById('reviewWorkerId').value,rating,review:document.getElementById('reviewText').value.trim()})}).then(r=>r.json());
+  if(d.success){showRA('ok','Review submitted! Thank you.');setTimeout(()=>{closeReview();loadAllJobs();},1500);}
+  else showRA('error',d.message||'Submission failed');
 }
-async function submitReview() {
-  const rating = parseInt(document.getElementById('reviewRating').value);
-  if (!rating) { alert('Please select a rating'); return; }
-  const d = await fetch('/api/jobs/review', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-    body: JSON.stringify({ job_id: document.getElementById('reviewJobId').value, worker_id: document.getElementById('reviewWorkerId').value, rating, review: document.getElementById('reviewText').value.trim() })
-  }).then(r => r.json());
-  const a = document.getElementById('reviewAlert');
-  a.style.display = 'flex'; a.className = 'alert ' + (d.success ? 'as' : 'ae');
-  a.innerHTML = `<i class="bi bi-${d.success ? 'check-circle-fill' : 'exclamation-circle'}"></i> ${d.success ? 'Review submitted!' : d.message}`;
-  if (d.success) setTimeout(() => { closeReview(); loadAllJobs(); }, 1500);
-}
-document.getElementById('reviewModal').addEventListener('click', e => { if (e.target === document.getElementById('reviewModal')) closeReview(); });
+function showRA(t,m){const a=document.getElementById('reviewAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
+document.getElementById('reviewModal').addEventListener('click',e=>{if(e.target===document.getElementById('reviewModal'))closeReview();});
 
-// ══════════════════════════════════════════════════════════
-// ── PROFILE ───────────────────────────────────────────────
-// ══════════════════════════════════════════════════════════
-async function loadProfile() {
-  // Fetch fresh data from server
-  try {
-    const d = await API('/api/auth/profile');
-    if (d.success) {
-      const u = d.user;
-      // Update local USER object
-      USER = { ...USER, ...u };
-      localStorage.setItem('kc_user', JSON.stringify(USER));
-      // Populate summary card
-      document.getElementById('profileAvatar').textContent = (u.name || 'C')[0].toUpperCase();
-      document.getElementById('profileName').textContent = u.name || '—';
-      document.getElementById('profileEmail').textContent = u.email || '—';
-      document.getElementById('profilePhone').textContent = u.phone || 'Not set';
-      document.getElementById('profileLocation').textContent = u.location || 'Not set';
-      document.getElementById('profileJoined').textContent = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN', { year:'numeric', month:'long' }) : '—';
-      // Populate edit form
-      document.getElementById('editName').value = u.name || '';
-      document.getElementById('editPhone').value = u.phone || '';
-      document.getElementById('editEmail').value = u.email || '';
-      document.getElementById('editLocation').value = u.location || '';
-      document.getElementById('editBio').value = u.bio || '';
-      // Jobs count
-      const stats = await API('/api/jobs/stats');
-      if (stats.success) document.getElementById('profileJobs').textContent = stats.stats.total || 0;
-      // Refresh sidebar
+async function loadProfile(){
+  try{
+    const d=await API('/api/auth/profile');
+    if(d.success){
+      const u=d.user; USER={...USER,...u}; localStorage.setItem('kc_user',JSON.stringify(USER));
+      document.getElementById('profileAvatar').textContent=(u.name||'C')[0].toUpperCase();
+      document.getElementById('profileName').textContent=u.name||'—';
+      document.getElementById('profileEmail').textContent=u.email||'—';
+      document.getElementById('profilePhone').textContent=u.phone||'Not set';
+      document.getElementById('profileLocation').textContent=u.location||'Not set';
+      document.getElementById('profileJoined').textContent=u.createdAt?new Date(u.createdAt).toLocaleDateString('en-IN',{year:'numeric',month:'long'}):'—';
+      document.getElementById('editName').value=u.name||''; document.getElementById('editPhone').value=u.phone||'';
+      document.getElementById('editEmail').value=u.email||''; document.getElementById('editLocation').value=u.location||''; document.getElementById('editBio').value=u.bio||'';
       initUI();
+      const stats=await API('/api/jobs/stats');
+      if(stats.success) document.getElementById('profileJobs').textContent=stats.stats.total||0;
     }
-  } catch (e) {
-    // fallback to cached
-    document.getElementById('editName').value = USER.name || '';
-    document.getElementById('editEmail').value = USER.email || '';
-    document.getElementById('editLocation').value = USER.location || '';
-    document.getElementById('profileAvatar').textContent = (USER.name || 'C')[0].toUpperCase();
-    document.getElementById('profileName').textContent = USER.name || '—';
-    document.getElementById('profileEmail').textContent = USER.email || '—';
+  }catch(e){
+    document.getElementById('editName').value=USER.name||''; document.getElementById('editEmail').value=USER.email||'';
+    document.getElementById('profileAvatar').textContent=(USER.name||'C')[0].toUpperCase();
+    document.getElementById('profileName').textContent=USER.name||'—'; document.getElementById('profileEmail').textContent=USER.email||'—';
   }
 }
-
-function switchFormTab(tab, btn) {
-  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.ts-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('fs-' + tab).classList.add('active');
-  btn.classList.add('active');
+function switchFormTab(tab,btn){document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ts-btn').forEach(b=>b.classList.remove('active'));document.getElementById('fs-'+tab).classList.add('active');btn.classList.add('active');}
+async function saveProfile(){
+  const name=document.getElementById('editName').value.trim(),phone=document.getElementById('editPhone').value.trim(),location=document.getElementById('editLocation').value.trim(),bio=document.getElementById('editBio').value.trim();
+  if(!name){showFA('infoAlert','error','Name cannot be empty');return;}
+  const btn=document.getElementById('saveInfoBtn'),sp=document.getElementById('saveInfoSpin');
+  btn.disabled=true;sp.style.display='inline-block';
+  try{
+    const d=await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name,phone,location,bio})}).then(r=>r.json());
+    if(d.success){USER={...USER,name,phone,location,bio};localStorage.setItem('kc_user',JSON.stringify(USER));showFA('infoAlert','success','Profile updated!');document.getElementById('profileAvatar').textContent=name[0].toUpperCase();document.getElementById('profileName').textContent=name;document.getElementById('profilePhone').textContent=phone||'Not set';document.getElementById('profileLocation').textContent=location||'Not set';initUI();showToast('Profile saved!','✅');}
+    else showFA('infoAlert','error',d.message||'Update failed');
+  }catch{showFA('infoAlert','error','Server error.');}
+  btn.disabled=false;sp.style.display='none';
 }
-
-async function saveProfile() {
-  const name = document.getElementById('editName').value.trim();
-  const phone = document.getElementById('editPhone').value.trim();
-  const location = document.getElementById('editLocation').value.trim();
-  const bio = document.getElementById('editBio').value.trim();
-  if (!name) { showAlert('infoAlert', 'error', 'Name cannot be empty'); return; }
-  const btn = document.getElementById('saveInfoBtn');
-  const sp = document.getElementById('saveInfoSpin');
-  btn.disabled = true; sp.style.display = 'inline-block';
-  try {
-    const d = await fetch('/api/auth/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify({ name, phone, location, bio })
-    }).then(r => r.json());
-    if (d.success) {
-      // Update cached user
-      USER = { ...USER, name, phone, location, bio };
-      localStorage.setItem('kc_user', JSON.stringify(USER));
-      showAlert('infoAlert', 'success', 'Profile updated successfully!');
-      // Refresh displayed info
-      document.getElementById('profileAvatar').textContent = name[0].toUpperCase();
-      document.getElementById('profileName').textContent = name;
-      document.getElementById('profilePhone').textContent = phone || 'Not set';
-      document.getElementById('profileLocation').textContent = location || 'Not set';
-      initUI();
-    } else {
-      showAlert('infoAlert', 'error', d.message || 'Update failed');
-    }
-  } catch {
-    showAlert('infoAlert', 'error', 'Server error. Is the server running?');
-  }
-  btn.disabled = false; sp.style.display = 'none';
+async function changePassword(){
+  const current=document.getElementById('currentPw').value,newPw=document.getElementById('newPw').value,confirm=document.getElementById('confirmPw').value;
+  if(!current||!newPw||!confirm){showFA('pwAlert','error','Fill in all fields');return;}
+  if(newPw.length<6){showFA('pwAlert','error','Min 6 characters');return;}
+  if(newPw!==confirm){showFA('pwAlert','error','Passwords do not match');return;}
+  const btn=document.getElementById('savePwBtn'),sp=document.getElementById('savePwSpin');btn.disabled=true;sp.style.display='inline-block';
+  try{
+    const d=await fetch('/api/auth/change-password',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({currentPassword:current,newPassword:newPw})}).then(r=>r.json());
+    if(d.success){showFA('pwAlert','success','Password changed!');document.getElementById('currentPw').value='';document.getElementById('newPw').value='';document.getElementById('confirmPw').value='';for(let i=1;i<=4;i++)document.getElementById('pwb'+i).style.background='var(--ink-06)';showToast('Password updated!','🔒');}
+    else showFA('pwAlert','error',d.message||'Failed');
+  }catch{showFA('pwAlert','error','Server error.');}
+  btn.disabled=false;sp.style.display='none';
 }
-
-async function changePassword() {
-  const current = document.getElementById('currentPw').value;
-  const newPw = document.getElementById('newPw').value;
-  const confirm = document.getElementById('confirmPw').value;
-  if (!current || !newPw || !confirm) { showAlert('pwAlert', 'error', 'Please fill in all password fields'); return; }
-  if (newPw.length < 6) { showAlert('pwAlert', 'error', 'New password must be at least 6 characters'); return; }
-  if (newPw !== confirm) { showAlert('pwAlert', 'error', 'New passwords do not match'); return; }
-  const btn = document.getElementById('savePwBtn');
-  const sp = document.getElementById('savePwSpin');
-  btn.disabled = true; sp.style.display = 'inline-block';
-  try {
-    const d = await fetch('/api/auth/change-password', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify({ currentPassword: current, newPassword: newPw })
-    }).then(r => r.json());
-    if (d.success) {
-      showAlert('pwAlert', 'success', 'Password changed successfully!');
-      document.getElementById('currentPw').value = '';
-      document.getElementById('newPw').value = '';
-      document.getElementById('confirmPw').value = '';
-      resetPwBars();
-    } else {
-      showAlert('pwAlert', 'error', d.message || 'Password change failed');
-    }
-  } catch {
-    showAlert('pwAlert', 'error', 'Server error. Is the server running?');
-  }
-  btn.disabled = false; sp.style.display = 'none';
-}
-
-function checkPwStrength(v) {
-  const checks = [v.length >= 6, v.length >= 8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
-  const colors = ['#DC2626', '#F59E0B', '#2E7D5E', '#15803D'];
-  const n = checks.filter(Boolean).length;
-  for (let i = 0; i < 4; i++) document.getElementById('pwb' + (i+1)).style.background = i < n ? colors[Math.min(n-1,3)] : 'var(--ink-06)';
-}
-function resetPwBars() { for (let i = 1; i <= 4; i++) document.getElementById('pwb'+i).style.background = 'var(--ink-06)'; }
-
-function showAlert(elId, type, msg) {
-  const a = document.getElementById(elId);
-  a.style.display = 'flex'; a.className = 'alert ' + (type === 'error' ? 'ae' : 'as');
-  a.innerHTML = `<i class="bi bi-${type === 'error' ? 'exclamation-circle-fill' : 'check-circle-fill'}"></i> ${msg}`;
-  setTimeout(() => { a.style.display = 'none'; }, 4000);
-}
-
-function logout() { localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href = 'login.html'; }
+function checkPwStrength(v){const c=[v.length>=6,v.length>=8,/[A-Z0-9]/.test(v),/[^A-Za-z0-9]/.test(v)];const cols=['#DC2626','#F59E0B','#2E7D5E','#15803D'];const n=c.filter(Boolean).length;for(let i=0;i<4;i++)document.getElementById('pwb'+(i+1)).style.background=i<n?cols[Math.min(n-1,3)]:'var(--ink-06)';}
+function showFA(id,t,m){const a=document.getElementById(id);a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;setTimeout(()=>a.style.display='none',4000);}
+function logout(){localStorage.removeItem('kc_token');localStorage.removeItem('kc_user');location.href='login.html';}
 loadOverview();
 </script>
 </body>

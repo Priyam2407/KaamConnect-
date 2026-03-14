@@ -74,12 +74,19 @@ exports.getWorkerEarnings = async (req, res) => {
   }
 };
 
+// ─── FIXED: Added "cancelled" to allow worker to reject jobs ───────────────
 exports.updateJobStatus = async (req, res) => {
   try {
     const { job_id, status } = req.body;
-    const validStatuses = ["accepted", "in_progress", "completed"];
-    if (!validStatuses.includes(status))
-      return res.status(400).json({ success: false, message: "Invalid status" });
+
+    // "cancelled" = worker rejected the job
+    const validStatuses = ["accepted", "in_progress", "completed", "cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid status. Allowed: ${validStatuses.join(", ")}`,
+      });
+    }
 
     const update = { status };
     if (status === "completed") update.completedAt = new Date();
@@ -90,14 +97,35 @@ exports.updateJobStatus = async (req, res) => {
       { new: true }
     );
 
-    if (!job) return res.status(404).json({ success: false, message: "Job not found" });
+    if (!job) return res.status(404).json({ success: false, message: "Job not found or not authorized" });
 
+    // Increment worker's totalJobs on completion
     if (status === "completed") {
       await User.findByIdAndUpdate(req.user.id, { $inc: { totalJobs: 1 } });
     }
 
+    // ── Send notification to customer ────────────────────────────────────
+    const notifData = {
+      accepted:    { title: "Job Accepted! 🎉",  message: "Your worker accepted the job request and will contact you soon." },
+      in_progress: { title: "Work Started! 🛠️",  message: "Your worker has started working on your job." },
+      completed:   { title: "Job Completed! ✅", message: "Your job is done! Please rate your experience." },
+      cancelled:   { title: "Job Rejected ❌",    message: "The worker couldn't take this job. Please book another worker." },
+    };
+
+    if (notifData[status] && job.customerId) {
+      await Notification.create({
+        userId:  job.customerId,
+        title:   notifData[status].title,
+        message: notifData[status].message,
+        type:    status,
+        isRead:  false,
+      });
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
     res.json({ success: true, message: `Job status updated to ${status}` });
   } catch (err) {
+    console.error("updateJobStatus error:", err);
     res.status(500).json({ success: false, message: "Database error" });
   }
 };

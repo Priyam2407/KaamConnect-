@@ -43,26 +43,34 @@ userSchema.methods.toJSON = function () {
 const jobSchema = new mongoose.Schema(
   {
     customerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    workerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    skill: { type: String, required: true, lowercase: true },
-    title: { type: String, trim: true },
+    workerId:   { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    skill:       { type: String, required: true, lowercase: true },
+    title:       { type: String, trim: true },
     description: { type: String },
-    location: { type: String, required: true },
-    address: { type: String },
-    price: { type: Number, required: true, min: 0 },
-    commission: { type: Number, default: 0 },
+    location:    { type: String, required: true },
+    address:     { type: String },
+    price:        { type: Number, required: true, min: 0 },
+    commission:   { type: Number, default: 0 },
     workerAmount: { type: Number, default: 0 },
     status: {
       type: String,
-      enum: ["pending", "accepted", "in_progress", "completed", "cancelled", "paid"],
+      enum: [
+        "pending",      // Job created, waiting for worker to accept
+        "accepted",     // Worker accepted the job
+        "in_progress",  // Worker started the job
+        "completed",    // Worker marked job as done
+        "cancelled",    // Worker rejected OR customer cancelled
+        "paid",         // Payment released to worker
+      ],
       default: "pending",
     },
-    scheduledDate: { type: Date },
-    scheduledTime: { type: String },
-    completedAt: { type: Date },
-    rating: { type: Number, min: 1, max: 5 },
-    review: { type: String },
-    razorpayOrderId: { type: String },
+    scheduledDate:     { type: Date },
+    scheduledTime:     { type: String },
+    completedAt:       { type: Date },
+    cancelledBy:       { type: String, enum: ["customer", "worker"], default: null }, // track who cancelled
+    rating:  { type: Number, min: 1, max: 5 },
+    review:  { type: String },
+    razorpayOrderId:   { type: String },
     razorpayPaymentId: { type: String },
   },
   { timestamps: true }
@@ -71,11 +79,11 @@ const jobSchema = new mongoose.Schema(
 // ─── MESSAGE MODEL ─────────────────────────────────────────
 const messageSchema = new mongoose.Schema(
   {
-    jobId: { type: mongoose.Schema.Types.ObjectId, ref: "Job" },
-    senderId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    receiverId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    message: { type: String, required: true },
-    isRead: { type: Boolean, default: false },
+    jobId:       { type: mongoose.Schema.Types.ObjectId, ref: "Job" },
+    senderId:    { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    receiverId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    message:     { type: String, required: true },
+    isRead:      { type: Boolean, default: false },
   },
   { timestamps: true }
 );
@@ -83,11 +91,11 @@ const messageSchema = new mongoose.Schema(
 // ─── REVIEW MODEL ──────────────────────────────────────────
 const reviewSchema = new mongoose.Schema(
   {
-    jobId: { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
-    workerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    customerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    rating: { type: Number, required: true, min: 1, max: 5 },
-    review: { type: String },
+    jobId:       { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
+    workerId:    { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    customerId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    rating:      { type: Number, required: true, min: 1, max: 5 },
+    review:      { type: String },
   },
   { timestamps: true }
 );
@@ -95,19 +103,24 @@ const reviewSchema = new mongoose.Schema(
 // ─── NOTIFICATION MODEL ────────────────────────────────────
 const notificationSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    title: { type: String },
-    message: { type: String },
-    type: { type: String },
-    isRead: { type: Boolean, default: false },
+    userId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    title:   { type: String, required: true },
+    message: { type: String, required: true },
+    type:    {
+      type: String,
+      enum: ["accepted", "in_progress", "completed", "cancelled", "new_job", "payment", "general"],
+      default: "general",
+    },
+    isRead:  { type: Boolean, default: false },
+    jobId:   { type: mongoose.Schema.Types.ObjectId, ref: "Job", default: null },
   },
   { timestamps: true }
 );
 
 module.exports = {
-  User: mongoose.model("User", userSchema),
-  Job: mongoose.model("Job", jobSchema),
-  Message: mongoose.model("Message", messageSchema),
-  Review: mongoose.model("Review", reviewSchema),
+  User:         mongoose.model("User",         userSchema),
+  Job:          mongoose.model("Job",          jobSchema),
+  Message:      mongoose.model("Message",      messageSchema),
+  Review:       mongoose.model("Review",       reviewSchema),
   Notification: mongoose.model("Notification", notificationSchema),
 };
