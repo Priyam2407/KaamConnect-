@@ -29,7 +29,7 @@ exports.createJob = async (req, res) => {
       userId: worker_id,
       title: "New Job Request",
       message: `You have a new job request for ${skill}`,
-      type: "job_request",
+      type: "new_job",
     });
 
     res.json({ success: true, message: "Job created successfully", job_id: job._id });

@@ -12,6 +12,8 @@
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
+
+<!-- htmlhint-disable -->
 <style>
 :root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -159,12 +161,14 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 .star-btn.on,.star-btn:hover{color:#FBBF24;transform:scale(1.15)}
 .m-submit{width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .m-submit:hover{background:var(--saffron-2)}
+.m-submit:disabled{opacity:.6;cursor:not-allowed}
 .alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
 .ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
 .spin-sm{display:none;animation:spin .8s linear infinite}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.workers-grid{grid-template-columns:1fr 1fr}.profile-layout{grid-template-columns:1fr}}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.workers-grid{grid-column:1/-1;grid-template-columns:1fr 1fr}.profile-layout{grid-template-columns:1fr}}
 </style>
+<!-- htmlhint-enable -->
 </head>
 <body>
 <div class="toast-wrap" id="toastWrap"></div>
@@ -191,7 +195,10 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">Overview</div>
     <div class="topbar-right">
-      <button class="notif-btn" onclick="showTab('jobs')" title="My Jobs"><i class="bi bi-bell"></i><div class="notif-badge" id="notifBadge" style="display:none">0</div></button>
+      <button class="notif-btn" onclick="showTab('jobs')" title="My Jobs">
+        <i class="bi bi-bell"></i>
+        <div class="notif-badge" id="notifBadge" style="display:none">0</div>
+      </button>
       <div onclick="showTab('profile')" style="width:38px;height:38px;border-radius:10px;background:var(--saffron);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;cursor:pointer" id="topbarAv">C</div>
     </div>
   </div>
@@ -210,7 +217,7 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
         <div class="stat-card"><div class="stat-ico blue">⏳</div><div class="stat-n" id="st-pend">—</div><div class="stat-l">Pending</div></div>
         <div class="stat-card"><div class="stat-ico gold">💰</div><div class="stat-n" id="st-spent">—</div><div class="stat-l">Total Spent</div></div>
       </div>
-      <div class="sec-head"><h2>Recent Jobs</h2><a onclick="showTab('jobs')">View All →</a></div>
+      <div class="sec-head"><h2>Recent Jobs</h2><a onclick="showTab('jobs')">View All &rarr;</a></div>
       <div id="recentJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
@@ -316,7 +323,9 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
         <button class="star-btn" data-v="5" onclick="setRating(5)">★</button>
       </div>
       <div class="fg"><label class="fl">Your Review</label><textarea class="fi fi-no-icon" id="reviewText" placeholder="Share your experience…"></textarea></div>
-      <input type="hidden" id="reviewJobId"><input type="hidden" id="reviewWorkerId"><input type="hidden" id="reviewRating" value="0">
+      <input type="hidden" id="reviewJobId">
+      <input type="hidden" id="reviewWorkerId">
+      <input type="hidden" id="reviewRating" value="0">
       <button class="m-submit" onclick="submitReview()"><i class="bi bi-send-fill"></i> Submit Review</button>
     </div>
   </div>
@@ -340,7 +349,10 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
         <div class="fg"><label class="fl">Time</label><input class="fi fi-no-icon" type="time" id="hireTime" style="padding:11px 14px"></div>
       </div>
       <div class="fg"><label class="fl">Details</label><textarea class="fi fi-no-icon" id="hireDesc" placeholder="Describe the work…" style="padding:11px 14px"></textarea></div>
-      <button class="m-submit" onclick="confirmHire()"><i class="bi bi-check-circle-fill"></i> Confirm Booking</button>
+      <button class="m-submit" id="hireSubmitBtn" onclick="confirmHire()">
+        <i class="bi bi-check-circle-fill"></i> Confirm Booking
+        <i class="bi bi-arrow-repeat spin-sm" id="hireSpin"></i>
+      </button>
     </div>
   </div>
 </div>
@@ -363,7 +375,8 @@ const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpent
 const statusBadge = { pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
 const statusLabel = { pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
 
-function showToast(msg, ico='✅', dur=4000) {
+function showToast(msg, ico, dur) {
+  ico = ico||'✅'; dur = dur||4000;
   const wrap = document.getElementById('toastWrap');
   const t = document.createElement('div'); t.className = 'toast';
   t.innerHTML = `<span style="font-size:18px">${ico}</span><span style="flex:1">${msg}</span><button style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:15px" onclick="this.parentElement.remove()">✕</button>`;
@@ -389,9 +402,9 @@ async function loadOverview() {
   try {
     const d = await API('/api/jobs/stats');
     if (d.success) {
-      document.getElementById('st-total').textContent = d.stats.total || 0;
+      document.getElementById('st-total').textContent = d.stats.total     || 0;
       document.getElementById('st-done').textContent  = d.stats.completed || 0;
-      document.getElementById('st-pend').textContent  = d.stats.pending || 0;
+      document.getElementById('st-pend').textContent  = d.stats.pending   || 0;
       document.getElementById('st-spent').textContent = d.stats.totalSpent ? '₹'+Math.round(d.stats.totalSpent) : '₹0';
       const p = d.stats.pending || 0;
       const badge = document.getElementById('notifBadge');
@@ -488,94 +501,232 @@ async function loadWorkers() {
   }
 }
 
-function openHire(id,name,skill,em) {
+/* ══ HIRE MODAL — FIXED ══ */
+function openHire(id, name, skill, em) {
   document.getElementById('hireWorkerId').value = id;
-  document.getElementById('hireWorkerInfo').innerHTML = `<div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:22px;flex-shrink:0">${em}</div><div><div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest)">${name}</div><div style="font-size:13px;color:var(--ink-40)">${skill}</div></div>`;
-  document.getElementById('hireSkill').value = skill;
+  document.getElementById('hireWorkerInfo').innerHTML = `
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:22px;flex-shrink:0">${em}</div>
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest)">${name}</div>
+      <div style="font-size:13px;color:var(--ink-40)">${skill}</div>
+    </div>`;
+  document.getElementById('hireSkill').value   = skill;
+  document.getElementById('hirePrice').value   = '';
+  document.getElementById('hireLocation').value= '';
+  document.getElementById('hireDate').value    = '';
+  document.getElementById('hireTime').value    = '';
+  document.getElementById('hireDesc').value    = '';
   document.getElementById('hireAlert').style.display = 'none';
+  document.getElementById('hireSubmitBtn').disabled = false;
   document.getElementById('hireModal').classList.add('open');
 }
-function closeHire() { document.getElementById('hireModal').classList.remove('open'); }
-async function confirmHire() {
-  const wid=document.getElementById('hireWorkerId').value, skill=document.getElementById('hireSkill').value.trim(), price=document.getElementById('hirePrice').value, loc=document.getElementById('hireLocation').value.trim();
-  if (!skill||!price||!loc) { showHA('error','Please fill all required fields'); return; }
-  const d = await fetch('/api/jobs/create',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({worker_id:wid,skill,price:parseFloat(price),location:loc,description:document.getElementById('hireDesc').value.trim(),scheduled_date:document.getElementById('hireDate').value||null,scheduled_time:document.getElementById('hireTime').value||null})}).then(r=>r.json());
-  if (d.success) { showHA('ok','Job booked! Worker has been notified.'); setTimeout(()=>{closeHire();showTab('jobs');},1500); }
-  else showHA('error',d.message||'Booking failed');
-}
-function showHA(t,m){const a=document.getElementById('hireAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
-document.getElementById('hireModal').addEventListener('click',e=>{if(e.target===document.getElementById('hireModal'))closeHire();});
 
-function openReview(jobId,workerId) {
-  document.getElementById('reviewJobId').value=jobId; document.getElementById('reviewWorkerId').value=workerId;
-  document.getElementById('reviewRating').value=0; document.getElementById('reviewText').value='';
-  document.getElementById('reviewAlert').style.display='none'; setRating(0);
+function closeHire() { document.getElementById('hireModal').classList.remove('open'); }
+
+async function confirmHire() {
+  const wid      = document.getElementById('hireWorkerId').value;
+  const skill    = document.getElementById('hireSkill').value.trim();
+  const priceVal = document.getElementById('hirePrice').value;
+  const loc      = document.getElementById('hireLocation').value.trim();
+  const desc     = document.getElementById('hireDesc').value.trim();
+  const date     = document.getElementById('hireDate').value;
+  const time     = document.getElementById('hireTime').value;
+
+  if (!skill || !priceVal || !loc) {
+    showHA('error', 'Please fill in Service, Budget and Location');
+    return;
+  }
+  const price = parseFloat(priceVal);
+  if (isNaN(price) || price < 1) {
+    showHA('error', 'Please enter a valid budget amount');
+    return;
+  }
+
+  const btn  = document.getElementById('hireSubmitBtn');
+  const spin = document.getElementById('hireSpin');
+  btn.disabled = true;
+  spin.style.display = 'inline-block';
+
+  try {
+    const res = await fetch('/api/jobs/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({
+        worker_id:      wid,
+        skill:          skill,
+        price:          price,
+        location:       loc,
+        description:    desc || undefined,
+        scheduled_date: date || undefined,
+        scheduled_time: time || undefined,
+      })
+    });
+
+    // ── KEY FIX: always parse JSON, check success field ──────────
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      // ✅ SUCCESS
+      showHA('ok', 'Job booked! Worker has been notified. 🎉');
+      showToast('Job booked successfully!', '🎉');
+      setTimeout(() => { closeHire(); showTab('jobs'); }, 1600);
+    } else {
+      // ❌ Server returned error
+      const errMsg = data.message || 'Booking failed. Please try again.';
+      showHA('error', errMsg);
+      btn.disabled = false;
+      spin.style.display = 'none';
+    }
+  } catch(networkErr) {
+    // ❌ Network error (server offline)
+    showHA('error', 'Cannot connect to server. Is it running?');
+    btn.disabled = false;
+    spin.style.display = 'none';
+  }
+}
+
+function showHA(t, m) {
+  const a = document.getElementById('hireAlert');
+  a.style.display = 'flex';
+  a.className = 'alert ' + (t==='error' ? 'ae' : 'as');
+  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;
+}
+
+document.getElementById('hireModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('hireModal')) closeHire();
+});
+
+/* ══ REVIEW MODAL ══ */
+function openReview(jobId, workerId) {
+  document.getElementById('reviewJobId').value    = jobId;
+  document.getElementById('reviewWorkerId').value = workerId;
+  document.getElementById('reviewRating').value   = 0;
+  document.getElementById('reviewText').value     = '';
+  document.getElementById('reviewAlert').style.display = 'none';
+  setRating(0);
   document.getElementById('reviewModal').classList.add('open');
 }
-function closeReview(){document.getElementById('reviewModal').classList.remove('open');}
-function setRating(v){document.getElementById('reviewRating').value=v;document.querySelectorAll('.star-btn').forEach(b=>b.classList.toggle('on',parseInt(b.dataset.v)<=v));}
-async function submitReview(){
-  const rating=parseInt(document.getElementById('reviewRating').value);
-  if(!rating){showRA('error','Please select a rating');return;}
-  const d=await fetch('/api/jobs/review',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:document.getElementById('reviewJobId').value,worker_id:document.getElementById('reviewWorkerId').value,rating,review:document.getElementById('reviewText').value.trim()})}).then(r=>r.json());
-  if(d.success){showRA('ok','Review submitted! Thank you.');setTimeout(()=>{closeReview();loadAllJobs();},1500);}
+function closeReview() { document.getElementById('reviewModal').classList.remove('open'); }
+function setRating(v) {
+  document.getElementById('reviewRating').value = v;
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('on', parseInt(b.dataset.v) <= v));
+}
+async function submitReview() {
+  const rating = parseInt(document.getElementById('reviewRating').value);
+  if (!rating) { showRA('error','Please select a rating'); return; }
+  const d = await fetch('/api/jobs/review',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:document.getElementById('reviewJobId').value,worker_id:document.getElementById('reviewWorkerId').value,rating,review:document.getElementById('reviewText').value.trim()})}).then(r=>r.json());
+  if (d.success) { showRA('ok','Review submitted! Thank you.'); setTimeout(()=>{closeReview();loadAllJobs();},1500); }
   else showRA('error',d.message||'Submission failed');
 }
 function showRA(t,m){const a=document.getElementById('reviewAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
 document.getElementById('reviewModal').addEventListener('click',e=>{if(e.target===document.getElementById('reviewModal'))closeReview();});
 
-async function loadProfile(){
-  try{
-    const d=await API('/api/auth/profile');
-    if(d.success){
-      const u=d.user; USER={...USER,...u}; localStorage.setItem('kc_user',JSON.stringify(USER));
-      document.getElementById('profileAvatar').textContent=(u.name||'C')[0].toUpperCase();
-      document.getElementById('profileName').textContent=u.name||'—';
-      document.getElementById('profileEmail').textContent=u.email||'—';
-      document.getElementById('profilePhone').textContent=u.phone||'Not set';
-      document.getElementById('profileLocation').textContent=u.location||'Not set';
-      document.getElementById('profileJoined').textContent=u.createdAt?new Date(u.createdAt).toLocaleDateString('en-IN',{year:'numeric',month:'long'}):'—';
-      document.getElementById('editName').value=u.name||''; document.getElementById('editPhone').value=u.phone||'';
-      document.getElementById('editEmail').value=u.email||''; document.getElementById('editLocation').value=u.location||''; document.getElementById('editBio').value=u.bio||'';
+/* ══ PROFILE ══ */
+async function loadProfile() {
+  try {
+    const d = await API('/api/auth/profile');
+    if (d.success) {
+      const u = d.user;
+      USER = { ...USER, ...u };
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      document.getElementById('profileAvatar').textContent  = (u.name||'C')[0].toUpperCase();
+      document.getElementById('profileName').textContent    = u.name    || '—';
+      document.getElementById('profileEmail').textContent   = u.email   || '—';
+      document.getElementById('profilePhone').textContent   = u.phone   || 'Not set';
+      document.getElementById('profileLocation').textContent= u.location|| 'Not set';
+      document.getElementById('profileJoined').textContent  = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN',{year:'numeric',month:'long'}) : '—';
+      document.getElementById('editName').value     = u.name     || '';
+      document.getElementById('editPhone').value    = u.phone    || '';
+      document.getElementById('editEmail').value    = u.email    || '';
+      document.getElementById('editLocation').value = u.location || '';
+      document.getElementById('editBio').value      = u.bio      || '';
       initUI();
-      const stats=await API('/api/jobs/stats');
-      if(stats.success) document.getElementById('profileJobs').textContent=stats.stats.total||0;
+      const stats = await API('/api/jobs/stats');
+      if (stats.success) document.getElementById('profileJobs').textContent = stats.stats.total || 0;
     }
-  }catch(e){
-    document.getElementById('editName').value=USER.name||''; document.getElementById('editEmail').value=USER.email||'';
-    document.getElementById('profileAvatar').textContent=(USER.name||'C')[0].toUpperCase();
-    document.getElementById('profileName').textContent=USER.name||'—'; document.getElementById('profileEmail').textContent=USER.email||'—';
+  } catch(e) {
+    document.getElementById('editName').value  = USER.name  || '';
+    document.getElementById('editEmail').value = USER.email || '';
+    document.getElementById('profileAvatar').textContent = (USER.name||'C')[0].toUpperCase();
+    document.getElementById('profileName').textContent   = USER.name  || '—';
+    document.getElementById('profileEmail').textContent  = USER.email || '—';
   }
 }
-function switchFormTab(tab,btn){document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ts-btn').forEach(b=>b.classList.remove('active'));document.getElementById('fs-'+tab).classList.add('active');btn.classList.add('active');}
-async function saveProfile(){
-  const name=document.getElementById('editName').value.trim(),phone=document.getElementById('editPhone').value.trim(),location=document.getElementById('editLocation').value.trim(),bio=document.getElementById('editBio').value.trim();
-  if(!name){showFA('infoAlert','error','Name cannot be empty');return;}
-  const btn=document.getElementById('saveInfoBtn'),sp=document.getElementById('saveInfoSpin');
-  btn.disabled=true;sp.style.display='inline-block';
-  try{
-    const d=await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name,phone,location,bio})}).then(r=>r.json());
-    if(d.success){USER={...USER,name,phone,location,bio};localStorage.setItem('kc_user',JSON.stringify(USER));showFA('infoAlert','success','Profile updated!');document.getElementById('profileAvatar').textContent=name[0].toUpperCase();document.getElementById('profileName').textContent=name;document.getElementById('profilePhone').textContent=phone||'Not set';document.getElementById('profileLocation').textContent=location||'Not set';initUI();showToast('Profile saved!','✅');}
-    else showFA('infoAlert','error',d.message||'Update failed');
-  }catch{showFA('infoAlert','error','Server error.');}
-  btn.disabled=false;sp.style.display='none';
+
+function switchFormTab(tab, btn) {
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ts-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('fs-' + tab).classList.add('active');
+  btn.classList.add('active');
 }
-async function changePassword(){
-  const current=document.getElementById('currentPw').value,newPw=document.getElementById('newPw').value,confirm=document.getElementById('confirmPw').value;
-  if(!current||!newPw||!confirm){showFA('pwAlert','error','Fill in all fields');return;}
-  if(newPw.length<6){showFA('pwAlert','error','Min 6 characters');return;}
-  if(newPw!==confirm){showFA('pwAlert','error','Passwords do not match');return;}
-  const btn=document.getElementById('savePwBtn'),sp=document.getElementById('savePwSpin');btn.disabled=true;sp.style.display='inline-block';
-  try{
-    const d=await fetch('/api/auth/change-password',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({currentPassword:current,newPassword:newPw})}).then(r=>r.json());
-    if(d.success){showFA('pwAlert','success','Password changed!');document.getElementById('currentPw').value='';document.getElementById('newPw').value='';document.getElementById('confirmPw').value='';for(let i=1;i<=4;i++)document.getElementById('pwb'+i).style.background='var(--ink-06)';showToast('Password updated!','🔒');}
-    else showFA('pwAlert','error',d.message||'Failed');
-  }catch{showFA('pwAlert','error','Server error.');}
-  btn.disabled=false;sp.style.display='none';
+
+async function saveProfile() {
+  const name     = document.getElementById('editName').value.trim();
+  const phone    = document.getElementById('editPhone').value.trim();
+  const location = document.getElementById('editLocation').value.trim();
+  const bio      = document.getElementById('editBio').value.trim();
+  if (!name) { showFA('infoAlert','error','Name cannot be empty'); return; }
+  const btn = document.getElementById('saveInfoBtn');
+  const sp  = document.getElementById('saveInfoSpin');
+  btn.disabled = true; sp.style.display = 'inline-block';
+  try {
+    const d = await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name,phone,location,bio})}).then(r=>r.json());
+    if (d.success) {
+      USER = { ...USER, name, phone, location, bio };
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      showFA('infoAlert','success','Profile updated!');
+      document.getElementById('profileAvatar').textContent   = name[0].toUpperCase();
+      document.getElementById('profileName').textContent     = name;
+      document.getElementById('profilePhone').textContent    = phone    || 'Not set';
+      document.getElementById('profileLocation').textContent = location || 'Not set';
+      initUI();
+      showToast('Profile saved!','✅');
+    } else showFA('infoAlert','error',d.message||'Update failed');
+  } catch { showFA('infoAlert','error','Server error.'); }
+  btn.disabled = false; sp.style.display = 'none';
 }
-function checkPwStrength(v){const c=[v.length>=6,v.length>=8,/[A-Z0-9]/.test(v),/[^A-Za-z0-9]/.test(v)];const cols=['#DC2626','#F59E0B','#2E7D5E','#15803D'];const n=c.filter(Boolean).length;for(let i=0;i<4;i++)document.getElementById('pwb'+(i+1)).style.background=i<n?cols[Math.min(n-1,3)]:'var(--ink-06)';}
-function showFA(id,t,m){const a=document.getElementById(id);a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;setTimeout(()=>a.style.display='none',4000);}
-function logout(){localStorage.removeItem('kc_token');localStorage.removeItem('kc_user');location.href='login.html';}
+
+async function changePassword() {
+  const current = document.getElementById('currentPw').value;
+  const newPw   = document.getElementById('newPw').value;
+  const confirm = document.getElementById('confirmPw').value;
+  if (!current||!newPw||!confirm) { showFA('pwAlert','error','Fill in all fields'); return; }
+  if (newPw.length < 6)  { showFA('pwAlert','error','Min 6 characters'); return; }
+  if (newPw !== confirm) { showFA('pwAlert','error','Passwords do not match'); return; }
+  const btn = document.getElementById('savePwBtn');
+  const sp  = document.getElementById('savePwSpin');
+  btn.disabled = true; sp.style.display = 'inline-block';
+  try {
+    const d = await fetch('/api/auth/change-password',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({currentPassword:current,newPassword:newPw})}).then(r=>r.json());
+    if (d.success) {
+      showFA('pwAlert','success','Password changed!');
+      document.getElementById('currentPw').value = '';
+      document.getElementById('newPw').value     = '';
+      document.getElementById('confirmPw').value = '';
+      for(let i=1;i<=4;i++) document.getElementById('pwb'+i).style.background='var(--ink-06)';
+      showToast('Password updated!','🔒');
+    } else showFA('pwAlert','error',d.message||'Failed');
+  } catch { showFA('pwAlert','error','Server error.'); }
+  btn.disabled = false; sp.style.display = 'none';
+}
+
+function checkPwStrength(v) {
+  const c    = [v.length>=6, v.length>=8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
+  const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
+  const n    = c.filter(Boolean).length;
+  for(let i=0;i<4;i++) document.getElementById('pwb'+(i+1)).style.background = i<n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
+}
+
+function showFA(id, t, m) {
+  const a = document.getElementById(id);
+  a.style.display = 'flex';
+  a.className = 'alert ' + (t==='error'?'ae':'as');
+  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
+  setTimeout(() => a.style.display = 'none', 4000);
+}
+
+function logout() { localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href = 'login.html'; }
+
 loadOverview();
 </script>
 </body>
