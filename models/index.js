@@ -4,20 +4,37 @@ const bcrypt = require("bcryptjs");
 // ─── USER MODEL ────────────────────────────────────────────
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    name:     { type: String, required: true, trim: true },
+    email:    { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true, minlength: 6 },
-    phone: { type: String, trim: true },
-    role: { type: String, enum: ["customer", "worker", "admin"], default: "customer" },
-    skill: { type: String, lowercase: true, trim: true },
+    phone:    { type: String, trim: true },
+    role:     { type: String, enum: ["customer", "worker", "admin"], default: "customer" },
+    skill:    { type: String, lowercase: true, trim: true },
     location: { type: String, trim: true },
-    avatar: { type: String },
-    bio: { type: String, maxlength: 500 },
+    avatar:   { type: String },
+    bio:      { type: String, maxlength: 500 },
     verified: { type: Boolean, default: false },
-    rating: { type: Number, default: 0, min: 0, max: 5 },
-    totalJobs: { type: Number, default: 0 },
+    rating:   { type: Number, default: 0, min: 0, max: 5 },
+    totalJobs:{ type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
-    subscriptionStatus: { type: String, enum: ["free", "basic", "premium"], default: "free" },
+
+    // ── Government ID for worker verification ──────────────
+    idType: {
+      type: String,
+      enum: ["aadhaar", "pan", "voter", "driving", "passport", "other", null],
+      default: null,
+    },
+    idDocument:       { type: String, default: null }, // base64 data URL or cloud URL
+    idVerifiedAt:     { type: Date, default: null },
+    idRejectedReason: { type: String, default: null },
+    idStatus: {
+      type: String,
+      enum: ["none", "pending", "approved", "rejected"],
+      default: "none",
+    },
+    // ───────────────────────────────────────────────────────
+
+    subscriptionStatus:  { type: String, enum: ["free", "basic", "premium"], default: "free" },
     subscriptionExpires: { type: Date },
   },
   { timestamps: true }
@@ -42,34 +59,27 @@ userSchema.methods.toJSON = function () {
 // ─── JOB MODEL ─────────────────────────────────────────────
 const jobSchema = new mongoose.Schema(
   {
-    customerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    workerId:   { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    customerId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    workerId:    { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     skill:       { type: String, required: true, lowercase: true },
     title:       { type: String, trim: true },
     description: { type: String },
     location:    { type: String, required: true },
     address:     { type: String },
-    price:        { type: Number, required: true, min: 0 },
-    commission:   { type: Number, default: 0 },
-    workerAmount: { type: Number, default: 0 },
+    price:       { type: Number, required: true, min: 0 },
+    commission:  { type: Number, default: 0 },
+    workerAmount:{ type: Number, default: 0 },
     status: {
       type: String,
-      enum: [
-        "pending",      // Job created, waiting for worker to accept
-        "accepted",     // Worker accepted the job
-        "in_progress",  // Worker started the job
-        "completed",    // Worker marked job as done
-        "cancelled",    // Worker rejected OR customer cancelled
-        "paid",         // Payment released to worker
-      ],
+      enum: ["pending", "accepted", "in_progress", "completed", "cancelled", "paid"],
       default: "pending",
     },
     scheduledDate:     { type: Date },
     scheduledTime:     { type: String },
     completedAt:       { type: Date },
-    cancelledBy:       { type: String, enum: ["customer", "worker"], default: null }, // track who cancelled
-    rating:  { type: Number, min: 1, max: 5 },
-    review:  { type: String },
+    cancelledBy:       { type: String, enum: ["customer", "worker"], default: null },
+    rating:            { type: Number, min: 1, max: 5 },
+    review:            { type: String },
     razorpayOrderId:   { type: String },
     razorpayPaymentId: { type: String },
   },
@@ -79,11 +89,11 @@ const jobSchema = new mongoose.Schema(
 // ─── MESSAGE MODEL ─────────────────────────────────────────
 const messageSchema = new mongoose.Schema(
   {
-    jobId:       { type: mongoose.Schema.Types.ObjectId, ref: "Job" },
-    senderId:    { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    receiverId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    message:     { type: String, required: true },
-    isRead:      { type: Boolean, default: false },
+    jobId:      { type: mongoose.Schema.Types.ObjectId, ref: "Job" },
+    senderId:   { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    receiverId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    message:    { type: String, required: true },
+    isRead:     { type: Boolean, default: false },
   },
   { timestamps: true }
 );
@@ -91,11 +101,11 @@ const messageSchema = new mongoose.Schema(
 // ─── REVIEW MODEL ──────────────────────────────────────────
 const reviewSchema = new mongoose.Schema(
   {
-    jobId:       { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
-    workerId:    { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    customerId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    rating:      { type: Number, required: true, min: 1, max: 5 },
-    review:      { type: String },
+    jobId:      { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
+    workerId:   { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    customerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    rating:     { type: Number, required: true, min: 1, max: 5 },
+    review:     { type: String },
   },
   { timestamps: true }
 );
@@ -106,9 +116,10 @@ const notificationSchema = new mongoose.Schema(
     userId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     title:   { type: String, required: true },
     message: { type: String, required: true },
-    type:    {
+    type: {
       type: String,
-      enum: ["accepted", "in_progress", "completed", "cancelled", "new_job", "payment", "general"],
+      enum: ["accepted", "in_progress", "completed", "cancelled", "new_job",
+             "payment", "general", "verification", "id_approved", "id_rejected"],
       default: "general",
     },
     isRead:  { type: Boolean, default: false },

@@ -183,3 +183,47 @@ exports.getRevenue = async (req, res) => {
     res.status(500).json({ success: false, message: "Error fetching revenue" });
   }
 };
+
+exports.rejectWorker = async (req, res) => {
+  try {
+    const { worker_id, reason } = req.body;
+    const worker = await User.findOneAndUpdate(
+      { _id: worker_id, role: "worker" },
+      { verified: false, idStatus: "rejected", idRejectedReason: reason || "Did not meet verification requirements" },
+      { new: true }
+    );
+    if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
+
+    await Notification.create({
+      userId: worker_id,
+      title: "Verification Rejected ❌",
+      message: reason || "Your ID verification was rejected. Please upload a valid government ID.",
+      type: "id_rejected",
+    });
+
+    res.json({ success: true, message: "Worker verification rejected" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+};
+
+exports.getWorkerDocument = async (req, res) => {
+  try {
+    const worker = await User.findOne({ _id: req.params.id, role: "worker" }).select("name idType idDocument idStatus idRejectedReason idVerifiedAt");
+    if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
+    res.json({ success: true, worker });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+};
+
+exports.getPendingVerifications = async (req, res) => {
+  try {
+    const workers = await User.find({ role: "worker", idStatus: "pending" })
+      .select("-password -idDocument")
+      .sort({ createdAt: -1 });
+    res.json({ success: true, workers });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+};

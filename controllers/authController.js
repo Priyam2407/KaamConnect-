@@ -14,14 +14,22 @@ exports.register = async (req, res) => {
     if (existing)
       return res.status(409).json({ success: false, message: "Email already registered" });
 
-    const user = await User.create({ name, email, password, phone, role: role || "customer", skill: skill || undefined, location, bio });
+    const { idType, idDocument } = req.body;
+    const isWorker = (role === "worker");
+    const userData = { name, email, password, phone, role: role || "customer", skill: skill || undefined, location, bio };
+    if (isWorker && idType && idDocument) {
+      userData.idType = idType;
+      userData.idDocument = idDocument;
+      userData.idStatus = "pending";
+    }
+    const user = await User.create(userData);
     const token = signToken(user._id, user.role);
 
     res.json({
       success: true,
       message: "Registered successfully",
       token,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role, skill: user.skill, location: user.location },
+      user: { id: user._id, name: user.name, email: user.email, role: user.role, skill: user.skill, location: user.location, idStatus: user.idStatus || "none" },
     });
   } catch (err) {
     console.error(err);

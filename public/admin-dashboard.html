@@ -1,312 +1,747 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel — KaamConnect</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
-:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
+:root{
+  --green:#2E7D5E;--green-2:#3A9970;--green-light:#E8F5EE;--green-pale:#F3FAF7;
+  --gold:#D4961A;--gold-light:#FEF3D0;
+  --rose:#DC2626;--rose-light:#FEF2F2;
+  --blue:#2563EB;--blue-light:#EFF6FF;
+  --saffron:#E8601C;--saffron-pale:#FEF0E8;
+  --ink:#1C1C2E;--ink-2:#2D2D42;--ink-60:rgba(28,28,46,.6);--ink-30:rgba(28,28,46,.3);--ink-10:rgba(28,28,46,.1);
+  --bg:#F8F8F6;--white:#FFFFFF;--border:rgba(28,28,46,.1);--border-2:rgba(28,28,46,.055);
+  --shadow-xs:0 1px 4px rgba(28,28,46,.07);--shadow-sm:0 2px 12px rgba(28,28,46,.08);--shadow:0 6px 24px rgba(28,28,46,.09);--shadow-lg:0 16px 56px rgba(28,28,46,.11);
+  --sidebar-w:252px;
+}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
-a{text-decoration:none;color:inherit}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--ink);display:flex;flex-direction:column;z-index:100;overflow:hidden}
-.sb-bg{position:absolute;bottom:-80px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.12),transparent 65%);pointer-events:none}
-.sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
-.sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff}
-.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
-.sb-logo-txt span{color:var(--saffron-2)}
-.sb-section{padding:10px 12px 4px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25)}
-.sb-nav{flex:1;padding:12px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
-.sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;transition:all .22s}
-.sb-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
-.sb-item.active{background:var(--saffron);color:#fff;box-shadow:0 4px 16px rgba(232,96,28,.35)}
-.sb-item i{font-size:17px;flex-shrink:0}
-.sb-divider{height:1px;background:rgba(255,255,255,.06);margin:10px 0}
-.sb-user{padding:18px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:relative;z-index:1}
-.sb-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
-.sb-uname{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:#fff}
-.sb-urole{font-size:11px;color:rgba(255,255,255,.35)}
-.sb-logout{margin-left:auto;background:rgba(255,255,255,.07);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.45);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
-.sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
-.main{margin-left:256px;min-height:100vh}
-.topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
-.seed-btn{padding:9px 18px;background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.25);border-radius:9px;font-size:13px;font-weight:600;color:var(--saffron);cursor:pointer;transition:all .2s}
-.seed-btn:hover{background:var(--saffron);color:#fff}
-.content{padding:32px 36px}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px}
-.stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
-.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
-.stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
-.si-o{background:var(--saffron-pale)}.si-g{background:var(--sage-light)}.si-b{background:#EFF6FF}.si-gold{background:#FEF9C3}.si-r{background:#FEE2E2}.si-p{background:#F3E8FF}
-.stat-n{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
-.stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
-.panel{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;overflow:hidden}
-.panel-head{padding:18px 22px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
-.panel-head h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--forest)}
-.panel-body{padding:4px 0;max-height:420px;overflow-y:auto}
-.user-row{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--ink-06);transition:background .2s}
-.user-row:hover{background:var(--cream)}
-.user-row:last-child{border-bottom:none}
-.ur-av{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:17px;font-weight:700;flex-shrink:0;color:#fff}
-.av-admin{background:var(--ink)}.av-worker{background:var(--sage)}.av-customer{background:var(--saffron)}
-.ur-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest);display:flex;align-items:center;gap:5px}
-.ur-sub{font-size:12px;color:var(--ink-40)}
-.ur-actions{margin-left:auto;display:flex;gap:7px;flex-shrink:0}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700}
-.badge-verified{background:var(--sage-light);color:var(--sage)}.badge-unverified{background:#FEF9C3;color:#A16207}.badge-active{background:#DBEAFE;color:#1D4ED8}.badge-inactive{background:#FEE2E2;color:#B91C1C}
-.badge-pending{background:#FEF9C3;color:#A16207}.badge-completed{background:var(--sage-light);color:var(--sage)}.badge-cancelled{background:#FEE2E2;color:#B91C1C}.badge-accepted{background:#DBEAFE;color:#1D4ED8}
-.action-btn{padding:6px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:none}
-.btn-verify{background:var(--sage-light);color:var(--sage)}
-.btn-verify:hover{background:var(--sage);color:#fff}
-.btn-toggle{background:var(--saffron-pale);color:var(--saffron)}
-.btn-toggle:hover{background:var(--saffron);color:#fff}
-.job-row{display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid var(--ink-06);transition:background .2s}
-.job-row:hover{background:var(--cream)}
-.job-row:last-child{border-bottom:none}
-.jr-ico{width:38px;height:38px;border-radius:10px;background:var(--cream);display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.jr-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
-.jr-meta{font-size:12px;color:var(--ink-40)}
-.jr-price{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--forest);margin-left:auto;flex-shrink:0}
-.empty-state{text-align:center;padding:48px 24px;color:var(--ink-40)}
-.empty-state i{font-size:36px;opacity:.2;display:block;margin-bottom:12px}
-.empty-state p{font-size:14px}
-.spin-loader{display:flex;justify-content:center;padding:36px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
+a{text-decoration:none;color:inherit}ul{list-style:none}button{font-family:inherit;cursor:pointer;border:none}
+
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--white);border-right:1px solid var(--border);position:fixed;top:0;bottom:0;left:0;overflow-y:auto;scrollbar-width:none;z-index:100;display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{display:none}
+.sb-top{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
+.sb-logo{display:flex;align-items:center;gap:10px}
+.sb-logo-icon{width:36px;height:36px;border-radius:10px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:16px;box-shadow:0 4px 12px rgba(46,125,94,.28)}
+.sb-logo-name{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;letter-spacing:-.3px;color:var(--ink)}
+.sb-logo-name em{font-style:normal;color:var(--green)}
+.sb-user{padding:18px 20px;border-bottom:1px solid var(--border)}
+.sb-av{width:40px;height:40px;border-radius:12px;background:var(--green-light);display:grid;place-items:center;font-size:18px;margin-bottom:10px}
+.sb-uname{font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.sb-urole{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-30)}
+.sb-nav{flex:1;padding:16px 12px}
+.sb-sec{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-30);padding:0 10px;margin:16px 0 8px}
+.sb-link{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;color:var(--ink-60);cursor:pointer;transition:all .2s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;position:relative}
+.sb-link i{font-size:16px;flex-shrink:0}
+.sb-link:hover{background:var(--bg);color:var(--ink)}
+.sb-link.on{background:var(--green-light);color:var(--green);font-weight:700}
+.sb-link.on i{color:var(--green)}
+.sb-badge{position:absolute;right:10px;top:50%;transform:translateY(-50%);min-width:20px;height:20px;border-radius:10px;background:var(--rose);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.sb-bottom{padding:14px 12px;border-top:1px solid var(--border)}
+.sb-logout{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;color:var(--ink-60);cursor:pointer;transition:all .2s;border:none;background:none;width:100%;font-family:'Plus Jakarta Sans',sans-serif}
+.sb-logout:hover{background:#FEF2F2;color:var(--rose)}
+
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 36px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.5px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.topbar-av{width:36px;height:36px;border-radius:10px;background:var(--green-light);display:grid;place-items:center;font-size:16px;cursor:pointer}
+.content{padding:36px;flex:1}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:22px;position:relative;overflow:hidden;transition:all .25s}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat-card::before{content:'';position:absolute;top:-20px;right:-20px;width:90px;height:90px;border-radius:50%;opacity:.07}
+.stat-card.c-green::before{background:var(--green)}
+.stat-card.c-gold::before{background:var(--gold)}
+.stat-card.c-blue::before{background:var(--blue)}
+.stat-card.c-rose::before{background:var(--rose)}
+.stat-card.c-saffron::before{background:var(--saffron)}
+.stat-icon{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:18px}
+.c-green .stat-icon{background:var(--green-light);color:var(--green)}
+.c-gold .stat-icon{background:var(--gold-light);color:var(--gold)}
+.c-blue .stat-icon{background:var(--blue-light);color:var(--blue)}
+.c-rose .stat-icon{background:var(--rose-light);color:var(--rose)}
+.c-saffron .stat-icon{background:var(--saffron-pale);color:var(--saffron)}
+.stat-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-30);margin-bottom:10px}
+.stat-val{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-1.5px;line-height:1;margin-bottom:6px}
+.stat-sub{font-size:12.5px;color:var(--ink-60)}
+
+.panel{background:var(--white);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px}
+.panel-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.panel-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.4px}
+.panel-body{padding:22px}
+
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-30);padding:0 16px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:14px 16px;border-bottom:1px solid var(--border-2);font-size:13.5px;color:var(--ink-60);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--bg)}
+.td-name{font-weight:700;color:var(--ink);display:block;margin-bottom:2px}
+
+.badge{padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
+.b-pending{background:#FEF3C7;color:#92400E}
+.b-accepted{background:var(--blue-light);color:#1D4ED8}
+.b-progress{background:var(--green-light);color:var(--green)}
+.b-completed{background:#F0FDF4;color:#166534}
+.b-cancelled{background:var(--rose-light);color:var(--rose)}
+.b-paid{background:#F5F3FF;color:#6D28D9}
+.b-id-pending{background:#FEF3C7;color:#B45309}
+.b-id-approved{background:#F0FDF4;color:#166534}
+.b-id-rejected{background:var(--rose-light);color:var(--rose)}
+.b-id-none{background:var(--bg);color:var(--ink-30)}
+
+.btn{padding:9px 18px;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:6px;border:none}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(46,125,94,.22)}
+.btn-green:hover{background:var(--green-2);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-60)}
+.btn-outline:hover{border-color:var(--ink);color:var(--ink)}
+.btn-teal{background:var(--green-light);color:var(--green);border:1.5px solid rgba(46,125,94,.2)}
+.btn-teal:hover{background:var(--green);color:#fff}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-danger{background:var(--rose-light);color:var(--rose);border:1.5px solid rgba(220,38,38,.15)}
+.btn-danger:hover{background:var(--rose);color:#fff}
+.btn-saffron{background:var(--saffron-pale);color:var(--saffron);border:1.5px solid rgba(232,96,28,.2)}
+.btn-saffron:hover{background:var(--saffron);color:#fff}
+.btn-disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+
+.fg{margin-bottom:16px}
+.fl{display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:7px;letter-spacing:.3px}
+.fi{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);outline:none;transition:all .2s}
+.fi:focus{border-color:var(--green);background:var(--white);box-shadow:0 0 0 3px rgba(46,125,94,.08)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+textarea.fi{min-height:80px;resize:vertical}
+
+/* ── ID VERIFICATION SECTION ── */
+.verf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.verf-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:22px;transition:all .25s;cursor:pointer}
+.verf-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--saffron)}
+.vc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.vc-avatar{width:44px;height:44px;border-radius:12px;background:var(--saffron-pale);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.vc-badge-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.vc-name{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px}
+.vc-skill{font-size:12px;color:var(--ink-30)}
+.vc-meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.vc-meta span{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-60)}
+.vc-id-type{display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11.5px;font-weight:600;color:var(--ink-60)}
+.vc-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ID Document Modal */
+.id-modal-img{width:100%;max-height:380px;object-fit:contain;border-radius:10px;border:1.5px solid var(--border);background:var(--bg)}
+.id-modal-pdf{width:100%;height:350px;border-radius:10px;border:1.5px solid var(--border)}
+.id-info-row{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.id-info-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;color:var(--ink-60)}
+.reject-input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);outline:none;transition:all .2s;margin-top:8px}
+.reject-input:focus{border-color:var(--rose)}
+
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(28,28,46,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+.modal-bg.open{display:flex;animation:mfade .22s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--white);border-radius:18px;padding:32px;width:100%;max-width:540px;border:1.5px solid var(--border);box-shadow:var(--shadow-lg);animation:mslide .25s cubic-bezier(.34,1.56,.64,1);position:relative;max-height:90vh;overflow-y:auto}
+@keyframes mslide{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.5px;margin-bottom:5px}
+.modal-sub{font-size:14px;color:var(--ink-60);margin-bottom:22px;font-weight:300}
+.modal-x{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:8px;background:var(--bg);border:none;cursor:pointer;display:grid;place-items:center;font-size:13px;color:var(--ink-60);transition:all .2s}
+.modal-x:hover{background:var(--border-2);color:var(--ink)}
+.modal-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+
+.alert{padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.ae{background:var(--rose-light);color:var(--rose);border:1.5px solid rgba(220,38,38,.2)}
+.as{background:#F0FDF4;color:#166534;border:1.5px solid #BBF7D0}
+
+.empty{text-align:center;padding:52px 24px;color:var(--ink-60)}
+.empty i{font-size:36px;display:block;margin-bottom:12px;opacity:.3}
+.empty h3{font-weight:700;font-size:16px;color:var(--ink);margin-bottom:5px}
+.empty p{font-size:13.5px}
+.loading{display:flex;justify-content:center;padding:48px;font-size:28px;color:var(--green);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.revenue-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
-.rev-card{background:var(--forest);border-radius:16px;padding:26px;position:relative;overflow:hidden}
-.rev-card::after{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
-.rev-card h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px}
-.rev-num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;line-height:1}
-.rev-sub{font-size:12px;color:rgba(255,255,255,.35);margin-top:7px}
-.search-bar{padding:12px 22px 12px;border-bottom:1px solid var(--ink-06)}
-.search-bar input{width:100%;padding:9px 14px;border:1.5px solid var(--ink-12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s}
-.search-bar input:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.08)}
+
+/* Toast */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column-reverse;gap:8px}
+.toast{background:var(--ink-2);color:#fff;padding:13px 18px;border-radius:11px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);animation:toastIn .3s ease;max-width:320px}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.toast.removing{animation:toastOut .3s ease forwards}
+@keyframes toastOut{to{opacity:0;transform:translateY(10px)}}
+
+@media(max-width:900px){.sidebar{display:none}.main{margin-left:0}.stats-row{grid-template-columns:repeat(2,1fr)}.verf-grid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}}
+.admin-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;background:var(--green-light);border:1.5px solid rgba(46,125,94,.18);font-size:11px;font-weight:700;color:var(--green)}
 </style>
 </head>
 <body>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sb-bg"></div>
-  <div class="sb-logo"><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
+  <div class="sb-top"><a class="sb-logo" href="index.html"><div class="sb-logo-icon"><i class="bi bi-tools"></i></div><span class="sb-logo-name">Kaam<em>Connect</em></span></a></div>
+  <div class="sb-user"><div class="sb-av" style="font-size:17px">👑</div><div class="sb-uname">Admin</div><div class="sb-urole">Super Admin</div></div>
   <nav class="sb-nav">
-    <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
-    <div class="sb-item" onclick="showTab('workers')"><i class="bi bi-people-fill"></i> Workers</div>
-    <div class="sb-item" onclick="showTab('customers')"><i class="bi bi-person-fill"></i> Customers</div>
-    <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> All Jobs</div>
-    <div class="sb-item" onclick="showTab('revenue')"><i class="bi bi-graph-up-arrow"></i> Revenue</div>
-    <div class="sb-divider"></div>
-    <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
+    <div class="sb-sec">Overview</div>
+    <button class="sb-link on" onclick="show('dashboard',this)"><i class="bi bi-grid-1x2"></i> Dashboard</button>
+    <div class="sb-sec" style="margin-top:16px">Manage</div>
+    <button class="sb-link" onclick="show('users',this)"><i class="bi bi-people"></i> Users</button>
+    <button class="sb-link" onclick="show('workers',this)"><i class="bi bi-person-badge"></i> Workers</button>
+    <button class="sb-link" onclick="show('jobs',this)"><i class="bi bi-briefcase"></i> Jobs</button>
+    <button class="sb-link" id="verf-sb-link" onclick="show('verifications',this)"><i class="bi bi-shield-check"></i> ID Verifications <span class="sb-badge" id="verf-sb-count" style="display:none">0</span></button>
+    <div class="sb-sec" style="margin-top:16px">Finance</div>
+    <button class="sb-link" onclick="show('revenue',this)"><i class="bi bi-currency-rupee"></i> Revenue</button>
   </nav>
-  <div class="sb-user">
-    <div class="sb-av">A</div>
-    <div><div class="sb-uname" id="sbName">Admin</div><div class="sb-urole">Super Admin</div></div>
-    <button class="sb-logout" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
-  </div>
+  <div class="sb-bottom"><button class="sb-logout" onclick="logout()"><i class="bi bi-box-arrow-left"></i> Sign Out</button></div>
 </aside>
-<div class="main">
+
+<!-- MAIN -->
+<main class="main">
   <div class="topbar">
-    <div class="topbar-title" id="topbarTitle">Overview</div>
-    <button class="seed-btn" onclick="seedData()"><i class="bi bi-database-fill-add"></i> Seed Demo Data</button>
+    <span class="topbar-title" id="pageTitle">Dashboard</span>
+    <div class="topbar-right">
+      <span class="admin-chip">👑 Admin</span>
+      <div class="topbar-av" style="font-size:17px">👑</div>
+    </div>
   </div>
   <div class="content">
 
-    <!-- OVERVIEW -->
-    <div id="tab-overview">
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-ico si-b">👤</div><div class="stat-n" id="st-cust">—</div><div class="stat-l">Total Customers</div></div>
-        <div class="stat-card"><div class="stat-ico si-g">🛠️</div><div class="stat-n" id="st-work">—</div><div class="stat-l">Total Workers</div></div>
-        <div class="stat-card"><div class="stat-ico si-gold">💰</div><div class="stat-n" id="st-rev">—</div><div class="stat-l">Total Revenue</div></div>
-        <div class="stat-card"><div class="stat-ico si-o">📋</div><div class="stat-n" id="st-jobs">—</div><div class="stat-l">Total Jobs</div></div>
-        <div class="stat-card"><div class="stat-ico si-r">⏳</div><div class="stat-n" id="st-pend">—</div><div class="stat-l">Pending Jobs</div></div>
-        <div class="stat-card"><div class="stat-ico si-p">🔍</div><div class="stat-n" id="st-verif">—</div><div class="stat-l">Pending Verifications</div></div>
+    <!-- DASHBOARD -->
+    <div id="sec-dashboard">
+      <div class="stats-row">
+        <div class="stat-card c-green"><div class="stat-icon"><i class="bi bi-people-fill"></i></div><div class="stat-label">Total Customers</div><div class="stat-val" id="s-cust">—</div></div>
+        <div class="stat-card c-gold"><div class="stat-icon"><i class="bi bi-person-badge-fill"></i></div><div class="stat-label">Total Workers</div><div class="stat-val" id="s-work">—</div></div>
+        <div class="stat-card c-blue"><div class="stat-icon"><i class="bi bi-briefcase-fill"></i></div><div class="stat-label">Total Jobs</div><div class="stat-val" id="s-jobs">—</div></div>
+        <div class="stat-card c-rose"><div class="stat-icon"><i class="bi bi-currency-rupee"></i></div><div class="stat-label">Total Revenue</div><div class="stat-val" id="s-rev">—</div></div>
       </div>
-      <div class="two-col">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px">
         <div class="panel">
-          <div class="panel-head"><h3>Recent Workers</h3><a href="#" onclick="showTab('workers')" style="font-size:13px;color:var(--saffron);font-weight:600">View All →</a></div>
-          <div class="panel-body" id="recentWorkers"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+          <div class="panel-head"><span class="panel-title">Pending ID Verifications</span><span class="badge b-id-pending" id="pvc">—</span></div>
+          <div style="overflow-x:auto"><table class="tbl" style="min-width:380px"><thead><tr><th>Worker</th><th>Skill</th><th>ID Type</th><th>Action</th></tr></thead><tbody id="pendVerTb"><tr><td colspan="4" style="text-align:center;padding:24px"><span class="loading" style="display:inline-block;font-size:20px"><i class="bi bi-arrow-repeat"></i></span></td></tr></tbody></table></div>
         </div>
         <div class="panel">
-          <div class="panel-head"><h3>Recent Jobs</h3><a href="#" onclick="showTab('jobs')" style="font-size:13px;color:var(--saffron);font-weight:600">View All →</a></div>
-          <div class="panel-body" id="recentJobsList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+          <div class="panel-head"><span class="panel-title">Platform Overview</span></div>
+          <div class="panel-body">
+            <div style="display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border-2)"><span style="font-size:14px;color:var(--ink-60);font-weight:500">Pending Jobs</span><span style="font-weight:800;font-size:15px" id="q-pend">—</span></div>
+              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border-2)"><span style="font-size:14px;color:var(--ink-60);font-weight:500">Pending ID Verifications</span><span style="font-weight:800;font-size:15px;color:var(--saffron)" id="q-unveri">—</span></div>
+              <div style="display:flex;justify-content:space-between;padding:13px 0"><span style="font-size:14px;color:var(--ink-60);font-weight:500">Platform Commission</span><span style="font-weight:800;font-size:15px;color:var(--green)">10%</span></div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><span class="panel-title">Recent Jobs</span><button class="btn btn-outline btn-sm" onclick="show('jobs',null)">View all</button></div>
+        <div style="overflow-x:auto"><table class="tbl" style="min-width:680px"><thead><tr><th>Job</th><th>Customer</th><th>Worker</th><th>Price</th><th>Commission</th><th>Status</th></tr></thead><tbody id="recentJTb"><tr><td colspan="6" style="text-align:center;padding:32px"><span class="loading" style="display:inline-block;font-size:22px"><i class="bi bi-arrow-repeat"></i></span></td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div id="sec-users" style="display:none">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">All Users</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input class="fi" type="text" id="uSearch" placeholder="Search name / email…" style="width:210px;padding:8px 12px;font-size:13px" oninput="loadUsers()">
+            <select class="fi" id="uRole" style="width:auto;padding:8px 12px;font-size:13px" onchange="loadUsers()"><option value="">All Roles</option><option value="customer">Customers</option><option value="worker">Workers</option></select>
+          </div>
+        </div>
+        <div style="overflow-x:auto"><table class="tbl" style="min-width:720px"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTb"><tr><td colspan="6"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody></table></div>
       </div>
     </div>
 
     <!-- WORKERS -->
-    <div id="tab-workers" style="display:none">
+    <div id="sec-workers" style="display:none">
       <div class="panel">
-        <div class="panel-head"><h3>All Workers</h3></div>
-        <div class="search-bar"><input type="text" id="workerSearch" placeholder="Search by name or email…" oninput="searchUsers('worker')"></div>
-        <div class="panel-body" id="workersList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
-      </div>
-    </div>
-
-    <!-- CUSTOMERS -->
-    <div id="tab-customers" style="display:none">
-      <div class="panel">
-        <div class="panel-head"><h3>All Customers</h3></div>
-        <div class="search-bar"><input type="text" id="customerSearch" placeholder="Search by name or email…" oninput="searchUsers('customer')"></div>
-        <div class="panel-body" id="customersList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+        <div class="panel-head"><span class="panel-title">Worker Management</span></div>
+        <div style="overflow-x:auto"><table class="tbl" style="min-width:900px"><thead><tr><th>Name</th><th>Skill</th><th>Location</th><th>Rating</th><th>Jobs</th><th>ID Status</th><th>Verified</th><th>Actions</th></tr></thead><tbody id="workersTb"><tr><td colspan="8"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody></table></div>
       </div>
     </div>
 
     <!-- JOBS -->
-    <div id="tab-jobs" style="display:none">
+    <div id="sec-jobs" style="display:none">
       <div class="panel">
-        <div class="panel-head"><h3>All Jobs</h3></div>
-        <div class="panel-body" id="jobsList"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+        <div class="panel-head">
+          <span class="panel-title">All Jobs</span>
+          <select class="fi" style="width:auto;padding:7px 12px;font-size:13px" onchange="loadAllJobs(this.value)"><option value="">All Status</option><option value="pending">Pending</option><option value="accepted">Accepted</option><option value="in_progress">In Progress</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select>
+        </div>
+        <div style="overflow-x:auto"><table class="tbl" style="min-width:780px"><thead><tr><th>Job</th><th>Customer</th><th>Worker</th><th>Price</th><th>Commission</th><th>Status</th><th>Date</th></tr></thead><tbody id="allJobsTb"><tr><td colspan="7"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody></table></div>
       </div>
+    </div>
+
+    <!-- ══ ID VERIFICATIONS ══ -->
+    <div id="sec-verifications" style="display:none">
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap">
+        <button class="btn btn-sm btn-saffron on-filter" id="vf-pending" onclick="filterVerf('pending',this)">⏳ Pending</button>
+        <button class="btn btn-sm btn-outline" id="vf-approved" onclick="filterVerf('approved',this)">✅ Approved</button>
+        <button class="btn btn-sm btn-outline" id="vf-rejected" onclick="filterVerf('rejected',this)">❌ Rejected</button>
+        <button class="btn btn-sm btn-outline" id="vf-all" onclick="filterVerf('all',this)">All Workers</button>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:22px">
+        <div class="stat-card c-saffron" style="padding:16px 18px"><div class="stat-icon" style="width:34px;height:34px;font-size:15px"><i class="bi bi-hourglass-split"></i></div><div class="stat-label" style="font-size:10px">Pending</div><div class="stat-val" style="font-size:28px" id="vs-pending">—</div></div>
+        <div class="stat-card c-green" style="padding:16px 18px"><div class="stat-icon" style="width:34px;height:34px;font-size:15px"><i class="bi bi-shield-check"></i></div><div class="stat-label" style="font-size:10px">Approved</div><div class="stat-val" style="font-size:28px" id="vs-approved">—</div></div>
+        <div class="stat-card c-rose" style="padding:16px 18px"><div class="stat-icon" style="width:34px;height:34px;font-size:15px"><i class="bi bi-shield-x"></i></div><div class="stat-label" style="font-size:10px">Rejected</div><div class="stat-val" style="font-size:28px" id="vs-rejected">—</div></div>
+        <div class="stat-card c-blue" style="padding:16px 18px"><div class="stat-icon" style="width:34px;height:34px;font-size:15px"><i class="bi bi-people"></i></div><div class="stat-label" style="font-size:10px">No ID Uploaded</div><div class="stat-val" style="font-size:28px" id="vs-none">—</div></div>
+      </div>
+
+      <div id="verfCards"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
     <!-- REVENUE -->
-    <div id="tab-revenue" style="display:none">
-      <div class="revenue-cards">
-        <div class="rev-card"><h4>Total Revenue</h4><div class="rev-num" id="revTotal">₹0</div><div class="rev-sub">All time</div></div>
-        <div class="rev-card"><h4>This Month</h4><div class="rev-num" id="revMonthly">₹0</div><div class="rev-sub">Current month</div></div>
+    <div id="sec-revenue" style="display:none">
+      <div class="stats-row" style="grid-template-columns:1fr 1fr;margin-bottom:22px">
+        <div class="stat-card c-green"><div class="stat-icon"><i class="bi bi-currency-rupee"></i></div><div class="stat-label">Total Revenue</div><div class="stat-val" id="r-total">—</div><div class="stat-sub">All time commissions</div></div>
+        <div class="stat-card c-gold"><div class="stat-icon"><i class="bi bi-calendar3"></i></div><div class="stat-label">This Month</div><div class="stat-val" id="r-month">—</div></div>
       </div>
-      <div class="panel"><div class="panel-head"><h3>Revenue History</h3></div><div class="panel-body" id="revHistory"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div></div>
+      <div class="panel"><div class="panel-head"><span class="panel-title">Monthly Breakdown</span></div><div style="overflow-x:auto"><table class="tbl" style="min-width:480px"><thead><tr><th>Month</th><th>Transactions</th><th>Revenue</th></tr></thead><tbody id="revTb"><tr><td colspan="3"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody></table></div></div>
     </div>
 
+  </div>
+</main>
+
+<!-- ID DOCUMENT MODAL -->
+<div class="modal-bg" id="idModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeIdModal()"><i class="bi bi-x"></i></button>
+    <div class="modal-title" id="idModalTitle">Review ID Document</div>
+    <div class="modal-sub" id="idModalSub">Worker identity verification</div>
+    <div id="idModalAlert" style="display:none"></div>
+
+    <!-- Worker info -->
+    <div class="id-info-row" id="idInfoRow"></div>
+
+    <!-- Document viewer -->
+    <div id="idDocViewer" style="margin-bottom:16px">
+      <div class="empty" style="padding:24px"><i class="bi bi-file-earmark-x"></i><p>No document uploaded</p></div>
+    </div>
+
+    <!-- Reject reason (hidden by default) -->
+    <div id="rejectReasonWrap" style="display:none">
+      <label style="display:block;font-size:12px;font-weight:700;color:var(--rose);margin-bottom:6px;letter-spacing:.3px"><i class="bi bi-exclamation-triangle-fill"></i> Rejection Reason</label>
+      <input type="text" class="reject-input" id="rejectReason" placeholder="e.g. ID is unclear, wrong document type, expired ID…">
+    </div>
+
+    <input type="hidden" id="idModalWorkerId">
+    <div class="modal-actions" id="idModalActions"></div>
   </div>
 </div>
 
 <script>
-const TOKEN=localStorage.getItem('kc_token');
-const USER=JSON.parse(localStorage.getItem('kc_user')||'{}');
-if(!TOKEN||USER.role!=='admin'){location.href='login.html';}
-document.getElementById('sbName').textContent=USER.name||'Admin';
-const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
-const AUTH=h=>fetch(h,{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
-const AUTHPOST=(h,b)=>fetch(h,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(b)}).then(r=>r.json());
+const token = localStorage.getItem('kc_token');
+const user  = JSON.parse(localStorage.getItem('kc_user') || '{}');
+if (!token || user.role !== 'admin') location.href = 'login.html';
+const H = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
 
-function showTab(t){
-  document.querySelectorAll('[id^=tab-]').forEach(el=>el.style.display='none');
-  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
-  document.getElementById('tab-'+t).style.display='block';
-  const order=['overview','workers','customers','jobs','revenue'];
-  document.querySelectorAll('.sb-item')[order.indexOf(t)]?.classList.add('active');
-  const titles={overview:'Overview',workers:'Workers',customers:'Customers',jobs:'All Jobs',revenue:'Revenue'};
-  document.getElementById('topbarTitle').textContent=titles[t]||t;
-  if(t==='overview')loadOverview();
-  if(t==='workers')loadUsers('worker','workersList');
-  if(t==='customers')loadUsers('customer','customersList');
-  if(t==='jobs')loadJobs();
-  if(t==='revenue')loadRevenue();
+/* ── TOAST ── */
+function toast(msg, ico='✅', dur=3500) {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div'); t.className = 'toast';
+  t.innerHTML = `<span>${ico}</span><span>${msg}</span>`;
+  wrap.appendChild(t);
+  setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, dur);
 }
 
-async function loadOverview(){
-  const d=await AUTH('/api/admin/dashboard');
-  if(d.success){
-    const s=d.stats;
-    document.getElementById('st-cust').textContent=(s.totalCustomers||0).toLocaleString('en-IN');
-    document.getElementById('st-work').textContent=(s.totalWorkers||0).toLocaleString('en-IN');
-    document.getElementById('st-jobs').textContent=(s.totalJobs||0).toLocaleString('en-IN');
-    document.getElementById('st-pend').textContent=(s.pendingJobs||0).toLocaleString('en-IN');
-    document.getElementById('st-verif').textContent=(s.pendingVerifications||0).toLocaleString('en-IN');
-    document.getElementById('st-rev').textContent='₹'+(s.totalRevenue||0).toLocaleString('en-IN');
+/* ── TABS ── */
+const SECTIONS = ['dashboard','users','workers','jobs','verifications','revenue'];
+function show(s, el) {
+  SECTIONS.forEach(x => document.getElementById('sec-'+x).style.display = x===s ? '' : 'none');
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('on'));
+  if (el) el.classList.add('on');
+  const titles = { dashboard:'Dashboard', users:'Users', workers:'Workers', jobs:'Jobs', verifications:'ID Verifications', revenue:'Revenue' };
+  document.getElementById('pageTitle').textContent = titles[s] || s;
+  if (s==='users') loadUsers();
+  if (s==='workers') loadWorkers();
+  if (s==='jobs') loadAllJobs('');
+  if (s==='verifications') loadVerifications();
+  if (s==='revenue') loadRevenue();
+}
+
+function statusBadge(s) {
+  const m = { pending:'b-pending', accepted:'b-accepted', in_progress:'b-progress', completed:'b-completed', cancelled:'b-cancelled', paid:'b-paid' };
+  return `<span class="badge ${m[s]||'b-pending'}">${s.replace('_',' ')}</span>`;
+}
+
+const ID_TYPE_LABELS = { aadhaar:'Aadhaar Card', pan:'PAN Card', voter:'Voter ID', driving:'Driving Licence', passport:'Passport', other:'Govt ID', none:'No ID' };
+const ID_TYPE_ICONS  = { aadhaar:'bi-credit-card-2-front', pan:'bi-credit-card', voter:'bi-person-badge', driving:'bi-car-front', passport:'bi-book', other:'bi-file-earmark-person', none:'bi-dash' };
+
+function idStatusBadge(s) {
+  const m = { pending:'b-id-pending', approved:'b-id-approved', rejected:'b-id-rejected', none:'b-id-none' };
+  const icons = { pending:'⏳', approved:'✅', rejected:'❌', none:'—' };
+  return `<span class="badge ${m[s]||'b-id-none'}">${icons[s]||''} ${s||'none'}</span>`;
+}
+
+/* ── STATS ── */
+async function loadStats() {
+  try {
+    const d = await (await fetch('/api/admin/dashboard', { headers: H })).json();
+    if (d.success && d.stats) {
+      const s = d.stats;
+      document.getElementById('s-cust').textContent = s.totalCustomers || 0;
+      document.getElementById('s-work').textContent = s.totalWorkers   || 0;
+      document.getElementById('s-jobs').textContent = s.totalJobs      || 0;
+      document.getElementById('s-rev').textContent  = '₹' + (s.totalRevenue || 0).toLocaleString();
+      document.getElementById('q-pend').textContent    = s.pendingJobs          || 0;
+      document.getElementById('q-unveri').textContent  = s.pendingVerifications || 0;
+      document.getElementById('pvc').textContent       = s.pendingVerifications || '0';
+      // Update sidebar badge
+      const cnt = s.pendingVerifications || 0;
+      const sb = document.getElementById('verf-sb-count');
+      sb.textContent = cnt; sb.style.display = cnt > 0 ? 'flex' : 'none';
+    }
+  } catch(e) {}
+}
+
+/* ── PENDING VERIFICATIONS (dashboard widget) ── */
+async function loadPendingVer() {
+  try {
+    const d = await (await fetch('/api/admin/pending-verifications', { headers: H })).json();
+    const tb = document.getElementById('pendVerTb');
+    const workers = d.workers || [];
+    if (!workers.length) {
+      tb.innerHTML = '<tr><td colspan="4"><div class="empty" style="padding:24px"><i class="bi bi-check-circle" style="font-size:24px;opacity:.3;display:block;margin-bottom:8px"></i><p>No pending ID verifications</p></div></td></tr>';
+      return;
+    }
+    tb.innerHTML = workers.slice(0, 5).map(u => `
+      <tr>
+        <td><span class="td-name">${u.name}</span><small style="color:var(--ink-30)">${u.email}</small></td>
+        <td>${u.skill || '—'}</td>
+        <td><span class="vc-id-type"><i class="bi ${ID_TYPE_ICONS[u.idType]||'bi-file-earmark'}"></i> ${ID_TYPE_LABELS[u.idType]||'—'}</span></td>
+        <td style="display:flex;gap:6px">
+          <button class="btn btn-teal btn-sm" onclick="openIdModal('${u._id||u.id}')"><i class="bi bi-eye"></i> Review</button>
+        </td>
+      </tr>`).join('');
+  } catch(e) {}
+}
+
+/* ── ID VERIFICATIONS TAB ── */
+let verfFilter = 'pending';
+let allVerfWorkers = [];
+
+async function loadVerifications() {
+  const el = document.getElementById('verfCards');
+  el.innerHTML = '<div class="loading"><i class="bi bi-arrow-repeat"></i></div>';
+  try {
+    const d = await (await fetch('/api/admin/users?role=worker', { headers: H })).json();
+    allVerfWorkers = d.users || [];
+
+    // Compute stats
+    const counts = { pending:0, approved:0, rejected:0, none:0 };
+    allVerfWorkers.forEach(w => { const s = w.idStatus || 'none'; counts[s] = (counts[s]||0) + 1; });
+    document.getElementById('vs-pending').textContent  = counts.pending;
+    document.getElementById('vs-approved').textContent = counts.approved;
+    document.getElementById('vs-rejected').textContent = counts.rejected;
+    document.getElementById('vs-none').textContent     = counts.none;
+
+    renderVerfCards();
+  } catch(e) {
+    el.innerHTML = '<div class="empty"><i class="bi bi-wifi-off"></i><h3>Error loading data</h3><p>Check server connection</p></div>';
   }
-  // Recent workers
-  const wd=await AUTH('/api/admin/users?role=worker&limit=5');
-  const rw=document.getElementById('recentWorkers');
-  if(wd.users?.length)rw.innerHTML=wd.users.map(userRow).join('');
-  else rw.innerHTML='<div class="empty-state"><i class="bi bi-people"></i><p>No workers found</p></div>';
-  // Recent jobs
-  const jd=await AUTH('/api/admin/jobs?limit=5');
-  const rj=document.getElementById('recentJobsList');
-  if(jd.jobs?.length)rj.innerHTML=jd.jobs.map(jobRow).join('');
-  else rj.innerHTML='<div class="empty-state"><i class="bi bi-briefcase"></i><p>No jobs found</p></div>';
 }
 
-function userRow(u){
-  const initials=(u.name||'U')[0].toUpperCase();
-  const avClass=u.role==='admin'?'av-admin':u.role==='worker'?'av-worker':'av-customer';
-  const verifiedBadge=u.role==='worker'?`<span class="badge ${u.verified?'badge-verified':'badge-unverified'}">${u.verified?'Verified':'Unverified'}</span>`:'';
-  const verifyBtn=u.role==='worker'&&!u.verified?`<button class="action-btn btn-verify" onclick="verifyWorker('${u._id}')"><i class="bi bi-patch-check-fill"></i> Verify</button>`:'';
-  const toggleBtn=`<button class="action-btn btn-toggle" onclick="toggleUser('${u._id}',${!u.isActive})">${u.isActive?'Deactivate':'Activate'}</button>`;
-  return `<div class="user-row">
-    <div class="ur-av ${avClass}">${initials}</div>
-    <div><div class="ur-name">${u.name||'Unknown'} ${verifiedBadge}</div><div class="ur-sub">${u.email} · ${u.skill||u.role}</div></div>
-    <div class="ur-actions">${verifyBtn}${toggleBtn}</div>
+function filterVerf(filter, btn) {
+  verfFilter = filter;
+  document.querySelectorAll('[id^=vf-]').forEach(b => { b.className = 'btn btn-sm btn-outline'; });
+  btn.className = 'btn btn-sm btn-saffron';
+  renderVerfCards();
+}
+
+function renderVerfCards() {
+  const el = document.getElementById('verfCards');
+  let workers = allVerfWorkers;
+  if (verfFilter !== 'all') workers = workers.filter(w => (w.idStatus || 'none') === verfFilter);
+  if (!workers.length) {
+    el.innerHTML = '<div class="empty"><i class="bi bi-shield-check"></i><h3>No workers in this category</h3><p>Try a different filter above</p></div>';
+    return;
+  }
+  el.innerHTML = `<div class="verf-grid">${workers.map(w => verfCard(w)).join('')}</div>`;
+}
+
+function verfCard(w) {
+  const idStatus = w.idStatus || 'none';
+  const hasDoc   = !!w.idType;
+  const isVerified = w.verified;
+
+  let actionBtns = '';
+  if (idStatus === 'pending') {
+    actionBtns = `
+      <button class="btn btn-teal btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> Review ID</button>`;
+  } else if (idStatus === 'approved' && !isVerified) {
+    actionBtns = `<button class="btn btn-green btn-sm" onclick="quickVerify('${w._id||w.id}')"><i class="bi bi-patch-check"></i> Verify Worker</button>`;
+  } else if (idStatus === 'approved' && isVerified) {
+    actionBtns = `<span style="font-size:12px;color:var(--green);font-weight:700"><i class="bi bi-patch-check-fill"></i> Fully Verified</span>`;
+  } else if (idStatus === 'rejected') {
+    actionBtns = `<button class="btn btn-outline btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-arrow-repeat"></i> Re-review</button>`;
+  } else {
+    actionBtns = `<span style="font-size:12px;color:var(--ink-30)">No ID uploaded yet</span>`;
+  }
+
+  return `<div class="verf-card">
+    <div class="vc-header">
+      <div class="vc-avatar">${hasDoc ? '🪪' : '👷'}</div>
+      <div class="vc-badge-wrap">
+        ${idStatusBadge(idStatus)}
+        ${isVerified ? '<span class="badge b-completed" style="font-size:10px">✅ Verified</span>' : ''}
+      </div>
+    </div>
+    <div class="vc-name">${w.name}</div>
+    <div class="vc-skill">${w.skill || '—'} • ${w.location || '—'}</div>
+    <div class="vc-meta" style="margin-top:10px">
+      <span><i class="bi bi-envelope" style="font-size:11px"></i> ${w.email}</span>
+      ${hasDoc ? `<span><i class="bi ${ID_TYPE_ICONS[w.idType]||'bi-file-earmark'}" style="font-size:11px"></i> ${ID_TYPE_LABELS[w.idType]||'—'}</span>` : ''}
+    </div>
+    ${w.idRejectedReason ? `<div style="font-size:12px;color:var(--rose);background:var(--rose-light);border-radius:7px;padding:7px 10px;margin-top:8px;margin-bottom:10px"><i class="bi bi-exclamation-circle"></i> ${w.idRejectedReason}</div>` : ''}
+    <div class="vc-actions">${actionBtns}</div>
   </div>`;
 }
 
-function jobRow(j){
-  const em=skillEmoji[j.skill]||'🛠️';
-  const stMap={pending:'badge-pending',accepted:'badge-accepted',in_progress:'badge-accepted',completed:'badge-completed',cancelled:'badge-cancelled',paid:'badge-completed'};
-  return `<div class="job-row">
-    <div class="jr-ico">${em}</div>
-    <div><div class="jr-title">${j.title||j.skill||'Job'}</div><div class="jr-meta">${j.customerId?.name||'Customer'} → ${j.workerId?.name||'Worker'}</div></div>
-    <span class="badge ${stMap[j.status]||''}">${j.status}</span>
-    <div class="jr-price">₹${j.price||0}</div>
-  </div>`;
-}
+/* ── ID MODAL ── */
+async function openIdModal(workerId) {
+  document.getElementById('idModal').classList.add('open');
+  document.getElementById('idModalWorkerId').value = workerId;
+  document.getElementById('idDocViewer').innerHTML = '<div class="loading"><i class="bi bi-arrow-repeat"></i></div>';
+  document.getElementById('idInfoRow').innerHTML   = '';
+  document.getElementById('idModalActions').innerHTML = '';
+  document.getElementById('idModalAlert').style.display = 'none';
+  document.getElementById('rejectReasonWrap').style.display = 'none';
+  document.getElementById('rejectReason').value = '';
 
-async function loadUsers(role,elId){
-  const el=document.getElementById(elId);
-  const d=await AUTH(`/api/admin/users?role=${role}&limit=50`);
-  if(d.users?.length)el.innerHTML=d.users.map(userRow).join('');
-  else el.innerHTML='<div class="empty-state"><i class="bi bi-people"></i><p>No users found</p></div>';
-}
+  try {
+    const d = await (await fetch(`/api/admin/worker-document/${workerId}`, { headers: H })).json();
+    if (!d.success) { showIdAlert('error', 'Could not load worker document.'); return; }
+    const w = d.worker;
+    document.getElementById('idModalTitle').textContent = `ID Review — ${w.name}`;
+    document.getElementById('idModalSub').textContent   = `Submitted ${ID_TYPE_LABELS[w.idType] || 'Government ID'} for verification`;
 
-async function searchUsers(role){
-  const q=document.getElementById(role+'Search').value.trim();
-  const elId=role+'sList';
-  const el=document.getElementById(elId);
-  const d=await AUTH(`/api/admin/users?role=${role}&search=${encodeURIComponent(q)}&limit=50`);
-  if(d.users?.length)el.innerHTML=d.users.map(userRow).join('');
-  else el.innerHTML='<div class="empty-state"><i class="bi bi-search"></i><p>No results found</p></div>';
-}
+    // Info chips
+    document.getElementById('idInfoRow').innerHTML = `
+      <div class="id-info-chip"><i class="bi ${ID_TYPE_ICONS[w.idType]||'bi-file-earmark'}"></i> ${ID_TYPE_LABELS[w.idType]||'Unknown ID'}</div>
+      <div class="id-info-chip">${idStatusBadge(w.idStatus||'none')}</div>
+      ${w.idRejectedReason ? `<div class="id-info-chip" style="color:var(--rose)"><i class="bi bi-exclamation-circle"></i> ${w.idRejectedReason}</div>` : ''}`;
 
-async function loadJobs(){
-  const el=document.getElementById('jobsList');
-  const d=await AUTH('/api/admin/jobs?limit=50');
-  if(d.jobs?.length)el.innerHTML=d.jobs.map(jobRow).join('');
-  else el.innerHTML='<div class="empty-state"><i class="bi bi-briefcase"></i><p>No jobs found</p></div>';
-}
+    // Document viewer
+    const viewer = document.getElementById('idDocViewer');
+    if (w.idDocument) {
+      const isPdf = w.idDocument.startsWith('data:application/pdf');
+      if (isPdf) {
+        viewer.innerHTML = `<iframe class="id-modal-pdf" src="${w.idDocument}" title="ID Document"></iframe>`;
+      } else {
+        viewer.innerHTML = `<img class="id-modal-img" src="${w.idDocument}" alt="ID Document" onerror="this.parentElement.innerHTML='<div class=\\'empty\\'><i class=\\'bi bi-image-fill\\'></i><p>Could not load image</p></div>'">`;
+      }
+    } else {
+      viewer.innerHTML = '<div class="empty" style="padding:24px"><i class="bi bi-file-earmark-x"></i><p>No document uploaded by worker</p></div>';
+    }
 
-async function loadRevenue(){
-  const d=await AUTH('/api/admin/revenue');
-  if(d.success){
-    document.getElementById('revTotal').textContent='₹'+(d.totalRevenue||0).toLocaleString('en-IN');
-    document.getElementById('revMonthly').textContent='₹'+(d.monthlyRevenue||0).toLocaleString('en-IN');
-    const el=document.getElementById('revHistory');
-    if(d.revenueChart?.length){
-      el.innerHTML=d.revenueChart.map(r=>`<div class="job-row">
-        <div class="jr-ico">📅</div>
-        <div><div class="jr-title">${r._id}</div><div class="jr-meta">${r.transactions} transactions</div></div>
-        <div class="jr-price">₹${(r.revenue||0).toLocaleString('en-IN')}</div>
-      </div>`).join('');
-    }else el.innerHTML='<div class="empty-state"><i class="bi bi-graph-up"></i><p>No revenue data yet</p></div>';
+    // Action buttons based on status
+    const acts = document.getElementById('idModalActions');
+    const status = w.idStatus || 'none';
+    if (status === 'pending' || status === 'none') {
+      acts.innerHTML = `
+        <button class="btn btn-green" onclick="approveId('${workerId}')"><i class="bi bi-check-circle-fill"></i> Approve & Verify</button>
+        <button class="btn btn-danger" onclick="showRejectInput()"><i class="bi bi-x-circle-fill"></i> Reject</button>
+        <button class="btn btn-outline" onclick="closeIdModal()">Cancel</button>`;
+    } else if (status === 'rejected') {
+      acts.innerHTML = `
+        <button class="btn btn-green" onclick="approveId('${workerId}')"><i class="bi bi-check-circle-fill"></i> Approve Anyway</button>
+        <button class="btn btn-outline" onclick="closeIdModal()">Close</button>`;
+    } else if (status === 'approved') {
+      acts.innerHTML = `
+        <button class="btn btn-green" onclick="quickVerify('${workerId}');closeIdModal()"><i class="bi bi-patch-check-fill"></i> Verify Worker</button>
+        <button class="btn btn-danger" onclick="showRejectInput()"><i class="bi bi-x-circle-fill"></i> Revoke</button>
+        <button class="btn btn-outline" onclick="closeIdModal()">Close</button>`;
+    }
+  } catch(e) {
+    showIdAlert('error', 'Network error. Is the server running?');
   }
 }
 
-async function verifyWorker(id){
-  const d=await AUTHPOST('/api/admin/verify-worker',{worker_id:id});
-  if(d.success){alert('Worker verified!');loadOverview();}
-  else alert(d.message||'Failed');
+function showRejectInput() {
+  document.getElementById('rejectReasonWrap').style.display = 'block';
+  // Swap buttons
+  document.getElementById('idModalActions').innerHTML = `
+    <button class="btn btn-danger" onclick="rejectId(document.getElementById('idModalWorkerId').value)"><i class="bi bi-x-circle-fill"></i> Confirm Reject</button>
+    <button class="btn btn-outline" onclick="closeIdModal()">Cancel</button>`;
+  document.getElementById('rejectReason').focus();
 }
-async function toggleUser(id,active){
-  const d=await fetch('/api/admin/user-status',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({user_id:id,is_active:active})}).then(r=>r.json());
-  if(d.success){loadOverview();showTab('workers');}
-  else alert(d.message||'Failed');
+
+async function approveId(workerId) {
+  try {
+    // Step 1: Mark idStatus as approved
+    const r1 = await fetch('/api/admin/verify-worker', { method:'POST', headers:H, body:JSON.stringify({ worker_id: workerId }) });
+    const d1 = await r1.json();
+    if (!d1.success) { showIdAlert('error', d1.message || 'Approval failed'); return; }
+    toast('Worker ID approved and verified! ✅');
+    closeIdModal();
+    loadStats(); loadPendingVer();
+    if (document.getElementById('sec-verifications').style.display !== 'none') loadVerifications();
+    if (document.getElementById('sec-workers').style.display !== 'none') loadWorkers();
+  } catch(e) { showIdAlert('error', 'Network error'); }
 }
-async function seedData(){
-  if(!confirm('Seed demo data into the database?'))return;
-  const d=await fetch('/api/admin/seed',{method:'POST'}).then(r=>r.json());
-  alert(d.message||(d.success?'Seeded!':'Failed'));
-  if(d.success)loadOverview();
+
+async function rejectId(workerId) {
+  const reason = document.getElementById('rejectReason').value.trim();
+  if (!reason) { showIdAlert('error', 'Please enter a rejection reason'); return; }
+  try {
+    const r = await fetch('/api/admin/reject-worker', { method:'POST', headers:H, body:JSON.stringify({ worker_id: workerId, reason }) });
+    const d = await r.json();
+    if (d.success) {
+      toast('Worker ID rejected. Worker has been notified. ❌');
+      closeIdModal();
+      loadStats(); loadPendingVer();
+      if (document.getElementById('sec-verifications').style.display !== 'none') loadVerifications();
+      if (document.getElementById('sec-workers').style.display !== 'none') loadWorkers();
+    } else {
+      showIdAlert('error', d.message || 'Rejection failed');
+    }
+  } catch(e) { showIdAlert('error', 'Network error'); }
 }
-function logout(){localStorage.removeItem('kc_token');localStorage.removeItem('kc_user');location.href='login.html';}
-loadOverview();
+
+async function quickVerify(workerId) {
+  try {
+    const r = await fetch('/api/admin/verify-worker', { method:'POST', headers:H, body:JSON.stringify({ worker_id: workerId }) });
+    const d = await r.json();
+    if (d.success) { toast('Worker verified! ✅'); loadStats(); loadPendingVer(); loadVerifications(); loadWorkers(); }
+  } catch(e) {}
+}
+
+function closeIdModal() {
+  document.getElementById('idModal').classList.remove('open');
+}
+document.getElementById('idModal').addEventListener('click', function(e) {
+  if (e.target === this) closeIdModal();
+});
+
+function showIdAlert(t, m) {
+  const a = document.getElementById('idModalAlert');
+  a.style.display = 'flex'; a.className = 'alert ' + (t==='error' ? 'ae' : 'as');
+  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;
+}
+
+/* ── RECENT JOBS ── */
+async function loadRecentJobs() {
+  try {
+    const d = await (await fetch('/api/admin/jobs?limit=8', { headers: H })).json();
+    const tb = document.getElementById('recentJTb');
+    if (!d.jobs?.length) { tb.innerHTML='<tr><td colspan="6"><div class="empty"><p>No jobs yet</p></div></td></tr>'; return; }
+    tb.innerHTML = d.jobs.map(j => `<tr>
+      <td><span class="td-name">${j.title||j.skill}</span></td>
+      <td>${j.customerId?.name||'—'}</td>
+      <td>${j.workerId?.name||'—'}</td>
+      <td>₹${j.price}</td>
+      <td style="font-weight:700;color:var(--green)">₹${j.commission||0}</td>
+      <td>${statusBadge(j.status)}</td>
+    </tr>`).join('');
+  } catch(e) {}
+}
+
+/* ── USERS ── */
+async function loadUsers() {
+  const search = document.getElementById('uSearch').value;
+  const role   = document.getElementById('uRole').value;
+  let url = `/api/admin/users?`; if (role) url += `role=${role}&`; if (search) url += `search=${encodeURIComponent(search)}`;
+  try {
+    const d = await (await fetch(url, { headers: H })).json();
+    const tb = document.getElementById('usersTb');
+    if (!d.users?.length) { tb.innerHTML='<tr><td colspan="6"><div class="empty"><i class="bi bi-people"></i><h3>No users found</h3></div></td></tr>'; return; }
+    tb.innerHTML = d.users.map(u => {
+      const active = u.isActive !== false;
+      return `<tr>
+        <td><span class="td-name">${u.name}</span></td>
+        <td style="font-size:12.5px">${u.email}</td>
+        <td><span class="badge ${u.role==='admin'?'b-paid':u.role==='worker'?'b-accepted':'b-pending'}">${u.role}</span></td>
+        <td>${u.location||'—'}</td>
+        <td><span class="badge ${active?'b-completed':'b-cancelled'}">${active?'Active':'Inactive'}</span></td>
+        <td><button class="btn btn-sm ${active?'btn-danger':'btn-teal'}" onclick="toggleU('${u._id||u.id}',${!active})">${active?'Deactivate':'Activate'}</button></td>
+      </tr>`;
+    }).join('');
+  } catch(e) {}
+}
+
+async function toggleU(id, activate) {
+  try {
+    const r = await fetch('/api/admin/user-status', { method:'PUT', headers:H, body:JSON.stringify({ user_id:id, is_active:activate }) });
+    if ((await r.json()).success) { loadUsers(); toast(activate ? 'User activated ✅' : 'User deactivated ❌'); }
+  } catch(e) {}
+}
+
+/* ── WORKERS ── */
+async function loadWorkers() {
+  try {
+    const d = await (await fetch('/api/admin/users?role=worker', { headers: H })).json();
+    const tb = document.getElementById('workersTb');
+    if (!d.users?.length) { tb.innerHTML='<tr><td colspan="8"><div class="empty"><i class="bi bi-person-badge"></i><h3>No workers yet</h3></div></td></tr>'; return; }
+    tb.innerHTML = d.users.map(u => {
+      const v = u.verified;
+      const idStatus = u.idStatus || 'none';
+      return `<tr>
+        <td><span class="td-name">${u.name}</span><small style="color:var(--ink-30)">${u.email}</small></td>
+        <td>${u.skill||'—'}</td>
+        <td>${u.location||'—'}</td>
+        <td><span style="color:var(--gold)">${'★'.repeat(Math.floor(u.rating||0))}</span> ${(u.rating||0).toFixed(1)}</td>
+        <td>${u.totalJobs||0}</td>
+        <td>${idStatusBadge(idStatus)}</td>
+        <td>${v ? '<span class="badge b-completed">✅ Verified</span>' : '<span class="badge b-pending">⏳ Pending</span>'}</td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap">
+          ${idStatus==='pending' ? `<button class="btn btn-saffron btn-sm" onclick="openIdModal('${u._id||u.id}')"><i class="bi bi-eye"></i> Review ID</button>` : ''}
+          ${!v && idStatus!=='pending' ? `<button class="btn btn-teal btn-sm" onclick="quickVerify('${u._id||u.id}')"><i class="bi bi-patch-check"></i> Verify</button>` : ''}
+          ${v ? '—' : ''}
+        </td>
+      </tr>`;
+    }).join('');
+  } catch(e) {}
+}
+
+/* ── JOBS ── */
+async function loadAllJobs(status) {
+  const url = status ? `/api/admin/jobs?status=${status}` : `/api/admin/jobs`;
+  try {
+    const d = await (await fetch(url, { headers: H })).json();
+    const tb = document.getElementById('allJobsTb');
+    if (!d.jobs?.length) { tb.innerHTML='<tr><td colspan="7"><div class="empty"><p>No jobs</p></div></td></tr>'; return; }
+    tb.innerHTML = d.jobs.map(j => {
+      const dt = j.createdAt ? new Date(j.createdAt).toLocaleDateString('en-IN') : '—';
+      return `<tr>
+        <td><span class="td-name">${j.title||j.skill}</span></td>
+        <td>${j.customerId?.name||'—'}</td>
+        <td>${j.workerId?.name||'—'}</td>
+        <td>₹${j.price}</td>
+        <td style="font-weight:700;color:var(--green)">₹${j.commission||0}</td>
+        <td>${statusBadge(j.status)}</td>
+        <td style="color:var(--ink-30)">${dt}</td>
+      </tr>`;
+    }).join('');
+  } catch(e) {}
+}
+
+/* ── REVENUE ── */
+async function loadRevenue() {
+  try {
+    const d = await (await fetch('/api/admin/revenue', { headers: H })).json();
+    document.getElementById('r-total').textContent = '₹' + (d.totalRevenue||0).toLocaleString();
+    document.getElementById('r-month').textContent = '₹' + (d.monthlyRevenue||0).toLocaleString();
+    const tb = document.getElementById('revTb');
+    if (d.revenueChart?.length) {
+      tb.innerHTML = d.revenueChart.map(r => `<tr>
+        <td style="font-weight:600">${r._id||r.month}</td>
+        <td>${r.transactions||r.count||0}</td>
+        <td style="font-weight:700;color:var(--green)">₹${(r.revenue||0).toLocaleString()}</td>
+      </tr>`).join('');
+    } else tb.innerHTML='<tr><td colspan="3"><div class="empty"><p>No revenue data yet</p></div></td></tr>';
+  } catch(e) {}
+}
+
+function logout() { localStorage.clear(); location.href = 'login.html'; }
+
+// ── INIT ──
+loadStats();
+loadPendingVer();
+loadRecentJobs();
 </script>
 </body>
 </html>
