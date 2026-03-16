@@ -358,6 +358,20 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 </div>
 
 <script>
+// ── Save token from Google OAuth redirect ──────────────────
+(function () {
+  const p = new URLSearchParams(window.location.search);
+  const t = p.get('token'), u = p.get('user');
+  if (t && u) {
+    try {
+      localStorage.setItem('kc_token', t);
+      localStorage.setItem('kc_user', u);
+      // Clean URL without reloading
+      window.history.replaceState({}, '', window.location.pathname);
+    } catch(e) {}
+  }
+})();
+
 const TOKEN = localStorage.getItem('kc_token');
 let USER = JSON.parse(localStorage.getItem('kc_user') || '{}');
 if (!TOKEN || USER.role !== 'customer') { location.href = 'login.html'; }

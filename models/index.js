@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-const bcrypt   = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
-// ─── USER MODEL ───────────────────────────────────────────────
+// ─── USER MODEL ────────────────────────────────────────────
 const userSchema = new mongoose.Schema(
   {
     name:     { type: String, required: true, trim: true },
     email:    { type: String, required: true, unique: true, lowercase: true, trim: true },
-    password: { type: String, minlength: 6, default: null },   // null OK for Google users
-    googleId: { type: String, default: null },                 // set for Google OAuth users
+    password: { type: String, minlength: 6, default: null },  // null for Google-only users
+    googleId: { type: String, default: null, sparse: true },  // Google OAuth ID
     phone:    { type: String, trim: true },
     role:     { type: String, enum: ["customer", "worker", "admin"], default: "customer" },
     skill:    { type: String, lowercase: true, trim: true },
@@ -19,14 +19,14 @@ const userSchema = new mongoose.Schema(
     totalJobs:{ type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
 
-    // ── Government ID (workers only) ───────────────────────
+    // ── Government ID for worker verification ──────────────
     idType: {
       type: String,
       enum: ["aadhaar", "pan", "voter", "driving", "passport", "other", null],
       default: null,
     },
-    idDocument:       { type: String, default: null },
-    idVerifiedAt:     { type: Date,   default: null },
+    idDocument:       { type: String, default: null }, // base64 data URL or cloud URL
+    idVerifiedAt:     { type: Date, default: null },
     idRejectedReason: { type: String, default: null },
     idStatus: {
       type: String,
@@ -41,11 +41,12 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash password before saving — skip if null or Google placeholder
+// Hash password before save (skip if null or unchanged)
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   if (!this.password) return next();
-  if (this.password.startsWith("google_oauth_")) return next();
+  // Skip hashing placeholder Google passwords that are already set
+  if (this.password.startsWith("google_oauth_") && !this.isNew) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
@@ -61,7 +62,7 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-// ─── JOB MODEL ────────────────────────────────────────────────
+// ─── JOB MODEL ─────────────────────────────────────────────
 const jobSchema = new mongoose.Schema(
   {
     customerId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -91,7 +92,7 @@ const jobSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ─── MESSAGE MODEL ────────────────────────────────────────────
+// ─── MESSAGE MODEL ─────────────────────────────────────────
 const messageSchema = new mongoose.Schema(
   {
     jobId:      { type: mongoose.Schema.Types.ObjectId, ref: "Job" },
@@ -103,10 +104,10 @@ const messageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ─── REVIEW MODEL ─────────────────────────────────────────────
+// ─── REVIEW MODEL ──────────────────────────────────────────
 const reviewSchema = new mongoose.Schema(
   {
-    jobId:      { type: mongoose.Schema.Types.ObjectId, ref: "Job",  required: true },
+    jobId:      { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
     workerId:   { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     customerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     rating:     { type: Number, required: true, min: 1, max: 5 },
@@ -115,7 +116,7 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// ─── NOTIFICATION MODEL ───────────────────────────────────────
+// ─── NOTIFICATION MODEL ────────────────────────────────────
 const notificationSchema = new mongoose.Schema(
   {
     userId:  { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -123,11 +124,8 @@ const notificationSchema = new mongoose.Schema(
     message: { type: String, required: true },
     type: {
       type: String,
-      enum: [
-        "accepted", "in_progress", "completed", "cancelled",
-        "new_job", "payment", "general", "verification",
-        "id_approved", "id_rejected",
-      ],
+      enum: ["accepted", "in_progress", "completed", "cancelled", "new_job",
+             "payment", "general", "verification", "id_approved", "id_rejected"],
       default: "general",
     },
     isRead: { type: Boolean, default: false },
