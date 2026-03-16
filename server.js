@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const http = require("http");
+const passport = require("passport");
 const connectDB = require("./config/db");
 const { Message } = require("./models");
 
@@ -21,6 +22,7 @@ connectDB();
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, "public")));
 
 // ── Socket.IO real-time ─────────────────────────────────────
@@ -93,13 +95,13 @@ app.post("/api/admin/seed", async (req, res) => {
     const hashedPass = await bcrypt.hash("admin123", 10);
 
     await User.insertMany([
-      { name:"Admin", email:"admin@kaamconnect.com", password:hashedPass, role:"admin", verified:true },
-      { name:"Rajesh Kumar", email:"rajesh@example.com", password:hashedPass, phone:"9876543210", role:"worker", skill:"electrician", location:"Ludhiana", verified:true, rating:4.8, totalJobs:124, bio:"10+ years of electrical experience. Certified electrician for residential and commercial projects." },
-      { name:"Suresh Sharma", email:"suresh@example.com", password:hashedPass, phone:"9876543211", role:"worker", skill:"plumber", location:"Chandigarh", verified:true, rating:4.6, totalJobs:98, bio:"Expert plumber specializing in bathroom renovation and pipe fitting." },
-      { name:"Amit Singh", email:"amit@example.com", password:hashedPass, phone:"9876543212", role:"worker", skill:"painter", location:"Delhi", verified:true, rating:4.9, totalJobs:156, bio:"Professional painter offering interior, exterior and texture painting services." },
-      { name:"Vikram Patel", email:"vikram@example.com", password:hashedPass, phone:"9876543213", role:"worker", skill:"carpenter", location:"Mumbai", verified:true, rating:4.7, totalJobs:87, bio:"Master carpenter with 15 years experience." },
-      { name:"Mohan Das", email:"mohan@example.com", password:hashedPass, phone:"9876543214", role:"worker", skill:"electrician", location:"Ludhiana", verified:true, rating:4.5, totalJobs:63, bio:"Qualified electrician for home wiring." },
-      { name:"Priya Sharma", email:"priya@example.com", password:hashedPass, phone:"9876543220", role:"customer", location:"Ludhiana" },
+      { name: "Admin", email: "admin@kaamconnect.com", password: hashedPass, role: "admin", verified: true },
+      { name: "Rajesh Kumar", email: "rajesh@example.com", password: hashedPass, phone: "9876543210", role: "worker", skill: "electrician", location: "Ludhiana", verified: true, rating: 4.8, totalJobs: 124, bio: "10+ years of electrical experience." },
+      { name: "Suresh Sharma", email: "suresh@example.com", password: hashedPass, phone: "9876543211", role: "worker", skill: "plumber", location: "Chandigarh", verified: true, rating: 4.6, totalJobs: 98, bio: "Expert plumber specializing in bathroom renovation." },
+      { name: "Amit Singh", email: "amit@example.com", password: hashedPass, phone: "9876543212", role: "worker", skill: "painter", location: "Delhi", verified: true, rating: 4.9, totalJobs: 156, bio: "Professional painter offering interior and exterior painting." },
+      { name: "Vikram Patel", email: "vikram@example.com", password: hashedPass, phone: "9876543213", role: "worker", skill: "carpenter", location: "Mumbai", verified: true, rating: 4.7, totalJobs: 87, bio: "Master carpenter with 15 years experience." },
+      { name: "Mohan Das", email: "mohan@example.com", password: hashedPass, phone: "9876543214", role: "worker", skill: "electrician", location: "Ludhiana", verified: true, rating: 4.5, totalJobs: 63, bio: "Qualified electrician for home wiring." },
+      { name: "Priya Sharma", email: "priya@example.com", password: hashedPass, phone: "9876543220", role: "customer", location: "Ludhiana" },
     ]);
 
     res.json({ success: true, message: "Demo data seeded! Login: admin123" });
