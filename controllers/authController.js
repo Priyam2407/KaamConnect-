@@ -1,48 +1,49 @@
 const { User } = require("../models");
-const jwt = require("jsonwebtoken");
+const jwt      = require("jsonwebtoken");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-// ─── JWT helper ─────────────────────────────────────────────
+// ─── JWT helper ──────────────────────────────────────────────
 const signToken = (id, role) =>
   jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-// ─── Google OAuth Strategy ───────────────────────────────────
+// ─── Google OAuth Strategy ────────────────────────────────────
 passport.use(
   new GoogleStrategy(
     {
-      clientID:     process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL:  `${process.env.BASE_URL}/api/auth/google/callback`,
+      clientID:          process.env.GOOGLE_CLIENT_ID,
+      clientSecret:      process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL:       `${process.env.BASE_URL}/api/auth/google/callback`,
+      passReqToCallback: true,
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (req, accessToken, refreshToken, profile, done) => {
       try {
-        // Try to find existing Google user
+        // 1. Already has Google account → log in directly
         let user = await User.findOne({ googleId: profile.id });
+        if (user) return done(null, { user, isNew: false });
 
-        if (!user) {
-          // Check if email already registered (link accounts)
-          user = await User.findOne({ email: profile.emails[0].value });
-          if (user) {
-            // Link Google ID to existing account
-            user.googleId = profile.id;
-            if (!user.avatar) user.avatar = profile.photos[0]?.value;
-            await user.save();
-          } else {
-            // Create brand new user via Google
-            user = await User.create({
-              name:     profile.displayName,
-              email:    profile.emails[0].value,
-              googleId: profile.id,
-              avatar:   profile.photos[0]?.value || null,
-              role:     "customer",
-              password: "google_oauth_" + profile.id, // placeholder, never used for login
-              verified: true,
-            });
-          }
+        // 2. Email already registered with password → link Google
+        user = await User.findOne({ email: profile.emails[0].value });
+        if (user) {
+          user.googleId = profile.id;
+          if (!user.avatar) user.avatar = profile.photos[0]?.value || null;
+          await user.save();
+          return done(null, { user, isNew: false });
         }
 
-        return done(null, user);
+        // 3. Brand new user → create with customer role for now
+        //    Role will be updated on google-role.html before going to dashboard
+        user = await User.create({
+          name:     profile.displayName,
+          email:    profile.emails[0].value,
+          googleId: profile.id,
+          avatar:   profile.photos[0]?.value || null,
+          role:     "customer",
+          password: "google_oauth_" + profile.id,
+          verified: true,
+        });
+
+        return done(null, { user, isNew: true });
       } catch (err) {
         return done(err, null);
       }
@@ -50,7 +51,7 @@ passport.use(
   )
 );
 
-// ─── Register ────────────────────────────────────────────────
+// ─── Register ─────────────────────────────────────────────────
 exports.register = async (req, res) => {
   try {
     const { name, email, password, phone, role, skill, location, bio } = req.body;
@@ -88,7 +89,7 @@ exports.register = async (req, res) => {
   }
 };
 
-// ─── Login ───────────────────────────────────────────────────
+// ─── Login ────────────────────────────────────────────────────
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -98,19 +99,15 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email, isActive: true }).select("+password");
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    // Block Google-only users from email login
-    if (user.googleId && user.password && user.password.startsWith("google_oauth_")) {
-      return res.status(401).json({ success: false, message: "This account uses Google Sign-In. Please continue with Google." });
-    }
+    if (user.googleId && user.password && user.password.startsWith("google_oauth_"))
+      return res.status(401).json({ success: false, message: "This account uses Google Sign-In. Please click 'Continue with Google'." });
 
     const valid = await user.comparePassword(password);
     if (!valid) return res.status(401).json({ success: false, message: "Invalid password" });
 
     const token = signToken(user._id, user.role);
     res.json({
-      success: true,
-      message: "Login successful",
-      token,
+      success: true, message: "Login successful", token,
       user: {
         id: user._id, name: user.name, email: user.email, role: user.role,
         skill: user.skill, location: user.location, avatar: user.avatar,
@@ -123,23 +120,60 @@ exports.login = async (req, res) => {
   }
 };
 
-// ─── Google OAuth — initiate ─────────────────────────────────
+// ─── Google Auth — Step 1 ────────────────────────────────────
 exports.googleAuth = passport.authenticate("google", {
-  scope: ["profile", "email"],
+  scope:   ["profile", "email"],
   session: false,
 });
 
-// ─── Google OAuth — callback ─────────────────────────────────
+// ─── Google Auth — Step 2: callback ──────────────────────────
 exports.googleCallback = (req, res) => {
-  passport.authenticate("google", { session: false }, (err, user) => {
-    if (err || !user) {
+  passport.authenticate("google", { session: false }, (err, result) => {
+    if (err || !result) {
       console.error("Google OAuth error:", err);
       return res.redirect("/login.html?error=google_failed");
     }
 
+    const { user, isNew } = result;
+    const token    = signToken(user._id, user.role);
+    const userData = encodeURIComponent(JSON.stringify({
+      id:       user._id,
+      name:     user.name,
+      email:    user.email,
+      role:     user.role,
+      skill:    user.skill    || null,
+      location: user.location || null,
+      avatar:   user.avatar   || null,
+    }));
+
+    // NEW user → send to role selection page first
+    if (isNew) {
+      return res.redirect(`/google-role.html?token=${token}&user=${userData}`);
+    }
+
+    // EXISTING user → send directly to their dashboard
+    const dest = user.role === "admin"  ? "admin-dashboard.html"
+               : user.role === "worker" ? "worker-dashboard.html"
+               : "customer-dashboard.html";
+
+    res.redirect(`/${dest}?token=${token}&user=${userData}`);
+  })(req, res);
+};
+
+// ─── Update role (called from google-role.html) ───────────────
+exports.updateGoogleRole = async (req, res) => {
+  try {
+    const { role } = req.body;
+    if (!["customer", "worker"].includes(role))
+      return res.status(400).json({ success: false, message: "Invalid role" });
+
+    const user  = await User.findByIdAndUpdate(req.user.id, { role }, { new: true });
     const token = signToken(user._id, user.role);
-    const userData = encodeURIComponent(
-      JSON.stringify({
+
+    res.json({
+      success: true,
+      token,
+      user: {
         id:       user._id,
         name:     user.name,
         email:    user.email,
@@ -147,15 +181,11 @@ exports.googleCallback = (req, res) => {
         skill:    user.skill    || null,
         location: user.location || null,
         avatar:   user.avatar   || null,
-      })
-    );
-
-    const dest = user.role === "admin"  ? "admin-dashboard.html"
-               : user.role === "worker" ? "worker-dashboard.html"
-               : "customer-dashboard.html";
-
-    res.redirect(`/${dest}?token=${token}&user=${userData}`);
-  })(req, res);
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error" });
+  }
 };
 
 // ─── Get Profile ─────────────────────────────────────────────
@@ -169,7 +199,7 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-// ─── Update Profile ──────────────────────────────────────────
+// ─── Update Profile ───────────────────────────────────────────
 exports.updateProfile = async (req, res) => {
   try {
     const { name, phone, location, bio, skill } = req.body;
@@ -180,16 +210,13 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-// ─── Change Password ─────────────────────────────────────────
+// ─── Change Password ──────────────────────────────────────────
 exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.user.id).select("+password");
-
-    if (user.googleId && user.password.startsWith("google_oauth_")) {
+    if (user.googleId && user.password.startsWith("google_oauth_"))
       return res.status(400).json({ success: false, message: "Google accounts cannot change password here." });
-    }
-
     const valid = await user.comparePassword(currentPassword);
     if (!valid) return res.status(401).json({ success: false, message: "Current password is incorrect" });
     user.password = newPassword;
