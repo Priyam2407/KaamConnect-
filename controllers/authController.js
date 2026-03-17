@@ -129,6 +129,8 @@ exports.googleCallback = (req, res) => {
 
     const { user, isNew } = result;
     const token    = signToken(user._id, user.role);
+    // NOTE: avatar intentionally excluded from URL to prevent 502 (header too large)
+    // Avatar is saved in DB and loaded via /api/auth/profile on dashboard
     const userData = encodeURIComponent(JSON.stringify({
       id:       user._id,
       name:     user.name,
@@ -136,7 +138,6 @@ exports.googleCallback = (req, res) => {
       role:     user.role,
       skill:    user.skill    || null,
       location: user.location || null,
-      avatar:   user.avatar   || null,
     }));
 
     // NEW user → role selection page first
