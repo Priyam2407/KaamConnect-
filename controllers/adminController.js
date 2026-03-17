@@ -103,7 +103,13 @@ exports.verifyWorker = async (req, res) => {
     const { worker_id } = req.body;
     const worker = await User.findOneAndUpdate(
       { _id: worker_id, role: "worker" },
-      { verified: true }
+      {
+        verified:         true,
+        idStatus:         "approved",
+        idVerifiedAt:     new Date(),
+        idRejectedReason: null,
+      },
+      { new: true }
     );
     if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
 
