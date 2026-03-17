@@ -1,466 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');
-</script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KaamConnect — India's Trusted Worker Marketplace</title>
+<title>My Dashboard — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
+
+<!-- htmlhint-disable -->
 <style>
-:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06);--gold:#C9941A;--r:16px;--r-sm:10px;--sh-sm:0 2px 12px rgba(15,25,35,.06);--sh:0 8px 32px rgba(15,25,35,.08);--sh-lg:0 20px 64px rgba(15,25,35,.10)}
+:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{text-decoration:none;color:inherit}ul{list-style:none}button,input,select,textarea{font-family:inherit}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
-
-/* ══ NAV ══ */
-#nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:10px 0;transition:all .4s cubic-bezier(.4,0,.2,1)}
-#nav.pinned{padding:0;background:rgba(250,247,242,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--ink-06);box-shadow:0 4px 32px rgba(15,25,35,.06)}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{display:flex;align-items:center;gap:11px}
-.logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(232,96,28,.35);flex-shrink:0;transition:transform .22s,box-shadow .22s}
-.logo:hover .logo-mark{transform:rotate(-8deg) scale(1.1);box-shadow:0 6px 20px rgba(232,96,28,.5)}
-.logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.4px;transition:color .3s}
-#nav:not(.pinned) .logo-txt{color:#fff}
-#nav.pinned .logo-txt{color:var(--forest)}
-.logo-txt span{color:var(--saffron-2)}
-.nav-menu{display:flex;align-items:center;gap:2px}
-.nav-menu a{font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:9px;position:relative;transition:all .22s;letter-spacing:.1px}
-#nav:not(.pinned) .nav-menu a{color:rgba(255,255,255,.7)}
-#nav.pinned .nav-menu a{color:var(--ink-70)}
-.nav-menu a::after{content:'';position:absolute;bottom:4px;left:50%;right:50%;height:2px;background:var(--saffron);border-radius:2px;transition:left .22s,right .22s}
-.nav-menu a:hover{color:var(--saffron)}
-#nav:not(.pinned) .nav-menu a:hover{background:rgba(255,255,255,.1);color:#fff}
-#nav.pinned .nav-menu a:hover{background:var(--saffron-pale)}
-.nav-menu a:hover::after{left:13px;right:13px}
-.nav-cta{display:flex;align-items:center;gap:8px}
-.nav-divider{width:1px;height:20px;flex-shrink:0;transition:background .3s}
-#nav:not(.pinned) .nav-divider{background:rgba(255,255,255,.2)}
-#nav.pinned .nav-divider{background:var(--ink-12)}
-/* Sign In */
-.n-ghost{padding:9px 18px;border-radius:var(--r-sm);font-size:13.5px;font-weight:600;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px)}
-#nav:not(.pinned) .n-ghost{border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);background:rgba(255,255,255,.08)}
-#nav.pinned .n-ghost{border:1.5px solid var(--ink-12);color:var(--ink-70);background:transparent}
-.n-ghost:hover{border-color:var(--saffron)!important;color:var(--saffron)!important;background:var(--saffron-pale)!important}
-/* Sign Up */
-.n-signup{padding:9px 18px;border-radius:var(--r-sm);font-size:13.5px;font-weight:700;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:6px}
-#nav:not(.pinned) .n-signup{border:2px solid rgba(255,255,255,.5);color:#fff;background:transparent}
-#nav.pinned .n-signup{border:2px solid var(--saffron);color:var(--saffron);background:transparent}
-#nav:not(.pinned) .n-signup:hover{background:rgba(255,255,255,.15);border-color:#fff;transform:translateY(-1px)}
-#nav.pinned .n-signup:hover{background:var(--saffron);color:#fff;box-shadow:0 4px 14px rgba(232,96,28,.3);transform:translateY(-1px)}
-/* Get Started */
-.n-solid{padding:10px 20px;background:var(--saffron);border:none;border-radius:var(--r-sm);font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;transition:all .22s;box-shadow:0 4px 14px rgba(232,96,28,.35);display:flex;align-items:center;gap:7px;position:relative;overflow:hidden}
-.n-solid::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .22s}
-.n-solid:hover{background:var(--saffron-2);transform:translateY(-1px);box-shadow:0 6px 22px rgba(232,96,28,.45)}
-.n-solid:hover::before{opacity:1}
-/* Hamburger */
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
-.nav-hamburger span{display:block;width:22px;height:2px;border-radius:2px;transition:all .3s}
-#nav:not(.pinned) .nav-hamburger span{background:#fff}
-#nav.pinned .nav-hamburger span{background:var(--ink)}
-/* Mobile menu */
-.nav-mobile{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(250,247,242,.98);backdrop-filter:blur(24px);border-bottom:1px solid var(--ink-06);padding:16px 24px 24px;flex-direction:column;gap:4px;box-shadow:0 12px 40px rgba(15,25,35,.1);animation:slideDown .25s ease;z-index:799}
-@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.nav-mobile.open{display:flex}
-.nav-mobile a{font-size:15px;font-weight:600;color:var(--ink-70);padding:12px 16px;border-radius:10px;transition:all .2s}
-.nav-mobile a:hover{background:var(--saffron-pale);color:var(--saffron)}
-.nav-mobile-btns{display:flex;gap:8px;margin-top:12px}
-.nav-mobile-btns button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
-.nmb-ghost{border:1.5px solid var(--ink-12);background:transparent;color:var(--ink-70)}
-.nmb-ghost:hover{border-color:var(--saffron);color:var(--saffron)}
-.nmb-solid{background:var(--saffron);border:none;color:#fff;box-shadow:0 4px 14px rgba(232,96,28,.3)}
-.nmb-solid:hover{background:var(--saffron-2)}
-@media(max-width:900px){.nav-menu,.nav-cta{display:none}.nav-hamburger{display:flex}}
-/* ══ INDIA FLAG LOGO ══ */
-.logo-india-flag{width:32px;height:22px;border-radius:4px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.2);transition:transform .22s}
-.logo:hover .logo-india-flag{transform:scale(1.08)}
-.logo-sep{width:1px;height:28px;background:rgba(255,255,255,.2);flex-shrink:0;transition:background .3s}
-#nav.pinned .logo-sep{background:var(--ink-12)}
-
-/* ══ FULL RESPONSIVE ══ */
-/* 900px already handled above - adding more granular fixes */
-@media(max-width:768px){
-  .hero-body{padding:100px 20px 60px}
-  .hero-h{font-size:clamp(36px,9vw,56px);letter-spacing:-1px}
-  .hero-p{font-size:15px;margin-bottom:28px}
-  .hero-search{flex-wrap:wrap;padding:10px 12px;gap:8px;border-radius:14px}
-  .hs-select{width:100%;color:rgba(255,255,255,.7)}
-  .hs-div{display:none}
-  .hs-input{width:100%}
-  .hs-btn{width:100%;justify-content:center;border-radius:10px}
-  .hero-trust{gap:12px}
-  .ribbon-in{flex-wrap:wrap;gap:16px;padding:20px 24px}
-  .section{padding:60px 0}
-  .svc-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .how-grid{gap:36px}
-  .nums-grid{grid-template-columns:repeat(2,1fr);gap:24px}
-  .nm-item+.nm-item{border-left:none}
-  .nm-num{font-size:40px}
-  .tgrid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
-  .cta-inner h2{font-size:clamp(28px,7vw,44px)}
-  .cta-btns{flex-direction:column;align-items:stretch;gap:10px;max-width:280px;margin:0 auto}
-  .modal{border-radius:16px}
-  .modal-head{padding:22px 24px}
-  .modal-body{padding:20px}
-  .fi-row{grid-template-columns:1fr}
-  .pane-in{padding:32px 20px}
-}
-@media(max-width:540px){
-  .svc-grid{grid-template-columns:1fr}
-  .workers-grid{grid-template-columns:1fr!important}
-  .footer-top{grid-template-columns:1fr}
-  .wrap{padding:0 16px}
-  .nav-in{padding:0 16px}
-  .ribbon-in{padding:16px}
-  .rib-num{font-size:24px}
-  .rib-lbl{font-size:11px}
-  .section{padding:48px 0}
-  .nums-band{padding:48px 0}
-  .nm-num{font-size:36px}
-  .chat-win{width:calc(100vw - 24px);right:12px}
-  .chat-fab{right:12px;bottom:16px}
-  .hero-trust{flex-direction:column;gap:8px}
-  .logo-india-flag{width:26px;height:18px}
-}
-
-
-/* ══ HERO ══ */
-.hero{min-height:100vh;background:var(--forest);position:relative;display:flex;flex-direction:column;overflow:hidden}
-.hero-bg{position:absolute;inset:0;overflow:hidden}
-.hbg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
-.hbg-orb1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.18) 0%,transparent 65%);top:-200px;right:-100px}
-.hbg-orb2{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.25) 0%,transparent 65%);bottom:-100px;left:-80px}
-.hbg-orb3{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,148,26,.12) 0%,transparent 65%);top:40%;left:40%}
-.hero-body{max-width:1200px;margin:0 auto;width:100%;padding:140px 40px 80px;flex:1;display:grid;grid-template-columns:1fr 420px;gap:70px;align-items:center;position:relative;z-index:1}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:6px 16px;margin-bottom:28px}
-.badge-pulse{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 10px rgba(74,222,128,.6);animation:pulse-glow 2s ease-in-out infinite}
-@keyframes pulse-glow{0%,100%{box-shadow:0 0 10px rgba(74,222,128,.6)}50%{box-shadow:0 0 20px rgba(74,222,128,.9)}}
-.badge-txt{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.3px}
-.hero-h{font-family:'Instrument Serif',serif;font-size:clamp(50px,6vw,82px);line-height:1.01;color:#fff;margin-bottom:22px;letter-spacing:-2px}
-.hero-h em{font-style:italic;color:var(--saffron-2)}
-.hero-p{font-size:17px;color:rgba(255,255,255,.6);line-height:1.8;font-weight:300;max-width:460px;margin-bottom:44px}
-.hero-search{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:8px 8px 8px 20px;display:flex;align-items:center;gap:10px;margin-bottom:28px;backdrop-filter:blur(12px)}
-.hs-select,.hs-input{border:none;outline:none;background:transparent;color:#fff;font-size:14.5px;font-weight:400}
-.hs-select{color:rgba(255,255,255,.6);cursor:pointer;font-size:14px}
-.hs-select option{color:var(--ink);background:#fff}
-.hs-input{flex:1;min-width:0}
-.hs-input::placeholder{color:rgba(255,255,255,.35)}
-.hs-div{width:1px;height:22px;background:rgba(255,255,255,.15);flex-shrink:0}
-.hs-btn{padding:12px 22px;background:var(--saffron);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;flex-shrink:0;transition:all .2s;box-shadow:0 4px 16px rgba(232,96,28,.4)}
-.hs-btn:hover{background:var(--saffron-2)}
-.hero-trust{display:flex;flex-wrap:wrap;gap:20px}
-.ht{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:rgba(255,255,255,.55)}
-.ht i{color:#4ADE80;font-size:13px}
-.hero-panel{position:relative;height:500px}
-.hp-card{position:absolute;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:20px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:22px;transition:all .3s}
-.hp-card:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.2);transform:translateY(-4px)}
-.hp1{top:0;left:10px;width:220px;animation:float1 8s ease-in-out infinite}
-.hp2{top:10px;right:0;width:155px;padding:18px;animation:float2 9.5s ease-in-out infinite}
-.hp3{bottom:50px;right:10px;width:210px;animation:float3 7.5s ease-in-out infinite}
-.hp4{bottom:190px;left:0;width:165px;padding:18px;animation:float1 10s ease-in-out infinite reverse}
-@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
-@keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes float3{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-.hp-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--saffron-pale),var(--saffron-light));display:grid;place-items:center;font-size:20px;margin-bottom:12px}
-.hp-skill{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px}
-.hp-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:5px}
-.hp-name i{color:#4ADE80;font-size:11px}
-.hp-loc{font-size:12px;color:rgba(255,255,255,.45)}
-.hp-stars{color:#FBBF24;font-size:12px;margin-top:8px}
-.hp-avail{display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:600;color:#4ADE80;margin-top:9px}
-.hp-bignum{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:#fff;line-height:1}
-.hp-numlbl{font-size:11px;color:rgba(255,255,255,.45);margin-top:5px}
-.hp-bar{height:3px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:12px;overflow:hidden}
-.hp-barfill{height:100%;width:74%;background:linear-gradient(90deg,var(--saffron),var(--saffron-2));border-radius:3px}
-.hp-jobs{font-size:13px;color:rgba(255,255,255,.5);margin-top:8px}
-.hp-jobs b{color:#fff}
-.hero-ribbon{background:var(--forest-2);border-top:1px solid rgba(255,255,255,.06)}
-.ribbon-in{max-width:1200px;margin:0 auto;padding:26px 40px;display:flex;gap:56px;align-items:center;position:relative;z-index:1}
-.rib-item{flex-shrink:0}
-.rib-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:-1.5px;line-height:1}
-.rib-lbl{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;font-weight:400}
-.rib-sep{width:1px;background:rgba(255,255,255,.08);align-self:stretch}
-.ticker{background:var(--saffron);padding:12px 0;overflow:hidden}
-.ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.t-item{display:inline-flex;align-items:center;gap:12px;padding:0 28px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.8);white-space:nowrap}
-.t-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
-#searchPane{display:none;background:var(--white);border-bottom:1px solid var(--ink-06)}
-.pane-in{max-width:1200px;margin:0 auto;padding:52px 40px}
-.section{padding:100px 0}
-.section.alt{background:var(--white)}
-.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.eyebrow::before{content:'';width:20px;height:2px;background:var(--saffron);border-radius:2px}
-.section-h{font-family:'Instrument Serif',serif;font-size:clamp(36px,4.5vw,58px);font-weight:400;color:var(--forest);line-height:1.06;letter-spacing:-1.5px}
-.section-h em{font-style:italic;color:var(--saffron)}
-.section-p{font-size:16.5px;color:var(--ink-70);line-height:1.78;font-weight:300;max-width:460px;margin-top:14px}
-.svc-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;gap:24px;flex-wrap:wrap}
-.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.svc-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:28px 24px 24px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.svc-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--saffron),var(--saffron-2));transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.svc-card:hover{border-color:rgba(232,96,28,.2);transform:translateY(-6px);box-shadow:var(--sh-lg)}
-.svc-card:hover::before{transform:scaleX(1)}
-.svc-ico{font-size:30px;display:block;margin-bottom:18px}
-.svc-cnt{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--saffron);margin-bottom:7px}
-.svc-name{font-family:'Syne',sans-serif;font-weight:700;font-size:15.5px;color:var(--forest);margin-bottom:6px}
-.svc-desc{font-size:13px;color:var(--ink-40);line-height:1.6}
-.svc-arr{position:absolute;top:22px;right:22px;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink-06);display:grid;place-items:center;font-size:12px;color:var(--ink-40);transition:all .3s}
-.svc-card:hover .svc-arr{background:var(--saffron);border-color:var(--saffron);color:#fff;transform:rotate(-45deg)}
-.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center}
-.how-steps{margin-top:44px;display:flex;flex-direction:column;gap:6px}
-.how-step{display:flex;gap:20px;padding:20px;border-radius:14px;border:1.5px solid transparent;cursor:default;transition:all .25s}
-.how-step:hover{background:var(--cream);border-color:var(--ink-06);box-shadow:var(--sh-sm)}
-.how-num{width:44px;height:44px;border-radius:13px;background:var(--sage-light);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--sage);flex-shrink:0;transition:all .25s}
-.how-step:hover .how-num{background:var(--saffron);color:#fff}
-.how-step h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--forest);margin-bottom:6px}
-.how-step p{font-size:13.5px;color:var(--ink-70);line-height:1.65}
-.app-mock{background:var(--forest);border-radius:24px;padding:28px;position:relative;overflow:hidden;box-shadow:var(--sh-lg)}
-.am-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--forest) 0%,var(--forest-2) 100%)}
-.am-orb{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%);top:-40px;right:-40px}
-.am-content{position:relative;z-index:1}
-.am-head{display:flex;align-items:center;gap:12px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08)}
-.am-av{width:46px;height:46px;border-radius:14px;background:var(--saffron-pale);display:grid;place-items:center;font-size:22px}
-.am-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff}
-.am-role{font-size:11.5px;color:rgba(255,255,255,.4)}
-.am-badge{margin-left:auto;background:rgba(74,222,128,.15);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:600;color:#4ADE80}
-.am-job{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:14px;margin-bottom:12px}
-.am-jt{font-weight:700;font-size:13.5px;color:#fff;margin-bottom:4px}
-.am-jm{font-size:11.5px;color:rgba(255,255,255,.4);display:flex;gap:16px}
-.am-btn{width:100%;padding:13px;background:var(--saffron);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
-.am-btn:hover{background:var(--saffron-2)}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
-.fchip{padding:8px 18px;border-radius:100px;font-size:13.5px;font-weight:600;border:1.5px solid var(--ink-12);background:var(--white);color:var(--ink-70);cursor:pointer;transition:all .22s}
-.fchip:hover{border-color:var(--saffron);color:var(--saffron)}
-.fchip.on{background:var(--saffron);border-color:var(--saffron);color:#fff}
-.workers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.wcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);overflow:hidden;transition:all .3s}
-.wcard:hover{transform:translateY(-5px);box-shadow:var(--sh-lg);border-color:rgba(232,96,28,.15)}
-.wcard-header{background:linear-gradient(135deg,var(--forest) 0%,var(--forest-2) 100%);padding:24px;display:flex;gap:14px;align-items:center;position:relative;overflow:hidden}
-.wcard-header::after{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.25),transparent 65%)}
-.wc-av{width:50px;height:50px;border-radius:14px;background:var(--saffron-pale);display:grid;place-items:center;font-size:22px;flex-shrink:0;z-index:1}
-.wc-skill{font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px;z-index:1}
-.wc-name{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:700;color:#fff;z-index:1;display:flex;align-items:center;gap:5px}
-.wc-name i{color:#4ADE80;font-size:11px}
-.wc-loc{font-size:12px;color:rgba(255,255,255,.5);z-index:1}
-.wcard-body{padding:18px 20px}
-.wc-rating{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.wc-stars{color:#FBBF24;font-size:12.5px}
-.wc-rnum{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--forest)}
-.wc-rjobs{font-size:12px;color:var(--ink-40)}
-.wc-bio{font-size:13px;color:var(--ink-70);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
-.wcard-foot{padding:14px 20px;border-top:1px solid var(--ink-06);display:flex;gap:9px}
-.btn-hire{flex:1;padding:10px;border-radius:9px;background:var(--saffron);border:none;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}
-.btn-hire:hover{background:var(--saffron-2)}
-.btn-view{padding:10px 14px;border-radius:9px;border:1.5px solid var(--ink-12);font-size:13.5px;font-weight:600;color:var(--ink-70);background:transparent;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
-.btn-view:hover{border-color:var(--saffron);color:var(--saffron)}
-.workers-empty{grid-column:1/-1;text-align:center;padding:64px 24px}
-.workers-empty i{font-size:40px;opacity:.2;display:block;margin-bottom:14px;color:var(--forest)}
-.workers-empty h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px}
-.workers-empty p{font-size:14px;color:var(--ink-40)}
-.spin-loader{grid-column:1/-1;display:flex;justify-content:center;padding:56px;color:var(--saffron);font-size:28px;animation:spin .8s linear infinite}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--forest);display:flex;flex-direction:column;z-index:100;overflow:hidden}
+.sb-bg{position:absolute;bottom:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
+.sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;flex-shrink:0}
+.sb-logo-india{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.3);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
+.sb-logo-india svg{width:100%;height:100%;display:block}
+.sb-logo:hover .sb-logo-india{transform:scale(1.08)}
+.sb-logo-sep{width:1px;height:22px;background:rgba(255,255,255,.2);flex-shrink:0}
+.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
+.sb-logo-txt span{color:var(--saffron-2)}
+.sb-nav{flex:1;padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
+.sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .22s;border:1px solid transparent}
+.sb-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
+.sb-item.active{background:var(--saffron);color:#fff;box-shadow:0 4px 16px rgba(232,96,28,.35)}
+.sb-item i{font-size:17px;flex-shrink:0}
+.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:12px 0}
+.sb-user{padding:18px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.sb-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-uname{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-urole{font-size:11px;color:rgba(255,255,255,.4)}
+.sb-logout{margin-left:auto;background:rgba(255,255,255,.08);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
+.sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
+.main{margin-left:256px;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.notif-btn{width:38px;height:38px;border-radius:10px;background:var(--cream);border:1.5px solid var(--ink-06);display:grid;place-items:center;font-size:16px;color:var(--ink-40);cursor:pointer;position:relative;transition:all .2s}
+.notif-btn:hover{border-color:var(--saffron);color:var(--saffron)}
+.notif-badge{position:absolute;top:-4px;right:-4px;width:16px;height:16px;background:var(--saffron);border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:grid;place-items:center;border:2px solid var(--white)}
+.content{flex:1;padding:32px 36px}
+.toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:var(--forest);color:#fff;padding:14px 18px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;box-shadow:0 8px 28px rgba(15,25,35,.2);pointer-events:all;animation:toastIn .3s ease;max-width:320px}
+.toast.removing{animation:toastOut .3s ease forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
+.welcome-banner{background:linear-gradient(135deg,var(--forest) 0%,var(--forest-2) 100%);border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;position:relative;overflow:hidden}
+.wb-orb{position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%);pointer-events:none}
+.wb-h{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.wb-p{font-size:14px;color:rgba(255,255,255,.5)}
+.wb-btn{padding:11px 22px;background:var(--saffron);border:none;border-radius:10px;font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;flex-shrink:0;position:relative;z-index:1}
+.wb-btn:hover{background:var(--saffron-2);transform:translateY(-1px)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
+.stat-card:hover{border-color:rgba(232,96,28,.2);transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
+.stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
+.stat-ico.orange{background:var(--saffron-pale)}.stat-ico.green{background:var(--sage-light)}.stat-ico.blue{background:#EFF6FF}.stat-ico.gold{background:#FEF9C3}
+.stat-n{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
+.stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.sec-head h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.sec-head a{font-size:13.5px;font-weight:600;color:var(--saffron);cursor:pointer}
+.jobs-list{display:flex;flex-direction:column;gap:14px}
+.job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px 22px;display:flex;align-items:center;gap:20px;transition:all .25s}
+.job-card:hover{border-color:rgba(232,96,28,.15);box-shadow:0 6px 24px rgba(15,25,35,.06)}
+.jc-ico{width:48px;height:48px;border-radius:13px;background:var(--cream);display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.jc-info{flex:1;min-width:0}
+.jc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jc-meta{font-size:12.5px;color:var(--ink-40);display:flex;flex-wrap:wrap;gap:14px}
+.jc-meta span{display:flex;align-items:center;gap:4px}
+.jc-price{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest)}
+.jc-actions{display:flex;gap:8px;flex-shrink:0}
+.jc-btn{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.jc-btn:disabled{opacity:.5;cursor:not-allowed}
+.jc-cancel{border:1.5px solid var(--ink-12);background:transparent;color:var(--ink-40)}
+.jc-cancel:hover:not(:disabled){border-color:#DC2626;color:#DC2626;background:#FEF2F2}
+.jc-review{border:1.5px solid var(--ink-12);background:transparent;color:var(--sage)}
+.jc-review:hover:not(:disabled){border-color:var(--sage);background:var(--sage-light)}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:100px;font-size:11.5px;font-weight:700}
+.badge-pending{background:#FEF9C3;color:#A16207}.badge-accepted{background:#DBEAFE;color:#1D4ED8}.badge-inprogress{background:#EDE9FE;color:#7C3AED}.badge-completed{background:var(--sage-light);color:var(--sage)}.badge-cancelled{background:#FEE2E2;color:#B91C1C}.badge-paid{background:#F0FDF4;color:#15803D}
+.empty-state{text-align:center;padding:56px 24px;color:var(--ink-40)}
+.empty-state i{font-size:40px;opacity:.25;display:block;margin-bottom:14px}
+.empty-state h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
+.spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.nums-band{background:var(--forest);padding:72px 0}
-.nums-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
-.nm-item{padding:0 30px}
-.nm-item+.nm-item{border-left:1px solid rgba(255,255,255,.08)}
-.nm-num{font-family:'Syne',sans-serif;font-size:54px;font-weight:800;color:#fff;line-height:1;letter-spacing:-2px}
-.nm-lbl{font-size:14px;color:rgba(255,255,255,.5);margin-top:8px}
-.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
-.tcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:28px;transition:all .3s}
-.tcard:hover{border-color:rgba(232,96,28,.2);box-shadow:var(--sh-lg);transform:translateY(-4px)}
-.tcard-quote{font-family:'Instrument Serif',serif;font-size:40px;color:var(--saffron);line-height:.7;margin-bottom:16px;opacity:.6}
-.tcard-text{font-size:14.5px;color:var(--ink-70);line-height:1.75;margin-bottom:22px;font-style:italic;font-family:'Instrument Serif',serif}
-.tcard-person{display:flex;align-items:center;gap:12px}
-.tcp-av{width:40px;height:40px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.tcp-name{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--forest)}
-.tcp-role{font-size:12px;color:var(--ink-40)}
-.tcp-stars{margin-left:auto;color:#FBBF24;font-size:13px}
-.cta-section{background:linear-gradient(135deg,var(--saffron) 0%,#C94A0A 100%);padding:100px 0;position:relative;overflow:hidden}
-.cta-section::before{content:'';position:absolute;top:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.07)}
-.cta-section::after{content:'';position:absolute;bottom:-100px;right:-60px;width:500px;height:500px;border-radius:50%;background:rgba(0,0,0,.08)}
-.cta-inner{text-align:center;position:relative;z-index:1}
-.cta-inner h2{font-family:'Instrument Serif',serif;font-size:clamp(38px,5vw,64px);color:#fff;line-height:1.06;letter-spacing:-1.5px;margin-bottom:16px}
-.cta-inner p{font-size:17px;color:rgba(255,255,255,.7);max-width:440px;margin:0 auto 40px;line-height:1.7}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.cta-primary{padding:14px 32px;background:#fff;border:none;border-radius:11px;font-size:15px;font-weight:700;color:var(--saffron);cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(0,0,0,.15)}
-.cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.2)}
-.cta-outline{padding:14px 32px;background:transparent;border:2px solid rgba(255,255,255,.4);border-radius:11px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s}
-.cta-outline:hover{border-color:#fff;background:rgba(255,255,255,.1)}
-footer{background:var(--ink);padding:72px 0 40px}
-.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px}
-.footer-brand .logo-txt{color:#fff}
-.footer-brand p{font-size:14px;color:rgba(255,255,255,.4);line-height:1.75;margin-top:14px;max-width:230px}
-.footer-social{display:flex;gap:10px;margin-top:22px}
-.fs-icon{width:36px;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:14px;transition:all .2s;cursor:pointer}
-.fs-icon:hover{border-color:var(--saffron);color:var(--saffron);background:rgba(232,96,28,.1)}
-.footer-col h4{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
-.footer-col ul li{margin-bottom:11px}
-.footer-col ul li a{font-size:14px;color:rgba(255,255,255,.5);transition:color .2s}
-.footer-col ul li a:hover{color:rgba(255,255,255,.9)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
-.footer-bottom p{font-size:13px;color:rgba(255,255,255,.3)}
-.footer-bottom a{font-size:13px;color:rgba(255,255,255,.35);transition:color .2s}
-.footer-bottom a:hover{color:rgba(255,255,255,.7)}
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.65);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
-.modal-backdrop.open{display:flex}
-.modal{background:var(--white);border-radius:22px;max-width:500px;width:100%;box-shadow:0 32px 80px rgba(15,25,35,.2);overflow:hidden;animation:modalIn .3s ease}
-@keyframes modalIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.modal-head{background:var(--forest);padding:28px 32px;position:relative}
-.modal-head h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff}
-.modal-head p{font-size:14px;color:rgba(255,255,255,.5);margin-top:4px}
-.modal-close{position:absolute;top:24px;right:28px;background:rgba(255,255,255,.1);border:none;width:32px;height:32px;border-radius:50%;color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;transition:background .2s}
-.modal-close:hover{background:rgba(255,255,255,.2)}
-.modal-body{padding:32px}
-.m-worker-info{display:flex;align-items:center;gap:16px;background:var(--cream);border-radius:14px;padding:16px;margin-bottom:28px}
-.mwi-av{width:52px;height:52px;border-radius:14px;background:var(--sage-light);display:grid;place-items:center;font-size:24px;flex-shrink:0}
-.mwi-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--forest)}
-.mwi-skill{font-size:13px;color:var(--ink-40)}
-.fg{margin-bottom:16px}
+.workers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.wcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;overflow:hidden;transition:all .28s}
+.wcard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(15,25,35,.09);border-color:rgba(232,96,28,.15)}
+.wcard-head{background:linear-gradient(135deg,var(--forest),var(--forest-2));padding:20px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden}
+.wcard-head::after{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%)}
+.wc-av{width:44px;height:44px;border-radius:12px;background:var(--saffron-pale);display:grid;place-items:center;font-size:20px;flex-shrink:0;z-index:1}
+.wc-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;z-index:1;display:flex;align-items:center;gap:4px}
+.wc-skill{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);z-index:1}
+.wc-loc{font-size:11.5px;color:rgba(255,255,255,.45);z-index:1}
+.wcard-body{padding:16px 18px}
+.wc-rating{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.wc-stars{color:#FBBF24;font-size:12px}
+.wc-bio{font-size:12.5px;color:var(--ink-70);line-height:1.62;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
+.wcard-foot{padding:12px 18px;border-top:1px solid var(--ink-06);display:flex;gap:8px}
+.btn-hire{flex:1;padding:9px;border-radius:8px;background:var(--saffron);border:none;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-hire:hover{background:var(--saffron-2)}
+.profile-layout{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+.profile-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;overflow:hidden}
+/* ── Profile photo upload ── */
+.profile-avatar-wrap{position:relative;width:80px;height:80px;margin:0 auto 16px;cursor:pointer}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.2);overflow:hidden;transition:opacity .2s}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profile-avatar-wrap:hover .profile-avatar{opacity:.75}
+.profile-avatar-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;flex-direction:column;gap:3px;pointer-events:none}
+.profile-avatar-wrap:hover .profile-avatar-overlay{display:flex}
+.profile-avatar-overlay i{font-size:18px;color:#fff}
+.profile-avatar-overlay span{font-size:10px;color:rgba(255,255,255,.85);font-weight:600;letter-spacing:.5px}
+.photo-actions{display:flex;gap:8px;justify-content:center;margin-top:10px;position:relative;z-index:1}
+.photo-btn{padding:5px 12px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px}
+.photo-btn-upload{background:rgba(255,255,255,.15);color:#fff}
+.photo-btn-upload:hover{background:rgba(255,255,255,.25)}
+.photo-btn-delete{background:rgba(220,38,38,.2);color:#FCA5A5}
+.photo-btn-delete:hover{background:rgba(220,38,38,.5);color:#fff}
+#photoFileInput{display:none}
+
+.profile-card-top{background:linear-gradient(135deg,var(--forest),var(--forest-2));padding:32px 24px;text-align:center;position:relative;overflow:hidden}
+.profile-card-top::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05)}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.2);margin:0 auto 16px}
+.profile-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;position:relative;z-index:1}
+.profile-email{font-size:13px;color:rgba(255,255,255,.5);position:relative;z-index:1}
+.profile-card-info{padding:20px 24px}
+.pci-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--ink-06)}
+.pci-row:last-child{border-bottom:none}
+.pci-icon{width:34px;height:34px;border-radius:9px;background:var(--cream);display:grid;place-items:center;font-size:14px;color:var(--saffron);flex-shrink:0}
+.pci-label{font-size:11px;font-weight:700;color:var(--ink-40);letter-spacing:.5px;text-transform:uppercase}
+.pci-value{font-size:14px;font-weight:600;color:var(--forest)}
+.profile-form-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;overflow:hidden}
+.pfc-head{padding:22px 28px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
+.pfc-head h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--forest)}
+.tab-switcher{display:flex;gap:4px;background:var(--cream);border-radius:10px;padding:4px}
+.ts-btn{padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .2s;color:var(--ink-40);background:transparent}
+.ts-btn.active{background:var(--white);color:var(--forest);box-shadow:0 2px 8px rgba(15,25,35,.08)}
+.pfc-body{padding:28px}
+.form-section{display:none}
+.form-section.active{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{margin-bottom:18px}
 .fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
 .fw{position:relative}
-.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-size:14.5px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s}
+.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s}
 .fi:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
 .fi::placeholder{color:var(--ink-40);font-weight:300}
 .fi-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:14px;pointer-events:none;transition:color .2s}
 .fw:focus-within .fi-ico{color:var(--saffron)}
-textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
-.fi-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.modal-actions{display:flex;gap:10px;margin-top:24px}
-.m-cancel{flex:1;padding:13px;border:1.5px solid var(--ink-12);border-radius:10px;font-size:14px;font-weight:600;color:var(--ink-70);background:transparent;cursor:pointer;transition:all .2s}
-.m-cancel:hover{border-color:var(--ink-40)}
-.m-submit{flex:2;padding:13px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,96,28,.3);display:flex;align-items:center;justify-content:center;gap:7px}
-.m-submit:hover{background:var(--saffron-2);transform:translateY(-1px)}
-.m-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
+.fi-no-icon{padding-left:14px}
+.save-btn{padding:13px 28px;background:var(--saffron);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(232,96,28,.28);display:inline-flex;align-items:center;gap:8px}
+.save-btn:hover{background:var(--saffron-2);transform:translateY(-1px)}
+.save-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+.pw-bars{display:flex;gap:4px;margin-top:8px}
+.pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
+.danger-zone{border:1.5px solid #FEE2E2;border-radius:14px;padding:20px 22px;background:#FFF5F5}
+.danger-zone h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#B91C1C;margin-bottom:6px}
+.danger-zone p{font-size:13px;color:#991B1B;opacity:.7;margin-bottom:16px}
+.danger-btn{padding:10px 20px;background:#FEE2E2;border:1.5px solid #FECACA;border-radius:9px;font-size:13px;font-weight:700;color:#B91C1C;cursor:pointer;transition:all .2s}
+.danger-btn:hover{background:#DC2626;color:#fff;border-color:#DC2626}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.6);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{background:var(--white);border-radius:20px;max-width:460px;width:100%;overflow:hidden;animation:mIn .3s ease}
+@keyframes mIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{background:var(--forest);padding:24px 28px;position:relative}
+.modal-head h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff}
+.modal-close{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:14px}
+.modal-body{padding:28px}
+.star-row{display:flex;gap:8px;margin:16px 0 22px;justify-content:center}
+.star-btn{font-size:36px;background:none;border:none;cursor:pointer;color:var(--ink-12);transition:all .2s;line-height:1}
+.star-btn.on,.star-btn:hover{color:#FBBF24;transform:scale(1.15)}
+.m-submit{width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.m-submit:hover{background:var(--saffron-2)}
+.m-submit:disabled{opacity:.6;cursor:not-allowed}
+.alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
+.as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
 .spin-sm{display:none;animation:spin .8s linear infinite}
-.alert{padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:16px}
-.alert-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
-.alert-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
-.chat-fab{position:fixed;bottom:32px;right:32px;z-index:700;background:var(--saffron);width:60px;height:60px;border-radius:50%;border:none;color:#fff;font-size:24px;cursor:pointer;box-shadow:0 8px 28px rgba(232,96,28,.45);transition:all .3s;display:flex;align-items:center;justify-content:center}
-.chat-fab:hover{background:var(--saffron-2);transform:scale(1.08);box-shadow:0 12px 36px rgba(232,96,28,.5)}
-.chat-bubble{position:absolute;top:-42px;right:0;background:var(--forest);color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:12px;border-bottom-right-radius:4px;white-space:nowrap;box-shadow:var(--sh)}
-.chat-bubble::after{content:'';position:absolute;bottom:-6px;right:14px;border:6px solid transparent;border-top-color:var(--forest);border-bottom:none}
-.chat-win{position:fixed;bottom:110px;right:32px;width:360px;background:var(--white);border-radius:20px;box-shadow:0 24px 72px rgba(15,25,35,.15);z-index:700;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--ink-06);animation:chatIn .3s ease}
-@keyframes chatIn{from{transform:translateY(20px) scale(.96);opacity:0}to{transform:none;opacity:1}}
-.chat-win.open{display:flex}
-.cw-head{background:var(--forest);padding:18px 20px;display:flex;align-items:center;gap:12px}
-.cw-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.cw-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff}
-.cw-status{font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px}
-.cw-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80}
-.cw-close{margin-left:auto;background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;font-size:14px;cursor:pointer;display:grid;place-items:center;transition:background .2s}
-.cw-close:hover{background:rgba(255,255,255,.2)}
-.cw-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;max-height:320px;min-height:200px}
-.cw-msg{max-width:80%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.6;animation:msgIn .2s ease}
-@keyframes msgIn{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
-.cw-msg.bot{background:var(--cream);color:var(--ink);border-bottom-left-radius:4px;align-self:flex-start}
-.cw-msg.user{background:var(--saffron);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
-.cw-chips{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:7px}
-.cw-chip{padding:6px 13px;border:1.5px solid var(--ink-12);border-radius:100px;font-size:12.5px;font-weight:600;color:var(--ink-70);cursor:pointer;background:var(--cream);transition:all .2s;white-space:nowrap}
-.cw-chip:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
-.cw-input{padding:14px 16px;border-top:1px solid var(--ink-06);display:flex;gap:10px;align-items:center}
-.cw-txt{flex:1;border:1.5px solid var(--ink-12);border-radius:10px;padding:9px 14px;font-size:13.5px;color:var(--ink);background:var(--cream);outline:none;transition:border-color .2s;resize:none}
-.cw-txt:focus{border-color:var(--saffron);background:var(--white)}
-.cw-send{background:var(--saffron);border:none;width:36px;height:36px;border-radius:9px;color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
-.cw-send:hover{background:var(--saffron-2)}
 
+
+/* ══ HAMBURGER & MOBILE SIDEBAR ══ */
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;flex-shrink:0}
+.mob-menu-btn span{display:block;width:22px;height:2px;border-radius:2px;background:var(--ink);transition:all .3s}
+.mob-menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mob-menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.mob-menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;backdrop-filter:blur(3px)}
+.sb-overlay.open{display:block}
+
+/* ══ FULL RESPONSIVE ══ */
 @media(max-width:900px){
-  .hero-body{grid-template-columns:1fr;gap:40px;padding:110px 24px 60px}
-  .hero-panel{display:none}
-  .svc-grid{grid-template-columns:repeat(2,1fr)}
-  .how-grid{grid-template-columns:1fr;gap:48px}
-  .workers-grid{grid-template-columns:repeat(2,1fr)}
-  .tgrid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr}
-  .nav-in{padding:0 24px}
-  .wrap{padding:0 24px}
-  .nums-grid{grid-template-columns:repeat(2,1fr);gap:32px}
-  .nm-item+.nm-item{border-left:none}
-  .ribbon-in{gap:32px;padding:24px}
+  .sidebar{
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+    z-index:100;
+    position:fixed
+  }
+  .sidebar.mobile-open{transform:translateX(0)}
+  .main{margin-left:0}
+  .mob-menu-btn{display:flex}
+  .topbar{padding:0 16px}
+  .content{padding:24px 16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .workers-grid{grid-template-columns:1fr 1fr}
+  .profile-layout{grid-template-columns:1fr}
+  .welcome-banner{flex-direction:column;align-items:flex-start;gap:16px;padding:22px}
+  .wb-btn{width:100%;justify-content:center}
+  .form-row{grid-template-columns:1fr}
+  .pfc-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .tab-switcher{width:100%}
+  .ts-btn{flex:1;text-align:center}
 }
-@media(max-width:540px){
-  .svc-grid{grid-template-columns:1fr}
+
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-card{padding:16px}
+  .stat-n{font-size:24px}
   .workers-grid{grid-template-columns:1fr}
-  .chat-win{width:calc(100vw - 32px);right:16px;bottom:100px}
-  .chat-fab{right:16px;bottom:20px}
+  .job-card{flex-wrap:wrap;gap:12px;padding:16px}
+  .jc-actions{width:100%}
+  .jc-btn{flex:1;justify-content:center}
+  .topbar-title{font-size:15px}
+  .content{padding:16px 12px}
+  .wb-h{font-size:18px}
+  .modal{border-radius:16px}
+  .modal-body{padding:20px}
+  .modal-head{padding:18px 20px}
+}
+
+@media(max-width:400px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-n{font-size:22px}
+  .profile-card-info{padding:14px 16px}
+  .pfc-body{padding:18px 16px}
 }
 </style>
+<!-- htmlhint-enable -->
 </head>
 <body>
+<div class="toast-wrap" id="toastWrap"></div>
 
-<!-- ══ NAV ══ -->
-<nav id="nav">
-  <div class="nav-in">
-    <a class="logo" href="index.html">
-      <div class="logo-india-flag"><svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="7.33" fill="#FF9933"/>
-  <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
-  <rect y="14.67" width="32" height="7.33" fill="#138808"/>
-  <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
-  <circle cx="16" cy="11" r="0.8" fill="#000080"/>
-  <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
-    <line x1="0" y1="-3.2" x2="0" y2="3.2"/>
-    <line x1="-3.2" y1="0" x2="3.2" y2="0"/>
-    <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/>
-    <line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
-    <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/>
-    <line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
-    <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/>
-    <line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
-  </g>
-</svg></div><div class="logo-sep"></div>
-      <div class="logo-mark"><i class="bi bi-tools"></i></div>
-      <div class="logo-txt">Kaam<span>Connect</span></div>
-    </a>
-    <div class="nav-menu">
-      <a href="#services">Services</a>
-      <a href="#how">How It Works</a>
-      <a href="#workers">Workers</a>
-      <a href="#about">About</a>
-    </div>
-    <div class="nav-cta">
-      <button class="n-ghost" onclick="location.href='login.html'"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
-      <div class="nav-divider"></div>
-      <button class="n-signup" onclick="location.href='register.html'"><i class="bi bi-person-plus"></i> Sign Up</button>
-      <button class="n-solid" onclick="location.href='register.html'">Get Started <i class="bi bi-arrow-right"></i></button>
-    </div>
-    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
-      <span id="hb1"></span><span id="hb2"></span><span id="hb3"></span>
-    </button>
+<aside class="sidebar">
+  <div class="sb-bg"></div>
+  <div class="sb-logo"><div class="sb-logo-india"><svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="7.33" fill="#FF9933"/><rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/><rect y="14.67" width="32" height="7.33" fill="#138808"/><circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/><circle cx="16" cy="11" r="0.75" fill="#000080"/><g stroke="#000080" stroke-width="0.4" transform="translate(16,11)"><line x1="0" y1="-3.2" x2="0" y2="3.2"/><line x1="-3.2" y1="0" x2="3.2" y2="0"/><line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/><line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/><line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/><line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/><line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/><line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/></g></svg></div><div class="sb-logo-sep"></div><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
+  <nav class="sb-nav">
+    <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
+    <div class="sb-item" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</div>
+    <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> My Jobs</div>
+    <div class="sb-item" onclick="showTab('profile')"><i class="bi bi-person-circle"></i> My Profile</div>
+    <div class="sb-divider"></div>
+    <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
+  </nav>
+  <div class="sb-user">
+    <div class="sb-av" id="sbAv">C</div>
+    <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole">Customer</div></div>
+    <button class="sb-logout" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
   </div>
-</nav>
-<div class="nav-mobile" id="navMobile">
-  <a href="#services" onclick="closeMobileMenu()">Services</a>
-  <a href="#how" onclick="closeMobileMenu()">How It Works</a>
-  <a href="#workers" onclick="closeMobileMenu()">Workers</a>
-  <a href="#about" onclick="closeMobileMenu()">About</a>
-  <div class="nav-mobile-btns">
-    <button class="nmb-ghost" onclick="location.href='login.html'"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
-    <button class="nmb-solid" onclick="location.href='register.html'"><i class="bi bi-person-plus"></i> Sign Up Free</button>
-  </div>
-</div>
+</aside>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"><div class="hbg-grid"></div><div class="hbg-orb1"></div><div class="hbg-orb2"></div><div class="hbg-orb3"></div></div>
-  <div class="hero-body">
-    <div class="hero-left">
-      <div class="hero-badge"><div class="badge-pulse"></div><span class="badge-txt">200 verified workers • Live now</span></div>
-      <h1 class="hero-h">India's most trusted<br><em>worker marketplace</em></h1>
-      <p class="hero-p">Book verified electricians, plumbers, painters and more in your city — fast, safe, and guaranteed.</p>
-      <div class="hero-search">
-        <select class="hs-select" id="heroSkill">
-          <option value="">All Services</option>
+<div class="main">
+  <div class="sb-overlay" id="sbOverlay"></div>
+  <div class="topbar">
+    <button class="mob-menu-btn" id="mobMenuBtn"><span></span><span></span><span></span></button>
+    <div class="topbar-title" id="topbarTitle">Overview</div>
+    <div class="topbar-right">
+      <button class="notif-btn" onclick="showTab('jobs')" title="My Jobs">
+        <i class="bi bi-bell"></i>
+        <div class="notif-badge" id="notifBadge" style="display:none">0</div>
+      </button>
+      <div onclick="showTab('profile')" style="width:38px;height:38px;border-radius:10px;background:var(--saffron);display:grid;place-items:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff;cursor:pointer" id="topbarAv">C</div>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div id="tab-overview">
+      <div class="welcome-banner">
+        <div><div class="wb-h">Welcome back, <span id="wbName">there</span>! 👋</div><div class="wb-p">Ready to book your next service?</div></div>
+        <div class="wb-orb"></div>
+        <button class="wb-btn" onclick="showTab('find')"><i class="bi bi-search"></i> Find a Worker</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-ico orange">📋</div><div class="stat-n" id="st-total">—</div><div class="stat-l">Total Jobs</div></div>
+        <div class="stat-card"><div class="stat-ico green">✅</div><div class="stat-n" id="st-done">—</div><div class="stat-l">Completed</div></div>
+        <div class="stat-card"><div class="stat-ico blue">⏳</div><div class="stat-n" id="st-pend">—</div><div class="stat-l">Pending</div></div>
+        <div class="stat-card"><div class="stat-ico gold">💰</div><div class="stat-n" id="st-spent">—</div><div class="stat-l">Total Spent</div></div>
+      </div>
+      <div class="sec-head"><h2>Recent Jobs</h2><a onclick="showTab('jobs')">View All &rarr;</a></div>
+      <div id="recentJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+
+    <!-- FIND WORKERS -->
+    <div id="tab-find" style="display:none">
+      <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap">
+        <select id="fskill" class="fi fi-no-icon" style="padding:11px 14px;max-width:180px;border:1.5px solid var(--ink-12);background:var(--white)">
+          <option value="">All Skills</option>
           <option value="electrician">⚡ Electrician</option>
           <option value="plumber">🔧 Plumber</option>
           <option value="painter">🎨 Painter</option>
@@ -470,255 +314,657 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
           <option value="ac technician">❄️ AC Technician</option>
           <option value="driver">🚗 Driver</option>
         </select>
-        <div class="hs-div"></div>
-        <input class="hs-input" type="text" id="heroLocation" placeholder="Enter your city…" onkeydown="if(event.key==='Enter')heroSearch()">
-        <button class="hs-btn" onclick="heroSearch()"><i class="bi bi-search"></i> Search</button>
+        <input id="floc" type="text" class="fi fi-no-icon" placeholder="City / Location" style="padding:11px 14px;max-width:220px;border:1.5px solid var(--ink-12);background:var(--white)">
+        <button onclick="loadWorkers()" style="padding:11px 22px;background:var(--saffron);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer"><i class="bi bi-search"></i> Search</button>
       </div>
-      <div class="hero-trust">
-        <div class="ht"><i class="bi bi-shield-fill-check"></i> Admin-verified workers</div>
-        <div class="ht"><i class="bi bi-clock-fill"></i> Book in 2 minutes</div>
-        <div class="ht"><i class="bi bi-lock-fill"></i> Pay after job done</div>
+      <div class="workers-grid" id="workersGrid"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+
+    <!-- MY JOBS -->
+    <div id="tab-jobs" style="display:none">
+      <div id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="tab-profile" style="display:none">
+      <div class="profile-layout">
+        <div class="profile-card">
+          <div class="profile-card-top">
+            <input type="file" id="photoFileInput" accept="image/*">
+            <div class="profile-avatar-wrap" onclick="document.getElementById('photoFileInput').click()" title="Click to change photo">
+              <div class="profile-avatar" id="profileAvatar">C</div>
+              <div class="profile-avatar-overlay"><i class="bi bi-camera-fill"></i><span>CHANGE</span></div>
+            </div>
+            <div class="photo-actions">
+              <button class="photo-btn photo-btn-upload" onclick="document.getElementById('photoFileInput').click()"><i class="bi bi-upload"></i> Upload</button>
+              <button class="photo-btn photo-btn-delete" id="deletePhotoBtn" onclick="deletePhoto()" style="display:none"><i class="bi bi-trash3"></i> Remove</button>
+            </div>
+            <div class="profile-name" id="profileName">—</div>
+            <div class="profile-email" id="profileEmail">—</div>
+          </div>
+          <div class="profile-card-info">
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-phone"></i></div><div><div class="pci-label">Phone</div><div class="pci-value" id="profilePhone">Not set</div></div></div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-geo-alt"></i></div><div><div class="pci-label">Location</div><div class="pci-value" id="profileLocation">Not set</div></div></div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-calendar3"></i></div><div><div class="pci-label">Member Since</div><div class="pci-value" id="profileJoined">—</div></div></div>
+            <div class="pci-row"><div class="pci-icon"><i class="bi bi-briefcase"></i></div><div><div class="pci-label">Total Jobs</div><div class="pci-value" id="profileJobs">0</div></div></div>
+          </div>
+        </div>
+        <div class="profile-form-card">
+          <div class="pfc-head">
+            <h3>Account Settings</h3>
+            <div class="tab-switcher">
+              <button class="ts-btn active" onclick="switchFormTab('info',this)">Personal Info</button>
+              <button class="ts-btn" onclick="switchFormTab('password',this)">Password</button>
+            </div>
+          </div>
+          <div class="pfc-body">
+            <div class="form-section active" id="fs-info">
+              <div id="infoAlert" style="display:none"></div>
+              <div class="form-row">
+                <div class="fg"><label class="fl">Full Name</label><div class="fw"><input class="fi" type="text" id="editName" placeholder="Your full name"><i class="bi bi-person fi-ico"></i></div></div>
+                <div class="fg"><label class="fl">Phone Number</label><div class="fw"><input class="fi" type="text" id="editPhone" placeholder="10-digit number"><i class="bi bi-phone fi-ico"></i></div></div>
+              </div>
+              <div class="fg"><label class="fl">Email Address</label><div class="fw"><input class="fi" type="email" id="editEmail" disabled style="opacity:.6;cursor:not-allowed"><i class="bi bi-envelope fi-ico"></i></div><div style="font-size:11.5px;color:var(--ink-40);margin-top:6px"><i class="bi bi-info-circle"></i> Email cannot be changed</div></div>
+              <div class="fg"><label class="fl">City / Location</label><div class="fw"><input class="fi" type="text" id="editLocation" placeholder="e.g. Ludhiana, Punjab"><i class="bi bi-geo-alt fi-ico"></i></div></div>
+              <div class="fg"><label class="fl">Bio <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><textarea class="fi fi-no-icon" id="editBio" placeholder="Tell workers about yourself…"></textarea></div>
+              <div style="display:flex;justify-content:flex-end">
+                <button class="save-btn" onclick="saveProfile()" id="saveInfoBtn"><i class="bi bi-check-circle-fill"></i> Save Changes <i class="bi bi-arrow-repeat spin-sm" id="saveInfoSpin"></i></button>
+              </div>
+            </div>
+            <div class="form-section" id="fs-password">
+              <div id="pwAlert" style="display:none"></div>
+              <div class="fg"><label class="fl">Current Password</label><div class="fw"><input class="fi" type="password" id="currentPw" placeholder="Enter current password"><i class="bi bi-lock fi-ico"></i></div></div>
+              <div class="fg"><label class="fl">New Password</label><div class="fw"><input class="fi" type="password" id="newPw" placeholder="Min 6 characters" oninput="checkPwStrength(this.value)"><i class="bi bi-lock-fill fi-ico"></i></div><div class="pw-bars"><div class="pw-bar" id="pwb1"></div><div class="pw-bar" id="pwb2"></div><div class="pw-bar" id="pwb3"></div><div class="pw-bar" id="pwb4"></div></div></div>
+              <div class="fg"><label class="fl">Confirm New Password</label><div class="fw"><input class="fi" type="password" id="confirmPw" placeholder="Repeat new password"><i class="bi bi-shield-lock fi-ico"></i></div></div>
+              <div style="display:flex;justify-content:flex-end">
+                <button class="save-btn" onclick="changePassword()" id="savePwBtn"><i class="bi bi-shield-fill-check"></i> Update Password <i class="bi bi-arrow-repeat spin-sm" id="savePwSpin"></i></button>
+              </div>
+              <div style="margin-top:28px">
+                <div class="danger-zone">
+                  <h4><i class="bi bi-exclamation-triangle-fill"></i> Danger Zone</h4>
+                  <p>Logging out will remove your session from this device.</p>
+                  <button class="danger-btn" onclick="logout()"><i class="bi bi-box-arrow-right"></i> Sign Out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-panel">
-      <div class="hp-card hp1"><div class="hp-avatar">⚡</div><div class="hp-skill">Electrician</div><div class="hp-name">Rajesh Kumar <i class="bi bi-patch-check-fill"></i></div><div class="hp-loc"><i class="bi bi-geo-alt"></i> Ludhiana, Punjab</div><div class="hp-stars">★★★★★</div><div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div></div>
-      <div class="hp-card hp2"><div class="hp-bignum" id="liveJobs">100+</div><div class="hp-numlbl">Jobs Completed</div><div class="hp-bar"><div class="hp-barfill"></div></div><div class="hp-jobs" style="margin-top:10px"><b>47</b> active today</div></div>
-      <div class="hp-card hp3"><div class="hp-avatar">🎨</div><div class="hp-skill">Painter</div><div class="hp-name">Amit Singh <i class="bi bi-patch-check-fill"></i></div><div class="hp-loc"><i class="bi bi-geo-alt"></i> Delhi</div><div class="hp-stars">★★★★★</div><div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div></div>
-      <div class="hp-card hp4"><div class="hp-bignum">4.8</div><div class="hp-numlbl">Average Rating</div><div class="hp-stars" style="margin-top:10px;font-size:18px">★★★★★</div></div>
+
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal-backdrop" id="reviewModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Leave a Review</h3><button class="modal-close" onclick="closeReview()"><i class="bi bi-x"></i></button></div>
+    <div class="modal-body">
+      <div id="reviewAlert" style="display:none"></div>
+      <p style="font-size:14px;color:var(--ink-40);text-align:center;margin-bottom:4px">How would you rate this service?</p>
+      <div class="star-row">
+        <button class="star-btn" data-v="1" onclick="setRating(1)">★</button>
+        <button class="star-btn" data-v="2" onclick="setRating(2)">★</button>
+        <button class="star-btn" data-v="3" onclick="setRating(3)">★</button>
+        <button class="star-btn" data-v="4" onclick="setRating(4)">★</button>
+        <button class="star-btn" data-v="5" onclick="setRating(5)">★</button>
+      </div>
+      <div class="fg"><label class="fl">Your Review</label><textarea class="fi fi-no-icon" id="reviewText" placeholder="Share your experience…"></textarea></div>
+      <input type="hidden" id="reviewJobId">
+      <input type="hidden" id="reviewWorkerId">
+      <input type="hidden" id="reviewRating" value="0">
+      <button class="m-submit" onclick="submitReview()"><i class="bi bi-send-fill"></i> Submit Review</button>
     </div>
   </div>
-  <div class="hero-ribbon">
-    <div class="ribbon-in">
-      <div class="rib-item"><div class="rib-num" id="statCustomers">2,847</div><div class="rib-lbl">Happy Customers</div></div>
-      <div class="rib-sep"></div>
-      <div class="rib-item"><div class="rib-num" id="statWorkers">50</div><div class="rib-lbl">Verified Workers</div></div>
-      <div class="rib-sep"></div>
-      <div class="rib-item"><div class="rib-num" id="statJobs">15,832</div><div class="rib-lbl">Jobs Completed</div></div>
-      <div class="rib-sep"></div>
-      <div class="rib-item"><div class="rib-num">4.8★</div><div class="rib-lbl">Average Rating</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker"><div class="ticker-track">
-  <span class="t-item">⚡ Electricians<div class="t-dot"></div></span><span class="t-item">🔧 Plumbers<div class="t-dot"></div></span><span class="t-item">🎨 Painters<div class="t-dot"></div></span><span class="t-item">🪚 Carpenters<div class="t-dot"></div></span><span class="t-item">🧱 Masons<div class="t-dot"></div></span><span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span><span class="t-item">👷 Labour<div class="t-dot"></div></span><span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
-  <span class="t-item">⚡ Electricians<div class="t-dot"></div></span><span class="t-item">🔧 Plumbers<div class="t-dot"></div></span><span class="t-item">🎨 Painters<div class="t-dot"></div></span><span class="t-item">🪚 Carpenters<div class="t-dot"></div></span><span class="t-item">🧱 Masons<div class="t-dot"></div></span><span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span><span class="t-item">👷 Labour<div class="t-dot"></div></span><span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
-</div></div>
-
-<!-- SEARCH PANE -->
-<div id="searchPane"><div class="pane-in">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
-    <h3 style="font-family:'Syne',sans-serif;font-size:22px;color:var(--forest)">Search Results</h3>
-    <button onclick="closeSearch()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-40)"><i class="bi bi-x"></i></button>
-  </div>
-  <div class="workers-grid" id="searchResults"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
-</div></div>
-
-<!-- SERVICES -->
-<section class="section" id="services"><div class="wrap">
-  <div class="svc-top">
-    <div><div class="eyebrow">Our Services</div><h2 class="section-h">Every skill you<br>need, <em>right here</em></h2><p class="section-p">From quick fixes to big projects — find verified professionals in your city within minutes.</p></div>
-    <button class="n-solid" onclick="location.href='register.html'" style="flex-shrink:0">Browse All →</button>
-  </div>
-  <div class="svc-grid">
-    <div class="svc-card" onclick="quickSearch('electrician')"><div style="position:relative;z-index:1"><span class="svc-ico">⚡</span><div class="svc-cnt">124 workers</div><div class="svc-name">Electrician</div><div class="svc-desc">Wiring, fuse fixes, appliance repair, panel work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('plumber')"><div style="position:relative;z-index:1"><span class="svc-ico">🔧</span><div class="svc-cnt">89 workers</div><div class="svc-name">Plumber</div><div class="svc-desc">Pipe fitting, leaks, bathroom renovation</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('painter')"><div style="position:relative;z-index:1"><span class="svc-ico">🎨</span><div class="svc-cnt">156 workers</div><div class="svc-name">Painter</div><div class="svc-desc">Interior, exterior, texture and wallpaper</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('carpenter')"><div style="position:relative;z-index:1"><span class="svc-ico">🪚</span><div class="svc-cnt">78 workers</div><div class="svc-name">Carpenter</div><div class="svc-desc">Furniture, doors, cabinets, custom woodwork</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('mason')"><div style="position:relative;z-index:1"><span class="svc-ico">🧱</span><div class="svc-cnt">63 workers</div><div class="svc-name">Mason</div><div class="svc-desc">Tiling, plastering, construction work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('ac technician')"><div style="position:relative;z-index:1"><span class="svc-ico">❄️</span><div class="svc-cnt">47 workers</div><div class="svc-name">AC Technician</div><div class="svc-desc">Installation, servicing, gas refill</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('labour')"><div style="position:relative;z-index:1"><span class="svc-ico">👷</span><div class="svc-cnt">210 workers</div><div class="svc-name">Labour</div><div class="svc-desc">Shifting, heavy lifting, site assistance</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('driver')"><div style="position:relative;z-index:1"><span class="svc-ico">🚗</span><div class="svc-cnt">54 workers</div><div class="svc-name">Driver</div><div class="svc-desc">Daily hire, outstation, part-time driving</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-  </div>
-</div></section>
-
-<!-- HOW IT WORKS -->
-<section class="section alt" id="how"><div class="wrap"><div class="how-grid">
-  <div>
-    <div class="eyebrow">How It Works</div>
-    <h2 class="section-h">Done in <em>four</em><br>simple steps</h2>
-    <div class="how-steps">
-      <div class="how-step"><div class="how-num">01</div><div><h3>Search by skill & city</h3><p>Filter verified workers by service type and your location. See ratings, reviews and availability at a glance.</p></div></div>
-      <div class="how-step"><div class="how-num">02</div><div><h3>View profiles & pick</h3><p>Browse detailed worker profiles with experience, past jobs, verified reviews and pricing information.</p></div></div>
-      <div class="how-step"><div class="how-num">03</div><div><h3>Book instantly</h3><p>Confirm your job request with date, time and description. Worker gets notified in real time.</p></div></div>
-      <div class="how-step"><div class="how-num">04</div><div><h3>Pay only after completion</h3><p>Secure escrow via Razorpay — your money is released to the worker only after the job is done to your satisfaction.</p></div></div>
-    </div>
-  </div>
-  <div><div class="app-mock"><div class="am-bg"></div><div class="am-orb"></div><div class="am-content">
-    <div class="am-head"><div class="am-av">🔧</div><div><div class="am-name">Suresh Sharma</div><div class="am-role">⭐ 4.6 · Plumber · Chandigarh</div></div><div class="am-badge">Online</div></div>
-    <div class="am-job"><div class="am-jt">🚿 Bathroom pipe repair</div><div class="am-jm"><span><i class="bi bi-calendar3"></i> Today, 3 PM</span><span><i class="bi bi-geo-alt"></i> Sector 17</span></div></div>
-    <div class="am-job" style="background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.2)"><div class="am-jt" style="color:#4ADE80">✅ Job Accepted</div><div class="am-jm"><span>Worker is on the way</span></div></div>
-    <button class="am-btn"><i class="bi bi-chat-dots"></i> Message Worker</button>
-  </div></div></div>
-</div></div></section>
-
-<!-- WORKERS -->
-<section class="section" id="workers"><div class="wrap">
-  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:20px">
-    <div><div class="eyebrow">Verified Workers</div><h2 class="section-h">Meet our top<br><em>professionals</em></h2></div>
-    <p class="section-p" style="margin:0;max-width:300px">All workers are admin-verified with ID and background checks.</p>
-  </div>
-  <div class="filter-row" id="workerFilters">
-    <button class="fchip on" data-skill="all" onclick="filterWorkers(this,'all')">All Workers</button>
-    <button class="fchip" data-skill="electrician" onclick="filterWorkers(this,'electrician')">⚡ Electrician</button>
-    <button class="fchip" data-skill="plumber" onclick="filterWorkers(this,'plumber')">🔧 Plumber</button>
-    <button class="fchip" data-skill="painter" onclick="filterWorkers(this,'painter')">🎨 Painter</button>
-    <button class="fchip" data-skill="carpenter" onclick="filterWorkers(this,'carpenter')">🪚 Carpenter</button>
-  </div>
-  <div class="workers-grid" id="workersGrid"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
-</div></section>
-
-<!-- NUMBERS BAND -->
-<div class="nums-band"><div class="wrap"><div class="nums-grid">
-  <div class="nm-item"><div class="nm-num" id="nb1">2,847</div><div class="nm-lbl">Happy Customers</div></div>
-  <div class="nm-item"><div class="nm-num" id="nb2">743+</div><div class="nm-lbl">Verified Workers</div></div>
-  <div class="nm-item"><div class="nm-num" id="nb3">15K+</div><div class="nm-lbl">Jobs Completed</div></div>
-  <div class="nm-item"><div class="nm-num">10%</div><div class="nm-lbl">Platform Fee Only</div></div>
-</div></div></div>
-
-<!-- TESTIMONIALS -->
-<section class="section alt" id="about"><div class="wrap">
-  <div class="eyebrow">Testimonials</div>
-  <h2 class="section-h">What our users <em>say</em></h2>
-  <div class="tgrid">
-    <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">Found a certified electrician in under 5 minutes. He arrived on time, fixed the issue, and the whole payment was handled safely. Brilliant service.</p><div class="tcard-person"><div class="tcp-av">👩</div><div><div class="tcp-name">Priya Sharma</div><div class="tcp-role">Customer · Ludhiana</div></div><div class="tcp-stars">★★★★★</div></div></div>
-    <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">As a plumber, KaamConnect gives me consistent work. I've completed 98 jobs and my earnings have doubled since joining. Highly recommend to any skilled worker.</p><div class="tcard-person"><div class="tcp-av">👨</div><div><div class="tcp-name">Suresh Sharma</div><div class="tcp-role">Worker · Chandigarh</div></div><div class="tcp-stars">★★★★★</div></div></div>
-    <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">The escrow payment system is a game changer. I only paid after I was satisfied with the painting work. Finally a platform that protects the customer.</p><div class="tcard-person"><div class="tcp-av">👨‍💼</div><div><div class="tcp-name">Arjun Mehta</div><div class="tcp-role">Customer · Delhi</div></div><div class="tcp-stars">★★★★★</div></div></div>
-  </div>
-</div></section>
-
-<!-- CTA -->
-<section class="cta-section"><div class="wrap"><div class="cta-inner">
-  <h2>Ready to get started?<br>Join India today.</h2>
-  <p>Thousands of customers and workers trust KaamConnect every day. It's free to join.</p>
-  <div class="cta-btns">
-    <button class="cta-primary" onclick="location.href='register.html'">Find a Worker →</button>
-    <button class="cta-outline" onclick="location.href='register.html?role=worker'">Join as Worker</button>
-  </div>
-</div></div></section>
-
-<!-- FOOTER -->
-<footer><div class="wrap">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="logo"><div class="logo-india-flag"><svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="7.33" fill="#FF9933"/>
-  <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
-  <rect y="14.67" width="32" height="7.33" fill="#138808"/>
-  <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
-  <circle cx="16" cy="11" r="0.8" fill="#000080"/>
-  <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
-    <line x1="0" y1="-3.2" x2="0" y2="3.2"/>
-    <line x1="-3.2" y1="0" x2="3.2" y2="0"/>
-    <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/>
-    <line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
-    <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/>
-    <line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
-    <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/>
-    <line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
-  </g>
-</svg></div><div class="logo-sep"></div><div class="logo-mark"><i class="bi bi-tools"></i></div><div class="logo-txt">Kaam<span>Connect</span></div></div>
-      <p>India's trusted marketplace connecting skilled workers with customers — since 2026.</p>
-      <div class="footer-social"><div class="fs-icon"><i class="bi bi-twitter-x"></i></div><div class="fs-icon"><i class="bi bi-instagram"></i></div><div class="fs-icon"><i class="bi bi-facebook"></i></div><div class="fs-icon"><i class="bi bi-linkedin"></i></div></div>
-    </div>
-    <div class="footer-col"><h4>Platform</h4><ul><li><a href="#">Find Workers</a></li><li><a href="#">How It Works</a></li><li><a href="#">Pricing</a></li><li><a href="#">Safety</a></li></ul></div>
-    <div class="footer-col"><h4>For Workers</h4><ul><li><a href="register.html">Join as Worker</a></li><li><a href="#">Worker Guidelines</a></li><li><a href="#">Earnings</a></li><li><a href="#">Verification</a></li></ul></div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
-  </div>
-  <div style="border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center">
-    <p style="font-size:13px;color:rgba(255,255,255,.35)">Built &amp; Designed with <span style="color:#E8601C">&#9829;</span> by <strong style="color:rgba(255,255,255,.65);font-weight:700">Priyam Yadav</strong></p>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 KaamConnect. All rights reserved.</p>
-    <div style="display:flex;gap:24px"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
-  </div>
-</div></footer>
+</div>
 
 <!-- HIRE MODAL -->
-<div class="modal-backdrop" id="hireModal"><div class="modal">
-  <div class="modal-head"><h3>Book This Worker</h3><p>Fill in job details and confirm</p><button class="modal-close" onclick="closeModal()"><i class="bi bi-x"></i></button></div>
-  <div class="modal-body">
-    <div id="modalAlert" style="display:none"></div>
-    <div class="m-worker-info" id="modalWorkerInfo"></div>
-    <input type="hidden" id="modalWorkerId">
-    <div class="fi-row">
-      <div class="fg"><label class="fl">Service Type</label><div class="fw"><input class="fi" type="text" id="jobSkill" placeholder="e.g. Electrical repair"><i class="bi bi-tools fi-ico"></i></div></div>
-      <div class="fg"><label class="fl">Budget (₹)</label><div class="fw"><input class="fi" type="number" id="jobPrice" placeholder="500" min="100"><i class="bi bi-currency-rupee fi-ico"></i></div></div>
-    </div>
-    <div class="fg"><label class="fl">Location / Address</label><div class="fw"><input class="fi" type="text" id="jobLocation" placeholder="Street, City"><i class="bi bi-geo-alt fi-ico"></i></div></div>
-    <div class="fi-row">
-      <div class="fg"><label class="fl">Date</label><div class="fw"><input class="fi" type="date" id="jobDate"><i class="bi bi-calendar3 fi-ico"></i></div></div>
-      <div class="fg"><label class="fl">Time</label><div class="fw"><input class="fi" type="time" id="jobTime"><i class="bi bi-clock fi-ico"></i></div></div>
-    </div>
-    <div class="fg"><label class="fl">Description</label><textarea class="fi" id="jobDesc" placeholder="Describe the work needed…" style="padding-left:14px"></textarea></div>
-    <div class="modal-actions">
-      <button class="m-cancel" onclick="closeModal()">Cancel</button>
-      <button class="m-submit" id="submitJob" onclick="submitJob()"><i class="bi bi-check-circle-fill"></i> Confirm Booking <i class="bi bi-arrow-repeat spin-sm" id="jobSpin"></i></button>
+<div class="modal-backdrop" id="hireModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Book Worker</h3><button class="modal-close" onclick="closeHire()"><i class="bi bi-x"></i></button></div>
+    <div class="modal-body">
+      <div id="hireAlert" style="display:none"></div>
+      <div id="hireWorkerInfo" style="background:var(--cream);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:22px"></div>
+      <input type="hidden" id="hireWorkerId">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="fg"><label class="fl">Service</label><input class="fi fi-no-icon" type="text" id="hireSkill" placeholder="e.g. Plumbing" style="padding:11px 14px"></div>
+        <div class="fg"><label class="fl">Budget ₹</label><input class="fi fi-no-icon" type="number" id="hirePrice" placeholder="500" min="100" style="padding:11px 14px"></div>
+      </div>
+      <div class="fg"><label class="fl">Location</label><input class="fi fi-no-icon" type="text" id="hireLocation" placeholder="Your address" style="padding:11px 14px"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="fg"><label class="fl">Date</label><input class="fi fi-no-icon" type="date" id="hireDate" style="padding:11px 14px"></div>
+        <div class="fg"><label class="fl">Time</label><input class="fi fi-no-icon" type="time" id="hireTime" style="padding:11px 14px"></div>
+      </div>
+      <div class="fg"><label class="fl">Details</label><textarea class="fi fi-no-icon" id="hireDesc" placeholder="Describe the work…" style="padding:11px 14px"></textarea></div>
+      <button class="m-submit" id="hireSubmitBtn" onclick="confirmHire()">
+        <i class="bi bi-check-circle-fill"></i> Confirm Booking
+        <i class="bi bi-arrow-repeat spin-sm" id="hireSpin"></i>
+      </button>
     </div>
   </div>
-</div></div>
-
-<!-- CHATBOT -->
-<button class="chat-fab" id="chatFab" onclick="toggleChat()">
-  <i class="bi bi-chat-dots-fill" id="chatIcon"></i>
-  <div class="chat-bubble" id="chatBubble">Need help? 👋</div>
-</button>
-<div class="chat-win" id="chatWin">
-  <div class="cw-head"><div class="cw-av">🤖</div><div><div class="cw-name">KaamBot</div><div class="cw-status"><div class="cw-dot"></div> Online</div></div><button class="cw-close" onclick="toggleChat()"><i class="bi bi-x"></i></button></div>
-  <div class="cw-msgs" id="chatMsgs"><div class="cw-msg bot">Namaste! 🙏 I'm KaamBot. How can I help you find a skilled worker today?</div></div>
-  <div class="cw-chips" id="chatChips"><span class="cw-chip" onclick="sendChip(this)">Find Electrician</span><span class="cw-chip" onclick="sendChip(this)">How it works?</span><span class="cw-chip" onclick="sendChip(this)">Pricing info</span></div>
-  <div class="cw-input"><input class="cw-txt" type="text" id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat()"><button class="cw-send" onclick="sendChat()"><i class="bi bi-send-fill"></i></button></div>
 </div>
 
 <script>
-// NAV SCROLL
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('pinned',scrollY>30));
+// ── Save token from Google OAuth redirect ──────────────────
+(function () {
+  const p = new URLSearchParams(window.location.search);
+  const t = p.get('token'), u = p.get('user');
+  if (t && u) {
+    try {
+      // decodeURIComponent because server sends encodeURIComponent(JSON.stringify(...))
+      const userJson = decodeURIComponent(u);
+      localStorage.setItem('kc_token', t);
+      localStorage.setItem('kc_user', userJson);
+      window.history.replaceState({}, '', window.location.pathname);
+    } catch(e) {}
+  }
+})();
 
-// MOBILE MENU
-let mobileOpen=false;
-function toggleMobileMenu(){
-  mobileOpen=!mobileOpen;
-  document.getElementById('navMobile').classList.toggle('open',mobileOpen);
-  document.getElementById('hb1').style.cssText=mobileOpen?'transform:translateY(7px) rotate(45deg)':'';
-  document.getElementById('hb2').style.cssText=mobileOpen?'opacity:0;transform:scaleX(0)':'';
-  document.getElementById('hb3').style.cssText=mobileOpen?'transform:translateY(-7px) rotate(-45deg)':'';
+const TOKEN = localStorage.getItem('kc_token');
+let USER = JSON.parse(localStorage.getItem('kc_user') || '{}');
+if (!TOKEN || USER.role !== 'customer') { location.href = 'login.html'; }
+
+function initUI() {
+  document.getElementById('sbName').textContent   = USER.name || 'Customer';
+  // Sidebar and topbar — show photo or initial
+  if (USER.avatar) {
+    const sbAv = document.getElementById('sbAv');
+    sbAv.innerHTML = `<img src="${USER.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:11px">`;
+    sbAv.style.background = 'transparent';
+    const tbAv = document.getElementById('topbarAv');
+    tbAv.innerHTML = `<img src="${USER.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
+    tbAv.style.background = 'transparent';
+  } else {
+    document.getElementById('sbAv').textContent     = (USER.name||'C')[0].toUpperCase();
+    document.getElementById('sbAv').style.background = 'var(--saffron)';
+    document.getElementById('topbarAv').textContent = (USER.name||'C')[0].toUpperCase();
+    document.getElementById('topbarAv').style.background = 'var(--saffron)';
+  }
+  document.getElementById('wbName').textContent   = (USER.name||'').split(' ')[0] || 'there';
 }
-function closeMobileMenu(){
-  mobileOpen=false;
-  document.getElementById('navMobile').classList.remove('open');
-  ['hb1','hb2','hb3'].forEach(id=>document.getElementById(id).style.cssText='');
+initUI();
+
+const API = url => fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
+const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
+const statusBadge = { pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
+const statusLabel = { pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
+
+function showToast(msg, ico, dur) {
+  ico = ico||'✅'; dur = dur||4000;
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div'); t.className = 'toast';
+  t.innerHTML = `<span style="font-size:18px">${ico}</span><span style="flex:1">${msg}</span><button style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:15px" onclick="this.parentElement.remove()">✕</button>`;
+  wrap.appendChild(t);
+  setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, dur);
 }
-document.addEventListener('click',e=>{if(mobileOpen&&!e.target.closest('#nav')&&!e.target.closest('#navMobile'))closeMobileMenu();});
 
-// ANALYTICS
-(async()=>{try{const r=await fetch('/api/analytics/platform');const d=await r.json();if(d.success){document.getElementById('statCustomers').textContent=d.customers.toLocaleString('en-IN');document.getElementById('statWorkers').textContent=d.workers.toLocaleString('en-IN');document.getElementById('statJobs').textContent=d.completedJobs.toLocaleString('en-IN');document.getElementById('nb1').textContent=d.customers.toLocaleString('en-IN');document.getElementById('nb2').textContent=d.workers.toLocaleString('en-IN')+'+';document.getElementById('nb3').textContent=d.completedJobs>999?Math.round(d.completedJobs/1000)+'K+':d.completedJobs;}}catch{}})();
+function showTab(t) {
+  document.querySelectorAll('[id^=tab-]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + t).style.display = 'block';
+  const order = ['overview','find','jobs','profile'];
+  document.querySelectorAll('.sb-item')[order.indexOf(t)]?.classList.add('active');
+  const titles = { overview:'Overview', find:'Find Workers', jobs:'My Jobs', profile:'My Profile' };
+  document.getElementById('topbarTitle').textContent = titles[t] || t;
+  if (t==='overview') loadOverview();
+  if (t==='jobs')     loadAllJobs();
+  if (t==='find')     loadWorkers();
+  if (t==='profile')  loadProfile();
+}
 
-// WORKER CARDS
-const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
-function buildStars(r){return '★'.repeat(Math.round(r))+'☆'.repeat(5-Math.round(r))}
-function workerCard(w){const em=skillEmoji[w.skill]||'🛠️';const vBadge=w.verified?'<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>':'';return `<div class="wcard"><div class="wcard-header"><div class="wc-av">${em}</div><div><div class="wc-skill">${w.skill||'Worker'}</div><div class="wc-name">${w.name} ${vBadge}</div><div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div></div></div><div class="wcard-body"><div class="wc-rating"><span class="wc-stars">${buildStars(w.rating||0)}</span><span class="wc-rnum">${(w.rating||0).toFixed(1)}</span><span class="wc-rjobs">(${w.totalJobs||0} jobs)</span></div><div class="wc-bio">${w.bio||'Experienced professional ready to help.'}</div></div><div class="wcard-foot"><button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Worker'}','${em}')"><i class="bi bi-calendar-check"></i> Book Now</button><button class="btn-view" onclick="viewProfile('${w._id}')"><i class="bi bi-person"></i> Profile</button></div></div>`;}
-let allWorkers=[];
-async function loadWorkers(skill='all'){const grid=document.getElementById('workersGrid');grid.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';try{const url='/api/workers/find'+(skill&&skill!=='all'?`?skill=${skill}`:'');const r=await fetch(url);const d=await r.json();allWorkers=d.workers||[];if(!allWorkers.length){grid.innerHTML='<div class="workers-empty"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>';return;}grid.innerHTML=allWorkers.slice(0,6).map(workerCard).join('');}catch{grid.innerHTML='<div class="workers-empty"><i class="bi bi-wifi-off"></i><h3>Could not load workers</h3><p>Make sure the server is running</p></div>';}}
-loadWorkers();
-function filterWorkers(el,skill){document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));el.classList.add('on');loadWorkers(skill);}
-function heroSearch(){doSearch(document.getElementById('heroSkill').value,document.getElementById('heroLocation').value.trim());}
-function quickSearch(skill){document.getElementById('heroSkill').value=skill;doSearch(skill,'');document.querySelector('#services').scrollIntoView({behavior:'smooth'});}
-async function doSearch(skill,location){const pane=document.getElementById('searchPane');const grid=document.getElementById('searchResults');pane.style.display='block';grid.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';let url='/api/workers/find?';if(skill&&skill!=='all')url+=`skill=${skill}&`;if(location)url+=`location=${encodeURIComponent(location)}`;try{const r=await fetch(url);const d=await r.json();const workers=d.workers||[];grid.innerHTML=workers.length?workers.map(workerCard).join(''):'<div class="workers-empty"><i class="bi bi-search"></i><h3>No workers found</h3><p>Try a different search</p></div>';}catch{grid.innerHTML='<div class="workers-empty"><i class="bi bi-wifi-off"></i><h3>Server not reachable</h3><p>Is the server running?</p></div>';}pane.scrollIntoView({behavior:'smooth'});}
-function closeSearch(){document.getElementById('searchPane').style.display='none';}
-function openHire(id,name,skill,em){const token=localStorage.getItem('kc_token');if(!token){alert('Please sign in to book a worker.');location.href='login.html';return;}document.getElementById('modalWorkerId').value=id;document.getElementById('modalWorkerInfo').innerHTML=`<div class="mwi-av">${em}</div><div><div class="mwi-name">${name}</div><div class="mwi-skill">${skill}</div></div>`;document.getElementById('jobSkill').value=skill;document.getElementById('hireModal').classList.add('open');}
-function closeModal(){document.getElementById('hireModal').classList.remove('open');document.getElementById('modalAlert').style.display='none';}
-function showModalAlert(t,m){const a=document.getElementById('modalAlert');a.style.display='flex';a.className='alert '+(t==='error'?'alert-err':'alert-ok');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
-async function submitJob(){const wid=document.getElementById('modalWorkerId').value;const skill=document.getElementById('jobSkill').value.trim();const price=document.getElementById('jobPrice').value;const location=document.getElementById('jobLocation').value.trim();const date=document.getElementById('jobDate').value;const time=document.getElementById('jobTime').value;const desc=document.getElementById('jobDesc').value.trim();if(!skill||!price||!location){showModalAlert('error','Please fill in service, price and location.');return;}const btn=document.getElementById('submitJob'),sp=document.getElementById('jobSpin');btn.disabled=true;sp.style.display='inline-block';try{const r=await fetch('/api/jobs/create',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+localStorage.getItem('kc_token')},body:JSON.stringify({worker_id:wid,skill,price:parseFloat(price),location,description:desc,scheduled_date:date||null,scheduled_time:time||null})});const d=await r.json();if(d.success){showModalAlert('success','Job booked! Check your dashboard.');setTimeout(closeModal,2000);}else showModalAlert('error',d.message||'Booking failed. Please try again.');}catch{showModalAlert('error','Server error. Is it running?');}btn.disabled=false;sp.style.display='none';}
-function viewProfile(id){location.href='login.html';}
-document.getElementById('hireModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-let chatOpen=false;
-function toggleChat(){chatOpen=!chatOpen;document.getElementById('chatWin').classList.toggle('open',chatOpen);document.getElementById('chatIcon').className=chatOpen?'bi bi-x-lg':'bi bi-chat-dots-fill';document.getElementById('chatBubble').style.display=chatOpen?'none':'block';}
-setTimeout(()=>{document.getElementById('chatBubble').style.animation='none';},5000);
-function addMsg(txt,who){const box=document.getElementById('chatMsgs');const d=document.createElement('div');d.className='cw-msg '+who;d.textContent=txt;box.appendChild(d);box.scrollTop=box.scrollHeight;}
-function setChips(arr){const c=document.getElementById('chatChips');c.innerHTML=arr.map(s=>`<span class="cw-chip" onclick="sendChip(this)">${s}</span>`).join('');}
-async function sendChat(){const inp=document.getElementById('chatInput');const msg=inp.value.trim();if(!msg)return;inp.value='';addMsg(msg,'user');try{const r=await fetch('/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();if(d.success){addMsg(d.response,'bot');if(d.suggestions)setChips(d.suggestions);}else addMsg('Sorry, I could not understand that. Please try again.','bot');}catch{addMsg('Server is offline. Please check if the app is running.','bot');}}
-function sendChip(el){document.getElementById('chatInput').value=el.textContent;sendChat();}
+/* ══ PROFILE PHOTO ══ */
+let currentAvatar = null;
+
+function setProfilePhoto(src) {
+  const el = document.getElementById('profileAvatar');
+  const deleteBtn = document.getElementById('deletePhotoBtn');
+  if (src) {
+    el.innerHTML = `<img src="${src}" alt="Profile photo">`;
+    el.style.background = 'transparent';
+    deleteBtn.style.display = 'flex';
+    currentAvatar = src;
+  } else {
+    const initial = (USER.name || 'C')[0].toUpperCase();
+    el.innerHTML = initial;
+    el.style.background = 'var(--saffron)';
+    deleteBtn.style.display = 'none';
+    currentAvatar = null;
+  }
+}
+
+document.getElementById('photoFileInput').addEventListener('change', async function () {
+  const file = this.files[0];
+  if (!file) return;
+  if (file.size > 3 * 1024 * 1024) {
+    showToast('Photo too large. Max 3MB.', '❌'); return;
+  }
+  // Convert to base64
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result;
+    // Preview immediately
+    setProfilePhoto(base64);
+    showToast('Uploading photo…', '📷', 2000);
+    // Save to server
+    try {
+      const d = await fetch('/api/auth/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+        body: JSON.stringify({
+          name:     USER.name     || '',
+          phone:    USER.phone    || '',
+          location: USER.location || '',
+          bio:      USER.bio      || '',
+          avatar:   base64,
+        })
+      }).then(r => r.json());
+      if (d.success) {
+        USER.avatar = base64;
+        localStorage.setItem('kc_user', JSON.stringify(USER));
+        showToast('Photo updated! ✅', '📷');
+      } else {
+        showToast(d.message || 'Upload failed', '❌');
+      }
+    } catch {
+      showToast('Server error.', '❌');
+    }
+  };
+  reader.readAsDataURL(file);
+  this.value = ''; // reset input
+});
+
+async function deletePhoto() {
+  if (!confirm('Remove your profile photo?')) return;
+  setProfilePhoto(null);
+  try {
+    const d = await fetch('/api/auth/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({
+        name:     USER.name     || '',
+        phone:    USER.phone    || '',
+        location: USER.location || '',
+        bio:      USER.bio      || '',
+        avatar:   null,
+      })
+    }).then(r => r.json());
+    if (d.success) {
+      USER.avatar = null;
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      showToast('Photo removed.', '🗑️');
+    } else {
+      showToast(d.message || 'Failed to remove photo', '❌');
+    }
+  } catch {
+    showToast('Server error.', '❌');
+  }
+}
+
+loadOverview();
+
+async function loadOverview() {
+  try {
+    const d = await API('/api/jobs/stats');
+    if (d.success) {
+      document.getElementById('st-total').textContent = d.stats.total     || 0;
+      document.getElementById('st-done').textContent  = d.stats.completed || 0;
+      document.getElementById('st-pend').textContent  = d.stats.pending   || 0;
+      document.getElementById('st-spent').textContent = d.stats.totalSpent ? '₹'+Math.round(d.stats.totalSpent) : '₹0';
+      const p = d.stats.pending || 0;
+      const badge = document.getElementById('notifBadge');
+      badge.style.display = p > 0 ? 'grid' : 'none';
+      badge.textContent = p;
+    }
+  } catch(e) {}
+  const jobs = await API('/api/jobs/customer?limit=3');
+  const el = document.getElementById('recentJobs');
+  el.innerHTML = (jobs.success && jobs.jobs?.length)
+    ? `<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`
+    : '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Book your first worker to get started!</p></div>';
+}
+
+function jobCard(j) {
+  const em    = skillEmoji[j.skill] || '🛠️';
+  const wName = j.workerId?.name || 'Worker';
+  const st    = j.status;
+  let actions = '';
+  if (st === 'pending')   actions = `<button class="jc-btn jc-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
+  if (st === 'completed') actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${j.workerId?._id||''}')"><i class="bi bi-star"></i> Review</button>`;
+  return `<div class="job-card" id="jcard-${j._id}">
+    <div class="jc-ico">${em}</div>
+    <div class="jc-info">
+      <div class="jc-title">${j.title||j.skill||'Job'}</div>
+      <div class="jc-meta">
+        <span><i class="bi bi-person"></i> ${wName}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
+        <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
+      </div>
+    </div>
+    <div class="jc-price">₹${j.price||0}</div>
+    <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
+    ${actions?`<div class="jc-actions">${actions}</div>`:''}
+  </div>`;
+}
+
+async function loadAllJobs() {
+  const el = document.getElementById('allJobs');
+  el.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  const d = await API('/api/jobs/customer?limit=50');
+  el.innerHTML = (d.success && d.jobs?.length)
+    ? `<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`
+    : '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Your job history will appear here.</p></div>';
+}
+
+async function cancelJob(id, btn) {
+  if (!confirm('Cancel this job?')) return;
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i>'; }
+  const d = await fetch('/api/jobs/cancel/'+id,{method:'PUT',headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+  if (d.success) {
+    const badge = document.getElementById('badge-'+id);
+    if (badge) { badge.className='badge badge-cancelled'; badge.textContent='Cancelled'; }
+    if (btn) btn.closest('.jc-actions').innerHTML = '';
+    showToast('Job cancelled.','🗑️');
+    loadOverview();
+  } else {
+    if (btn) { btn.disabled=false; btn.innerHTML='<i class="bi bi-x-circle"></i> Cancel'; }
+    showToast(d.message||'Cancel failed','❌');
+  }
+}
+
+async function loadWorkers() {
+  const skill = document.getElementById('fskill').value;
+  const loc   = document.getElementById('floc').value.trim();
+  const grid  = document.getElementById('workersGrid');
+  grid.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  let url = '/api/workers/find?';
+  if (skill) url += `skill=${skill}&`;
+  if (loc)   url += `location=${encodeURIComponent(loc)}`;
+  try {
+    const d = await fetch(url).then(r=>r.json());
+    grid.innerHTML = d.workers?.length
+      ? d.workers.map(w=>`<div class="wcard">
+          <div class="wcard-head">
+            <div class="wc-av">${skillEmoji[w.skill]||'🛠️'}</div>
+            <div style="z-index:1">
+              <div class="wc-skill">${w.skill||'worker'}</div>
+              <div class="wc-name">${w.name}${w.verified?'<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>':''}</div>
+              <div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div>
+            </div>
+          </div>
+          <div class="wcard-body">
+            <div class="wc-rating"><span class="wc-stars">${'★'.repeat(Math.round(w.rating||0))}${'☆'.repeat(5-Math.round(w.rating||0))}</span> <b>${(w.rating||0).toFixed(1)}</b> (${w.totalJobs||0})</div>
+            <div class="wc-bio">${w.bio||'Experienced professional.'}</div>
+          </div>
+          <div class="wcard-foot">
+            <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Work'}','${skillEmoji[w.skill]||'🛠️'}')"><i class="bi bi-calendar-check"></i> Book Now</button>
+          </div>
+        </div>`).join('')
+      : '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try different filters</p></div>';
+  } catch(e) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-wifi-off"></i><h3>Connection error</h3><p>Is the server running?</p></div>';
+  }
+}
+
+/* ══ HIRE MODAL — FIXED ══ */
+function openHire(id, name, skill, em) {
+  document.getElementById('hireWorkerId').value = id;
+  document.getElementById('hireWorkerInfo').innerHTML = `
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:22px;flex-shrink:0">${em}</div>
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest)">${name}</div>
+      <div style="font-size:13px;color:var(--ink-40)">${skill}</div>
+    </div>`;
+  document.getElementById('hireSkill').value   = skill;
+  document.getElementById('hirePrice').value   = '';
+  document.getElementById('hireLocation').value= '';
+  document.getElementById('hireDate').value    = '';
+  document.getElementById('hireTime').value    = '';
+  document.getElementById('hireDesc').value    = '';
+  document.getElementById('hireAlert').style.display = 'none';
+  document.getElementById('hireSubmitBtn').disabled = false;
+  document.getElementById('hireModal').classList.add('open');
+}
+
+function closeHire() { document.getElementById('hireModal').classList.remove('open'); }
+
+async function confirmHire() {
+  const wid      = document.getElementById('hireWorkerId').value;
+  const skill    = document.getElementById('hireSkill').value.trim();
+  const priceVal = document.getElementById('hirePrice').value;
+  const loc      = document.getElementById('hireLocation').value.trim();
+  const desc     = document.getElementById('hireDesc').value.trim();
+  const date     = document.getElementById('hireDate').value;
+  const time     = document.getElementById('hireTime').value;
+
+  if (!skill || !priceVal || !loc) {
+    showHA('error', 'Please fill in Service, Budget and Location');
+    return;
+  }
+  const price = parseFloat(priceVal);
+  if (isNaN(price) || price < 1) {
+    showHA('error', 'Please enter a valid budget amount');
+    return;
+  }
+
+  const btn  = document.getElementById('hireSubmitBtn');
+  const spin = document.getElementById('hireSpin');
+  btn.disabled = true;
+  spin.style.display = 'inline-block';
+
+  try {
+    const res = await fetch('/api/jobs/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({
+        worker_id:      wid,
+        skill:          skill,
+        price:          price,
+        location:       loc,
+        description:    desc || undefined,
+        scheduled_date: date || undefined,
+        scheduled_time: time || undefined,
+      })
+    });
+
+    // ── KEY FIX: always parse JSON, check success field ──────────
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      // ✅ SUCCESS
+      showHA('ok', 'Job booked! Worker has been notified. 🎉');
+      showToast('Job booked successfully!', '🎉');
+      setTimeout(() => { closeHire(); showTab('jobs'); }, 1600);
+    } else {
+      // ❌ Server returned error
+      const errMsg = data.message || 'Booking failed. Please try again.';
+      showHA('error', errMsg);
+      btn.disabled = false;
+      spin.style.display = 'none';
+    }
+  } catch(networkErr) {
+    // ❌ Network error (server offline)
+    showHA('error', 'Cannot connect to server. Is it running?');
+    btn.disabled = false;
+    spin.style.display = 'none';
+  }
+}
+
+function showHA(t, m) {
+  const a = document.getElementById('hireAlert');
+  a.style.display = 'flex';
+  a.className = 'alert ' + (t==='error' ? 'ae' : 'as');
+  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;
+}
+
+document.getElementById('hireModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('hireModal')) closeHire();
+});
+
+/* ══ REVIEW MODAL ══ */
+function openReview(jobId, workerId) {
+  document.getElementById('reviewJobId').value    = jobId;
+  document.getElementById('reviewWorkerId').value = workerId;
+  document.getElementById('reviewRating').value   = 0;
+  document.getElementById('reviewText').value     = '';
+  document.getElementById('reviewAlert').style.display = 'none';
+  setRating(0);
+  document.getElementById('reviewModal').classList.add('open');
+}
+function closeReview() { document.getElementById('reviewModal').classList.remove('open'); }
+function setRating(v) {
+  document.getElementById('reviewRating').value = v;
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('on', parseInt(b.dataset.v) <= v));
+}
+async function submitReview() {
+  const rating = parseInt(document.getElementById('reviewRating').value);
+  if (!rating) { showRA('error','Please select a rating'); return; }
+  const d = await fetch('/api/jobs/review',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:document.getElementById('reviewJobId').value,worker_id:document.getElementById('reviewWorkerId').value,rating,review:document.getElementById('reviewText').value.trim()})}).then(r=>r.json());
+  if (d.success) { showRA('ok','Review submitted! Thank you.'); setTimeout(()=>{closeReview();loadAllJobs();},1500); }
+  else showRA('error',d.message||'Submission failed');
+}
+function showRA(t,m){const a=document.getElementById('reviewAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
+document.getElementById('reviewModal').addEventListener('click',e=>{if(e.target===document.getElementById('reviewModal'))closeReview();});
+
+/* ══ PROFILE ══ */
+async function loadProfile() {
+  try {
+    const d = await API('/api/auth/profile');
+    if (d.success) {
+      const u = d.user;
+      USER = { ...USER, ...u };
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      // Show avatar photo or initial
+      if (u.avatar) {
+        setProfilePhoto(u.avatar);
+      } else {
+        const initial = (u.name||'C')[0].toUpperCase();
+        document.getElementById('profileAvatar').innerHTML = initial;
+        document.getElementById('profileAvatar').style.background = 'var(--saffron)';
+        document.getElementById('deletePhotoBtn').style.display = 'none';
+      }
+      document.getElementById('profileName').textContent    = u.name    || '—';
+      document.getElementById('profileEmail').textContent   = u.email   || '—';
+      document.getElementById('profilePhone').textContent   = u.phone   || 'Not set';
+      document.getElementById('profileLocation').textContent= u.location|| 'Not set';
+      document.getElementById('profileJoined').textContent  = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN',{year:'numeric',month:'long'}) : '—';
+      document.getElementById('editName').value     = u.name     || '';
+      document.getElementById('editPhone').value    = u.phone    || '';
+      document.getElementById('editEmail').value    = u.email    || '';
+      document.getElementById('editLocation').value = u.location || '';
+      document.getElementById('editBio').value      = u.bio      || '';
+      initUI();
+      const stats = await API('/api/jobs/stats');
+      if (stats.success) document.getElementById('profileJobs').textContent = stats.stats.total || 0;
+    }
+  } catch(e) {
+    document.getElementById('editName').value  = USER.name  || '';
+    document.getElementById('editEmail').value = USER.email || '';
+    document.getElementById('profileAvatar').textContent = (USER.name||'C')[0].toUpperCase();
+    document.getElementById('profileName').textContent   = USER.name  || '—';
+    document.getElementById('profileEmail').textContent  = USER.email || '—';
+  }
+}
+
+function switchFormTab(tab, btn) {
+  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ts-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('fs-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+async function saveProfile() {
+  const name     = document.getElementById('editName').value.trim();
+  const phone    = document.getElementById('editPhone').value.trim();
+  const location = document.getElementById('editLocation').value.trim();
+  const bio      = document.getElementById('editBio').value.trim();
+  if (!name) { showFA('infoAlert','error','Name cannot be empty'); return; }
+  const btn = document.getElementById('saveInfoBtn');
+  const sp  = document.getElementById('saveInfoSpin');
+  btn.disabled = true; sp.style.display = 'inline-block';
+  try {
+    const d = await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name,phone,location,bio})}).then(r=>r.json());
+    if (d.success) {
+      USER = { ...USER, name, phone, location, bio };
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      showFA('infoAlert','success','Profile updated!');
+      document.getElementById('profileAvatar').textContent   = name[0].toUpperCase();
+      document.getElementById('profileName').textContent     = name;
+      document.getElementById('profilePhone').textContent    = phone    || 'Not set';
+      document.getElementById('profileLocation').textContent = location || 'Not set';
+      initUI();
+      showToast('Profile saved!','✅');
+    } else showFA('infoAlert','error',d.message||'Update failed');
+  } catch { showFA('infoAlert','error','Server error.'); }
+  btn.disabled = false; sp.style.display = 'none';
+}
+
+async function changePassword() {
+  const current = document.getElementById('currentPw').value;
+  const newPw   = document.getElementById('newPw').value;
+  const confirm = document.getElementById('confirmPw').value;
+  if (!current||!newPw||!confirm) { showFA('pwAlert','error','Fill in all fields'); return; }
+  if (newPw.length < 6)  { showFA('pwAlert','error','Min 6 characters'); return; }
+  if (newPw !== confirm) { showFA('pwAlert','error','Passwords do not match'); return; }
+  const btn = document.getElementById('savePwBtn');
+  const sp  = document.getElementById('savePwSpin');
+  btn.disabled = true; sp.style.display = 'inline-block';
+  try {
+    const d = await fetch('/api/auth/change-password',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({currentPassword:current,newPassword:newPw})}).then(r=>r.json());
+    if (d.success) {
+      showFA('pwAlert','success','Password changed!');
+      document.getElementById('currentPw').value = '';
+      document.getElementById('newPw').value     = '';
+      document.getElementById('confirmPw').value = '';
+      for(let i=1;i<=4;i++) document.getElementById('pwb'+i).style.background='var(--ink-06)';
+      showToast('Password updated!','🔒');
+    } else showFA('pwAlert','error',d.message||'Failed');
+  } catch { showFA('pwAlert','error','Server error.'); }
+  btn.disabled = false; sp.style.display = 'none';
+}
+
+function checkPwStrength(v) {
+  const c    = [v.length>=6, v.length>=8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
+  const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
+  const n    = c.filter(Boolean).length;
+  for(let i=0;i<4;i++) document.getElementById('pwb'+(i+1)).style.background = i<n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
+}
+
+function showFA(id, t, m) {
+  const a = document.getElementById(id);
+  a.style.display = 'flex';
+  a.className = 'alert ' + (t==='error'?'ae':'as');
+  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
+  setTimeout(() => a.style.display = 'none', 4000);
+}
+
+function logout() { localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href = 'login.html'; }
+
+// ── Mobile sidebar ─────────────────────────────────────────
+const mobBtn   = document.getElementById('mobMenuBtn');
+const sbOverlay = document.getElementById('sbOverlay');
+const sidebar   = document.querySelector('.sidebar');
+if (mobBtn) {
+  mobBtn.addEventListener('click', () => {
+    mobBtn.classList.toggle('open');
+    sidebar.classList.toggle('mobile-open');
+    sbOverlay.classList.toggle('open');
+  });
+  sbOverlay.addEventListener('click', () => {
+    mobBtn.classList.remove('open');
+    sidebar.classList.remove('mobile-open');
+    sbOverlay.classList.remove('open');
+  });
+}
+document.querySelectorAll('.sb-item').forEach(el => {
+  el.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+      mobBtn && mobBtn.classList.remove('open');
+      sidebar && sidebar.classList.remove('mobile-open');
+      sbOverlay && sbOverlay.classList.remove('open');
+    }
+  });
+});
+
 </script>
 </body>
 </html>

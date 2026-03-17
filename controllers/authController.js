@@ -212,9 +212,12 @@ exports.getProfile = async (req, res) => {
 // ─── Update Profile ───────────────────────────────────────────
 exports.updateProfile = async (req, res) => {
   try {
-    const { name, phone, location, bio, skill } = req.body;
-    await User.findByIdAndUpdate(req.user.id, { name, phone, location, bio, skill });
-    res.json({ success: true, message: "Profile updated successfully" });
+    const { name, phone, location, bio, skill, avatar } = req.body;
+    const update = { name, phone, location, bio, skill };
+    // avatar can be a base64 data URL, a URL string, or null (to delete)
+    if (avatar !== undefined) update.avatar = avatar;
+    const user = await User.findByIdAndUpdate(req.user.id, update, { new: true });
+    res.json({ success: true, message: "Profile updated successfully", avatar: user.avatar || null });
   } catch (err) {
     res.status(500).json({ success: false, message: "Update failed" });
   }

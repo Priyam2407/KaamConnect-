@@ -23,6 +23,10 @@ a{text-decoration:none;color:inherit}
 .sb-bg{position:absolute;bottom:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
 .sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
 .sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;flex-shrink:0}
+.sb-logo-india{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.3);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
+.sb-logo-india svg{width:100%;height:100%;display:block}
+.sb-logo:hover .sb-logo-india{transform:scale(1.08)}
+.sb-logo-sep{width:1px;height:22px;background:rgba(255,255,255,.2);flex-shrink:0}
 .sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
 .sb-logo-txt span{color:var(--saffron-2)}
 .sb-nav{flex:1;padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
@@ -101,12 +105,29 @@ a{text-decoration:none;color:inherit}
 .wcard-body{padding:16px 18px}
 .wc-rating{display:flex;align-items:center;gap:7px;margin-bottom:9px}
 .wc-stars{color:#FBBF24;font-size:12px}
-.wc-bio{font-size:12.5px;color:var(--ink-70);line-height:1.62;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
+.wc-bio{font-size:12.5px;color:var(--ink-70);line-height:1.62;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
 .wcard-foot{padding:12px 18px;border-top:1px solid var(--ink-06);display:flex;gap:8px}
 .btn-hire{flex:1;padding:9px;border-radius:8px;background:var(--saffron);border:none;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-hire:hover{background:var(--saffron-2)}
 .profile-layout{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
 .profile-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;overflow:hidden}
+/* ── Profile photo upload ── */
+.profile-avatar-wrap{position:relative;width:80px;height:80px;margin:0 auto 16px;cursor:pointer}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.2);overflow:hidden;transition:opacity .2s}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profile-avatar-wrap:hover .profile-avatar{opacity:.75}
+.profile-avatar-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;flex-direction:column;gap:3px;pointer-events:none}
+.profile-avatar-wrap:hover .profile-avatar-overlay{display:flex}
+.profile-avatar-overlay i{font-size:18px;color:#fff}
+.profile-avatar-overlay span{font-size:10px;color:rgba(255,255,255,.85);font-weight:600;letter-spacing:.5px}
+.photo-actions{display:flex;gap:8px;justify-content:center;margin-top:10px;position:relative;z-index:1}
+.photo-btn{padding:5px 12px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px}
+.photo-btn-upload{background:rgba(255,255,255,.15);color:#fff}
+.photo-btn-upload:hover{background:rgba(255,255,255,.25)}
+.photo-btn-delete{background:rgba(220,38,38,.2);color:#FCA5A5}
+.photo-btn-delete:hover{background:rgba(220,38,38,.5);color:#fff}
+#photoFileInput{display:none}
+
 .profile-card-top{background:linear-gradient(135deg,var(--forest),var(--forest-2));padding:32px 24px;text-align:center;position:relative;overflow:hidden}
 .profile-card-top::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05)}
 .profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.2);margin:0 auto 16px}
@@ -175,7 +196,7 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 
 <aside class="sidebar">
   <div class="sb-bg"></div>
-  <div class="sb-logo"><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
+  <div class="sb-logo"><div class="sb-logo-india"><svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="7.33" fill="#FF9933"/><rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/><rect y="14.67" width="32" height="7.33" fill="#138808"/><circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/><circle cx="16" cy="11" r="0.75" fill="#000080"/><g stroke="#000080" stroke-width="0.4" transform="translate(16,11)"><line x1="0" y1="-3.2" x2="0" y2="3.2"/><line x1="-3.2" y1="0" x2="3.2" y2="0"/><line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/><line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/><line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/><line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/><line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/><line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/></g></svg></div><div class="sb-logo-sep"></div><div class="sb-logo-mark"><i class="bi bi-tools"></i></div><div class="sb-logo-txt">Kaam<span>Connect</span></div></div>
   <nav class="sb-nav">
     <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
     <div class="sb-item" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</div>
@@ -192,7 +213,9 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 </aside>
 
 <div class="main">
+  <div class="sb-overlay" id="sbOverlay"></div>
   <div class="topbar">
+    <button class="mob-menu-btn" id="mobMenuBtn"><span></span><span></span><span></span></button>
     <div class="topbar-title" id="topbarTitle">Overview</div>
     <div class="topbar-right">
       <button class="notif-btn" onclick="showTab('jobs')" title="My Jobs">
@@ -251,7 +274,15 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
       <div class="profile-layout">
         <div class="profile-card">
           <div class="profile-card-top">
-            <div class="profile-avatar" id="profileAvatar">C</div>
+            <input type="file" id="photoFileInput" accept="image/*">
+            <div class="profile-avatar-wrap" onclick="document.getElementById('photoFileInput').click()" title="Click to change photo">
+              <div class="profile-avatar" id="profileAvatar">C</div>
+              <div class="profile-avatar-overlay"><i class="bi bi-camera-fill"></i><span>CHANGE</span></div>
+            </div>
+            <div class="photo-actions">
+              <button class="photo-btn photo-btn-upload" onclick="document.getElementById('photoFileInput').click()"><i class="bi bi-upload"></i> Upload</button>
+              <button class="photo-btn photo-btn-delete" id="deletePhotoBtn" onclick="deletePhoto()" style="display:none"><i class="bi bi-trash3"></i> Remove</button>
+            </div>
             <div class="profile-name" id="profileName">—</div>
             <div class="profile-email" id="profileEmail">—</div>
           </div>
@@ -364,9 +395,10 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
   const t = p.get('token'), u = p.get('user');
   if (t && u) {
     try {
+      // decodeURIComponent because server sends encodeURIComponent(JSON.stringify(...))
+      const userJson = decodeURIComponent(u);
       localStorage.setItem('kc_token', t);
-      localStorage.setItem('kc_user', u);
-      // Clean URL without reloading
+      localStorage.setItem('kc_user', userJson);
       window.history.replaceState({}, '', window.location.pathname);
     } catch(e) {}
   }
@@ -378,8 +410,20 @@ if (!TOKEN || USER.role !== 'customer') { location.href = 'login.html'; }
 
 function initUI() {
   document.getElementById('sbName').textContent   = USER.name || 'Customer';
-  document.getElementById('sbAv').textContent     = (USER.name||'C')[0].toUpperCase();
-  document.getElementById('topbarAv').textContent = (USER.name||'C')[0].toUpperCase();
+  // Sidebar and topbar — show photo or initial
+  if (USER.avatar) {
+    const sbAv = document.getElementById('sbAv');
+    sbAv.innerHTML = `<img src="${USER.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:11px">`;
+    sbAv.style.background = 'transparent';
+    const tbAv = document.getElementById('topbarAv');
+    tbAv.innerHTML = `<img src="${USER.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
+    tbAv.style.background = 'transparent';
+  } else {
+    document.getElementById('sbAv').textContent     = (USER.name||'C')[0].toUpperCase();
+    document.getElementById('sbAv').style.background = 'var(--saffron)';
+    document.getElementById('topbarAv').textContent = (USER.name||'C')[0].toUpperCase();
+    document.getElementById('topbarAv').style.background = 'var(--saffron)';
+  }
   document.getElementById('wbName').textContent   = (USER.name||'').split(' ')[0] || 'there';
 }
 initUI();
@@ -411,6 +455,96 @@ function showTab(t) {
   if (t==='find')     loadWorkers();
   if (t==='profile')  loadProfile();
 }
+
+/* ══ PROFILE PHOTO ══ */
+let currentAvatar = null;
+
+function setProfilePhoto(src) {
+  const el = document.getElementById('profileAvatar');
+  const deleteBtn = document.getElementById('deletePhotoBtn');
+  if (src) {
+    el.innerHTML = `<img src="${src}" alt="Profile photo">`;
+    el.style.background = 'transparent';
+    deleteBtn.style.display = 'flex';
+    currentAvatar = src;
+  } else {
+    const initial = (USER.name || 'C')[0].toUpperCase();
+    el.innerHTML = initial;
+    el.style.background = 'var(--saffron)';
+    deleteBtn.style.display = 'none';
+    currentAvatar = null;
+  }
+}
+
+document.getElementById('photoFileInput').addEventListener('change', async function () {
+  const file = this.files[0];
+  if (!file) return;
+  if (file.size > 3 * 1024 * 1024) {
+    showToast('Photo too large. Max 3MB.', '❌'); return;
+  }
+  // Convert to base64
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result;
+    // Preview immediately
+    setProfilePhoto(base64);
+    showToast('Uploading photo…', '📷', 2000);
+    // Save to server
+    try {
+      const d = await fetch('/api/auth/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+        body: JSON.stringify({
+          name:     USER.name     || '',
+          phone:    USER.phone    || '',
+          location: USER.location || '',
+          bio:      USER.bio      || '',
+          avatar:   base64,
+        })
+      }).then(r => r.json());
+      if (d.success) {
+        USER.avatar = base64;
+        localStorage.setItem('kc_user', JSON.stringify(USER));
+        showToast('Photo updated! ✅', '📷');
+      } else {
+        showToast(d.message || 'Upload failed', '❌');
+      }
+    } catch {
+      showToast('Server error.', '❌');
+    }
+  };
+  reader.readAsDataURL(file);
+  this.value = ''; // reset input
+});
+
+async function deletePhoto() {
+  if (!confirm('Remove your profile photo?')) return;
+  setProfilePhoto(null);
+  try {
+    const d = await fetch('/api/auth/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({
+        name:     USER.name     || '',
+        phone:    USER.phone    || '',
+        location: USER.location || '',
+        bio:      USER.bio      || '',
+        avatar:   null,
+      })
+    }).then(r => r.json());
+    if (d.success) {
+      USER.avatar = null;
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      showToast('Photo removed.', '🗑️');
+    } else {
+      showToast(d.message || 'Failed to remove photo', '❌');
+    }
+  } catch {
+    showToast('Server error.', '❌');
+  }
+}
+
+loadOverview();
 
 async function loadOverview() {
   try {
@@ -474,7 +608,9 @@ async function cancelJob(id, btn) {
     if (badge) { badge.className='badge badge-cancelled'; badge.textContent='Cancelled'; }
     if (btn) btn.closest('.jc-actions').innerHTML = '';
     showToast('Job cancelled.','🗑️');
-    loadOverview();
+    
+
+loadOverview();
   } else {
     if (btn) { btn.disabled=false; btn.innerHTML='<i class="bi bi-x-circle"></i> Cancel'; }
     showToast(d.message||'Cancel failed','❌');
@@ -643,7 +779,15 @@ async function loadProfile() {
       const u = d.user;
       USER = { ...USER, ...u };
       localStorage.setItem('kc_user', JSON.stringify(USER));
-      document.getElementById('profileAvatar').textContent  = (u.name||'C')[0].toUpperCase();
+      // Show avatar photo or initial
+      if (u.avatar) {
+        setProfilePhoto(u.avatar);
+      } else {
+        const initial = (u.name||'C')[0].toUpperCase();
+        document.getElementById('profileAvatar').innerHTML = initial;
+        document.getElementById('profileAvatar').style.background = 'var(--saffron)';
+        document.getElementById('deletePhotoBtn').style.display = 'none';
+      }
       document.getElementById('profileName').textContent    = u.name    || '—';
       document.getElementById('profileEmail').textContent   = u.email   || '—';
       document.getElementById('profilePhone').textContent   = u.phone   || 'Not set';
@@ -741,7 +885,8 @@ function showFA(id, t, m) {
 
 function logout() { localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href = 'login.html'; }
 
-loadOverview();
+
+
 </script>
 </body>
 </html>

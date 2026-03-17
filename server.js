@@ -126,9 +126,9 @@ const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`
 ╔══════════════════════════════════════════╗
-║     🚀 KaamConnect v3.0 - MongoDB        ║
+║     🚀 KaamConnect - MongoDB        ║
 ╠══════════════════════════════════════════╣
-║  🌐  http://localhost:${PORT}            ║
+║  🌐  http://localhost:${PORT}             ║
 ║  🍃  MongoDB Atlas Connected             ║
 ║  📡  Socket.IO Real-time                 ║
 ╚══════════════════════════════════════════╝
