@@ -187,7 +187,63 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 .ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
 .spin-sm{display:none;animation:spin .8s linear infinite}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}.workers-grid{grid-column:1/-1;grid-template-columns:1fr 1fr}.profile-layout{grid-template-columns:1fr}}
+
+
+/* ══ HAMBURGER & MOBILE SIDEBAR ══ */
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;flex-shrink:0}
+.mob-menu-btn span{display:block;width:22px;height:2px;border-radius:2px;background:var(--ink);transition:all .3s}
+.mob-menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mob-menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.mob-menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;backdrop-filter:blur(3px)}
+.sb-overlay.open{display:block}
+
+/* ══ FULL RESPONSIVE ══ */
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+    z-index:100;
+    position:fixed
+  }
+  .sidebar.mobile-open{transform:translateX(0)}
+  .main{margin-left:0}
+  .mob-menu-btn{display:flex}
+  .topbar{padding:0 16px}
+  .content{padding:24px 16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .workers-grid{grid-template-columns:1fr 1fr}
+  .profile-layout{grid-template-columns:1fr}
+  .welcome-banner{flex-direction:column;align-items:flex-start;gap:16px;padding:22px}
+  .wb-btn{width:100%;justify-content:center}
+  .form-row{grid-template-columns:1fr}
+  .pfc-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .tab-switcher{width:100%}
+  .ts-btn{flex:1;text-align:center}
+}
+
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .stat-card{padding:16px}
+  .stat-n{font-size:24px}
+  .workers-grid{grid-template-columns:1fr}
+  .job-card{flex-wrap:wrap;gap:12px;padding:16px}
+  .jc-actions{width:100%}
+  .jc-btn{flex:1;justify-content:center}
+  .topbar-title{font-size:15px}
+  .content{padding:16px 12px}
+  .wb-h{font-size:18px}
+  .modal{border-radius:16px}
+  .modal-body{padding:20px}
+  .modal-head{padding:18px 20px}
+}
+
+@media(max-width:400px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-n{font-size:22px}
+  .profile-card-info{padding:14px 16px}
+  .pfc-body{padding:18px 16px}
+}
 </style>
 <!-- htmlhint-enable -->
 </head>
@@ -608,9 +664,7 @@ async function cancelJob(id, btn) {
     if (badge) { badge.className='badge badge-cancelled'; badge.textContent='Cancelled'; }
     if (btn) btn.closest('.jc-actions').innerHTML = '';
     showToast('Job cancelled.','🗑️');
-    
-
-loadOverview();
+    loadOverview();
   } else {
     if (btn) { btn.disabled=false; btn.innerHTML='<i class="bi bi-x-circle"></i> Cancel'; }
     showToast(d.message||'Cancel failed','❌');
@@ -885,7 +939,31 @@ function showFA(id, t, m) {
 
 function logout() { localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href = 'login.html'; }
 
-
+// ── Mobile sidebar ─────────────────────────────────────────
+const mobBtn   = document.getElementById('mobMenuBtn');
+const sbOverlay = document.getElementById('sbOverlay');
+const sidebar   = document.querySelector('.sidebar');
+if (mobBtn) {
+  mobBtn.addEventListener('click', () => {
+    mobBtn.classList.toggle('open');
+    sidebar.classList.toggle('mobile-open');
+    sbOverlay.classList.toggle('open');
+  });
+  sbOverlay.addEventListener('click', () => {
+    mobBtn.classList.remove('open');
+    sidebar.classList.remove('mobile-open');
+    sbOverlay.classList.remove('open');
+  });
+}
+document.querySelectorAll('.sb-item').forEach(el => {
+  el.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+      mobBtn && mobBtn.classList.remove('open');
+      sidebar && sidebar.classList.remove('mobile-open');
+      sbOverlay && sbOverlay.classList.remove('open');
+    }
+  });
+});
 
 </script>
 </body>
