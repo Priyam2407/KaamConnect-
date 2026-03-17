@@ -6,13 +6,12 @@
 <title>Choose Your Role — KaamConnect</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <style>
-:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
+:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased;position:relative}
-body::before{content:'';position:fixed;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,96,28,.07),transparent 60%);pointer-events:none}
-body::after{content:'';position:fixed;bottom:-100px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(26,60,52,.08),transparent 60%);pointer-events:none}
-
-.card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:24px;padding:48px 40px;width:100%;max-width:520px;box-shadow:0 20px 60px rgba(15,25,35,.08);position:relative;z-index:1;animation:up .4s cubic-bezier(.22,1,.36,1)}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px 80px;-webkit-font-smoothing:antialiased;position:relative}
+body::before{content:'';position:fixed;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,96,28,.07),transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-100px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(26,60,52,.08),transparent 60%);pointer-events:none;z-index:0}
+.card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:24px;padding:48px 40px;width:100%;max-width:560px;box-shadow:0 20px 60px rgba(15,25,35,.08);position:relative;z-index:1;animation:up .4s cubic-bezier(.22,1,.36,1)}
 @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .logo{display:flex;align-items:center;gap:10px;margin-bottom:32px;justify-content:center}
 .logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:16px;color:#fff}
@@ -35,24 +34,64 @@ h1{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--fore
 .rbtn-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--saffron);background:rgba(232,96,28,.1);border-radius:100px;padding:3px 10px;margin-bottom:6px}
 .rbtn-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--forest);margin-bottom:4px}
 .rbtn-desc{font-size:12px;color:var(--ink-40);line-height:1.5}
-.btn{width:100%;padding:14px;background:var(--saffron);border:none;border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .22s;box-shadow:0 4px 16px rgba(232,96,28,.3);display:flex;align-items:center;justify-content:center;gap:8px}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:16px}
+.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
+.fw{position:relative}
+.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
+.fi::placeholder{color:var(--ink-40);font-weight:300}
+.fi:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
+.fi-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:13px;pointer-events:none;transition:color .2s}
+.fw:focus-within .fi-ico{color:var(--saffron)}
+textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
+.worker-extra{display:none;border-top:1.5px solid var(--ink-06);margin-top:4px;padding-top:24px;animation:slideIn .26s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.id-upload-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.04));border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:16px}
+.id-upload-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.id-upload-icon{width:36px;height:36px;border-radius:10px;background:var(--sage-light);display:grid;place-items:center;font-size:16px;color:var(--sage);flex-shrink:0}
+.id-upload-title{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:var(--forest)}
+.id-upload-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
+.id-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.id-type-btn{padding:10px 12px;border:1.5px solid var(--ink-12);border-radius:10px;background:var(--white);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-70);font-family:'DM Sans',sans-serif}
+.id-type-btn:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-light)}
+.id-type-btn.selected{border-color:var(--saffron);background:var(--saffron-pale);color:var(--saffron);font-weight:700}
+.id-type-btn i{font-size:15px}
+.id-dropzone{border:2px dashed var(--ink-12);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--white);position:relative}
+.id-dropzone:hover,.id-dropzone.drag-over{border-color:var(--saffron);background:var(--saffron-pale)}
+.id-dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.id-dz-icon{font-size:32px;color:var(--ink-12);margin-bottom:10px;transition:color .2s}
+.id-dropzone:hover .id-dz-icon,.id-dropzone.drag-over .id-dz-icon{color:var(--saffron)}
+.id-dz-txt{font-size:13.5px;font-weight:600;color:var(--ink-40);margin-bottom:4px}
+.id-dz-hint{font-size:12px;color:var(--ink-40)}
+.id-preview{display:none;align-items:center;gap:12px;background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:10px;padding:12px 14px;margin-top:10px}
+.id-preview-icon{font-size:22px;flex-shrink:0}
+.id-preview-name{font-size:13px;font-weight:600;color:var(--forest);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.id-preview-size{font-size:11px;color:var(--ink-40)}
+.id-preview-remove{background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:16px;transition:color .2s;flex-shrink:0}
+.id-preview-remove:hover{color:#DC2626}
+.id-note{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.id-note i{color:var(--sage);flex-shrink:0;margin-top:1px}
+.btn{width:100%;padding:14px;background:var(--saffron);border:none;border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .22s;box-shadow:0 4px 16px rgba(232,96,28,.3);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px}
 .btn:hover{background:var(--saffron-2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,96,28,.38)}
 .btn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
 .spin{display:none;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .alert{padding:11px 14px;border-radius:10px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:16px}
 .ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
-@media(max-width:480px){.card{padding:32px 20px}.roles{grid-template-columns:1fr}}
+@media(max-width:480px){.card{padding:32px 20px}.roles{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.id-type-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="card">
+
   <div class="logo">
     <div class="logo-mark"><i class="bi bi-tools"></i></div>
     <div class="logo-txt">Kaam<span>Connect</span></div>
   </div>
 
-  <div class="avatar-row" id="avatarRow">
+  <div class="avatar-row">
     <div class="avatar" id="avImg">?</div>
     <div>
       <div class="av-name" id="avName">Loading…</div>
@@ -78,34 +117,126 @@ h1{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--fore
       <span class="rbtn-ico">👷</span>
       <div class="rbtn-tag">Worker</div>
       <div class="rbtn-name">Find Work</div>
-      <div class="rbtn-desc">Get jobs & earn money daily</div>
+      <div class="rbtn-desc">Get jobs &amp; earn money daily</div>
     </div>
   </div>
+
+  <!-- Extra fields shown only when Worker is selected -->
+  <div class="worker-extra" id="workerExtra">
+
+    <div class="sec-lbl">Your Details</div>
+
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">City / Location</label>
+        <div class="fw">
+          <input class="fi" type="text" id="cityInput" placeholder="e.g. Ludhiana">
+          <i class="bi bi-geo-alt fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Phone Number</label>
+        <div class="fw">
+          <input class="fi" type="text" id="phoneInput" placeholder="9876543210">
+          <i class="bi bi-phone fi-ico"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-lbl">Worker Details</div>
+
+    <div class="fg">
+      <label class="fl">Primary Skill</label>
+      <div class="fw">
+        <select class="fi" id="skill">
+          <option value="">Select your main skill</option>
+          <option value="electrician">⚡ Electrician</option>
+          <option value="plumber">🔧 Plumber</option>
+          <option value="painter">🎨 Painter</option>
+          <option value="carpenter">🪚 Carpenter</option>
+          <option value="labour">👷 Labour</option>
+          <option value="mason">🧱 Mason</option>
+          <option value="ac technician">❄️ AC Technician</option>
+          <option value="driver">🚗 Driver</option>
+        </select>
+        <i class="bi bi-tools fi-ico"></i>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl">About You</label>
+      <textarea class="fi" id="bio" style="padding-left:14px" placeholder="Briefly describe your experience and specialties…"></textarea>
+    </div>
+
+    <div class="sec-lbl">Government ID Verification</div>
+
+    <div class="id-upload-section">
+      <div class="id-upload-head">
+        <div class="id-upload-icon"><i class="bi bi-shield-check"></i></div>
+        <div>
+          <div class="id-upload-title">Upload a valid Government ID</div>
+          <div class="id-upload-sub">Required for worker verification by admin</div>
+        </div>
+      </div>
+
+      <label class="fl" style="margin-bottom:10px">Select ID Type</label>
+      <div class="id-type-grid">
+        <button type="button" class="id-type-btn" data-type="aadhaar" onclick="selectIdType(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
+        <button type="button" class="id-type-btn" data-type="pan" onclick="selectIdType(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
+        <button type="button" class="id-type-btn" data-type="voter" onclick="selectIdType(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
+        <button type="button" class="id-type-btn" data-type="driving" onclick="selectIdType(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
+        <button type="button" class="id-type-btn" data-type="passport" onclick="selectIdType(this)"><i class="bi bi-book"></i> Passport</button>
+        <button type="button" class="id-type-btn" data-type="other" onclick="selectIdType(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
+      </div>
+      <input type="hidden" id="selectedIdType" value="">
+
+      <div class="id-dropzone" id="idDropzone">
+        <input type="file" id="idFileInput" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+        <div class="id-dz-icon"><i class="bi bi-cloud-upload"></i></div>
+        <div class="id-dz-txt">Click to upload or drag &amp; drop</div>
+        <div class="id-dz-hint">JPG, PNG or PDF • Max 5MB</div>
+      </div>
+
+      <div class="id-preview" id="idPreview">
+        <span class="id-preview-icon" id="idPreviewIcon">📄</span>
+        <div>
+          <div class="id-preview-name" id="idPreviewName">—</div>
+          <div class="id-preview-size" id="idPreviewSize">—</div>
+        </div>
+        <button type="button" class="id-preview-remove" onclick="removeFile()">
+          <i class="bi bi-x-circle-fill"></i>
+        </button>
+      </div>
+
+      <div class="id-note">
+        <i class="bi bi-info-circle-fill"></i>
+        Your ID is kept confidential and used only for identity verification. It will be reviewed by our admin team within 24 hours. You can start working after verification.
+      </div>
+    </div>
+
+  </div><!-- /worker-extra -->
 
   <button class="btn" id="continueBtn" onclick="continueWith()">
     <i class="bi bi-arrow-right-circle-fill"></i> Continue as <span id="roleLabel">Customer</span>
     <i class="bi bi-arrow-repeat spin" id="sp"></i>
   </button>
+
 </div>
 
 <script>
-// ── Read token & user from URL (passed from Google callback) ──
+// ── Read token & user from URL ────────────────────────────────
 const params  = new URLSearchParams(window.location.search);
 const token   = params.get('token');
 const userStr = params.get('user');
 
-if (!token || !userStr) {
-  window.location.replace('/login.html');
-}
+if (!token || !userStr) { window.location.replace('/login.html'); }
 
 let user;
 try {
   user = JSON.parse(decodeURIComponent(userStr));
-} catch(e) {
-  window.location.replace('/login.html');
-}
+} catch(e) { window.location.replace('/login.html'); }
 
-// ── Show user info ────────────────────────────────────────────
+// ── Show Google user info ─────────────────────────────────────
 document.getElementById('avName').textContent  = user.name  || 'User';
 document.getElementById('avEmail').textContent = user.email || '';
 if (user.avatar) {
@@ -116,31 +247,110 @@ if (user.avatar) {
 
 // ── Role selection ────────────────────────────────────────────
 let selectedRole = 'customer';
+
 function pick(r) {
   selectedRole = r;
   document.getElementById('rb-c').classList.toggle('on', r === 'customer');
   document.getElementById('rb-w').classList.toggle('on', r === 'worker');
   document.getElementById('roleLabel').textContent = r === 'worker' ? 'Worker' : 'Customer';
+  document.getElementById('workerExtra').style.display = r === 'worker' ? 'block' : 'none';
 }
+
+// ── ID type selection ─────────────────────────────────────────
+function selectIdType(btn) {
+  document.querySelectorAll('.id-type-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('selectedIdType').value = btn.dataset.type;
+}
+
+// ── File upload ───────────────────────────────────────────────
+let selectedFile = null;
+
+function handleFileSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    showAlert('File too large. Max 5MB allowed.');
+    input.value = '';
+    return;
+  }
+  selectedFile = file;
+  const isImg = file.type.startsWith('image/');
+  document.getElementById('idPreviewIcon').textContent = isImg ? '🖼️' : '📄';
+  document.getElementById('idPreviewName').textContent = file.name;
+  document.getElementById('idPreviewSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+  document.getElementById('idPreview').style.display   = 'flex';
+  document.getElementById('idDropzone').style.borderColor = 'var(--sage)';
+}
+
+function removeFile() {
+  selectedFile = null;
+  document.getElementById('idFileInput').value = '';
+  document.getElementById('idPreview').style.display = 'none';
+  document.getElementById('idDropzone').style.borderColor = '';
+}
+
+// Drag & drop
+const dz = document.getElementById('idDropzone');
+dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) {
+    const input = document.getElementById('idFileInput');
+    const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files;
+    handleFileSelect(input);
+  }
+});
 
 // ── Submit ────────────────────────────────────────────────────
 async function continueWith() {
+  // Validate worker-specific fields
+  if (selectedRole === 'worker') {
+    const city   = document.getElementById('cityInput').value.trim();
+    const skill  = document.getElementById('skill').value;
+    const idType = document.getElementById('selectedIdType').value;
+    if (!city)        { showAlert('Please enter your city / location.'); return; }
+    if (!skill)       { showAlert('Please select your primary skill.'); return; }
+    if (!idType)      { showAlert('Please select your ID type.'); return; }
+    if (!selectedFile){ showAlert('Please upload your government ID document.'); return; }
+  }
+
   const btn = document.getElementById('continueBtn');
   const sp  = document.getElementById('sp');
   btn.disabled = true; sp.style.display = 'inline-block';
 
   try {
+    // Convert ID document to base64
+    let idDocumentData = null;
+    if (selectedRole === 'worker' && selectedFile) {
+      idDocumentData = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload  = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(selectedFile);
+      });
+    }
+
+    const payload = {
+      role:       selectedRole,
+      skill:      selectedRole === 'worker' ? document.getElementById('skill').value           : null,
+      location:   selectedRole === 'worker' ? document.getElementById('cityInput').value.trim(): null,
+      phone:      selectedRole === 'worker' ? document.getElementById('phoneInput').value.trim(): null,
+      bio:        selectedRole === 'worker' ? document.getElementById('bio').value.trim()       : null,
+      idType:     selectedRole === 'worker' ? document.getElementById('selectedIdType').value   : null,
+      idDocument: idDocumentData,
+    };
+
     const r = await fetch('/api/auth/google/role', {
       method:  'PUT',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + token,
-      },
-      body: JSON.stringify({ role: selectedRole }),
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body:    JSON.stringify(payload),
     });
     const d = await r.json();
+
     if (d.success) {
-      // Save updated token & user (role is now correct)
       localStorage.setItem('kc_token', d.token);
       localStorage.setItem('kc_user', JSON.stringify(d.user));
       const dest = d.user.role === 'worker' ? 'worker-dashboard.html' : 'customer-dashboard.html';
@@ -159,6 +369,7 @@ function showAlert(m) {
   const b = document.getElementById('alertBox');
   b.style.display = 'flex'; b.className = 'alert ae';
   b.innerHTML = `<i class="bi bi-exclamation-circle-fill"></i> ${m}`;
+  b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 </script>
 </body>

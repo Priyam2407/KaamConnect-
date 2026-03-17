@@ -31,8 +31,8 @@ passport.use(
           return done(null, { user, isNew: false });
         }
 
-        // 3. Brand new user → create with customer role for now
-        //    Role will be updated on google-role.html before going to dashboard
+        // 3. Brand new user → create with customer role temporarily
+        //    Role + worker details updated on google-role.html
         user = await User.create({
           name:     profile.displayName,
           email:    profile.emails[0].value,
@@ -74,14 +74,8 @@ exports.register = async (req, res) => {
     const token = signToken(user._id, user.role);
 
     res.json({
-      success: true,
-      message: "Registered successfully",
-      token,
-      user: {
-        id: user._id, name: user.name, email: user.email,
-        role: user.role, skill: user.skill, location: user.location,
-        idStatus: user.idStatus || "none",
-      },
+      success: true, message: "Registered successfully", token,
+      user: { id: user._id, name: user.name, email: user.email, role: user.role, skill: user.skill, location: user.location, idStatus: user.idStatus || "none" },
     });
   } catch (err) {
     console.error(err);
@@ -111,8 +105,7 @@ exports.login = async (req, res) => {
       user: {
         id: user._id, name: user.name, email: user.email, role: user.role,
         skill: user.skill, location: user.location, avatar: user.avatar,
-        verified: user.verified, rating: user.rating,
-        subscriptionStatus: user.subscriptionStatus,
+        verified: user.verified, rating: user.rating, subscriptionStatus: user.subscriptionStatus,
       },
     });
   } catch (err) {
@@ -146,12 +139,12 @@ exports.googleCallback = (req, res) => {
       avatar:   user.avatar   || null,
     }));
 
-    // NEW user → send to role selection page first
+    // NEW user → role selection page first
     if (isNew) {
       return res.redirect(`/google-role.html?token=${token}&user=${userData}`);
     }
 
-    // EXISTING user → send directly to their dashboard
+    // EXISTING user → straight to their dashboard
     const dest = user.role === "admin"  ? "admin-dashboard.html"
                : user.role === "worker" ? "worker-dashboard.html"
                : "customer-dashboard.html";
@@ -160,19 +153,34 @@ exports.googleCallback = (req, res) => {
   })(req, res);
 };
 
-// ─── Update role (called from google-role.html) ───────────────
+// ─── Update role + worker details (called from google-role.html) ─
 exports.updateGoogleRole = async (req, res) => {
   try {
-    const { role } = req.body;
+    const { role, skill, location, phone, bio, idType, idDocument } = req.body;
+
     if (!["customer", "worker"].includes(role))
       return res.status(400).json({ success: false, message: "Invalid role" });
 
-    const user  = await User.findByIdAndUpdate(req.user.id, { role }, { new: true });
+    const updateData = { role };
+
+    // If worker, save all extra details
+    if (role === "worker") {
+      if (skill)      updateData.skill    = skill;
+      if (location)   updateData.location = location;
+      if (phone)      updateData.phone    = phone;
+      if (bio)        updateData.bio      = bio;
+      if (idType)     updateData.idType   = idType;
+      if (idDocument) {
+        updateData.idDocument = idDocument;
+        updateData.idStatus   = "pending";
+      }
+    }
+
+    const user  = await User.findByIdAndUpdate(req.user.id, updateData, { new: true });
     const token = signToken(user._id, user.role);
 
     res.json({
-      success: true,
-      token,
+      success: true, token,
       user: {
         id:       user._id,
         name:     user.name,
@@ -181,9 +189,11 @@ exports.updateGoogleRole = async (req, res) => {
         skill:    user.skill    || null,
         location: user.location || null,
         avatar:   user.avatar   || null,
+        idStatus: user.idStatus || "none",
       },
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
