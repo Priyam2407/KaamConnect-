@@ -7,9 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
@@ -19,14 +17,23 @@ html,body{height:100%;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:an
 body{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:var(--cream)}
 a{text-decoration:none;color:inherit}
 
+/* ── LEFT ── */
 .left{background:var(--forest);display:flex;flex-direction:column;justify-content:space-between;padding:52px;position:relative;overflow:hidden}
 .l-orb1{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%);top:-150px;right:-150px;pointer-events:none}
 .l-orb2{position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.3),transparent 65%);bottom:-100px;left:-80px;pointer-events:none}
 .l-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:52px 52px}
-.logo{display:inline-flex;align-items:center;gap:11px;position:relative;z-index:1}
-.logo-mark{width:38px;height:38px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:18px;color:#fff;box-shadow:0 4px 14px rgba(232,96,28,.4)}
+
+/* ── LOGO with India flag ── */
+.logo{display:inline-flex;align-items:center;gap:10px;position:relative;z-index:1;text-decoration:none}
+.logo-india-flag{width:32px;height:22px;border-radius:4px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.3);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
+.logo-india-flag svg{width:100%;height:100%;display:block}
+.logo:hover .logo-india-flag{transform:scale(1.08)}
+.logo-sep{width:1px;height:26px;background:rgba(255,255,255,.2);flex-shrink:0}
+.logo-mark{width:38px;height:38px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:18px;color:#fff;box-shadow:0 4px 14px rgba(232,96,28,.4);flex-shrink:0;transition:transform .22s}
+.logo:hover .logo-mark{transform:rotate(-8deg) scale(1.1)}
 .logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#fff;letter-spacing:-.3px}
 .logo-txt span{color:var(--saffron-2)}
+
 .l-body{position:relative;z-index:1}
 .l-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(232,96,28,.15);border:1px solid rgba(232,96,28,.25);border-radius:100px;padding:6px 14px;font-size:11.5px;font-weight:600;color:var(--saffron-2);margin-bottom:24px;letter-spacing:.3px}
 .l-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--saffron-2);animation:blink 2s ease-in-out infinite}
@@ -43,6 +50,7 @@ a{text-decoration:none;color:inherit}
 .ls-n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1px}
 .ls-l{font-size:11.5px;color:rgba(255,255,255,.35);margin-top:4px}
 
+/* ── RIGHT ── */
 .right{display:flex;align-items:center;justify-content:center;padding:60px 52px;background:var(--cream)}
 .form-box{width:100%;max-width:400px}
 .back-link{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-40);margin-bottom:36px;transition:color .2s;cursor:pointer}
@@ -55,15 +63,12 @@ a{text-decoration:none;color:inherit}
 .demo-row{display:flex;gap:8px;flex-wrap:wrap}
 .demo-btn{padding:8px 14px;border:1.5px solid var(--ink-12);border-radius:9px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink-70);background:var(--cream);display:flex;align-items:center;gap:5px;transition:all .2s;font-family:'DM Sans',sans-serif}
 .demo-btn:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
-
-/* Google button */
 .google-btn{width:100%;padding:12.5px 16px;border:1.5px solid var(--ink-12);border-radius:11px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;color:var(--ink);transition:all .22s;margin-bottom:18px}
 .google-btn:hover{border-color:#4285F4;background:#F8FAFF;box-shadow:0 4px 16px rgba(66,133,244,.12)}
 .google-ico{width:20px;height:20px;flex-shrink:0}
 .divider{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--ink-06)}
 .divider span{font-size:12px;color:var(--ink-40);font-weight:500;white-space:nowrap}
-
 .fg{margin-bottom:16px}
 .fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
 .fw{position:relative}
@@ -88,7 +93,51 @@ a{text-decoration:none;color:inherit}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
 .signin-row{text-align:center;font-size:13.5px;color:var(--ink-40);margin-top:20px}
 .signin-row a{color:var(--saffron);font-weight:700}
-@media(max-width:768px){body{grid-template-columns:1fr}.left{display:none}.right{padding:40px 24px}}
+
+/* ══ RESPONSIVE ══ */
+/* Tablet: left panel becomes a slim top bar */
+@media(max-width:900px){
+  body{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .left{
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 24px;
+    min-height:auto
+  }
+  .l-body,.l-stats,.features,.l-orb1,.l-orb2,.l-grid{display:none}
+  .right{padding:40px 32px;align-items:flex-start}
+}
+
+/* Mobile */
+@media(max-width:600px){
+  .left{padding:14px 16px}
+  .logo-txt{font-size:16px}
+  .logo-mark{width:32px;height:32px;font-size:15px}
+  .logo-india-flag{width:26px;height:18px}
+  .right{padding:32px 20px}
+  .form-box{max-width:100%}
+  .f-title{font-size:24px}
+  .f-sub{font-size:13.5px;margin-bottom:20px}
+  .demo-row{gap:6px}
+  .demo-btn{font-size:12px;padding:7px 11px}
+  .google-btn{font-size:13.5px;padding:11px 14px}
+  .opts-row{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:18px}
+  .submit-btn{font-size:14px;padding:13px}
+  .back-link{margin-bottom:24px}
+}
+
+/* Small phones */
+@media(max-width:400px){
+  .logo-sep{display:none}
+  .logo-india-flag{width:22px;height:15px}
+  .logo-txt{font-size:14px}
+  .right{padding:24px 14px}
+  .f-title{font-size:22px}
+  .demo-row{flex-direction:column}
+  .demo-btn{width:100%;justify-content:center}
+  .fi{font-size:14px;padding:11px 13px 11px 40px}
+}
 </style>
 </head>
 <body>
@@ -96,7 +145,33 @@ a{text-decoration:none;color:inherit}
 <!-- LEFT PANEL -->
 <div class="left">
   <div class="l-orb1"></div><div class="l-orb2"></div><div class="l-grid"></div>
-  <a class="logo" href="index.html"><div class="logo-mark"><i class="bi bi-tools"></i></div><div class="logo-txt">Kaam<span>Connect</span></div></a>
+
+  <!-- 🇮🇳 Flag + | + 🔧 Tools + KaamConnect -->
+  <a class="logo" href="index.html">
+    <div class="logo-india-flag">
+      <svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="7.33" fill="#FF9933"/>
+        <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
+        <rect y="14.67" width="32" height="7.33" fill="#138808"/>
+        <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
+        <circle cx="16" cy="11" r="0.75" fill="#000080"/>
+        <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
+          <line x1="0" y1="-3.2" x2="0" y2="3.2"/>
+          <line x1="-3.2" y1="0" x2="3.2" y2="0"/>
+          <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/>
+          <line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
+          <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/>
+          <line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
+          <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/>
+          <line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
+        </g>
+      </svg>
+    </div>
+    <div class="logo-sep"></div>
+    <div class="logo-mark"><i class="bi bi-tools"></i></div>
+    <div class="logo-txt">Kaam<span>Connect</span></div>
+  </a>
+
   <div class="l-body">
     <div class="l-tag"><div class="l-tag-dot"></div>India's #1 Worker Marketplace</div>
     <h2 class="l-h">Welcome<br>back.<em><br>Good to see you.</em></h2>
@@ -107,6 +182,7 @@ a{text-decoration:none;color:inherit}
       <div class="feat"><div class="feat-ico"><i class="bi bi-lock" style="color:var(--saffron-2)"></i></div><div class="feat-text">Secure escrow — pay only after job is done</div></div>
     </div>
   </div>
+
   <div class="l-stats">
     <div><div class="ls-n">743+</div><div class="ls-l">Workers</div></div>
     <div><div class="ls-n">15K+</div><div class="ls-l">Jobs Done</div></div>
@@ -133,7 +209,7 @@ a{text-decoration:none;color:inherit}
 
     <div id="alertBox" style="display:none"></div>
 
-    <!-- Google Sign-In Button -->
+    <!-- Google Sign-In -->
     <button class="google-btn" onclick="googleSignIn()">
       <svg class="google-ico" viewBox="0 0 48 48">
         <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/>
@@ -181,7 +257,7 @@ a{text-decoration:none;color:inherit}
 </div>
 
 <script>
-// ── Handle Google OAuth redirect (token passed in URL) ──────
+// ── Handle Google OAuth redirect ────────────────────────────
 (function () {
   const params  = new URLSearchParams(window.location.search);
   const token   = params.get('token');
@@ -197,7 +273,7 @@ a{text-decoration:none;color:inherit}
                  : user.role === 'worker' ? 'worker-dashboard.html'
                  : 'customer-dashboard.html';
       window.location.replace(dest);
-    } catch (e) { /* ignore */ }
+    } catch (e) {}
   }
 
   if (error === 'google_failed') {
@@ -208,25 +284,19 @@ a{text-decoration:none;color:inherit}
   }
 })();
 
-// ── Google OAuth kick-off ───────────────────────────────────
-function googleSignIn() {
-  window.location.href = '/api/auth/google';
-}
+function googleSignIn() { window.location.href = '/api/auth/google'; }
 
-// ── Quick demo fill ─────────────────────────────────────────
 function ql(email, pass) {
   document.getElementById('email').value    = email;
   document.getElementById('password').value = pass;
 }
 
-// ── Eye toggle ──────────────────────────────────────────────
 function togglePw() {
   const p = document.getElementById('password'), i = document.getElementById('eyeI');
   p.type      = p.type === 'password' ? 'text' : 'password';
   i.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
 }
 
-// ── Alert helper ────────────────────────────────────────────
 function showAlert(t, m) {
   const b = document.getElementById('alertBox');
   b.style.display = 'flex';
@@ -234,7 +304,6 @@ function showAlert(t, m) {
   b.innerHTML     = `<i class="bi bi-${t === 'error' ? 'exclamation-circle-fill' : 'check-circle-fill'}"></i> ${m}`;
 }
 
-// ── Email/password login ────────────────────────────────────
 async function login() {
   const email = document.getElementById('email').value.trim();
   const pass  = document.getElementById('password').value;
