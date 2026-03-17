@@ -80,6 +80,59 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .nmb-solid{background:var(--saffron);border:none;color:#fff;box-shadow:0 4px 14px rgba(232,96,28,.3)}
 .nmb-solid:hover{background:var(--saffron-2)}
 @media(max-width:900px){.nav-menu,.nav-cta{display:none}.nav-hamburger{display:flex}}
+/* ══ INDIA FLAG LOGO ══ */
+.logo-india-flag{width:32px;height:22px;border-radius:4px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.2);transition:transform .22s}
+.logo:hover .logo-india-flag{transform:scale(1.08)}
+.logo-sep{width:1px;height:28px;background:rgba(255,255,255,.2);flex-shrink:0;transition:background .3s}
+#nav.pinned .logo-sep{background:var(--ink-12)}
+
+/* ══ FULL RESPONSIVE ══ */
+/* 900px already handled above - adding more granular fixes */
+@media(max-width:768px){
+  .hero-body{padding:100px 20px 60px}
+  .hero-h{font-size:clamp(36px,9vw,56px);letter-spacing:-1px}
+  .hero-p{font-size:15px;margin-bottom:28px}
+  .hero-search{flex-wrap:wrap;padding:10px 12px;gap:8px;border-radius:14px}
+  .hs-select{width:100%;color:rgba(255,255,255,.7)}
+  .hs-div{display:none}
+  .hs-input{width:100%}
+  .hs-btn{width:100%;justify-content:center;border-radius:10px}
+  .hero-trust{gap:12px}
+  .ribbon-in{flex-wrap:wrap;gap:16px;padding:20px 24px}
+  .section{padding:60px 0}
+  .svc-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .how-grid{gap:36px}
+  .nums-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+  .nm-item+.nm-item{border-left:none}
+  .nm-num{font-size:40px}
+  .tgrid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+  .cta-inner h2{font-size:clamp(28px,7vw,44px)}
+  .cta-btns{flex-direction:column;align-items:stretch;gap:10px;max-width:280px;margin:0 auto}
+  .modal{border-radius:16px}
+  .modal-head{padding:22px 24px}
+  .modal-body{padding:20px}
+  .fi-row{grid-template-columns:1fr}
+  .pane-in{padding:32px 20px}
+}
+@media(max-width:540px){
+  .svc-grid{grid-template-columns:1fr}
+  .workers-grid{grid-template-columns:1fr!important}
+  .footer-top{grid-template-columns:1fr}
+  .wrap{padding:0 16px}
+  .nav-in{padding:0 16px}
+  .ribbon-in{padding:16px}
+  .rib-num{font-size:24px}
+  .rib-lbl{font-size:11px}
+  .section{padding:48px 0}
+  .nums-band{padding:48px 0}
+  .nm-num{font-size:36px}
+  .chat-win{width:calc(100vw - 24px);right:12px}
+  .chat-fab{right:12px;bottom:16px}
+  .hero-trust{flex-direction:column;gap:8px}
+  .logo-india-flag{width:26px;height:18px}
+}
+
 
 /* ══ HERO ══ */
 .hero{min-height:100vh;background:var(--forest);position:relative;display:flex;flex-direction:column;overflow:hidden}
@@ -205,7 +258,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .wc-stars{color:#FBBF24;font-size:12.5px}
 .wc-rnum{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--forest)}
 .wc-rjobs{font-size:12px;color:var(--ink-40)}
-.wc-bio{font-size:13px;color:var(--ink-70);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
+.wc-bio{font-size:13px;color:var(--ink-70);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:14px}
 .wcard-foot{padding:14px 20px;border-top:1px solid var(--ink-06);display:flex;gap:9px}
 .btn-hire{flex:1;padding:10px;border-radius:9px;background:var(--saffron);border:none;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s}
 .btn-hire:hover{background:var(--saffron-2)}
@@ -349,6 +402,23 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 <nav id="nav">
   <div class="nav-in">
     <a class="logo" href="index.html">
+      <div class="logo-india-flag"><svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="7.33" fill="#FF9933"/>
+  <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
+  <rect y="14.67" width="32" height="7.33" fill="#138808"/>
+  <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
+  <circle cx="16" cy="11" r="0.8" fill="#000080"/>
+  <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
+    <line x1="0" y1="-3.2" x2="0" y2="3.2"/>
+    <line x1="-3.2" y1="0" x2="3.2" y2="0"/>
+    <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/>
+    <line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
+    <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/>
+    <line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
+    <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/>
+    <line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
+  </g>
+</svg></div><div class="logo-sep"></div>
       <div class="logo-mark"><i class="bi bi-tools"></i></div>
       <div class="logo-txt">Kaam<span>Connect</span></div>
     </a>
@@ -532,7 +602,23 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 <footer><div class="wrap">
   <div class="footer-top">
     <div class="footer-brand">
-      <div class="logo"><div class="logo-mark"><i class="bi bi-tools"></i></div><div class="logo-txt">Kaam<span>Connect</span></div></div>
+      <div class="logo"><div class="logo-india-flag"><svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="7.33" fill="#FF9933"/>
+  <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
+  <rect y="14.67" width="32" height="7.33" fill="#138808"/>
+  <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
+  <circle cx="16" cy="11" r="0.8" fill="#000080"/>
+  <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
+    <line x1="0" y1="-3.2" x2="0" y2="3.2"/>
+    <line x1="-3.2" y1="0" x2="3.2" y2="0"/>
+    <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/>
+    <line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
+    <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/>
+    <line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
+    <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/>
+    <line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
+  </g>
+</svg></div><div class="logo-sep"></div><div class="logo-mark"><i class="bi bi-tools"></i></div><div class="logo-txt">Kaam<span>Connect</span></div></div>
       <p>India's trusted marketplace connecting skilled workers with customers — since 2026.</p>
       <div class="footer-social"><div class="fs-icon"><i class="bi bi-twitter-x"></i></div><div class="fs-icon"><i class="bi bi-instagram"></i></div><div class="fs-icon"><i class="bi bi-facebook"></i></div><div class="fs-icon"><i class="bi bi-linkedin"></i></div></div>
     </div>
