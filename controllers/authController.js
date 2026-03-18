@@ -91,26 +91,28 @@ exports.register = async (req, res) => {
       expiresAt,
     });
 
-    // Send verification email
+    // Send verification email — keep pending user regardless of email result
+    let emailSent = false;
+    let emailError = null;
     try {
       await mailer.sendVerificationEmail({ name, email, token: verifyToken });
+      emailSent = true;
       console.log("[Register] Verification email sent to:", email);
     } catch (emailErr) {
-      // If email fails, clean up and tell the user
-      await PendingUser.deleteOne({ email });
-      console.error("[Register] Email failed:", emailErr.message);
-      return res.status(500).json({
-        success: false,
-        message: "Could not send verification email. Please check your email address and try again.",
-      });
+      emailError = emailErr.message;
+      console.error("[Register] ⚠️ Email failed (pending user kept):", emailErr.message);
+      // DO NOT delete pending user — they can resend from the screen
     }
 
-    // Respond — NO token, NO user object yet (account not created)
+    // Always respond success — pending user is saved, they can resend if needed
     res.json({
       success:   true,
       pending:   true,
-      emailSent: true,
-      message:   "Verification email sent! Please check your inbox and click the link to complete your registration.",
+      emailSent,
+      emailError: emailError ? "Email delivery failed — please use the Resend button." : null,
+      message:   emailSent
+        ? "Verification email sent! Please check your inbox and click the link to complete your registration."
+        : "Your details are saved. Email delivery failed — please click Resend Verification Email below.",
       email,
     });
   } catch (err) {

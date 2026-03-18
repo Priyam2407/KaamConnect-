@@ -491,6 +491,17 @@ async function register() {
         if (el.id !== 'emailSentScreen' && el.id !== 'alertBox') el.style.display = 'none';
       });
       document.getElementById('emailSentScreen').style.display = 'block';
+      // If email failed to send, show warning and auto-highlight resend button
+      if (!data.emailSent) {
+        const warn = document.createElement('div');
+        warn.style.cssText = 'background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:12px 16px;font-size:13px;color:#DC2626;margin-bottom:16px;display:flex;align-items:center;gap:8px;text-align:left';
+        warn.innerHTML = '<i class="bi bi-exclamation-triangle-fill" style="flex-shrink:0"></i> Email delivery failed. Click <strong style="margin:0 4px">Resend</strong> below to try again.';
+        document.getElementById('emailSentScreen').insertBefore(warn, document.getElementById('resendBtn'));
+        document.getElementById('resendBtn').style.background = 'var(--saffron)';
+        document.getElementById('resendBtn').style.color = '#fff';
+        document.getElementById('resendBtn').style.border = 'none';
+        document.getElementById('resendBtn').style.fontWeight = '700';
+      }
       return;
     } else {
       showAlert('error', data.message || 'Registration failed.');
