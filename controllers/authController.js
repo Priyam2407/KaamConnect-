@@ -1,7 +1,9 @@
 const { User } = require("../models");
 const jwt      = require("jsonwebtoken");
 const passport = require("passport");
+const crypto   = require("crypto");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const mailer   = require("../config/mailer");
 
 // ─── JWT helper ──────────────────────────────────────────────
 const signToken = (id, role) =>
@@ -70,11 +72,27 @@ exports.register = async (req, res) => {
       userData.idDocument = idDocument;
       userData.idStatus   = "pending";
     }
+    // Generate email verification token
+    const verifyToken = crypto.randomBytes(32).toString("hex");
+    userData.emailVerifyToken   = verifyToken;
+    userData.emailVerifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
+    userData.emailVerified      = false;
+
     const user  = await User.create(userData);
     const token = signToken(user._id, user.role);
 
+    // Send verification email (non-blocking — don't fail registration if email fails)
+    mailer.sendVerificationEmail({
+      name:  user.name,
+      email: user.email,
+      token: verifyToken,
+    }).catch(err => console.error("Verification email error:", err));
+
     res.json({
-      success: true, message: "Registered successfully", token,
+      success: true,
+      message: "Registered successfully! Please check your email to verify your account.",
+      token,
+      emailSent: true,
       user: { id: user._id, name: user.name, email: user.email, role: user.role, skill: user.skill, location: user.location, idStatus: user.idStatus || "none" },
     });
   } catch (err) {
@@ -255,3 +273,69 @@ exports.changePassword = async (req, res) => {
     res.status(500).json({ success: false, message: "Password update failed" });
   }
 };
+
+// ─── Verify Email ─────────────────────────────────────────────
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.query;
+    if (!token) return res.status(400).send(emailResult("error", "Invalid verification link."));
+
+    const user = await User.findOne({
+      emailVerifyToken:   token,
+      emailVerifyExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return res.status(400).send(emailResult("error", "Verification link is invalid or has expired."));
+    }
+
+    user.emailVerified      = true;
+    user.emailVerifyToken   = null;
+    user.emailVerifyExpires = null;
+    await user.save();
+
+    // Redirect to login with success flag
+    return res.redirect(`/login.html?verified=1`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(emailResult("error", "Server error. Please try again."));
+  }
+};
+
+// ─── Resend Verification Email ────────────────────────────────
+exports.resendVerification = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (user.emailVerified) return res.json({ success: false, message: "Email already verified" });
+
+    const verifyToken = crypto.randomBytes(32).toString("hex");
+    user.emailVerifyToken   = verifyToken;
+    user.emailVerifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await user.save();
+
+    await mailer.sendVerificationEmail({ name: user.name, email: user.email, token: verifyToken });
+    res.json({ success: true, message: "Verification email sent! Check your inbox." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Failed to send email" });
+  }
+};
+
+// ─── HTML result page helper ──────────────────────────────────
+function emailResult(type, message) {
+  const isOk = type === "ok";
+  const color = isOk ? "#2E7D5E" : "#DC2626";
+  const bg    = isOk ? "#E8F5EE" : "#FEF2F2";
+  const icon  = isOk ? "✅" : "❌";
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KaamConnect</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#FAF7F2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}</style>
+</head><body>
+<div style="background:#fff;border-radius:20px;padding:48px 40px;max-width:460px;width:100%;text-align:center;box-shadow:0 16px 60px rgba(15,25,35,.08);border:1.5px solid rgba(15,25,35,.06)">
+  <div style="font-size:48px;margin-bottom:16px">${icon}</div>
+  <h1 style="font-family:Georgia,serif;font-size:24px;color:#1A3C34;margin-bottom:10px">${isOk ? "Email Verified!" : "Verification Failed"}</h1>
+  <p style="font-size:14.5px;color:rgba(15,25,35,.6);margin-bottom:28px;line-height:1.6">${message}</p>
+  <a href="/login.html" style="display:inline-block;padding:13px 32px;background:#E8601C;color:#fff;text-decoration:none;border-radius:10px;font-size:14px;font-weight:700">Go to Login →</a>
+</div>
+</body></html>`;
+}

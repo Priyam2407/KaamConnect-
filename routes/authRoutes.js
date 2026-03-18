@@ -10,6 +10,10 @@ router.get("/profile",         authenticateToken, auth.getProfile);
 router.put("/profile",         authenticateToken, auth.updateProfile);
 router.put("/change-password", authenticateToken, auth.changePassword);
 
+// ── Email Verification ────────────────────────────────────────
+router.get("/verify-email",            auth.verifyEmail);
+router.post("/resend-verification",    authenticateToken, auth.resendVerification);
+
 // ── Google OAuth ──────────────────────────────────────────────
 // Pass ?role=worker or ?role=customer to set role on first signup
 router.get("/google",               auth.googleAuth);

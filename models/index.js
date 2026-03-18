@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema(
     totalJobs:{ type: Number, default: 0 },
     isActive: { type: Boolean, default: true },
 
+    // ── Email Verification ─────────────────────────────────
+    emailVerified:   { type: Boolean, default: false },
+    emailVerifyToken:{ type: String, default: null },
+    emailVerifyExpires: { type: Date, default: null },
+    // ───────────────────────────────────────────────────────
+
     // ── Government ID for worker verification ──────────────
     idType: {
       type: String,
