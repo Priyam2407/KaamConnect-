@@ -39,7 +39,7 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
   });
   console.log("[Mailer] SMTP connection OK ✓");
 
-  const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+  const baseUrl = process.env.APP_URL || process.env.BASE_URL || "http://localhost:5000";
   const link = `${baseUrl}/api/auth/verify-email?token=${token}`;
 
   const html = `
