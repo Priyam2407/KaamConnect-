@@ -157,40 +157,55 @@ exports.googleCallback = (req, res) => {
 // ─── Update role + worker details (called from google-role.html) ─
 exports.updateGoogleRole = async (req, res) => {
   try {
-    const { role, skill, location, phone, bio, idType, idDocument } = req.body;
+    const { role, skill, location, phone, bio, idType, idDocument, password } = req.body;
 
     if (!["customer", "worker"].includes(role))
       return res.status(400).json({ success: false, message: "Invalid role" });
 
+    // Validate password if provided
+    if (password && password.length < 6)
+      return res.status(400).json({ success: false, message: "Password must be at least 6 characters" });
+
     const updateData = { role };
+
+    // Common fields for both roles
+    if (phone)    updateData.phone    = phone;
+    if (location) updateData.location = location;
 
     // If worker, save all extra details
     if (role === "worker") {
-      if (skill)      updateData.skill    = skill;
-      if (location)   updateData.location = location;
-      if (phone)      updateData.phone    = phone;
-      if (bio)        updateData.bio      = bio;
-      if (idType)     updateData.idType   = idType;
+      if (skill)      updateData.skill = skill;
+      if (bio)        updateData.bio   = bio;
+      if (idType)     updateData.idType = idType;
       if (idDocument) {
         updateData.idDocument = idDocument;
         updateData.idStatus   = "pending";
       }
     }
 
-    const user  = await User.findByIdAndUpdate(req.user.id, updateData, { new: true });
-    const token = signToken(user._id, user.role);
+    // Save password if provided (allows Google users to also login with email/password)
+    const user = await User.findById(req.user.id);
+    if (password) {
+      user.password = password; // model pre-save will hash it
+    }
+    Object.assign(user, updateData);
+    await user.save();
+
+    const updatedUser = await User.findById(req.user.id);
+    const token = signToken(updatedUser._id, updatedUser.role);
 
     res.json({
       success: true, token,
       user: {
-        id:       user._id,
-        name:     user.name,
-        email:    user.email,
-        role:     user.role,
-        skill:    user.skill    || null,
-        location: user.location || null,
-        avatar:   user.avatar   || null,
-        idStatus: user.idStatus || "none",
+        id:       updatedUser._id,
+        name:     updatedUser.name,
+        email:    updatedUser.email,
+        role:     updatedUser.role,
+        phone:    updatedUser.phone    || null,
+        location: updatedUser.location || null,
+        skill:    updatedUser.skill    || null,
+        avatar:   updatedUser.avatar   || null,
+        idStatus: updatedUser.idStatus || "none",
       },
     });
   } catch (err) {

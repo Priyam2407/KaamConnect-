@@ -7,9 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
 <style>
 :root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06);--r:16px;--r-sm:10px;--sh:0 8px 32px rgba(15,25,35,.08);--sh-lg:0 20px 64px rgba(15,25,35,.10)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -17,19 +15,27 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
-
-/* ── NAV ── */
-nav{background:var(--forest);padding:0;border-bottom:1px solid rgba(255,255,255,.06)}
+/* NAV */
+nav{background:var(--forest);border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-in{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:11px}
-.logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(232,96,28,.35);transition:transform .22s}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.logo-india-flag{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
+.logo-india-flag svg{width:100%;height:100%;display:block}
+.logo:hover .logo-india-flag{transform:scale(1.08)}
+.logo-sep{width:1px;height:22px;background:rgba(255,255,255,.2);flex-shrink:0}
+.logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(232,96,28,.35);transition:transform .22s;flex-shrink:0}
 .logo:hover .logo-mark{transform:rotate(-8deg) scale(1.1)}
 .logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.4px;color:#fff}
 .logo-txt span{color:var(--saffron-2)}
-.nav-back{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:var(--r-sm);border:1.5px solid rgba(255,255,255,.12);transition:all .22s;cursor:pointer}
+.nav-back{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:var(--r-sm);border:1.5px solid rgba(255,255,255,.12);transition:all .22s}
 .nav-back:hover{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.07)}
-
-/* ── HERO BAND ── */
+/* TICKER */
+.ticker{background:var(--saffron);padding:10px 0;overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{display:inline-flex;align-items:center;gap:10px;padding:0 24px;font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.8);white-space:nowrap}
+.t-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
+/* HERO */
 .hero-band{background:var(--forest);padding:52px 40px 56px;position:relative;overflow:hidden;text-align:center}
 .hero-band::before{content:'';position:absolute;top:-120px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
 .hero-band::after{content:'';position:absolute;bottom:-80px;left:-60px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.2),transparent 65%);pointer-events:none}
@@ -42,11 +48,9 @@ nav{background:var(--forest);padding:0;border-bottom:1px solid rgba(255,255,255,
 .hb-h{font-family:'Instrument Serif',serif;font-size:clamp(34px,5vw,52px);color:#fff;line-height:1.06;letter-spacing:-1.5px;margin-bottom:12px}
 .hb-h em{font-style:italic;color:var(--saffron-2)}
 .hb-p{font-size:15.5px;color:rgba(255,255,255,.55);line-height:1.7;font-weight:300}
-
-/* ── MAIN ── */
+/* MAIN */
 .main{max-width:680px;margin:0 auto;padding:48px 24px 100px}
-
-/* Google user card */
+/* User card */
 .user-card{display:flex;align-items:center;gap:16px;background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:18px 22px;margin-bottom:36px;box-shadow:var(--sh)}
 .user-av{width:52px;height:52px;border-radius:14px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700;flex-shrink:0;overflow:hidden}
 .user-av img{width:100%;height:100%;object-fit:cover;border-radius:14px}
@@ -54,14 +58,12 @@ nav{background:var(--forest);padding:0;border-bottom:1px solid rgba(255,255,255,
 .user-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--forest);margin-bottom:3px}
 .user-email{font-size:13px;color:var(--ink-40)}
 .user-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600;color:#166534;flex-shrink:0}
-
-/* Section eyebrow */
+/* Eyebrow */
 .eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .eyebrow::before{content:'';width:18px;height:2px;background:var(--saffron);border-radius:2px}
 .section-h{font-family:'Instrument Serif',serif;font-size:clamp(26px,4vw,34px);color:var(--forest);line-height:1.1;letter-spacing:-1px;margin-bottom:6px}
 .section-h em{font-style:italic;color:var(--saffron)}
 .section-p{font-size:14.5px;color:var(--ink-70);line-height:1.7;font-weight:300;margin-bottom:28px}
-
 /* Role grid */
 .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px}
 .rbtn{padding:28px 22px;border:2px solid var(--ink-12);border-radius:var(--r);text-align:center;cursor:pointer;background:var(--white);transition:all .25s;position:relative;overflow:hidden}
@@ -76,11 +78,9 @@ nav{background:var(--forest);padding:0;border-bottom:1px solid rgba(255,255,255,
 .rbtn-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--saffron);background:rgba(232,96,28,.1);border-radius:100px;padding:3px 10px;margin-bottom:8px}
 .rbtn-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest);margin-bottom:5px}
 .rbtn-desc{font-size:13px;color:var(--ink-40);line-height:1.55}
-
 /* Divider */
 .divider-line{height:1px;background:var(--ink-06);margin-bottom:32px}
-
-/* Form fields (matching index.html modal) */
+/* Form fields */
 .fg{margin-bottom:16px}
 .fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
 .fw{position:relative}
@@ -91,15 +91,25 @@ nav{background:var(--forest);padding:0;border-bottom:1px solid rgba(255,255,255,
 .fw:focus-within .fi-ico{color:var(--saffron)}
 textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
+.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:4px;transition:color .2s}
+.eye-btn:hover{color:var(--ink)}
+/* Password strength bars */
+.pw-bars{display:flex;gap:4px;margin-top:8px}
+.pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
 /* Section label */
 .sec-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
-
-/* Worker extra */
-.worker-extra{display:none;animation:slideIn .3s ease}
+/* Extra fields */
+.customer-extra,.worker-extra{animation:slideIn .3s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-
+/* Password section card */
+.pw-section{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:24px;margin-bottom:20px;box-shadow:var(--sh)}
+.pw-section-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.pw-section-ico{width:40px;height:40px;border-radius:11px;background:var(--saffron-pale);display:grid;place-items:center;font-size:18px;color:var(--saffron);flex-shrink:0}
+.pw-section-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
+.pw-section-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
+.pw-note{font-size:12px;color:var(--ink-40);display:flex;align-items:flex-start;gap:7px;margin-top:12px;line-height:1.6}
+.pw-note i{color:var(--saffron);flex-shrink:0;margin-top:2px;font-size:13px}
 /* ID upload */
 .id-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.05));border:1.5px solid var(--sage-light);border-radius:var(--r);padding:24px;margin-bottom:20px}
 .id-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
@@ -126,13 +136,12 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 .prev-rm:hover{color:#DC2626}
 .id-note{font-size:12px;color:var(--ink-40);margin-top:12px;display:flex;align-items:flex-start;gap:7px;line-height:1.6}
 .id-note i{color:var(--sage);flex-shrink:0;margin-top:2px;font-size:13px}
-
 /* Alert */
 .alert{padding:12px 16px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .alert-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
-
-/* Submit button (matching index.html n-solid / m-submit) */
+.alert-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+/* Submit */
 .submit-btn{width:100%;padding:15px 28px;background:var(--saffron);border:none;border-radius:var(--r-sm);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .25s;box-shadow:0 4px 16px rgba(232,96,28,.35);position:relative;overflow:hidden}
 .submit-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .22s}
 .submit-btn:hover{background:var(--saffron-2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,96,28,.45)}
@@ -140,15 +149,21 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 .spin{display:none;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Ticker bar */
-.ticker{background:var(--saffron);padding:10px 0;overflow:hidden}
-.ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.t-item{display:inline-flex;align-items:center;gap:10px;padding:0 24px;font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.8);white-space:nowrap}
-.t-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
-
-@media(max-width:600px){.role-grid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.id-type-grid{grid-template-columns:1fr 1fr}.nav-in{padding:0 20px}.main{padding:32px 16px 80px}}
+/* RESPONSIVE */
+@media(max-width:600px){
+  .role-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .id-type-grid{grid-template-columns:1fr 1fr}
+  .nav-in{padding:0 16px}
+  .main{padding:28px 16px 80px}
+  .hero-band{padding:36px 20px 40px}
+  .logo-txt{font-size:16px}
+  .logo-india-flag{width:22px;height:15px}
+}
+@media(max-width:400px){
+  .logo-sep{display:none}
+  .id-type-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -157,6 +172,22 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 <nav>
   <div class="nav-in">
     <a class="logo" href="index.html">
+      <div class="logo-india-flag">
+        <svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="7.33" fill="#FF9933"/>
+          <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
+          <rect y="14.67" width="32" height="7.33" fill="#138808"/>
+          <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
+          <circle cx="16" cy="11" r="0.75" fill="#000080"/>
+          <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
+            <line x1="0" y1="-3.2" x2="0" y2="3.2"/><line x1="-3.2" y1="0" x2="3.2" y2="0"/>
+            <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/><line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
+            <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/><line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
+            <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/><line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
+          </g>
+        </svg>
+      </div>
+      <div class="logo-sep"></div>
       <div class="logo-mark"><i class="bi bi-tools"></i></div>
       <div class="logo-txt">Kaam<span>Connect</span></div>
     </a>
@@ -183,7 +214,7 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 <!-- MAIN -->
 <div class="main">
 
-  <!-- Google user info card -->
+  <!-- Google user card -->
   <div class="user-card">
     <div class="user-av" id="avImg">?</div>
     <div class="user-info">
@@ -195,7 +226,7 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 
   <div id="alertBox" style="display:none"></div>
 
-  <!-- Role selector -->
+  <!-- STEP 1: Role selector -->
   <div class="eyebrow">Step 1</div>
   <h2 class="section-h">How will you use <em>KaamConnect?</em></h2>
   <p class="section-p">Pick the role that fits you. You can always update this later from your profile.</p>
@@ -206,21 +237,80 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
       <span class="rbtn-ico">👤</span>
       <div class="rbtn-tag">Customer</div>
       <div class="rbtn-name">Hire a Worker</div>
-      <div class="rbtn-desc">Find verified skilled workers in your city — fast & safe</div>
+      <div class="rbtn-desc">Find verified skilled workers in your city — fast &amp; safe</div>
     </div>
     <div class="rbtn" id="rb-w" onclick="pick('worker')">
       <div class="rbtn-check"><i class="bi bi-check"></i></div>
       <span class="rbtn-ico">👷</span>
       <div class="rbtn-tag">Worker</div>
       <div class="rbtn-name">Find Work</div>
-      <div class="rbtn-desc">Get jobs from customers & earn money daily</div>
+      <div class="rbtn-desc">Get jobs from customers &amp; earn money daily</div>
     </div>
   </div>
 
-  <!-- Worker extra fields (shown only when Worker selected) -->
-  <div id="workerExtra" class="worker-extra">
+  <!-- ─── CUSTOMER EXTRA ─── -->
+  <div id="customerExtra" class="customer-extra">
     <div class="divider-line"></div>
+    <div class="eyebrow">Step 2</div>
+    <h2 class="section-h">Set up your <em>account</em></h2>
+    <p class="section-p">Add your phone and location so workers can reach you, and optionally set a password to also sign in with email.</p>
 
+    <!-- Phone + City -->
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">Phone Number <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
+        <div class="fw">
+          <input class="fi" type="tel" id="c-phone" placeholder="9876543210" maxlength="10">
+          <i class="bi bi-phone fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">City / Location <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
+        <div class="fw">
+          <input class="fi" type="text" id="c-location" placeholder="e.g. Ludhiana, Punjab">
+          <i class="bi bi-geo-alt fi-ico"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password card for customer -->
+    <div class="pw-section">
+      <div class="pw-section-head">
+        <div class="pw-section-ico"><i class="bi bi-lock-fill"></i></div>
+        <div>
+          <div class="pw-section-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
+          <div class="pw-section-sub">Lets you sign in with email &amp; password in addition to Google</div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <div class="fw">
+          <input class="fi" type="password" id="c-password" placeholder="Min 6 characters" oninput="checkStrength('c-password','c-pw')">
+          <i class="bi bi-lock fi-ico"></i>
+          <button type="button" class="eye-btn" onclick="toggleEye('c-password','c-eye')"><i class="bi bi-eye" id="c-eye"></i></button>
+        </div>
+        <div class="pw-bars">
+          <div class="pw-bar" id="c-pw-1"></div><div class="pw-bar" id="c-pw-2"></div>
+          <div class="pw-bar" id="c-pw-3"></div><div class="pw-bar" id="c-pw-4"></div>
+        </div>
+      </div>
+      <div class="fg" id="c-confirm-wrap" style="display:none;margin-bottom:0">
+        <label class="fl">Confirm Password</label>
+        <div class="fw">
+          <input class="fi" type="password" id="c-confirm" placeholder="Repeat password">
+          <i class="bi bi-shield-lock fi-ico"></i>
+        </div>
+      </div>
+      <div class="pw-note">
+        <i class="bi bi-info-circle-fill"></i>
+        You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too anytime.
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── WORKER EXTRA ─── -->
+  <div id="workerExtra" class="worker-extra" style="display:none">
+    <div class="divider-line"></div>
     <div class="eyebrow">Step 2</div>
     <h2 class="section-h">Tell us about <em>yourself</em></h2>
     <p class="section-p">This information helps customers find and trust you on the platform.</p>
@@ -228,16 +318,16 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
     <div class="sec-lbl">Your Details</div>
     <div class="frow">
       <div class="fg">
-        <label class="fl">City / Location</label>
+        <label class="fl">City / Location <span style="color:#DC2626">*</span></label>
         <div class="fw">
-          <input class="fi" type="text" id="cityInput" placeholder="e.g. Ludhiana">
+          <input class="fi" type="text" id="w-location" placeholder="e.g. Ludhiana">
           <i class="bi bi-geo-alt fi-ico"></i>
         </div>
       </div>
       <div class="fg">
-        <label class="fl">Phone Number</label>
+        <label class="fl">Phone Number <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
         <div class="fw">
-          <input class="fi" type="text" id="phoneInput" placeholder="9876543210">
+          <input class="fi" type="tel" id="w-phone" placeholder="9876543210" maxlength="10">
           <i class="bi bi-phone fi-ico"></i>
         </div>
       </div>
@@ -245,7 +335,7 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 
     <div class="sec-lbl">Worker Details</div>
     <div class="fg">
-      <label class="fl">Primary Skill</label>
+      <label class="fl">Primary Skill <span style="color:#DC2626">*</span></label>
       <div class="fw">
         <select class="fi" id="skill">
           <option value="">Select your main skill</option>
@@ -262,8 +352,42 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
       </div>
     </div>
     <div class="fg">
-      <label class="fl">About You</label>
+      <label class="fl">About You <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
       <textarea class="fi" id="bio" placeholder="Briefly describe your experience, years of work, and specialties…"></textarea>
+    </div>
+
+    <!-- Password card for worker -->
+    <div class="pw-section">
+      <div class="pw-section-head">
+        <div class="pw-section-ico"><i class="bi bi-lock-fill"></i></div>
+        <div>
+          <div class="pw-section-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
+          <div class="pw-section-sub">Lets you sign in with email &amp; password in addition to Google</div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <div class="fw">
+          <input class="fi" type="password" id="w-password" placeholder="Min 6 characters" oninput="checkStrength('w-password','w-pw')">
+          <i class="bi bi-lock fi-ico"></i>
+          <button type="button" class="eye-btn" onclick="toggleEye('w-password','w-eye')"><i class="bi bi-eye" id="w-eye"></i></button>
+        </div>
+        <div class="pw-bars">
+          <div class="pw-bar" id="w-pw-1"></div><div class="pw-bar" id="w-pw-2"></div>
+          <div class="pw-bar" id="w-pw-3"></div><div class="pw-bar" id="w-pw-4"></div>
+        </div>
+      </div>
+      <div class="fg" id="w-confirm-wrap" style="display:none;margin-bottom:0">
+        <label class="fl">Confirm Password</label>
+        <div class="fw">
+          <input class="fi" type="password" id="w-confirm" placeholder="Repeat password">
+          <i class="bi bi-shield-lock fi-ico"></i>
+        </div>
+      </div>
+      <div class="pw-note">
+        <i class="bi bi-info-circle-fill"></i>
+        You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too anytime.
+      </div>
     </div>
 
     <div class="sec-lbl">Government ID Verification</div>
@@ -271,38 +395,31 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
       <div class="id-head">
         <div class="id-head-ico"><i class="bi bi-shield-check"></i></div>
         <div>
-          <div class="id-head-title">Upload a valid Government ID</div>
+          <div class="id-head-title">Upload a valid Government ID <span style="color:#DC2626">*</span></div>
           <div class="id-head-sub">Required for worker verification by admin</div>
         </div>
       </div>
-
       <label class="fl" style="margin-bottom:10px">Select ID Type</label>
       <div class="id-type-grid">
-        <button type="button" class="id-btn" data-type="aadhaar" onclick="pickId(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
-        <button type="button" class="id-btn" data-type="pan" onclick="pickId(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
-        <button type="button" class="id-btn" data-type="voter" onclick="pickId(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
-        <button type="button" class="id-btn" data-type="driving" onclick="pickId(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
+        <button type="button" class="id-btn" data-type="aadhaar"  onclick="pickId(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
+        <button type="button" class="id-btn" data-type="pan"      onclick="pickId(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
+        <button type="button" class="id-btn" data-type="voter"    onclick="pickId(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
+        <button type="button" class="id-btn" data-type="driving"  onclick="pickId(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
         <button type="button" class="id-btn" data-type="passport" onclick="pickId(this)"><i class="bi bi-book"></i> Passport</button>
-        <button type="button" class="id-btn" data-type="other" onclick="pickId(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
+        <button type="button" class="id-btn" data-type="other"    onclick="pickId(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
       </div>
       <input type="hidden" id="idType" value="">
-
       <div class="dropzone" id="dropzone">
         <input type="file" id="fileInput" accept="image/*,.pdf" onchange="onFile(this)">
         <div class="dz-ico"><i class="bi bi-cloud-upload"></i></div>
         <div class="dz-txt">Click to upload or drag &amp; drop</div>
         <div class="dz-hint">JPG, PNG or PDF • Max 5MB</div>
       </div>
-
       <div class="preview" id="preview">
         <span class="prev-ico" id="prevIco">📄</span>
-        <div>
-          <div class="prev-name" id="prevName">—</div>
-          <div class="prev-size" id="prevSize">—</div>
-        </div>
-        <button type="button" class="prev-rm" onclick="rmFile()" title="Remove"><i class="bi bi-x-circle-fill"></i></button>
+        <div><div class="prev-name" id="prevName">—</div><div class="prev-size" id="prevSize">—</div></div>
+        <button type="button" class="prev-rm" onclick="rmFile()"><i class="bi bi-x-circle-fill"></i></button>
       </div>
-
       <div class="id-note">
         <i class="bi bi-info-circle-fill"></i>
         Your ID is kept confidential and used only for identity verification. It will be reviewed by our admin team within 24 hours. You can start working after verification.
@@ -312,61 +429,84 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 
   <button class="submit-btn" id="submitBtn" onclick="submit()">
     <i class="bi bi-arrow-right-circle-fill"></i>
-    Continue as <span id="roleLabel">Customer</span>
+    Create Account as <span id="roleLabel">Customer</span>
     <i class="bi bi-arrow-repeat spin" id="sp"></i>
   </button>
 
 </div>
 
 <script>
-// ── Token & user from URL ──────────────────────────────────
+// Token & user from URL
 const params  = new URLSearchParams(window.location.search);
 const token   = params.get('token');
 const userStr = params.get('user');
-if (!token || !userStr) { location.replace('/login.html'); }
+if (!token || !userStr) location.replace('/login.html');
 
 let user;
 try { user = JSON.parse(decodeURIComponent(userStr)); }
 catch(e) { location.replace('/login.html'); }
 
-// ── Show Google user info ──────────────────────────────────
+// Show Google user info
 document.getElementById('avName').textContent  = user.name  || 'User';
 document.getElementById('avEmail').textContent = user.email || '';
 if (user.avatar) {
-  document.getElementById('avImg').innerHTML = `<img src="${user.avatar}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:14px">`;
+  document.getElementById('avImg').innerHTML = `<img src="${user.avatar}" alt="avatar">`;
 } else {
   document.getElementById('avImg').textContent = (user.name || 'U')[0].toUpperCase();
 }
 
-// ── Role picker ────────────────────────────────────────────
+// Role picker
 let role = 'customer';
 function pick(r) {
   role = r;
   document.getElementById('rb-c').classList.toggle('on', r === 'customer');
   document.getElementById('rb-w').classList.toggle('on', r === 'worker');
   document.getElementById('roleLabel').textContent = r === 'worker' ? 'Worker' : 'Customer';
-  const extra = document.getElementById('workerExtra');
-  extra.style.display = r === 'worker' ? 'block' : 'none';
+  document.getElementById('customerExtra').style.display = r === 'customer' ? 'block' : 'none';
+  document.getElementById('workerExtra').style.display   = r === 'worker'   ? 'block' : 'none';
 }
 
-// ── ID type picker ─────────────────────────────────────────
+// Password strength + show confirm field when typing
+function checkStrength(inputId, prefix) {
+  const v = document.getElementById(inputId).value;
+  const checks = [v.length >= 6, v.length >= 8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
+  const n = checks.filter(Boolean).length;
+  const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
+  for (let i = 1; i <= 4; i++) {
+    const bar = document.getElementById(`${prefix}-${i}`);
+    if (bar) bar.style.background = i <= n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
+  }
+  // Show confirm field only when there's a password value
+  const confirmWrapId = inputId.startsWith('c-') ? 'c-confirm-wrap' : 'w-confirm-wrap';
+  const wrap = document.getElementById(confirmWrapId);
+  if (wrap) wrap.style.display = v.length > 0 ? 'block' : 'none';
+}
+
+// Eye toggle
+function toggleEye(inputId, eyeId) {
+  const p = document.getElementById(inputId);
+  const i = document.getElementById(eyeId);
+  p.type = p.type === 'password' ? 'text' : 'password';
+  i.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+}
+
+// ID type picker
 function pickId(btn) {
   document.querySelectorAll('.id-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('idType').value = btn.dataset.type;
 }
 
-// ── File upload ────────────────────────────────────────────
+// File upload
 let file = null;
 function onFile(input) {
-  const f = input.files[0];
-  if (!f) return;
+  const f = input.files[0]; if (!f) return;
   if (f.size > 5 * 1024 * 1024) { showAlert('File too large. Max 5MB.'); input.value=''; return; }
   file = f;
-  document.getElementById('prevIco').textContent = f.type.startsWith('image/') ? '🖼️' : '📄';
+  document.getElementById('prevIco').textContent  = f.type.startsWith('image/') ? '🖼️' : '📄';
   document.getElementById('prevName').textContent = f.name;
   document.getElementById('prevSize').textContent = (f.size/1024).toFixed(1) + ' KB';
-  document.getElementById('preview').style.display = 'flex';
+  document.getElementById('preview').style.display  = 'flex';
   document.getElementById('dropzone').style.borderColor = 'var(--sage)';
 }
 function rmFile() {
@@ -376,27 +516,42 @@ function rmFile() {
   document.getElementById('dropzone').style.borderColor = '';
 }
 const dz = document.getElementById('dropzone');
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag'); });
 dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
 dz.addEventListener('drop', e => {
   e.preventDefault(); dz.classList.remove('drag');
   const f = e.dataTransfer.files[0];
-  if (f) { const i=document.getElementById('fileInput'); const dt=new DataTransfer(); dt.items.add(f); i.files=dt.files; onFile(i); }
+  if (f) { const inp = document.getElementById('fileInput'); const dt = new DataTransfer(); dt.items.add(f); inp.files = dt.files; onFile(inp); }
 });
 
-// ── Submit ─────────────────────────────────────────────────
+// Submit
 async function submit() {
-  if (role === 'worker') {
-    if (!document.getElementById('cityInput').value.trim()) { showAlert('Please enter your city / location.'); return; }
-    if (!document.getElementById('skill').value)            { showAlert('Please select your primary skill.'); return; }
-    if (!document.getElementById('idType').value)           { showAlert('Please select your ID type.'); return; }
-    if (!file)                                               { showAlert('Please upload your government ID document.'); return; }
+  // ── Customer validation ────────────────────────────────────
+  if (role === 'customer') {
+    const pw  = document.getElementById('c-password').value;
+    const cpw = document.getElementById('c-confirm').value;
+    if (pw && pw.length < 6) { showAlert('Password must be at least 6 characters.'); return; }
+    if (pw && pw !== cpw)    { showAlert('Passwords do not match.'); return; }
   }
 
-  const btn = document.getElementById('submitBtn'), sp = document.getElementById('sp');
+  // ── Worker validation ──────────────────────────────────────
+  if (role === 'worker') {
+    if (!document.getElementById('w-location').value.trim()) { showAlert('Please enter your city / location.'); return; }
+    if (!document.getElementById('skill').value)             { showAlert('Please select your primary skill.'); return; }
+    if (!document.getElementById('idType').value)            { showAlert('Please select your ID type.'); return; }
+    if (!file)                                               { showAlert('Please upload your government ID document.'); return; }
+    const pw  = document.getElementById('w-password').value;
+    const cpw = document.getElementById('w-confirm').value;
+    if (pw && pw.length < 6) { showAlert('Password must be at least 6 characters.'); return; }
+    if (pw && pw !== cpw)    { showAlert('Passwords do not match.'); return; }
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const sp  = document.getElementById('sp');
   btn.disabled = true; sp.style.display = 'inline-block';
 
   try {
+    // Convert file to base64
     let idDoc = null;
     if (role === 'worker' && file) {
       idDoc = await new Promise((res, rej) => {
@@ -407,15 +562,26 @@ async function submit() {
       });
     }
 
-    const payload = {
-      role,
-      skill:      role === 'worker' ? document.getElementById('skill').value                  : null,
-      location:   role === 'worker' ? document.getElementById('cityInput').value.trim()        : null,
-      phone:      role === 'worker' ? document.getElementById('phoneInput').value.trim()       : null,
-      bio:        role === 'worker' ? document.getElementById('bio').value.trim()              : null,
-      idType:     role === 'worker' ? document.getElementById('idType').value                  : null,
-      idDocument: idDoc,
-    };
+    // Build payload
+    const payload = { role };
+
+    if (role === 'customer') {
+      const pw = document.getElementById('c-password').value;
+      payload.phone    = document.getElementById('c-phone').value.trim()    || null;
+      payload.location = document.getElementById('c-location').value.trim() || null;
+      if (pw) payload.password = pw;
+    }
+
+    if (role === 'worker') {
+      const pw = document.getElementById('w-password').value;
+      payload.location   = document.getElementById('w-location').value.trim();
+      payload.phone      = document.getElementById('w-phone').value.trim()    || null;
+      payload.skill      = document.getElementById('skill').value;
+      payload.bio        = document.getElementById('bio').value.trim()         || null;
+      payload.idType     = document.getElementById('idType').value;
+      payload.idDocument = idDoc;
+      if (pw) payload.password = pw;
+    }
 
     const r = await fetch('/api/auth/google/role', {
       method:  'PUT',
@@ -427,13 +593,16 @@ async function submit() {
     if (d.success) {
       localStorage.setItem('kc_token', d.token);
       localStorage.setItem('kc_user', JSON.stringify(d.user));
-      location.replace(d.user.role === 'worker' ? 'worker-dashboard.html' : 'customer-dashboard.html');
+      showOk('Account created! Taking you to your dashboard…');
+      setTimeout(() => {
+        location.replace(d.user.role === 'worker' ? 'worker-dashboard.html' : 'customer-dashboard.html');
+      }, 900);
     } else {
       showAlert(d.message || 'Something went wrong. Please try again.');
       btn.disabled = false; sp.style.display = 'none';
     }
   } catch(e) {
-    showAlert('Cannot connect to server.');
+    showAlert('Cannot connect to server. Is it running?');
     btn.disabled = false; sp.style.display = 'none';
   }
 }
@@ -443,6 +612,11 @@ function showAlert(m) {
   b.style.display = 'flex'; b.className = 'alert alert-err';
   b.innerHTML = `<i class="bi bi-exclamation-circle-fill"></i> ${m}`;
   b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function showOk(m) {
+  const b = document.getElementById('alertBox');
+  b.style.display = 'flex'; b.className = 'alert alert-ok';
+  b.innerHTML = `<i class="bi bi-check-circle-fill"></i> ${m}`;
 }
 </script>
 </body>
