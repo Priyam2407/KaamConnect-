@@ -281,6 +281,17 @@ async function login() {
                       : role === 'worker' ? 'worker-dashboard.html'
                       : 'customer-dashboard.html';
       }, 800);
+    } else if (d.emailUnverified) {
+      // Show special unverified banner with resend button
+      const b = document.getElementById('alertBox');
+      b.style.display = 'flex'; b.className = 'alert ae'; b.style.flexDirection = 'column'; b.style.alignItems = 'flex-start'; b.style.gap = '10px';
+      b.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px"><i class="bi bi-envelope-exclamation-fill"></i> <strong>Email not verified.</strong> ${d.message}</div>
+        <button onclick="resendFromLogin('${d.email}','${d.token}')" id="resendLoginBtn"
+          style="background:var(--saffron);border:none;border-radius:8px;padding:8px 16px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px">
+          <i class="bi bi-arrow-repeat"></i> Resend Verification Email
+        </button>
+        <div id="resendLoginMsg" style="display:none;color:#15803D;font-size:13px"><i class="bi bi-check-circle-fill"></i> Sent! Check your inbox.</div>`;
     } else {
       showAlert('error', d.message || 'Login failed. Check your credentials.');
     }
@@ -289,6 +300,26 @@ async function login() {
   }
 
   btn.disabled = false; sp.style.display = 'none';
+}
+
+async function resendFromLogin(email, token) {
+  const btn = document.getElementById('resendLoginBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
+  try {
+    const r = await fetch('/api/auth/resend-verification', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const d = await r.json();
+    if (d.success) {
+      document.getElementById('resendLoginMsg').style.display = 'block';
+      btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Email Sent!';
+    } else {
+      btn.disabled = false; btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend Verification Email';
+    }
+  } catch(e) {
+    btn.disabled = false; btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend Verification Email';
+  }
 }
 </script>
 </body>

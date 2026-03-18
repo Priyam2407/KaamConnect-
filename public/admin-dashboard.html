@@ -517,6 +517,7 @@ async function loadUsers(){
       <td style="font-size:12.5px">${u.email}</td>
       <td><span class="badge ${u.role==='admin'?'b-paid':u.role==='worker'?'b-accepted':'b-pending'}">${u.role}</span></td>
       <td>${u.location||'—'}</td>
+      <td>${u.role!=='admin'?(u.emailVerified?'<span class="badge b-completed" style="font-size:11px">✅ Email OK</span>':'<span class="badge b-cancelled" style="font-size:11px">✉️ Unverified</span>'):'<span style="font-size:12px;color:var(--ink-30)">—</span>'}</td>
       <td><span class="badge ${active?'b-completed':'b-cancelled'}">${active?'Active':'Inactive'}</span></td>
       <td><div class="td-actions">
         ${!isAdmin?`<button class="btn btn-sm ${active?'btn-danger':'btn-teal'}" onclick="toggleU('${uid}',${!active})">${active?'<i class="bi bi-slash-circle"></i> Deactivate':'<i class="bi bi-check-circle"></i> Activate'}</button>`:''}
