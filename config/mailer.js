@@ -1,57 +1,70 @@
 const nodemailer = require("nodemailer");
 
-// ─── Create transporter ───────────────────────────────────────
+// ─── Create transporter ──────────────────────────────────────
 const createTransporter = () => {
+  // Option 1: Custom SMTP (Brevo, Mailgun, Postmark, etc.)
   if (process.env.SMTP_HOST) {
     return nodemailer.createTransport({
       host:   process.env.SMTP_HOST,
       port:   parseInt(process.env.SMTP_PORT) || 587,
       secure: process.env.SMTP_PORT === "465",
       auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-      connectionTimeout: 8000,   // 8s max to connect
-      greetingTimeout:   8000,
-      socketTimeout:     8000,
+      connectionTimeout: 15000,
+      greetingTimeout:   10000,
+      socketTimeout:     20000,
     });
   }
+
+  // Option 2: Gmail via App Password
+  // IMPORTANT: Gmail requires:
+  //   1. 2-Step Verification ON at myaccount.google.com/security
+  //   2. App Password created at myaccount.google.com/apppasswords
+  //   3. Use the 16-char App Password (no spaces) as GMAIL_PASS
   return nodemailer.createTransport({
     host:    "smtp.gmail.com",
-    port:    587,   // 587 STARTTLS works on Render; 465 SSL is often blocked
-    secure:  false,
+    port:    587,
+    secure:  false,   // STARTTLS — works on Render/cloud
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,   // 16-char App Password, no spaces
+      pass: process.env.GMAIL_PASS,
     },
-    tls:               { rejectUnauthorized: false },
-    connectionTimeout: 10000,   // 10s — works on Render
+    tls: { rejectUnauthorized: false },
+    connectionTimeout: 15000,
     greetingTimeout:   10000,
-    socketTimeout:     15000,
+    socketTimeout:     20000,
   });
 };
 
-// ─── Send verification email (with 10s hard timeout) ─────────
+// ─── Send verification email ─────────────────────────────────
 exports.sendVerificationEmail = async ({ name, email, token }) => {
-  console.log("[Mailer] Sending to:", email);
-  console.log("[Mailer] GMAIL_USER:", process.env.GMAIL_USER ? "SET ✓" : "NOT SET ✗");
-  console.log("[Mailer] GMAIL_PASS:", process.env.GMAIL_PASS ? `${process.env.GMAIL_PASS.length} chars ✓` : "NOT SET ✗");
+  const user = process.env.GMAIL_USER || process.env.SMTP_USER;
+  const pass = process.env.GMAIL_PASS || process.env.SMTP_PASS;
+
+  console.log("[Mailer] ── Sending verification email ──");
+  console.log("[Mailer] To:", email);
+  console.log("[Mailer] SMTP user:", user ? "SET ✓" : "NOT SET ✗");
+  console.log("[Mailer] SMTP pass:", pass ? pass.length + " chars ✓" : "NOT SET ✗");
+  console.log("[Mailer] NODE_ENV:", process.env.NODE_ENV);
+
+  if (!user || !pass) {
+    throw new Error("GMAIL_USER or GMAIL_PASS not set in environment variables");
+  }
 
   const transporter = createTransporter();
 
-  // On Render/production NODE_ENV=production so BASE_URL is used
-  // Locally NODE_ENV=development so APP_URL (localhost) is used
   const isProduction = process.env.NODE_ENV === "production";
   const baseUrl = isProduction
     ? (process.env.BASE_URL || "http://localhost:5000")
     : (process.env.APP_URL  || process.env.BASE_URL || "http://localhost:5000");
+
   const link = `${baseUrl}/api/auth/verify-email?token=${token}`;
+  console.log("[Mailer] Verify link:", link);
 
   const html = `
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Verify your KaamConnect email</title>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verify your KaamConnect email</title></head>
 <body style="margin:0;padding:0;background:#FAF7F2;font-family:'Segoe UI',Arial,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#FAF7F2;padding:40px 20px">
   <tr><td align="center">
@@ -72,7 +85,7 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
         <div style="background:#FEF0E8;border:1.5px solid #FDE0CF;border-radius:10px;padding:14px 18px;margin-bottom:24px">
           <p style="font-size:13px;color:#E8601C;margin:0;font-weight:600">⏰ This link expires in <strong>24 hours</strong></p>
         </div>
-        <p style="font-size:12.5px;color:rgba(15,25,35,.4);margin:0 0 6px">If the button doesn't work, paste this link in your browser:</p>
+        <p style="font-size:12.5px;color:rgba(15,25,35,.4);margin:0 0 6px">If the button doesn't work, copy this link into your browser:</p>
         <p style="font-size:12px;word-break:break-all;color:#3D7A6E;margin:0">${link}</p>
       </td></tr>
       <tr><td style="background:#F8F8F6;border-top:1px solid rgba(15,25,35,.06);padding:22px 40px;text-align:center">
@@ -85,28 +98,23 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
 </body>
 </html>`;
 
-  // ── 10 second hard timeout — registration NEVER hangs ────────
-  const sendWithTimeout = new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new Error("Email send timed out after 10 seconds — check GMAIL_USER / GMAIL_PASS in .env"));
-    }, 10000);
-
+  // 20 second hard timeout
+  const info = await Promise.race([
     transporter.sendMail({
-      from:    `"KaamConnect" <${process.env.GMAIL_USER || process.env.SMTP_USER}>`,
+      from:    `"KaamConnect" <${user}>`,
       to:      email,
       subject: "Verify your KaamConnect email address",
       html,
-      text: `Hi ${name},\n\nVerify your KaamConnect email:\n${link}\n\nThis link expires in 24 hours.\n\n— KaamConnect Team`,
-    }).then(info => {
-      clearTimeout(timer);
-      resolve(info);
-    }).catch(err => {
-      clearTimeout(timer);
-      reject(err);
-    });
-  });
+      text: `Hi ${name},\n\nVerify your KaamConnect account:\n${link}\n\nThis link expires in 24 hours.\n\n— KaamConnect Team`,
+    }),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error(
+        "SMTP timeout after 20s. Likely cause: wrong GMAIL_PASS (needs App Password, not Gmail login password). " +
+        "Go to myaccount.google.com/apppasswords to generate one."
+      )), 20000)
+    ),
+  ]);
 
-  const info = await sendWithTimeout;
-  console.log("[Mailer] ✅ Email sent → messageId:", info.messageId, "→", email);
+  console.log("[Mailer] ✅ Sent! messageId:", info.messageId);
   return info;
 };

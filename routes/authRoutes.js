@@ -12,19 +12,31 @@ router.put("/change-password", authenticateToken, auth.changePassword);
 
 // ── Test Email (development only) ───────────────────────────
 router.get("/test-email", async (req, res) => {
-  if (process.env.NODE_ENV === "production") {
-    return res.status(403).json({ success: false, message: "Not available in production" });
-  }
   const mailer = require("../config/mailer");
+  const target = process.env.GMAIL_USER || process.env.SMTP_USER;
   try {
     await mailer.sendVerificationEmail({
       name:  "Test User",
-      email: process.env.GMAIL_USER || process.env.SMTP_USER,
+      email: target,
       token: "test-token-12345",
     });
-    res.json({ success: true, message: "Test email sent! Check your inbox." });
+    res.json({
+      success: true,
+      message: "✅ Test email sent to " + target + "! Check your inbox.",
+      gmail_user: target,
+      node_env:   process.env.NODE_ENV,
+      base_url:   process.env.BASE_URL,
+    });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message, hint: "Check your GMAIL_USER and GMAIL_PASS in .env" });
+    res.status(500).json({
+      success:   false,
+      error:     err.message,
+      gmail_user: target,
+      gmail_pass_set: !!(process.env.GMAIL_PASS || process.env.SMTP_PASS),
+      gmail_pass_len: (process.env.GMAIL_PASS || process.env.SMTP_PASS || "").length,
+      node_env:  process.env.NODE_ENV,
+      hint: "If error says 'Invalid login': go to myaccount.google.com/apppasswords and generate a new 16-char App Password",
+    });
   }
 });
 
