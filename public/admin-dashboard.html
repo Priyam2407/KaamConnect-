@@ -7,9 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
@@ -28,40 +26,52 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
 a{text-decoration:none;color:inherit}ul{list-style:none}button{font-family:inherit;cursor:pointer;border:none}
-
-/* ─── SIDEBAR ─── */
-.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--white);border-right:1px solid var(--border);position:fixed;top:0;bottom:0;left:0;overflow-y:auto;scrollbar-width:none;z-index:100;display:flex;flex-direction:column}
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--white);border-right:1px solid var(--border);position:fixed;top:0;bottom:0;left:0;overflow-y:auto;scrollbar-width:none;z-index:100;display:flex;flex-direction:column;transition:transform .3s ease}
 .sidebar::-webkit-scrollbar{display:none}
-.sb-top{padding:24px 20px 20px;border-bottom:1px solid var(--border)}
-.sb-logo{display:flex;align-items:center;gap:10px}
-.sb-logo-icon{width:36px;height:36px;border-radius:10px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:16px;box-shadow:0 4px 12px rgba(46,125,94,.28)}
-.sb-logo-name{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;letter-spacing:-.3px;color:var(--ink)}
+.sb-top{padding:20px 20px 18px;border-bottom:1px solid var(--border)}
+/* LOGO with India Flag */
+.sb-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.sb-logo-india{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.15);border:1.5px solid rgba(0,0,0,.08);transition:transform .22s}
+.sb-logo-india svg{width:100%;height:100%;display:block}
+.sb-logo:hover .sb-logo-india{transform:scale(1.08)}
+.sb-logo-sep{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.sb-logo-icon{width:34px;height:34px;border-radius:9px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:0 4px 10px rgba(46,125,94,.28);flex-shrink:0;transition:transform .22s}
+.sb-logo:hover .sb-logo-icon{transform:rotate(-8deg) scale(1.1)}
+.sb-logo-name{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;letter-spacing:-.3px;color:var(--ink)}
 .sb-logo-name em{font-style:normal;color:var(--green)}
-.sb-user{padding:18px 20px;border-bottom:1px solid var(--border)}
-.sb-av{width:40px;height:40px;border-radius:12px;background:var(--green-light);display:grid;place-items:center;font-size:18px;margin-bottom:10px}
+.sb-user{padding:16px 20px;border-bottom:1px solid var(--border)}
+.sb-av{width:38px;height:38px;border-radius:11px;background:var(--green-light);display:grid;place-items:center;font-size:17px;margin-bottom:9px}
 .sb-uname{font-weight:700;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
 .sb-urole{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-30)}
-.sb-nav{flex:1;padding:16px 12px}
-.sb-sec{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-30);padding:0 10px;margin:16px 0 8px}
+.sb-nav{flex:1;padding:14px 12px}
+.sb-sec{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-30);padding:0 10px;margin:14px 0 6px}
 .sb-link{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;color:var(--ink-60);cursor:pointer;transition:all .2s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;position:relative}
 .sb-link i{font-size:16px;flex-shrink:0}
 .sb-link:hover{background:var(--bg);color:var(--ink)}
 .sb-link.on{background:var(--green-light);color:var(--green);font-weight:700}
 .sb-link.on i{color:var(--green)}
 .sb-badge{position:absolute;right:10px;top:50%;transform:translateY(-50%);min-width:20px;height:20px;border-radius:10px;background:var(--rose);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px}
-.sb-bottom{padding:14px 12px;border-top:1px solid var(--border)}
+.sb-bottom{padding:12px 12px;border-top:1px solid var(--border)}
 .sb-logout{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;color:var(--ink-60);cursor:pointer;transition:all .2s;border:none;background:none;width:100%;font-family:'Plus Jakarta Sans',sans-serif}
 .sb-logout:hover{background:var(--rose-light);color:var(--rose)}
-
-/* ─── MAIN ─── */
+/* HAMBURGER */
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;flex-shrink:0}
+.mob-menu-btn span{display:block;width:22px;height:2px;border-radius:2px;background:var(--ink);transition:all .3s}
+.mob-menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mob-menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.mob-menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99;backdrop-filter:blur(3px)}
+.sb-overlay.open{display:block}
+/* MAIN */
 .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 36px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
 .topbar-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.5px}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.topbar-av{width:36px;height:36px;border-radius:10px;background:var(--green-light);display:grid;place-items:center;font-size:16px;cursor:pointer}
-.content{padding:36px;flex:1}
-
-/* ─── STATS ─── */
+.topbar-av{width:36px;height:36px;border-radius:10px;background:var(--green-light);display:grid;place-items:center;font-size:16px}
+.admin-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;background:var(--green-light);border:1.5px solid rgba(46,125,94,.18);font-size:11px;font-weight:700;color:var(--green)}
+.content{padding:32px 36px;flex:1}
+/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
 .stat-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:22px;position:relative;overflow:hidden;transition:all .25s}
 .stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
@@ -72,57 +82,39 @@ a{text-decoration:none;color:inherit}ul{list-style:none}button{font-family:inher
 .stat-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-30);margin-bottom:10px}
 .stat-val{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--ink);letter-spacing:-1.5px;line-height:1;margin-bottom:6px}
 .stat-sub{font-size:12.5px;color:var(--ink-60)}
-
-/* ─── PANEL ─── */
+/* PANEL */
 .panel{background:var(--white);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:22px}
 .panel-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .panel-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.4px}
 .panel-body{padding:22px}
-
-/* ─── TABLE ─── */
+/* TABLE */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tbl{width:100%;border-collapse:collapse}
-.tbl th{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-30);padding:0 16px 12px;text-align:left;border-bottom:1px solid var(--border)}
-.tbl td{padding:14px 16px;border-bottom:1px solid var(--border-2);font-size:13.5px;color:var(--ink-60);vertical-align:middle}
+.tbl th{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-30);padding:0 16px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:13px 16px;border-bottom:1px solid var(--border-2);font-size:13.5px;color:var(--ink-60);vertical-align:middle}
 .tbl tr:last-child td{border-bottom:none}
 .tbl tr:hover td{background:var(--bg)}
 .td-name{font-weight:700;color:var(--ink);display:block;margin-bottom:2px}
-
-/* ─── BADGES ─── */
+.td-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+/* BADGES */
 .badge{padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
-.b-pending{background:#FEF3C7;color:#92400E}
-.b-accepted{background:var(--blue-light);color:#1D4ED8}
-.b-progress{background:var(--green-light);color:var(--green)}
-.b-completed{background:#F0FDF4;color:#166534}
-.b-cancelled{background:var(--rose-light);color:var(--rose)}
-.b-paid{background:#F5F3FF;color:#6D28D9}
-.b-id-pending{background:#FEF3C7;color:#B45309}
-.b-id-approved{background:#F0FDF4;color:#166534}
-.b-id-rejected{background:var(--rose-light);color:var(--rose)}
-.b-id-none{background:var(--bg);color:var(--ink-30);border:1px solid var(--border)}
-
-/* ─── BUTTONS ─── */
+.b-pending{background:#FEF3C7;color:#92400E}.b-accepted{background:var(--blue-light);color:#1D4ED8}.b-progress{background:var(--green-light);color:var(--green)}.b-completed{background:#F0FDF4;color:#166534}.b-cancelled{background:var(--rose-light);color:var(--rose)}.b-paid{background:#F5F3FF;color:#6D28D9}
+.b-id-pending{background:#FEF3C7;color:#B45309}.b-id-approved{background:#F0FDF4;color:#166534}.b-id-rejected{background:var(--rose-light);color:var(--rose)}.b-id-none{background:var(--bg);color:var(--ink-30);border:1px solid var(--border)}
+/* BUTTONS */
 .btn{padding:9px 18px;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:6px;border:none}
-.btn-green{background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(46,125,94,.22)}
-.btn-green:hover{background:var(--green-2);transform:translateY(-1px)}
-.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-60)}
-.btn-outline:hover{border-color:var(--ink);color:var(--ink)}
-.btn-teal{background:var(--green-light);color:var(--green);border:1.5px solid rgba(46,125,94,.2)}
-.btn-teal:hover{background:var(--green);color:#fff}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(46,125,94,.22)}.btn-green:hover{background:var(--green-2);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-60)}.btn-outline:hover{border-color:var(--ink);color:var(--ink)}
+.btn-teal{background:var(--green-light);color:var(--green);border:1.5px solid rgba(46,125,94,.2)}.btn-teal:hover{background:var(--green);color:#fff}
 .btn-sm{padding:6px 12px;font-size:12px}
-.btn-danger{background:var(--rose-light);color:var(--rose);border:1.5px solid rgba(220,38,38,.15)}
-.btn-danger:hover{background:var(--rose);color:#fff}
-.btn-saffron{background:var(--saffron-pale);color:var(--saffron);border:1.5px solid rgba(232,96,28,.2)}
-.btn-saffron:hover{background:var(--saffron);color:#fff}
-
-/* ─── FORMS ─── */
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:7px;letter-spacing:.3px}
+.btn-danger{background:var(--rose-light);color:var(--rose);border:1.5px solid rgba(220,38,38,.15)}.btn-danger:hover{background:var(--rose);color:#fff}
+.btn-saffron{background:var(--saffron-pale);color:var(--saffron);border:1.5px solid rgba(232,96,28,.2)}.btn-saffron:hover{background:var(--saffron);color:#fff}
+.btn-delete{background:var(--rose);color:#fff;border:none;box-shadow:0 2px 8px rgba(220,38,38,.25)}.btn-delete:hover{background:#B91C1C;transform:translateY(-1px);box-shadow:0 4px 14px rgba(220,38,38,.38)}
+/* FORMS */
+.fg{margin-bottom:16px}.fl{display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:7px;letter-spacing:.3px}
 .fi{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);outline:none;transition:all .2s}
 .fi:focus{border-color:var(--green);background:var(--white);box-shadow:0 0 0 3px rgba(46,125,94,.08)}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-textarea.fi{min-height:80px;resize:vertical}
-
-/* ─── ID VERIFICATION CARDS ─── */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}textarea.fi{min-height:80px;resize:vertical}
+/* VERF CARDS */
 .verf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .verf-card{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:22px;transition:all .25s}
 .verf-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:rgba(232,96,28,.3)}
@@ -135,26 +127,28 @@ textarea.fi{min-height:80px;resize:vertical}
 .vc-chip{display:inline-flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 9px;font-size:11.5px;font-weight:600;color:var(--ink-60)}
 .vc-reject-note{font-size:12px;color:var(--rose);background:var(--rose-light);border:1px solid rgba(220,38,38,.12);border-radius:8px;padding:8px 11px;margin-bottom:12px;display:flex;align-items:flex-start;gap:6px}
 .vc-actions{display:flex;gap:8px;flex-wrap:wrap}
-
-/* ─── FILTER TABS ─── */
+/* FILTER TABS */
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
 .ftab{padding:8px 16px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:1.5px solid var(--border);background:transparent;color:var(--ink-60);font-family:'Plus Jakarta Sans',sans-serif}
 .ftab:hover{border-color:var(--green);color:var(--green)}
 .ftab.on{background:var(--green-light);border-color:rgba(46,125,94,.3);color:var(--green);font-weight:700}
-
-/* ─── MODAL ─── */
+/* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(28,28,46,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
 .modal-bg.open{display:flex;animation:mfade .2s ease}
 @keyframes mfade{from{opacity:0}to{opacity:1}}
-.modal{background:var(--white);border-radius:18px;padding:32px;width:100%;max-width:540px;border:1.5px solid var(--border);box-shadow:var(--shadow-lg);animation:mslide .25s cubic-bezier(.34,1.56,.64,1);position:relative;max-height:92vh;overflow-y:auto}
+.modal{background:var(--white);border-radius:18px;padding:28px;width:100%;max-width:540px;border:1.5px solid var(--border);box-shadow:var(--shadow-lg);animation:mslide .25s cubic-bezier(.34,1.56,.64,1);position:relative;max-height:92vh;overflow-y:auto}
 @keyframes mslide{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
 .modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.5px;margin-bottom:4px}
 .modal-sub{font-size:14px;color:var(--ink-60);margin-bottom:20px;font-weight:300}
 .modal-x{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:8px;background:var(--bg);border:none;cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--ink-60);transition:all .2s}
 .modal-x:hover{background:var(--border);color:var(--ink)}
 .modal-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-
-/* ─── ID Doc Viewer ─── */
+/* Delete Modal */
+.del-icon{width:60px;height:60px;background:var(--rose-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px}
+.del-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ink);text-align:center;margin-bottom:8px}
+.del-warn{font-size:13.5px;color:var(--ink-60);text-align:center;line-height:1.65;margin-bottom:4px}
+.del-warn strong{color:var(--rose)}
+/* ID Doc */
 .id-chips-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .id-chip{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;color:var(--ink-60)}
 .id-doc-img{width:100%;max-height:380px;object-fit:contain;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);display:block}
@@ -163,40 +157,84 @@ textarea.fi{min-height:80px;resize:vertical}
 .reject-lbl{display:block;font-size:12px;font-weight:700;color:var(--rose);margin-bottom:7px;letter-spacing:.3px}
 .reject-input{width:100%;padding:11px 14px;border:1.5px solid rgba(220,38,38,.3);border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--bg);outline:none;transition:all .2s}
 .reject-input:focus{border-color:var(--rose);background:var(--white)}
-
-/* ─── ALERTS ─── */
+/* ALERTS */
 .alert{padding:11px 14px;border-radius:9px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:14px}
 .ae{background:var(--rose-light);color:var(--rose);border:1.5px solid rgba(220,38,38,.2)}
 .as{background:#F0FDF4;color:#166534;border:1.5px solid #BBF7D0}
-
-/* ─── EMPTY / LOADING ─── */
+/* EMPTY / LOADING */
 .empty{text-align:center;padding:52px 24px;color:var(--ink-60)}
 .empty i{font-size:36px;display:block;margin-bottom:12px;opacity:.3}
 .empty h3{font-weight:700;font-size:16px;color:var(--ink);margin-bottom:5px}
 .empty p{font-size:13.5px}
 .loading{display:flex;justify-content:center;padding:48px;font-size:28px;color:var(--green);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ─── TOAST ─── */
+/* TOAST */
 .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column-reverse;gap:8px}
 .toast{background:var(--ink-2);color:#fff;padding:13px 18px;border-radius:11px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);animation:toastIn .3s ease;max-width:320px}
 @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .toast.out{animation:toastOut .3s ease forwards}
 @keyframes toastOut{to{opacity:0;transform:translateY(8px)}}
-
-.admin-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;background:var(--green-light);border:1.5px solid rgba(46,125,94,.18);font-size:11px;font-weight:700;color:var(--green)}
-
-@media(max-width:900px){.sidebar{display:none}.main{margin-left:0}.stats-row{grid-template-columns:repeat(2,1fr)}.verf-grid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}}
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .main{margin-left:0}
+  .mob-menu-btn{display:flex}
+  .topbar{padding:0 16px}
+  .content{padding:20px 16px}
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:12px}
+  .verf-grid{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .panel-head{padding:14px 16px;gap:10px}
+  .panel-body{padding:16px}
+  .dashboard-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr;gap:10px}
+  .stat-card{padding:16px}
+  .stat-val{font-size:26px}
+  .verf-grid{grid-template-columns:1fr}
+  .topbar-title{font-size:18px}
+  .admin-chip{display:none}
+  .content{padding:16px 12px}
+  .modal{padding:20px;border-radius:14px}
+  .filter-bar{gap:6px}
+  .ftab{padding:6px 12px;font-size:12px}
+  .tbl th,.tbl td{padding:10px 12px}
+  .toast-wrap{right:12px;bottom:12px}
+}
+@media(max-width:400px){
+  .stats-row{grid-template-columns:1fr}
+  .btn-sm{padding:5px 9px;font-size:11px}
+  .td-actions{flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
 <body>
 
 <div class="toast-wrap" id="toastWrap"></div>
+<div class="sb-overlay" id="sbOverlay"></div>
 
-<!-- ══ SIDEBAR ══ -->
+<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-top">
     <a class="sb-logo" href="index.html">
+      <div class="sb-logo-india">
+        <svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="7.33" fill="#FF9933"/>
+          <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
+          <rect y="14.67" width="32" height="7.33" fill="#138808"/>
+          <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
+          <circle cx="16" cy="11" r="0.75" fill="#000080"/>
+          <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
+            <line x1="0" y1="-3.2" x2="0" y2="3.2"/><line x1="-3.2" y1="0" x2="3.2" y2="0"/>
+            <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/><line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
+            <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/><line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
+            <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/><line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
+          </g>
+        </svg>
+      </div>
+      <div class="sb-logo-sep"></div>
       <div class="sb-logo-icon"><i class="bi bi-tools"></i></div>
       <span class="sb-logo-name">Kaam<em>Connect</em></span>
     </a>
@@ -209,7 +247,7 @@ textarea.fi{min-height:80px;resize:vertical}
   <nav class="sb-nav">
     <div class="sb-sec">Overview</div>
     <button class="sb-link on" onclick="show('dashboard',this)"><i class="bi bi-grid-1x2"></i> Dashboard</button>
-    <div class="sb-sec" style="margin-top:16px">Manage</div>
+    <div class="sb-sec" style="margin-top:14px">Manage</div>
     <button class="sb-link" onclick="show('users',this)"><i class="bi bi-people"></i> Users</button>
     <button class="sb-link" onclick="show('workers',this)"><i class="bi bi-person-badge"></i> Workers</button>
     <button class="sb-link" onclick="show('jobs',this)"><i class="bi bi-briefcase"></i> Jobs</button>
@@ -217,7 +255,7 @@ textarea.fi{min-height:80px;resize:vertical}
       <i class="bi bi-shield-check"></i> ID Verifications
       <span class="sb-badge" id="verfBadge" style="display:none">0</span>
     </button>
-    <div class="sb-sec" style="margin-top:16px">Finance</div>
+    <div class="sb-sec" style="margin-top:14px">Finance</div>
     <button class="sb-link" onclick="show('revenue',this)"><i class="bi bi-currency-rupee"></i> Revenue</button>
   </nav>
   <div class="sb-bottom">
@@ -225,10 +263,13 @@ textarea.fi{min-height:80px;resize:vertical}
   </div>
 </aside>
 
-<!-- ══ MAIN ══ -->
+<!-- MAIN -->
 <main class="main">
   <div class="topbar">
-    <span class="topbar-title" id="pageTitle">Dashboard</span>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="mob-menu-btn" id="mobMenuBtn"><span></span><span></span><span></span></button>
+      <span class="topbar-title" id="pageTitle">Dashboard</span>
+    </div>
     <div class="topbar-right">
       <span class="admin-chip">👑 Admin</span>
       <div class="topbar-av">👑</div>
@@ -236,7 +277,7 @@ textarea.fi{min-height:80px;resize:vertical}
   </div>
   <div class="content">
 
-    <!-- ── DASHBOARD ── -->
+    <!-- DASHBOARD -->
     <div id="sec-dashboard">
       <div class="stats-row">
         <div class="stat-card c-green"><div class="stat-icon"><i class="bi bi-people-fill"></i></div><div class="stat-label">Total Customers</div><div class="stat-val" id="s-cust">—</div></div>
@@ -244,23 +285,14 @@ textarea.fi{min-height:80px;resize:vertical}
         <div class="stat-card c-blue"><div class="stat-icon"><i class="bi bi-briefcase-fill"></i></div><div class="stat-label">Total Jobs</div><div class="stat-val" id="s-jobs">—</div></div>
         <div class="stat-card c-rose"><div class="stat-icon"><i class="bi bi-currency-rupee"></i></div><div class="stat-label">Total Revenue</div><div class="stat-val" id="s-rev">—</div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px">
-        <!-- Pending Verifications Widget -->
+      <div class="dashboard-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px">
         <div class="panel">
-          <div class="panel-head">
-            <span class="panel-title">Pending ID Verifications</span>
-            <span class="badge b-id-pending" id="pvc">0</span>
-          </div>
-          <div style="overflow-x:auto">
-            <table class="tbl" style="min-width:380px">
-              <thead><tr><th>Worker</th><th>Skill</th><th>ID Type</th><th>Action</th></tr></thead>
-              <tbody id="pendVerTb">
-                <tr><td colspan="4" style="text-align:center;padding:28px"><div class="loading" style="padding:0;font-size:22px"><i class="bi bi-arrow-repeat"></i></div></td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="panel-head"><span class="panel-title">Pending ID Verifications</span><span class="badge b-id-pending" id="pvc">0</span></div>
+          <div class="tbl-wrap"><table class="tbl" style="min-width:360px">
+            <thead><tr><th>Worker</th><th>Skill</th><th>ID Type</th><th>Action</th></tr></thead>
+            <tbody id="pendVerTb"><tr><td colspan="4" style="text-align:center;padding:28px"><div class="loading" style="padding:0;font-size:22px"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
+          </table></div>
         </div>
-        <!-- Platform Overview -->
         <div class="panel">
           <div class="panel-head"><span class="panel-title">Platform Overview</span></div>
           <div class="panel-body">
@@ -270,58 +302,46 @@ textarea.fi{min-height:80px;resize:vertical}
           </div>
         </div>
       </div>
-      <!-- Recent Jobs -->
       <div class="panel">
-        <div class="panel-head">
-          <span class="panel-title">Recent Jobs</span>
-          <button class="btn btn-outline btn-sm" onclick="show('jobs',null)">View all</button>
-        </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" style="min-width:680px">
-            <thead><tr><th>Job</th><th>Customer</th><th>Worker</th><th>Price</th><th>Commission</th><th>Status</th></tr></thead>
-            <tbody id="recentJTb">
-              <tr><td colspan="6" style="text-align:center;padding:32px"><div class="loading" style="padding:0;font-size:22px"><i class="bi bi-arrow-repeat"></i></div></td></tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="panel-head"><span class="panel-title">Recent Jobs</span><button class="btn btn-outline btn-sm" onclick="show('jobs',null)">View all</button></div>
+        <div class="tbl-wrap"><table class="tbl" style="min-width:600px">
+          <thead><tr><th>Job</th><th>Customer</th><th>Worker</th><th>Price</th><th>Commission</th><th>Status</th></tr></thead>
+          <tbody id="recentJTb"><tr><td colspan="6" style="text-align:center;padding:32px"><div class="loading" style="padding:0;font-size:22px"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
-    <!-- ── USERS ── -->
+    <!-- USERS -->
     <div id="sec-users" style="display:none">
       <div class="panel">
         <div class="panel-head">
           <span class="panel-title">All Users</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <input class="fi" type="text" id="uSearch" placeholder="Search name / email…" style="width:210px;padding:8px 12px;font-size:13px" oninput="loadUsers()">
+            <input class="fi" type="text" id="uSearch" placeholder="Search name / email…" style="width:200px;padding:8px 12px;font-size:13px" oninput="loadUsers()">
             <select class="fi" id="uRole" style="width:auto;padding:8px 12px;font-size:13px" onchange="loadUsers()">
               <option value="">All Roles</option><option value="customer">Customers</option><option value="worker">Workers</option>
             </select>
           </div>
         </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" style="min-width:720px">
-            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody id="usersTb"><tr><td colspan="6"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
-          </table>
-        </div>
+        <div class="tbl-wrap"><table class="tbl" style="min-width:700px">
+          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="usersTb"><tr><td colspan="6"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
-    <!-- ── WORKERS ── -->
+    <!-- WORKERS -->
     <div id="sec-workers" style="display:none">
       <div class="panel">
         <div class="panel-head"><span class="panel-title">Worker Management</span></div>
-        <div style="overflow-x:auto">
-          <table class="tbl" style="min-width:920px">
-            <thead><tr><th>Name</th><th>Skill</th><th>Location</th><th>Rating</th><th>Jobs</th><th>ID Status</th><th>Verified</th><th>Actions</th></tr></thead>
-            <tbody id="workersTb"><tr><td colspan="8"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
-          </table>
-        </div>
+        <div class="tbl-wrap"><table class="tbl" style="min-width:860px">
+          <thead><tr><th>Name</th><th>Skill</th><th>Location</th><th>Rating</th><th>Jobs</th><th>ID Status</th><th>Verified</th><th>Actions</th></tr></thead>
+          <tbody id="workersTb"><tr><td colspan="8"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
-    <!-- ── JOBS ── -->
+    <!-- JOBS -->
     <div id="sec-jobs" style="display:none">
       <div class="panel">
         <div class="panel-head">
@@ -331,53 +351,32 @@ textarea.fi{min-height:80px;resize:vertical}
             <option value="in_progress">In Progress</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
           </select>
         </div>
-        <div style="overflow-x:auto">
-          <table class="tbl" style="min-width:780px">
-            <thead><tr><th>Job</th><th>Customer</th><th>Worker</th><th>Price</th><th>Commission</th><th>Status</th><th>Date</th></tr></thead>
-            <tbody id="allJobsTb"><tr><td colspan="7"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
-          </table>
-        </div>
+        <div class="tbl-wrap"><table class="tbl" style="min-width:720px">
+          <thead><tr><th>Job</th><th>Customer</th><th>Worker</th><th>Price</th><th>Commission</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="allJobsTb"><tr><td colspan="7"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
-    <!-- ══ ID VERIFICATIONS ══ -->
+    <!-- ID VERIFICATIONS -->
     <div id="sec-verifications" style="display:none">
-      <!-- Stats row -->
       <div class="stats-row" style="grid-template-columns:repeat(4,1fr)">
-        <div class="stat-card c-saffron" style="padding:18px 20px">
-          <div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-hourglass-split"></i></div>
-          <div class="stat-label" style="font-size:10px">Pending</div>
-          <div class="stat-val" style="font-size:30px" id="vs-pending">—</div>
-        </div>
-        <div class="stat-card c-green" style="padding:18px 20px">
-          <div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-shield-fill-check"></i></div>
-          <div class="stat-label" style="font-size:10px">Approved</div>
-          <div class="stat-val" style="font-size:30px" id="vs-approved">—</div>
-        </div>
-        <div class="stat-card c-rose" style="padding:18px 20px">
-          <div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-shield-x"></i></div>
-          <div class="stat-label" style="font-size:10px">Rejected</div>
-          <div class="stat-val" style="font-size:30px" id="vs-rejected">—</div>
-        </div>
-        <div class="stat-card c-blue" style="padding:18px 20px">
-          <div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-file-earmark-x"></i></div>
-          <div class="stat-label" style="font-size:10px">No ID</div>
-          <div class="stat-val" style="font-size:30px" id="vs-none">—</div>
-        </div>
+        <div class="stat-card c-saffron" style="padding:18px 20px"><div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-hourglass-split"></i></div><div class="stat-label" style="font-size:10px">Pending</div><div class="stat-val" style="font-size:30px" id="vs-pending">—</div></div>
+        <div class="stat-card c-green"   style="padding:18px 20px"><div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-shield-fill-check"></i></div><div class="stat-label" style="font-size:10px">Approved</div><div class="stat-val" style="font-size:30px" id="vs-approved">—</div></div>
+        <div class="stat-card c-rose"    style="padding:18px 20px"><div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-shield-x"></i></div><div class="stat-label" style="font-size:10px">Rejected</div><div class="stat-val" style="font-size:30px" id="vs-rejected">—</div></div>
+        <div class="stat-card c-blue"    style="padding:18px 20px"><div class="stat-icon" style="width:38px;height:38px;font-size:16px"><i class="bi bi-file-earmark-x"></i></div><div class="stat-label" style="font-size:10px">No ID</div><div class="stat-val" style="font-size:30px" id="vs-none">—</div></div>
       </div>
-      <!-- Filter bar -->
       <div class="filter-bar">
-        <button class="ftab on" id="vf-pending"  onclick="filterVerf('pending',this)"><i class="bi bi-hourglass-split"></i> Pending</button>
-        <button class="ftab"    id="vf-approved" onclick="filterVerf('approved',this)"><i class="bi bi-shield-fill-check"></i> Approved</button>
-        <button class="ftab"    id="vf-rejected" onclick="filterVerf('rejected',this)"><i class="bi bi-shield-x"></i> Rejected</button>
-        <button class="ftab"    id="vf-none"     onclick="filterVerf('none',this)"><i class="bi bi-dash-circle"></i> No ID</button>
-        <button class="ftab"    id="vf-all"      onclick="filterVerf('all',this)"><i class="bi bi-people"></i> All Workers</button>
+        <button class="ftab on" onclick="filterVerf('pending',this)"><i class="bi bi-hourglass-split"></i> Pending</button>
+        <button class="ftab"    onclick="filterVerf('approved',this)"><i class="bi bi-shield-fill-check"></i> Approved</button>
+        <button class="ftab"    onclick="filterVerf('rejected',this)"><i class="bi bi-shield-x"></i> Rejected</button>
+        <button class="ftab"    onclick="filterVerf('none',this)"><i class="bi bi-dash-circle"></i> No ID</button>
+        <button class="ftab"    onclick="filterVerf('all',this)"><i class="bi bi-people"></i> All Workers</button>
       </div>
-      <!-- Cards -->
       <div id="verfCards"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
-    <!-- ── REVENUE ── -->
+    <!-- REVENUE -->
     <div id="sec-revenue" style="display:none">
       <div class="stats-row" style="grid-template-columns:1fr 1fr;margin-bottom:22px">
         <div class="stat-card c-green"><div class="stat-icon"><i class="bi bi-currency-rupee"></i></div><div class="stat-label">Total Revenue</div><div class="stat-val" id="r-total">—</div><div class="stat-sub">All time commissions</div></div>
@@ -385,475 +384,279 @@ textarea.fi{min-height:80px;resize:vertical}
       </div>
       <div class="panel">
         <div class="panel-head"><span class="panel-title">Monthly Breakdown</span></div>
-        <div style="overflow-x:auto">
-          <table class="tbl" style="min-width:480px">
-            <thead><tr><th>Month</th><th>Transactions</th><th>Revenue</th></tr></thead>
-            <tbody id="revTb"><tr><td colspan="3"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
-          </table>
-        </div>
+        <div class="tbl-wrap"><table class="tbl" style="min-width:380px">
+          <thead><tr><th>Month</th><th>Transactions</th><th>Revenue</th></tr></thead>
+          <tbody id="revTb"><tr><td colspan="3"><div class="loading"><i class="bi bi-arrow-repeat"></i></div></td></tr></tbody>
+        </table></div>
       </div>
     </div>
 
-  </div><!-- /content -->
+  </div>
 </main>
 
-<!-- ══ ID DOCUMENT MODAL ══ -->
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-bg" id="deleteModal">
+  <div class="modal" style="max-width:420px;text-align:center">
+    <button class="modal-x" onclick="closeDeleteModal()"><i class="bi bi-x"></i></button>
+    <div class="del-icon">🗑️</div>
+    <div class="del-name" id="deleteUserName">User Name</div>
+    <div class="del-warn">This will <strong>permanently delete</strong> this user and all their data.<br><strong>This action cannot be undone.</strong></div>
+    <div style="background:var(--rose-light);border:1.5px solid rgba(220,38,38,.2);border-radius:10px;padding:12px 14px;margin:16px 0;font-size:13px;color:var(--rose);display:flex;align-items:center;gap:8px;text-align:left">
+      <i class="bi bi-exclamation-triangle-fill" style="flex-shrink:0"></i>
+      All jobs, reviews and data associated with this account will be permanently lost.
+    </div>
+    <input type="hidden" id="deleteUserId">
+    <div class="modal-actions" style="justify-content:center">
+      <button class="btn btn-delete" id="confirmDeleteBtn" onclick="confirmDelete()"><i class="bi bi-trash3-fill"></i> Yes, Delete Permanently</button>
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+    </div>
+    <div id="deleteAlert" style="display:none;margin-top:12px"></div>
+  </div>
+</div>
+
+<!-- ID DOCUMENT MODAL -->
 <div class="modal-bg" id="idModal">
   <div class="modal">
     <button class="modal-x" onclick="closeIdModal()"><i class="bi bi-x"></i></button>
     <div class="modal-title" id="idModalTitle">Review ID Document</div>
     <div class="modal-sub"  id="idModalSub">Worker identity verification</div>
-
     <div id="idModalAlert" style="display:none"></div>
-
-    <!-- Worker info chips -->
     <div class="id-chips-row" id="idChipsRow"></div>
-
-    <!-- Document viewer -->
-    <div id="idDocViewer" style="margin-bottom:16px">
-      <div class="empty" style="padding:28px"><i class="bi bi-file-earmark-x"></i><p>No document uploaded</p></div>
-    </div>
-
-    <!-- Reject reason — shown when admin clicks Reject -->
+    <div id="idDocViewer" style="margin-bottom:16px"><div class="empty" style="padding:28px"><i class="bi bi-file-earmark-x"></i><p>No document uploaded</p></div></div>
     <div class="reject-wrap" id="rejectWrap" style="display:none">
       <label class="reject-lbl"><i class="bi bi-exclamation-triangle-fill"></i> Rejection Reason <span style="font-weight:400;opacity:.7">(required)</span></label>
       <input type="text" class="reject-input" id="rejectReason" placeholder="e.g. ID unclear, expired, wrong document type…">
     </div>
-
     <input type="hidden" id="idModalWid">
     <div class="modal-actions" id="idModalActions"></div>
   </div>
 </div>
 
 <script>
-// ── Save token from Google OAuth redirect ──────────────────
-(function () {
-  const p = new URLSearchParams(window.location.search);
-  const t = p.get('token'), u = p.get('user');
-  if (t && u) {
-    try {
-      localStorage.setItem('kc_token', t);
-      localStorage.setItem('kc_user', u);
-      window.history.replaceState({}, '', window.location.pathname);
-    } catch(e) {}
-  }
-})();
+// AUTH
+(function(){const p=new URLSearchParams(window.location.search);const t=p.get('token'),u=p.get('user');if(t&&u){try{localStorage.setItem('kc_token',t);localStorage.setItem('kc_user',u);window.history.replaceState({},'',window.location.pathname);}catch(e){}}})();
+const TOKEN=localStorage.getItem('kc_token');
+const ME=JSON.parse(localStorage.getItem('kc_user')||'{}');
+if(!TOKEN||ME.role!=='admin')location.href='login.html';
+document.getElementById('sbName').textContent=ME.name||'Admin';
+const H={'Content-Type':'application/json','Authorization':'Bearer '+TOKEN};
 
-// ── AUTH ──────────────────────────────────────────────────────────
-const TOKEN = localStorage.getItem('kc_token');
-const ME    = JSON.parse(localStorage.getItem('kc_user') || '{}');
-if (!TOKEN || ME.role !== 'admin') location.href = 'login.html';
-document.getElementById('sbName').textContent = ME.name || 'Admin';
-const H = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN };
+// MOBILE SIDEBAR
+const mobBtn=document.getElementById('mobMenuBtn');
+const sbOverlay=document.getElementById('sbOverlay');
+const sidebar=document.querySelector('.sidebar');
+mobBtn.addEventListener('click',()=>{mobBtn.classList.toggle('open');sidebar.classList.toggle('mobile-open');sbOverlay.classList.toggle('open');});
+sbOverlay.addEventListener('click',()=>{mobBtn.classList.remove('open');sidebar.classList.remove('mobile-open');sbOverlay.classList.remove('open');});
+document.querySelectorAll('.sb-link').forEach(el=>el.addEventListener('click',()=>{if(window.innerWidth<=900){mobBtn.classList.remove('open');sidebar.classList.remove('mobile-open');sbOverlay.classList.remove('open');}}));
 
-// ── HELPERS ───────────────────────────────────────────────────────
-const ID_LABELS = { aadhaar:'Aadhaar Card', pan:'PAN Card', voter:'Voter ID', driving:'Driving Licence', passport:'Passport', other:'Govt ID' };
-const ID_ICONS  = { aadhaar:'bi-credit-card-2-front', pan:'bi-credit-card', voter:'bi-person-badge', driving:'bi-car-front', passport:'bi-book', other:'bi-file-earmark-person' };
+// HELPERS
+const ID_LABELS={aadhaar:'Aadhaar Card',pan:'PAN Card',voter:'Voter ID',driving:'Driving Licence',passport:'Passport',other:'Govt ID'};
+const ID_ICONS={aadhaar:'bi-credit-card-2-front',pan:'bi-credit-card',voter:'bi-person-badge',driving:'bi-car-front',passport:'bi-book',other:'bi-file-earmark-person'};
+function statusBadge(s){const m={pending:'b-pending',accepted:'b-accepted',in_progress:'b-progress',completed:'b-completed',cancelled:'b-cancelled',paid:'b-paid'};return `<span class="badge ${m[s]||'b-pending'}">${s.replace('_',' ')}</span>`;}
+function idBadge(s){const m={pending:'b-id-pending',approved:'b-id-approved',rejected:'b-id-rejected',none:'b-id-none'};const lbl={pending:'⏳ Pending',approved:'✅ Approved',rejected:'❌ Rejected',none:'— None'};return `<span class="badge ${m[s]||'b-id-none'}">${lbl[s]||s}</span>`;}
 
-function statusBadge(s) {
-  const m = { pending:'b-pending', accepted:'b-accepted', in_progress:'b-progress', completed:'b-completed', cancelled:'b-cancelled', paid:'b-paid' };
-  return `<span class="badge ${m[s]||'b-pending'}">${s.replace('_',' ')}</span>`;
-}
-function idBadge(s) {
-  const m    = { pending:'b-id-pending', approved:'b-id-approved', rejected:'b-id-rejected', none:'b-id-none' };
-  const lbl  = { pending:'⏳ Pending',  approved:'✅ Approved',    rejected:'❌ Rejected',    none:'— None' };
-  return `<span class="badge ${m[s]||'b-id-none'}">${lbl[s]||s}</span>`;
-}
+// TOAST
+function toast(msg,dur=3500){const w=document.getElementById('toastWrap');const t=document.createElement('div');t.className='toast';t.textContent=msg;w.appendChild(t);setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),300);},dur);}
 
-// ── TOAST ─────────────────────────────────────────────────────────
-function toast(msg, dur = 3500) {
-  const w = document.getElementById('toastWrap');
-  const t = document.createElement('div'); t.className = 'toast';
-  t.textContent = msg; w.appendChild(t);
-  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 300); }, dur);
+// TABS
+const SECS=['dashboard','users','workers','jobs','verifications','revenue'];
+function show(s,el){
+  SECS.forEach(x=>document.getElementById('sec-'+x).style.display=x===s?'':'none');
+  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('on'));
+  if(el)el.classList.add('on');
+  document.getElementById('pageTitle').textContent={dashboard:'Dashboard',users:'Users',workers:'Workers',jobs:'Jobs',verifications:'ID Verifications',revenue:'Revenue'}[s]||s;
+  if(s==='users')loadUsers();if(s==='workers')loadWorkers();if(s==='jobs')loadAllJobs('');if(s==='verifications')loadVerifications();if(s==='revenue')loadRevenue();
 }
 
-// ── TABS ──────────────────────────────────────────────────────────
-const SECS = ['dashboard','users','workers','jobs','verifications','revenue'];
-function show(s, el) {
-  SECS.forEach(x => document.getElementById('sec-'+x).style.display = x===s ? '' : 'none');
-  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('on'));
-  if (el) el.classList.add('on');
-  document.getElementById('pageTitle').textContent =
-    { dashboard:'Dashboard', users:'Users', workers:'Workers', jobs:'Jobs', verifications:'ID Verifications', revenue:'Revenue' }[s] || s;
-  if (s==='users')         loadUsers();
-  if (s==='workers')       loadWorkers();
-  if (s==='jobs')          loadAllJobs('');
-  if (s==='verifications') loadVerifications();
-  if (s==='revenue')       loadRevenue();
+// STATS
+async function loadStats(){
+  try{const d=await(await fetch('/api/admin/dashboard',{headers:H})).json();
+  if(d.success&&d.stats){const s=d.stats;
+    document.getElementById('s-cust').textContent=s.totalCustomers||0;
+    document.getElementById('s-work').textContent=s.totalWorkers||0;
+    document.getElementById('s-jobs').textContent=s.totalJobs||0;
+    document.getElementById('s-rev').textContent='₹'+(s.totalRevenue||0).toLocaleString('en-IN');
+    document.getElementById('q-pend').textContent=s.pendingJobs||0;
+    document.getElementById('q-unveri').textContent=s.pendingVerifications||0;
+    document.getElementById('pvc').textContent=s.pendingVerifications||'0';
+    const cnt=s.pendingVerifications||0;const sb=document.getElementById('verfBadge');sb.textContent=cnt;sb.style.display=cnt>0?'flex':'none';
+  }}catch(e){}
 }
 
-// ── STATS ─────────────────────────────────────────────────────────
-async function loadStats() {
-  try {
-    const d = await (await fetch('/api/admin/dashboard', { headers: H })).json();
-    if (d.success && d.stats) {
-      const s = d.stats;
-      document.getElementById('s-cust').textContent = s.totalCustomers  || 0;
-      document.getElementById('s-work').textContent = s.totalWorkers    || 0;
-      document.getElementById('s-jobs').textContent = s.totalJobs       || 0;
-      document.getElementById('s-rev').textContent  = '₹' + (s.totalRevenue||0).toLocaleString('en-IN');
-      document.getElementById('q-pend').textContent   = s.pendingJobs          || 0;
-      document.getElementById('q-unveri').textContent = s.pendingVerifications || 0;
-      document.getElementById('pvc').textContent      = s.pendingVerifications || '0';
-      const cnt = s.pendingVerifications || 0;
-      const sb  = document.getElementById('verfBadge');
-      sb.textContent = cnt; sb.style.display = cnt > 0 ? 'flex' : 'none';
-    }
-  } catch(e) {}
+// PENDING VERIFICATIONS WIDGET
+async function loadPendingVer(){
+  try{const d=await(await fetch('/api/admin/pending-verifications',{headers:H})).json();
+  const tb=document.getElementById('pendVerTb');const ws=d.workers||[];
+  if(!ws.length){tb.innerHTML=`<tr><td colspan="4"><div class="empty" style="padding:24px"><i class="bi bi-check2-circle" style="font-size:24px;opacity:.25;display:block;margin-bottom:8px"></i><p>No pending verifications</p></div></td></tr>`;return;}
+  tb.innerHTML=ws.slice(0,6).map(u=>`<tr><td><span class="td-name">${u.name}</span><small style="color:var(--ink-30)">${u.email}</small></td><td>${u.skill||'—'}</td><td><span class="vc-chip"><i class="bi ${ID_ICONS[u.idType]||'bi-file-earmark'}"></i> ${ID_LABELS[u.idType]||'Unknown'}</span></td><td><button class="btn btn-saffron btn-sm" onclick="openIdModal('${u._id||u.id}')"><i class="bi bi-eye"></i> Review</button></td></tr>`).join('');}catch(e){}
 }
 
-// ── PENDING VER WIDGET ────────────────────────────────────────────
-async function loadPendingVer() {
-  try {
-    const d  = await (await fetch('/api/admin/pending-verifications', { headers: H })).json();
-    const tb = document.getElementById('pendVerTb');
-    const ws = d.workers || [];
-    if (!ws.length) {
-      tb.innerHTML = `<tr><td colspan="4">
-        <div class="empty" style="padding:28px">
-          <i class="bi bi-check2-circle" style="font-size:26px;opacity:.25;display:block;margin-bottom:8px"></i>
-          <p>No pending ID verifications</p>
-        </div></td></tr>`;
-      return;
-    }
-    tb.innerHTML = ws.slice(0, 6).map(u => `
-      <tr>
-        <td><span class="td-name">${u.name}</span><small style="color:var(--ink-30)">${u.email}</small></td>
-        <td>${u.skill || '—'}</td>
-        <td><span class="vc-chip"><i class="bi ${ID_ICONS[u.idType]||'bi-file-earmark'}"></i> ${ID_LABELS[u.idType]||'Unknown'}</span></td>
-        <td><button class="btn btn-saffron btn-sm" onclick="openIdModal('${u._id||u.id}')"><i class="bi bi-eye"></i> Review</button></td>
-      </tr>`).join('');
-  } catch(e) {}
+// RECENT JOBS
+async function loadRecentJobs(){
+  try{const d=await(await fetch('/api/admin/jobs?limit=8',{headers:H})).json();
+  const tb=document.getElementById('recentJTb');
+  if(!d.jobs?.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty" style="padding:24px"><p>No jobs yet</p></div></td></tr>`;return;}
+  tb.innerHTML=d.jobs.map(j=>`<tr><td><span class="td-name">${j.title||j.skill}</span></td><td>${j.customerId?.name||'—'}</td><td>${j.workerId?.name||'—'}</td><td>₹${j.price}</td><td style="font-weight:700;color:var(--green)">₹${j.commission||0}</td><td>${statusBadge(j.status)}</td></tr>`).join('');}catch(e){}
 }
 
-// ── RECENT JOBS ───────────────────────────────────────────────────
-async function loadRecentJobs() {
-  try {
-    const d  = await (await fetch('/api/admin/jobs?limit=8', { headers: H })).json();
-    const tb = document.getElementById('recentJTb');
-    if (!d.jobs?.length) { tb.innerHTML = `<tr><td colspan="6"><div class="empty" style="padding:28px"><p>No jobs yet</p></div></td></tr>`; return; }
-    tb.innerHTML = d.jobs.map(j => `<tr>
-      <td><span class="td-name">${j.title||j.skill}</span></td>
-      <td>${j.customerId?.name||'—'}</td>
-      <td>${j.workerId?.name||'—'}</td>
-      <td>₹${j.price}</td>
-      <td style="font-weight:700;color:var(--green)">₹${j.commission||0}</td>
-      <td>${statusBadge(j.status)}</td>
-    </tr>`).join('');
-  } catch(e) {}
+// USERS with DELETE button
+async function loadUsers(){
+  const search=document.getElementById('uSearch').value;
+  const role=document.getElementById('uRole').value;
+  let url='/api/admin/users?';if(role)url+=`role=${role}&`;if(search)url+=`search=${encodeURIComponent(search)}`;
+  try{const d=await(await fetch(url,{headers:H})).json();
+  const tb=document.getElementById('usersTb');
+  if(!d.users?.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="bi bi-people"></i><h3>No users found</h3></div></td></tr>`;return;}
+  tb.innerHTML=d.users.map(u=>{
+    const active=u.isActive!==false;
+    const isAdmin=u.role==='admin';
+    const uid=u._id||u.id;
+    const eName=(u.name||'').replace(/'/g,"\\'");
+    return `<tr>
+      <td><span class="td-name">${u.name}</span></td>
+      <td style="font-size:12.5px">${u.email}</td>
+      <td><span class="badge ${u.role==='admin'?'b-paid':u.role==='worker'?'b-accepted':'b-pending'}">${u.role}</span></td>
+      <td>${u.location||'—'}</td>
+      <td><span class="badge ${active?'b-completed':'b-cancelled'}">${active?'Active':'Inactive'}</span></td>
+      <td><div class="td-actions">
+        ${!isAdmin?`<button class="btn btn-sm ${active?'btn-danger':'btn-teal'}" onclick="toggleU('${uid}',${!active})">${active?'<i class="bi bi-slash-circle"></i> Deactivate':'<i class="bi bi-check-circle"></i> Activate'}</button>`:''}
+        ${!isAdmin?`<button class="btn btn-delete btn-sm" onclick="openDeleteModal('${uid}','${eName}')"><i class="bi bi-trash3-fill"></i> Delete</button>`:'<span style="font-size:12px;color:var(--ink-30);padding:4px 6px">Protected</span>'}
+      </div></td>
+    </tr>`;
+  }).join('');}catch(e){}
 }
 
-// ── USERS ─────────────────────────────────────────────────────────
-async function loadUsers() {
-  const search = document.getElementById('uSearch').value;
-  const role   = document.getElementById('uRole').value;
-  let url = '/api/admin/users?';
-  if (role)   url += `role=${role}&`;
-  if (search) url += `search=${encodeURIComponent(search)}`;
-  try {
-    const d  = await (await fetch(url, { headers: H })).json();
-    const tb = document.getElementById('usersTb');
-    if (!d.users?.length) { tb.innerHTML = `<tr><td colspan="6"><div class="empty"><i class="bi bi-people"></i><h3>No users found</h3></div></td></tr>`; return; }
-    tb.innerHTML = d.users.map(u => {
-      const active = u.isActive !== false;
-      return `<tr>
-        <td><span class="td-name">${u.name}</span></td>
-        <td style="font-size:12.5px">${u.email}</td>
-        <td><span class="badge ${u.role==='admin'?'b-paid':u.role==='worker'?'b-accepted':'b-pending'}">${u.role}</span></td>
-        <td>${u.location||'—'}</td>
-        <td><span class="badge ${active?'b-completed':'b-cancelled'}">${active?'Active':'Inactive'}</span></td>
-        <td><button class="btn btn-sm ${active?'btn-danger':'btn-teal'}" onclick="toggleU('${u._id||u.id}',${!active})">${active?'Deactivate':'Activate'}</button></td>
-      </tr>`;
-    }).join('');
-  } catch(e) {}
-}
-async function toggleU(id, activate) {
-  try {
-    const r = await fetch('/api/admin/user-status', { method:'PUT', headers:H, body:JSON.stringify({ user_id:id, is_active:activate }) });
-    if ((await r.json()).success) { loadUsers(); toast(activate ? '✅ User activated' : '❌ User deactivated'); }
-  } catch(e) {}
+async function toggleU(id,activate){
+  try{const r=await fetch('/api/admin/user-status',{method:'PUT',headers:H,body:JSON.stringify({user_id:id,is_active:activate})});
+  if((await r.json()).success){loadUsers();toast(activate?'✅ User activated':'⛔ User deactivated');}}catch(e){}
 }
 
-// ── WORKERS ───────────────────────────────────────────────────────
-async function loadWorkers() {
-  try {
-    const d  = await (await fetch('/api/admin/users?role=worker', { headers: H })).json();
-    const tb = document.getElementById('workersTb');
-    if (!d.users?.length) { tb.innerHTML = `<tr><td colspan="8"><div class="empty"><i class="bi bi-person-badge"></i><h3>No workers yet</h3></div></td></tr>`; return; }
-    tb.innerHTML = d.users.map(u => {
-      const v        = u.verified;
-      const idStatus = u.idStatus || 'none';
-      let actions = '';
-      if (idStatus === 'pending')    actions = `<button class="btn btn-saffron btn-sm" onclick="openIdModal('${u._id||u.id}')"><i class="bi bi-eye"></i> Review ID</button>`;
-      else if (!v)                   actions = `<button class="btn btn-teal btn-sm" onclick="quickVerify('${u._id||u.id}')"><i class="bi bi-patch-check"></i> Verify</button>`;
-      else                           actions = `—`;
-      return `<tr>
-        <td><span class="td-name">${u.name}</span><small style="color:var(--ink-30)">${u.email}</small></td>
-        <td>${u.skill||'—'}</td>
-        <td>${u.location||'—'}</td>
-        <td><span style="color:var(--gold)">${'★'.repeat(Math.floor(u.rating||0))}</span> ${(u.rating||0).toFixed(1)}</td>
-        <td>${u.totalJobs||0}</td>
-        <td>${idBadge(idStatus)}</td>
-        <td>${v ? '<span class="badge b-completed">✅ Verified</span>' : '<span class="badge b-pending">⏳ Pending</span>'}</td>
-        <td>${actions}</td>
-      </tr>`;
-    }).join('');
-  } catch(e) {}
+// DELETE USER MODAL
+function openDeleteModal(userId,userName){
+  document.getElementById('deleteUserId').value=userId;
+  document.getElementById('deleteUserName').textContent=userName;
+  document.getElementById('deleteAlert').style.display='none';
+  document.getElementById('confirmDeleteBtn').disabled=false;
+  document.getElementById('confirmDeleteBtn').innerHTML='<i class="bi bi-trash3-fill"></i> Yes, Delete Permanently';
+  document.getElementById('deleteModal').classList.add('open');
+}
+function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');}
+document.getElementById('deleteModal').addEventListener('click',e=>{if(e.target===document.getElementById('deleteModal'))closeDeleteModal();});
+
+async function confirmDelete(){
+  const uid=document.getElementById('deleteUserId').value;
+  const btn=document.getElementById('confirmDeleteBtn');
+  btn.disabled=true;
+  btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Deleting…';
+  try{
+    const r=await fetch(`/api/admin/user/${uid}`,{method:'DELETE',headers:H});
+    const d=await r.json();
+    if(d.success){toast('🗑️ User permanently deleted');closeDeleteModal();loadUsers();loadStats();}
+    else{const a=document.getElementById('deleteAlert');a.style.display='flex';a.className='alert ae';a.innerHTML=`<i class="bi bi-exclamation-circle"></i> ${d.message||'Delete failed'}`;btn.disabled=false;btn.innerHTML='<i class="bi bi-trash3-fill"></i> Yes, Delete Permanently';}
+  }catch(e){const a=document.getElementById('deleteAlert');a.style.display='flex';a.className='alert ae';a.innerHTML='<i class="bi bi-exclamation-circle"></i> Network error. Is the server running?';btn.disabled=false;btn.innerHTML='<i class="bi bi-trash3-fill"></i> Yes, Delete Permanently';}
 }
 
-// ── JOBS ──────────────────────────────────────────────────────────
-async function loadAllJobs(status) {
-  const url = status ? `/api/admin/jobs?status=${status}` : `/api/admin/jobs`;
-  try {
-    const d  = await (await fetch(url, { headers: H })).json();
-    const tb = document.getElementById('allJobsTb');
-    if (!d.jobs?.length) { tb.innerHTML = `<tr><td colspan="7"><div class="empty"><p>No jobs</p></div></td></tr>`; return; }
-    tb.innerHTML = d.jobs.map(j => {
-      const dt = j.createdAt ? new Date(j.createdAt).toLocaleDateString('en-IN') : '—';
-      return `<tr>
-        <td><span class="td-name">${j.title||j.skill}</span></td>
-        <td>${j.customerId?.name||'—'}</td>
-        <td>${j.workerId?.name||'—'}</td>
-        <td>₹${j.price}</td>
-        <td style="font-weight:700;color:var(--green)">₹${j.commission||0}</td>
-        <td>${statusBadge(j.status)}</td>
-        <td style="color:var(--ink-30)">${dt}</td>
-      </tr>`;
-    }).join('');
-  } catch(e) {}
+// WORKERS
+async function loadWorkers(){
+  try{const d=await(await fetch('/api/admin/users?role=worker',{headers:H})).json();
+  const tb=document.getElementById('workersTb');
+  if(!d.users?.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><i class="bi bi-person-badge"></i><h3>No workers yet</h3></div></td></tr>`;return;}
+  tb.innerHTML=d.users.map(u=>{
+    const v=u.verified;const idStatus=u.idStatus||'none';
+    let actions='';
+    if(idStatus==='pending')actions=`<button class="btn btn-saffron btn-sm" onclick="openIdModal('${u._id||u.id}')"><i class="bi bi-eye"></i> Review ID</button>`;
+    else if(!v)actions=`<button class="btn btn-teal btn-sm" onclick="quickVerify('${u._id||u.id}')"><i class="bi bi-patch-check"></i> Verify</button>`;
+    else actions='—';
+    return `<tr><td><span class="td-name">${u.name}</span><small style="color:var(--ink-30)">${u.email}</small></td><td>${u.skill||'—'}</td><td>${u.location||'—'}</td><td><span style="color:var(--gold)">${'★'.repeat(Math.floor(u.rating||0))}</span> ${(u.rating||0).toFixed(1)}</td><td>${u.totalJobs||0}</td><td>${idBadge(idStatus)}</td><td>${v?'<span class="badge b-completed">✅ Verified</span>':'<span class="badge b-pending">⏳ Pending</span>'}</td><td>${actions}</td></tr>`;
+  }).join('');}catch(e){}
 }
 
-// ── REVENUE ───────────────────────────────────────────────────────
-async function loadRevenue() {
-  try {
-    const d  = await (await fetch('/api/admin/revenue', { headers: H })).json();
-    document.getElementById('r-total').textContent = '₹' + (d.totalRevenue||0).toLocaleString('en-IN');
-    document.getElementById('r-month').textContent = '₹' + (d.monthlyRevenue||0).toLocaleString('en-IN');
-    const tb = document.getElementById('revTb');
-    if (d.revenueChart?.length) {
-      tb.innerHTML = d.revenueChart.map(r => `<tr>
-        <td style="font-weight:600">${r._id||r.month}</td>
-        <td>${r.transactions||r.count||0}</td>
-        <td style="font-weight:700;color:var(--green)">₹${(r.revenue||0).toLocaleString('en-IN')}</td>
-      </tr>`).join('');
-    } else tb.innerHTML = `<tr><td colspan="3"><div class="empty"><p>No revenue data yet</p></div></td></tr>`;
-  } catch(e) {}
+// JOBS
+async function loadAllJobs(status){
+  const url=status?`/api/admin/jobs?status=${status}`:'/api/admin/jobs';
+  try{const d=await(await fetch(url,{headers:H})).json();
+  const tb=document.getElementById('allJobsTb');
+  if(!d.jobs?.length){tb.innerHTML=`<tr><td colspan="7"><div class="empty"><p>No jobs</p></div></td></tr>`;return;}
+  tb.innerHTML=d.jobs.map(j=>{const dt=j.createdAt?new Date(j.createdAt).toLocaleDateString('en-IN'):'—';
+    return `<tr><td><span class="td-name">${j.title||j.skill}</span></td><td>${j.customerId?.name||'—'}</td><td>${j.workerId?.name||'—'}</td><td>₹${j.price}</td><td style="font-weight:700;color:var(--green)">₹${j.commission||0}</td><td>${statusBadge(j.status)}</td><td style="color:var(--ink-30)">${dt}</td></tr>`;
+  }).join('');}catch(e){}
 }
 
-// ── ID VERIFICATIONS TAB ──────────────────────────────────────────
-let verfFilter = 'pending';
-let allWorkers = [];
-
-async function loadVerifications() {
-  const el = document.getElementById('verfCards');
-  el.innerHTML = '<div class="loading"><i class="bi bi-arrow-repeat"></i></div>';
-  try {
-    const d = await (await fetch('/api/admin/users?role=worker', { headers: H })).json();
-    allWorkers = d.users || [];
-    // Stats
-    const c = { pending:0, approved:0, rejected:0, none:0 };
-    allWorkers.forEach(w => { const s = w.idStatus||'none'; c[s] = (c[s]||0)+1; });
-    document.getElementById('vs-pending').textContent  = c.pending;
-    document.getElementById('vs-approved').textContent = c.approved;
-    document.getElementById('vs-rejected').textContent = c.rejected;
-    document.getElementById('vs-none').textContent     = c.none;
-    renderVerfCards();
-  } catch(e) {
-    el.innerHTML = '<div class="empty"><i class="bi bi-wifi-off"></i><h3>Error loading</h3><p>Check server connection</p></div>';
-  }
+// REVENUE
+async function loadRevenue(){
+  try{const d=await(await fetch('/api/admin/revenue',{headers:H})).json();
+  document.getElementById('r-total').textContent='₹'+(d.totalRevenue||0).toLocaleString('en-IN');
+  document.getElementById('r-month').textContent='₹'+(d.monthlyRevenue||0).toLocaleString('en-IN');
+  const tb=document.getElementById('revTb');
+  if(d.revenueChart?.length)tb.innerHTML=d.revenueChart.map(r=>`<tr><td style="font-weight:600">${r._id||r.month}</td><td>${r.transactions||r.count||0}</td><td style="font-weight:700;color:var(--green)">₹${(r.revenue||0).toLocaleString('en-IN')}</td></tr>`).join('');
+  else tb.innerHTML=`<tr><td colspan="3"><div class="empty"><p>No revenue data yet</p></div></td></tr>`;}catch(e){}
 }
 
-function filterVerf(filter, btn) {
-  verfFilter = filter;
-  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  renderVerfCards();
+// ID VERIFICATIONS
+let verfFilter='pending';let allWorkers=[];
+async function loadVerifications(){
+  const el=document.getElementById('verfCards');el.innerHTML='<div class="loading"><i class="bi bi-arrow-repeat"></i></div>';
+  try{const d=await(await fetch('/api/admin/users?role=worker',{headers:H})).json();
+  allWorkers=d.users||[];
+  const c={pending:0,approved:0,rejected:0,none:0};
+  allWorkers.forEach(w=>{const s=w.idStatus||'none';c[s]=(c[s]||0)+1;});
+  document.getElementById('vs-pending').textContent=c.pending;document.getElementById('vs-approved').textContent=c.approved;
+  document.getElementById('vs-rejected').textContent=c.rejected;document.getElementById('vs-none').textContent=c.none;
+  renderVerfCards();}catch(e){el.innerHTML='<div class="empty"><i class="bi bi-wifi-off"></i><h3>Error loading</h3><p>Check server connection</p></div>';}
+}
+function filterVerf(filter,btn){verfFilter=filter;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderVerfCards();}
+function renderVerfCards(){
+  const el=document.getElementById('verfCards');
+  const ws=verfFilter==='all'?allWorkers:allWorkers.filter(w=>(w.idStatus||'none')===verfFilter);
+  if(!ws.length){el.innerHTML=`<div class="panel"><div class="empty"><i class="bi bi-shield-check"></i><h3>No workers in this category</h3><p>Try a different filter</p></div></div>`;return;}
+  el.innerHTML=`<div class="verf-grid">${ws.map(verfCard).join('')}</div>`;
+}
+function verfCard(w){
+  const idStatus=w.idStatus||'none';const isVerified=w.verified;const hasId=!!w.idType;
+  const icoClass=ID_ICONS[w.idType]||'bi-file-earmark';const idLabel=ID_LABELS[w.idType]||null;
+  let actions='';
+  if(idStatus==='pending')actions=`<button class="btn btn-saffron btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> Review ID</button>`;
+  else if(idStatus==='approved'&&!isVerified)actions=`<button class="btn btn-green btn-sm" onclick="quickVerify('${w._id||w.id}')"><i class="bi bi-patch-check"></i> Verify Worker</button><button class="btn btn-outline btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> View ID</button>`;
+  else if(idStatus==='approved'&&isVerified)actions=`<span style="font-size:12px;color:var(--green);font-weight:700"><i class="bi bi-patch-check-fill"></i> Fully Verified</span><button class="btn btn-outline btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> View</button>`;
+  else if(idStatus==='rejected')actions=`<button class="btn btn-saffron btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> Re-review</button>`;
+  else actions=`<span style="font-size:12px;color:var(--ink-30)">No ID uploaded yet</span>`;
+  return `<div class="verf-card"><div class="vc-top"><div class="vc-av">${hasId?'🪪':'👷'}</div><div class="vc-badges">${idBadge(idStatus)}${isVerified?'<span class="badge b-completed" style="font-size:10px;margin-top:2px">✅ Verified</span>':''}</div></div><div class="vc-name">${w.name}</div><div class="vc-skill">${w.skill||'—'} · ${w.location||'—'}</div><div class="vc-meta"><span class="vc-chip"><i class="bi bi-envelope"></i> ${w.email}</span>${idLabel?`<span class="vc-chip"><i class="bi ${icoClass}"></i> ${idLabel}</span>`:''}</div>${w.idRejectedReason?`<div class="vc-reject-note"><i class="bi bi-exclamation-circle-fill" style="flex-shrink:0;margin-top:1px"></i>${w.idRejectedReason}</div>`:''}<div class="vc-actions">${actions}</div></div>`;
 }
 
-function renderVerfCards() {
-  const el = document.getElementById('verfCards');
-  const ws = verfFilter === 'all' ? allWorkers : allWorkers.filter(w => (w.idStatus||'none') === verfFilter);
-  if (!ws.length) {
-    el.innerHTML = `<div class="panel"><div class="empty">
-      <i class="bi bi-shield-check"></i>
-      <h3>No workers in this category</h3>
-      <p>Try a different filter</p>
-    </div></div>`;
-    return;
-  }
-  el.innerHTML = `<div class="verf-grid">${ws.map(verfCard).join('')}</div>`;
-}
-
-function verfCard(w) {
-  const idStatus   = w.idStatus || 'none';
-  const isVerified = w.verified;
-  const hasId      = !!w.idType;
-  const icoClass   = ID_ICONS[w.idType] || 'bi-file-earmark';
-  const idLabel    = ID_LABELS[w.idType] || null;
-
-  let actions = '';
-  if (idStatus === 'pending') {
-    actions = `<button class="btn btn-saffron btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> Review ID</button>`;
-  } else if (idStatus === 'approved' && !isVerified) {
-    actions = `<button class="btn btn-green btn-sm" onclick="quickVerify('${w._id||w.id}')"><i class="bi bi-patch-check"></i> Verify Worker</button>
-               <button class="btn btn-outline btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> View ID</button>`;
-  } else if (idStatus === 'approved' && isVerified) {
-    actions = `<span style="font-size:12px;color:var(--green);font-weight:700"><i class="bi bi-patch-check-fill"></i> Fully Verified</span>
-               <button class="btn btn-outline btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> View ID</button>`;
-  } else if (idStatus === 'rejected') {
-    actions = `<button class="btn btn-saffron btn-sm" onclick="openIdModal('${w._id||w.id}')"><i class="bi bi-eye"></i> Re-review</button>`;
-  } else {
-    actions = `<span style="font-size:12px;color:var(--ink-30)">No ID uploaded yet</span>`;
-  }
-
-  return `<div class="verf-card">
-    <div class="vc-top">
-      <div class="vc-av">${hasId ? '🪪' : '👷'}</div>
-      <div class="vc-badges">
-        ${idBadge(idStatus)}
-        ${isVerified ? '<span class="badge b-completed" style="font-size:10px;margin-top:2px">✅ Verified</span>' : ''}
-      </div>
-    </div>
-    <div class="vc-name">${w.name}</div>
-    <div class="vc-skill">${w.skill||'—'} · ${w.location||'—'}</div>
-    <div class="vc-meta">
-      <span class="vc-chip"><i class="bi bi-envelope"></i> ${w.email}</span>
-      ${idLabel ? `<span class="vc-chip"><i class="bi ${icoClass}"></i> ${idLabel}</span>` : ''}
-    </div>
-    ${w.idRejectedReason ? `<div class="vc-reject-note"><i class="bi bi-exclamation-circle-fill" style="flex-shrink:0;margin-top:1px"></i>${w.idRejectedReason}</div>` : ''}
-    <div class="vc-actions">${actions}</div>
-  </div>`;
-}
-
-// ── ID MODAL ──────────────────────────────────────────────────────
-async function openIdModal(workerId) {
-  // Reset modal
+// ID MODAL
+async function openIdModal(workerId){
   document.getElementById('idModal').classList.add('open');
-  document.getElementById('idModalWid').value         = workerId;
-  document.getElementById('idDocViewer').innerHTML    = '<div class="loading"><i class="bi bi-arrow-repeat"></i></div>';
-  document.getElementById('idChipsRow').innerHTML     = '';
-  document.getElementById('idModalActions').innerHTML = '';
-  document.getElementById('idModalAlert').style.display = 'none';
-  document.getElementById('rejectWrap').style.display   = 'none';
-  document.getElementById('rejectReason').value         = '';
-
-  try {
-    const d = await (await fetch(`/api/admin/worker-document/${workerId}`, { headers: H })).json();
-    if (!d.success) { showIdAlert('error', 'Could not load worker document.'); return; }
-    const w = d.worker;
-    document.getElementById('idModalTitle').textContent = `Review ID — ${w.name}`;
-    document.getElementById('idModalSub').textContent   = `${ID_LABELS[w.idType]||'Government ID'} submitted for verification`;
-
-    // Info chips
-    document.getElementById('idChipsRow').innerHTML = `
-      <div class="id-chip"><i class="bi ${ID_ICONS[w.idType]||'bi-file-earmark'}"></i> ${ID_LABELS[w.idType]||'Unknown ID'}</div>
-      <div class="id-chip">${idBadge(w.idStatus||'none')}</div>
-      ${w.idRejectedReason ? `<div class="id-chip" style="color:var(--rose);border-color:rgba(220,38,38,.2);background:var(--rose-light)"><i class="bi bi-exclamation-circle"></i> ${w.idRejectedReason}</div>` : ''}`;
-
-    // Document viewer
-    const viewer = document.getElementById('idDocViewer');
-    if (w.idDocument) {
-      if (w.idDocument.startsWith('data:application/pdf')) {
-        viewer.innerHTML = `<iframe class="id-doc-pdf" src="${w.idDocument}" title="ID Document"></iframe>`;
-      } else {
-        viewer.innerHTML = `<img class="id-doc-img" src="${w.idDocument}" alt="ID Document">`;
-      }
-    } else {
-      viewer.innerHTML = `<div class="empty" style="padding:28px"><i class="bi bi-file-earmark-x"></i><p>No document uploaded by worker</p></div>`;
-    }
-
-    // Action buttons
-    const acts   = document.getElementById('idModalActions');
-    const status = w.idStatus || 'none';
-    if (status === 'pending' || status === 'none') {
-      acts.innerHTML = `
-        <button class="btn btn-green" onclick="approveId('${workerId}')"><i class="bi bi-check-circle-fill"></i> Approve &amp; Verify</button>
-        <button class="btn btn-danger" onclick="showRejectInput()"><i class="bi bi-x-circle-fill"></i> Reject</button>
-        <button class="btn btn-outline" onclick="closeIdModal()">Cancel</button>`;
-    } else if (status === 'rejected') {
-      acts.innerHTML = `
-        <button class="btn btn-green" onclick="approveId('${workerId}')"><i class="bi bi-check-circle-fill"></i> Approve Anyway</button>
-        <button class="btn btn-outline" onclick="closeIdModal()">Close</button>`;
-    } else if (status === 'approved') {
-      acts.innerHTML = `
-        <button class="btn btn-green" onclick="quickVerify('${workerId}');closeIdModal()"><i class="bi bi-patch-check-fill"></i> Mark as Verified</button>
-        <button class="btn btn-danger" onclick="showRejectInput()"><i class="bi bi-x-circle-fill"></i> Revoke Approval</button>
-        <button class="btn btn-outline" onclick="closeIdModal()">Close</button>`;
-    }
-  } catch(e) {
-    showIdAlert('error', 'Network error. Is the server running?');
-  }
+  document.getElementById('idModalWid').value=workerId;
+  document.getElementById('idDocViewer').innerHTML='<div class="loading"><i class="bi bi-arrow-repeat"></i></div>';
+  document.getElementById('idChipsRow').innerHTML='';document.getElementById('idModalActions').innerHTML='';
+  document.getElementById('idModalAlert').style.display='none';document.getElementById('rejectWrap').style.display='none';document.getElementById('rejectReason').value='';
+  try{const d=await(await fetch(`/api/admin/worker-document/${workerId}`,{headers:H})).json();
+  if(!d.success){showIdAlert('error','Could not load worker document.');return;}
+  const w=d.worker;
+  document.getElementById('idModalTitle').textContent=`Review ID — ${w.name}`;
+  document.getElementById('idModalSub').textContent=`${ID_LABELS[w.idType]||'Government ID'} submitted for verification`;
+  document.getElementById('idChipsRow').innerHTML=`<div class="id-chip"><i class="bi ${ID_ICONS[w.idType]||'bi-file-earmark'}"></i> ${ID_LABELS[w.idType]||'Unknown ID'}</div><div class="id-chip">${idBadge(w.idStatus||'none')}</div>${w.idRejectedReason?`<div class="id-chip" style="color:var(--rose);border-color:rgba(220,38,38,.2);background:var(--rose-light)"><i class="bi bi-exclamation-circle"></i> ${w.idRejectedReason}</div>`:''}`;
+  const viewer=document.getElementById('idDocViewer');
+  if(w.idDocument){if(w.idDocument.startsWith('data:application/pdf')){viewer.innerHTML=`<iframe class="id-doc-pdf" src="${w.idDocument}" title="ID Document"></iframe>`;}else{viewer.innerHTML=`<img class="id-doc-img" src="${w.idDocument}" alt="ID Document">`;}}
+  else{viewer.innerHTML=`<div class="empty" style="padding:28px"><i class="bi bi-file-earmark-x"></i><p>No document uploaded</p></div>`;}
+  const acts=document.getElementById('idModalActions');const status=w.idStatus||'none';
+  if(status==='pending'||status==='none'){acts.innerHTML=`<button class="btn btn-green" onclick="approveId('${workerId}')"><i class="bi bi-check-circle-fill"></i> Approve &amp; Verify</button><button class="btn btn-danger" onclick="showRejectInput()"><i class="bi bi-x-circle-fill"></i> Reject</button><button class="btn btn-outline" onclick="closeIdModal()">Cancel</button>`;}
+  else if(status==='rejected'){acts.innerHTML=`<button class="btn btn-green" onclick="approveId('${workerId}')"><i class="bi bi-check-circle-fill"></i> Approve Anyway</button><button class="btn btn-outline" onclick="closeIdModal()">Close</button>`;}
+  else if(status==='approved'){acts.innerHTML=`<button class="btn btn-green" onclick="quickVerify('${workerId}');closeIdModal()"><i class="bi bi-patch-check-fill"></i> Mark as Verified</button><button class="btn btn-danger" onclick="showRejectInput()"><i class="bi bi-x-circle-fill"></i> Revoke Approval</button><button class="btn btn-outline" onclick="closeIdModal()">Close</button>`;}
+  }catch(e){showIdAlert('error','Network error. Is the server running?');}
 }
+function showRejectInput(){document.getElementById('rejectWrap').style.display='block';document.getElementById('idModalActions').innerHTML=`<button class="btn btn-danger" onclick="rejectId(document.getElementById('idModalWid').value)"><i class="bi bi-x-circle-fill"></i> Confirm Rejection</button><button class="btn btn-outline" onclick="closeIdModal()">Cancel</button>`;document.getElementById('rejectReason').focus();}
+async function approveId(workerId){try{const r=await fetch('/api/admin/verify-worker',{method:'POST',headers:H,body:JSON.stringify({worker_id:workerId})});const d=await r.json();if(d.success){toast('✅ Worker ID approved and verified!');closeIdModal();loadStats();loadPendingVer();if(document.getElementById('sec-verifications').style.display!=='none')loadVerifications();if(document.getElementById('sec-workers').style.display!=='none')loadWorkers();}else showIdAlert('error',d.message||'Approval failed');}catch(e){showIdAlert('error','Network error');}}
+async function rejectId(workerId){const reason=document.getElementById('rejectReason').value.trim();if(!reason){showIdAlert('error','Please enter a rejection reason');return;}try{const r=await fetch('/api/admin/reject-worker',{method:'POST',headers:H,body:JSON.stringify({worker_id:workerId,reason})});const d=await r.json();if(d.success){toast('❌ ID rejected.');closeIdModal();loadStats();loadPendingVer();if(document.getElementById('sec-verifications').style.display!=='none')loadVerifications();if(document.getElementById('sec-workers').style.display!=='none')loadWorkers();}else showIdAlert('error',d.message||'Rejection failed');}catch(e){showIdAlert('error','Network error');}}
+async function quickVerify(workerId){try{const r=await fetch('/api/admin/verify-worker',{method:'POST',headers:H,body:JSON.stringify({worker_id:workerId})});if((await r.json()).success){toast('✅ Worker verified!');loadStats();loadPendingVer();if(document.getElementById('sec-verifications').style.display!=='none')loadVerifications();if(document.getElementById('sec-workers').style.display!=='none')loadWorkers();}}catch(e){}}
+function closeIdModal(){document.getElementById('idModal').classList.remove('open');}
+document.getElementById('idModal').addEventListener('click',e=>{if(e.target===document.getElementById('idModal'))closeIdModal();});
+function showIdAlert(t,m){const a=document.getElementById('idModalAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
 
-function showRejectInput() {
-  document.getElementById('rejectWrap').style.display = 'block';
-  document.getElementById('idModalActions').innerHTML = `
-    <button class="btn btn-danger" onclick="rejectId(document.getElementById('idModalWid').value)">
-      <i class="bi bi-x-circle-fill"></i> Confirm Rejection
-    </button>
-    <button class="btn btn-outline" onclick="closeIdModal()">Cancel</button>`;
-  document.getElementById('rejectReason').focus();
-}
+function logout(){localStorage.clear();location.href='login.html';}
 
-async function approveId(workerId) {
-  try {
-    const r = await fetch('/api/admin/verify-worker', { method:'POST', headers:H, body:JSON.stringify({ worker_id: workerId }) });
-    const d = await r.json();
-    if (d.success) {
-      toast('✅ Worker ID approved and verified!');
-      closeIdModal();
-      loadStats(); loadPendingVer();
-      if (document.getElementById('sec-verifications').style.display !== 'none') loadVerifications();
-      if (document.getElementById('sec-workers').style.display !== 'none')       loadWorkers();
-    } else showIdAlert('error', d.message || 'Approval failed');
-  } catch(e) { showIdAlert('error', 'Network error'); }
-}
-
-async function rejectId(workerId) {
-  const reason = document.getElementById('rejectReason').value.trim();
-  if (!reason) { showIdAlert('error', 'Please enter a rejection reason'); return; }
-  try {
-    const r = await fetch('/api/admin/reject-worker', { method:'POST', headers:H, body:JSON.stringify({ worker_id: workerId, reason }) });
-    const d = await r.json();
-    if (d.success) {
-      toast('❌ ID rejected. Worker has been notified.');
-      closeIdModal();
-      loadStats(); loadPendingVer();
-      if (document.getElementById('sec-verifications').style.display !== 'none') loadVerifications();
-      if (document.getElementById('sec-workers').style.display !== 'none')       loadWorkers();
-    } else showIdAlert('error', d.message || 'Rejection failed');
-  } catch(e) { showIdAlert('error', 'Network error'); }
-}
-
-async function quickVerify(workerId) {
-  try {
-    const r = await fetch('/api/admin/verify-worker', { method:'POST', headers:H, body:JSON.stringify({ worker_id: workerId }) });
-    if ((await r.json()).success) {
-      toast('✅ Worker verified!');
-      loadStats(); loadPendingVer();
-      if (document.getElementById('sec-verifications').style.display !== 'none') loadVerifications();
-      if (document.getElementById('sec-workers').style.display !== 'none')       loadWorkers();
-    }
-  } catch(e) {}
-}
-
-function closeIdModal() { document.getElementById('idModal').classList.remove('open'); }
-document.getElementById('idModal').addEventListener('click', e => { if (e.target === document.getElementById('idModal')) closeIdModal(); });
-
-function showIdAlert(t, m) {
-  const a = document.getElementById('idModalAlert');
-  a.style.display = 'flex';
-  a.className = 'alert ' + (t==='error' ? 'ae' : 'as');
-  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;
-}
-
-function logout() { localStorage.clear(); location.href = 'login.html'; }
-
-// ── INIT ──────────────────────────────────────────────────────────
-loadStats();
-loadPendingVer();
-loadRecentJobs();
+// INIT
+loadStats();loadPendingVer();loadRecentJobs();
 </script>
 </body>
 </html>

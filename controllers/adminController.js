@@ -138,8 +138,11 @@ exports.toggleUserStatus = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(req.params.id, { isActive: false });
-    res.json({ success: true, message: "User deactivated successfully" });
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    if (user.role === "admin") return res.status(403).json({ success: false, message: "Cannot delete admin accounts" });
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ success: true, message: "User permanently deleted" });
   } catch (err) {
     res.status(500).json({ success: false, message: "Database error" });
   }
