@@ -140,6 +140,31 @@ const notificationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
+// ─── PENDING USER MODEL (temp store before email verification) ──
+const pendingUserSchema = new mongoose.Schema(
+  {
+    name:       { type: String, required: true },
+    email:      { type: String, required: true, unique: true, lowercase: true },
+    password:   { type: String, required: true },  // already hashed
+    phone:      { type: String },
+    role:       { type: String, default: "customer" },
+    skill:      { type: String },
+    location:   { type: String },
+    bio:        { type: String },
+    idType:     { type: String, default: null },
+    idDocument: { type: String, default: null },
+    verifyToken:   { type: String, required: true },
+    expiresAt:     { type: Date, required: true },   // TTL — auto-delete after 24h
+  },
+  { timestamps: true }
+);
+
+// Auto-delete document 24h after expiresAt
+pendingUserSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
+const PendingUser = mongoose.models.PendingUser || mongoose.model("PendingUser", pendingUserSchema);
+
 module.exports = {
   User:         mongoose.model("User",         userSchema),
   Job:          mongoose.model("Job",          jobSchema),

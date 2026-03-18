@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, PendingUser } = require("../models");
 const jwt      = require("jsonwebtoken");
 const passport = require("passport");
 const crypto   = require("crypto");
@@ -56,50 +56,62 @@ passport.use(
 // ─── Register ─────────────────────────────────────────────────
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, phone, role, skill, location, bio } = req.body;
+    const { name, email, password, phone, role, skill, location, bio, idType, idDocument } = req.body;
     if (!name || !email || !password)
       return res.status(400).json({ success: false, message: "Name, email and password required" });
 
+    // Block if already a verified real user
     const existing = await User.findOne({ email });
     if (existing)
       return res.status(409).json({ success: false, message: "Email already registered" });
 
-    const { idType, idDocument } = req.body;
-    const isWorker = role === "worker";
-    const userData = { name, email, password, phone, role: role || "customer", skill: skill || undefined, location, bio };
-    if (isWorker && idType && idDocument) {
-      userData.idType     = idType;
-      userData.idDocument = idDocument;
-      userData.idStatus   = "pending";
-    }
-    // Generate email verification token
+    // Remove any previous pending registration for this email
+    await PendingUser.deleteOne({ email });
+
+    // Hash password before storing in pending
+    const bcrypt = require("bcryptjs");
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Generate verification token
     const verifyToken = crypto.randomBytes(32).toString("hex");
-    userData.emailVerifyToken   = verifyToken;
-    userData.emailVerifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
-    userData.emailVerified      = false;
+    const expiresAt   = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
 
-    const user  = await User.create(userData);
-    const token = signToken(user._id, user.role);
+    // Save registration data temporarily — NOT in User collection yet
+    await PendingUser.create({
+      name, email,
+      password:   hashedPassword,
+      phone:      phone   || undefined,
+      role:       role    || "customer",
+      skill:      skill   || undefined,
+      location:   location || undefined,
+      bio:        bio     || undefined,
+      idType:     idType  || undefined,
+      idDocument: idDocument || undefined,
+      verifyToken,
+      expiresAt,
+    });
 
-    // Send verification email — log errors clearly but don't fail registration
+    // Send verification email
     try {
-      await mailer.sendVerificationEmail({
-        name:  user.name,
-        email: user.email,
-        token: verifyToken,
-      });
-      console.log("[Register] Verification email sent to:", user.email);
+      await mailer.sendVerificationEmail({ name, email, token: verifyToken });
+      console.log("[Register] Verification email sent to:", email);
     } catch (emailErr) {
-      console.error("[Register] ⚠️  Failed to send verification email:", emailErr.message);
-      // Registration still succeeds — user can resend from dashboard
+      // If email fails, clean up and tell the user
+      await PendingUser.deleteOne({ email });
+      console.error("[Register] Email failed:", emailErr.message);
+      return res.status(500).json({
+        success: false,
+        message: "Could not send verification email. Please check your email address and try again.",
+      });
     }
 
+    // Respond — NO token, NO user object yet (account not created)
     res.json({
-      success: true,
-      message: "Registered successfully! Please check your email to verify your account.",
-      token,
+      success:   true,
+      pending:   true,
       emailSent: true,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role, skill: user.skill, location: user.location, idStatus: user.idStatus || "none" },
+      message:   "Verification email sent! Please check your inbox and click the link to complete your registration.",
+      email,
     });
   } catch (err) {
     console.error(err);
@@ -298,22 +310,51 @@ exports.verifyEmail = async (req, res) => {
     const { token } = req.query;
     if (!token) return res.status(400).send(emailResult("error", "Invalid verification link."));
 
-    const user = await User.findOne({
-      emailVerifyToken:   token,
-      emailVerifyExpires: { $gt: new Date() },
+    // Check pending registration
+    const pending = await PendingUser.findOne({
+      verifyToken: token,
+      expiresAt:   { $gt: new Date() },
     });
 
-    if (!user) {
-      return res.status(400).send(emailResult("error", "Verification link is invalid or has expired."));
+    if (!pending) {
+      // Also check if already verified (user clicked link twice)
+      const alreadyDone = await User.findOne({ email: pending?.email });
+      if (alreadyDone?.emailVerified) return res.redirect("/login.html?verified=1");
+      return res.status(400).send(emailResult("error", "Verification link is invalid or has expired. Please register again."));
     }
 
-    user.emailVerified      = true;
-    user.emailVerifyToken   = null;
-    user.emailVerifyExpires = null;
-    await user.save();
+    // Check again that email not taken (race condition guard)
+    const existingUser = await User.findOne({ email: pending.email });
+    if (existingUser) {
+      await PendingUser.deleteOne({ _id: pending._id });
+      return res.redirect("/login.html?verified=1");
+    }
+
+    // ── Create the real User account now ──────────────────────
+    const newUser = await User.create({
+      name:         pending.name,
+      email:        pending.email,
+      password:     pending.password,   // already hashed
+      phone:        pending.phone,
+      role:         pending.role,
+      skill:        pending.skill,
+      location:     pending.location,
+      bio:          pending.bio,
+      idType:       pending.idType    || null,
+      idDocument:   pending.idDocument || null,
+      idStatus:     pending.idDocument ? "pending" : "none",
+      emailVerified: true,             // verified right now
+      verified:      false,            // admin verification (for workers)
+      isActive:      true,
+    });
+
+    // Clean up pending record
+    await PendingUser.deleteOne({ _id: pending._id });
+
+    console.log("[VerifyEmail] Account created for:", newUser.email, "role:", newUser.role);
 
     // Redirect to login with success flag
-    return res.redirect(`/login.html?verified=1`);
+    return res.redirect("/login.html?verified=1");
   } catch (err) {
     console.error(err);
     res.status(500).send(emailResult("error", "Server error. Please try again."));
@@ -323,17 +364,26 @@ exports.verifyEmail = async (req, res) => {
 // ─── Resend Verification Email ────────────────────────────────
 exports.resendVerification = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ success: false, message: "User not found" });
-    if (user.emailVerified) return res.json({ success: false, message: "Email already verified" });
+    // Look up by email from body (no auth token yet — account not created)
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ success: false, message: "Email required" });
 
+    const pending = await PendingUser.findOne({ email });
+    if (!pending) {
+      // May already be a verified user
+      const user = await User.findOne({ email });
+      if (user?.emailVerified) return res.json({ success: false, message: "Email already verified. Please log in." });
+      return res.status(404).json({ success: false, message: "No pending registration found. Please register again." });
+    }
+
+    // Generate fresh token and extend expiry
     const verifyToken = crypto.randomBytes(32).toString("hex");
-    user.emailVerifyToken   = verifyToken;
-    user.emailVerifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    await user.save();
+    pending.verifyToken = verifyToken;
+    pending.expiresAt   = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await pending.save();
 
-    await mailer.sendVerificationEmail({ name: user.name, email: user.email, token: verifyToken });
-    res.json({ success: true, message: "Verification email sent! Check your inbox." });
+    await mailer.sendVerificationEmail({ name: pending.name, email: pending.email, token: verifyToken });
+    res.json({ success: true, message: "Verification email resent! Check your inbox." });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Failed to send email" });

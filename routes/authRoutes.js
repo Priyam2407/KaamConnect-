@@ -30,7 +30,7 @@ router.get("/test-email", async (req, res) => {
 
 // ── Email Verification ────────────────────────────────────────
 router.get("/verify-email",            auth.verifyEmail);
-router.post("/resend-verification",    authenticateToken, auth.resendVerification);
+router.post("/resend-verification",    auth.resendVerification);
 
 // ── Google OAuth ──────────────────────────────────────────────
 // Pass ?role=worker or ?role=customer to set role on first signup
