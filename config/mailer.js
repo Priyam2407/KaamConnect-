@@ -1,33 +1,44 @@
 const nodemailer = require("nodemailer");
 
-// ─── Create transporter ──────────────────────────────────────
-// Uses Gmail with App Password (set GMAIL_USER + GMAIL_PASS in .env)
-// Or any SMTP: set SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
+// ─── Create & verify transporter ─────────────────────────────
 const createTransporter = () => {
   if (process.env.SMTP_HOST) {
     return nodemailer.createTransport({
       host:   process.env.SMTP_HOST,
       port:   parseInt(process.env.SMTP_PORT) || 587,
       secure: process.env.SMTP_PORT === "465",
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
     });
   }
-  // Default: Gmail
+  // Gmail — requires App Password (not your regular password)
+  // Enable at: myaccount.google.com/apppasswords
   return nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,                          // SSL on port 465 — most reliable
     auth: {
       user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASS,
+      pass: process.env.GMAIL_PASS,        // 16-char App Password (no spaces)
     },
+    tls: { rejectUnauthorized: false },    // prevents self-signed cert errors
   });
 };
 
 // ─── Send verification email ─────────────────────────────────
 exports.sendVerificationEmail = async ({ name, email, token }) => {
   const transporter = createTransporter();
+
+  // ── Verify connection before sending ──────────────────────
+  console.log("[Mailer] Verifying SMTP connection…");
+  console.log("[Mailer] GMAIL_USER:", process.env.GMAIL_USER ? "SET ✓" : "NOT SET ✗");
+  console.log("[Mailer] GMAIL_PASS:", process.env.GMAIL_PASS ? "SET ✓" : "NOT SET ✗");
+
+  await transporter.verify().catch(err => {
+    console.error("[Mailer] SMTP connection FAILED:", err.message);
+    throw new Error("SMTP connection failed: " + err.message);
+  });
+  console.log("[Mailer] SMTP connection OK ✓");
+
   const baseUrl = process.env.BASE_URL || "http://localhost:5000";
   const link = `${baseUrl}/api/auth/verify-email?token=${token}`;
 
@@ -48,14 +59,6 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
       <tr><td style="background:linear-gradient(135deg,#1A3C34,#24524A);padding:36px 40px;text-align:center">
         <table cellpadding="0" cellspacing="0" style="margin:0 auto">
           <tr>
-            <td>
-              <!-- India flag inline -->
-              <table cellpadding="0" cellspacing="0" style="border-radius:4px;overflow:hidden;border:2px solid rgba(255,255,255,.4);width:32px;height:22px;display:inline-block;vertical-align:middle">
-                <tr><td style="background:#FF9933;height:7px"></td></tr>
-                <tr><td style="background:#FFFFFF;height:7px;text-align:center;font-size:9px;line-height:7px;color:#000080">●</td></tr>
-                <tr><td style="background:#138808;height:7px"></td></tr>
-              </table>
-            </td>
             <td style="padding:0 10px">
               <div style="width:36px;height:36px;background:#E8601C;border-radius:10px;display:inline-block;line-height:36px;text-align:center;font-size:18px;vertical-align:middle">🔧</div>
             </td>
@@ -64,7 +67,7 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
             </td>
           </tr>
         </table>
-        <p style="color:rgba(255,255,255,.55);font-size:13px;margin:12px 0 0">India's Trusted Worker Marketplace</p>
+        <p style="color:rgba(255,255,255,.55);font-size:13px;margin:12px 0 0">India's Trusted Worker Marketplace 🇮🇳</p>
       </td></tr>
 
       <!-- Body -->
@@ -75,7 +78,7 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
         <!-- CTA Button -->
         <table cellpadding="0" cellspacing="0" width="100%">
           <tr><td align="center" style="padding:0 0 28px">
-            <a href="${link}" style="display:inline-block;padding:15px 40px;background:#E8601C;color:#ffffff;text-decoration:none;border-radius:11px;font-size:15px;font-weight:700;letter-spacing:0.2px;box-shadow:0 4px 16px rgba(232,96,28,.35)">✅ &nbsp;Verify My Email</a>
+            <a href="${link}" style="display:inline-block;padding:15px 40px;background:#E8601C;color:#ffffff;text-decoration:none;border-radius:11px;font-size:15px;font-weight:700;letter-spacing:0.2px">✅  Verify My Email</a>
           </td></tr>
         </table>
 
@@ -84,8 +87,7 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
           <p style="font-size:13px;color:#E8601C;margin:0;font-weight:600">⏰ This link expires in <strong>24 hours</strong></p>
         </div>
 
-        <!-- Fallback link -->
-        <p style="font-size:12.5px;color:rgba(15,25,35,.4);margin:0 0 6px">If the button doesn't work, copy and paste this link into your browser:</p>
+        <p style="font-size:12.5px;color:rgba(15,25,35,.4);margin:0 0 6px">If the button doesn't work, paste this link in your browser:</p>
         <p style="font-size:12px;word-break:break-all;color:#3D7A6E;margin:0">${link}</p>
       </td></tr>
 
@@ -101,11 +103,14 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
 </body>
 </html>`;
 
-  await transporter.sendMail({
+  const info = await transporter.sendMail({
     from:    `"KaamConnect" <${process.env.GMAIL_USER || process.env.SMTP_USER}>`,
     to:      email,
     subject: "Verify your KaamConnect email address",
     html,
     text: `Hi ${name},\n\nVerify your KaamConnect email:\n${link}\n\nThis link expires in 24 hours.\n\n— KaamConnect Team`,
   });
+
+  console.log("[Mailer] Email sent ✓ messageId:", info.messageId, "→", email);
+  return info;
 };

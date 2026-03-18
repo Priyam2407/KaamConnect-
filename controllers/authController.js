@@ -81,12 +81,18 @@ exports.register = async (req, res) => {
     const user  = await User.create(userData);
     const token = signToken(user._id, user.role);
 
-    // Send verification email (non-blocking — don't fail registration if email fails)
-    mailer.sendVerificationEmail({
-      name:  user.name,
-      email: user.email,
-      token: verifyToken,
-    }).catch(err => console.error("Verification email error:", err));
+    // Send verification email — log errors clearly but don't fail registration
+    try {
+      await mailer.sendVerificationEmail({
+        name:  user.name,
+        email: user.email,
+        token: verifyToken,
+      });
+      console.log("[Register] Verification email sent to:", user.email);
+    } catch (emailErr) {
+      console.error("[Register] ⚠️  Failed to send verification email:", emailErr.message);
+      // Registration still succeeds — user can resend from dashboard
+    }
 
     res.json({
       success: true,
