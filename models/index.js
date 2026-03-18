@@ -167,6 +167,7 @@ const PendingUser = mongoose.models.PendingUser || mongoose.model("PendingUser",
 
 module.exports = {
   User:         mongoose.model("User",         userSchema),
+  PendingUser,
   Job:          mongoose.model("Job",          jobSchema),
   Message:      mongoose.model("Message",      messageSchema),
   Review:       mongoose.model("Review",       reviewSchema),
