@@ -19,21 +19,20 @@ body::after{content:'';position:fixed;bottom:-100px;left:-80px;width:400px;heigh
 a{text-decoration:none;color:inherit}
 .page-top{text-align:center;margin-bottom:32px;position:relative;z-index:1}
 .logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:24px}
-.logo-mark{width:40px;height:40px;border-radius:12px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 4px 16px rgba(232,96,28,.3)}
+.logo-mark{width:40px;height:40px;border-radius:12px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 4px 16px rgba(232,96,28,.3);position:relative;overflow:visible!important}
 .logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:21px;color:var(--forest);letter-spacing:-.4px}
 .logo-txt span{color:var(--saffron)}
+.logo-flag{position:absolute;bottom:-6px;right:-7px;width:17px;height:12px;border-radius:2px;overflow:hidden;border:1.5px solid rgba(255,255,255,.7);box-shadow:0 1px 5px rgba(0,0,0,.3);display:block;z-index:10}
+.logo-flag svg{width:100%;height:100%;display:block}
 h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--forest);letter-spacing:-1px;margin-bottom:6px}
 .subtitle{font-size:14.5px;color:var(--ink-40);font-weight:300}
 .card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;padding:44px;width:100%;max-width:580px;box-shadow:0 16px 60px rgba(15,25,35,.07);position:relative;z-index:1}
-
-/* Google button */
 .google-btn{width:100%;padding:12.5px 16px;border:1.5px solid var(--ink-12);border-radius:11px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;color:var(--ink);transition:all .22s;margin-bottom:18px}
 .google-btn:hover{border-color:#4285F4;background:#F8FAFF;box-shadow:0 4px 16px rgba(66,133,244,.12)}
 .google-ico{width:20px;height:20px;flex-shrink:0}
 .divider{display:flex;align-items:center;gap:12px;margin-bottom:24px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--ink-06)}
 .divider span{font-size:12px;color:var(--ink-40);font-weight:500;white-space:nowrap}
-
 .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
 .rbtn{padding:20px 16px;border:2px solid var(--ink-12);border-radius:16px;text-align:center;cursor:pointer;background:var(--cream);transition:all .22s;user-select:none;position:relative}
 .rbtn:hover{border-color:var(--saffron-2);background:var(--saffron-pale)}
@@ -46,7 +45,6 @@ h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--fore
 .rbtn.on .rbtn-role-tag{background:rgba(232,96,28,.15);border-color:rgba(232,96,28,.3)}
 .rbtn-name{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:700;color:var(--forest);margin-bottom:3px}
 .rbtn-desc{font-size:12.5px;color:var(--ink-40)}
-
 .sec-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -61,10 +59,8 @@ h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--fore
 textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
 .pw-bars{display:flex;gap:4px;margin-top:8px}
 .pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
-
 .worker-extra{display:none;border-top:1.5px solid var(--ink-06);margin-top:8px;padding-top:24px;animation:slideIn .26s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-
 .id-upload-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.04));border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:16px}
 .id-upload-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .id-upload-icon{width:36px;height:36px;border-radius:10px;background:var(--sage-light);display:grid;place-items:center;font-size:16px;color:var(--sage);flex-shrink:0}
@@ -90,7 +86,6 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
 .id-preview-remove:hover{color:#DC2626}
 .id-note{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;align-items:flex-start;gap:6px;line-height:1.5}
 .id-note i{color:var(--sage);flex-shrink:0;margin-top:1px}
-
 .submit-btn{width:100%;padding:14px;background:var(--saffron);border:none;border-radius:11px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .22s;box-shadow:0 4px 16px rgba(232,96,28,.3);margin-top:8px}
 .submit-btn:hover{background:var(--saffron-2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,96,28,.38)}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
@@ -101,14 +96,6 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
 .signin-row{text-align:center;font-size:13.5px;color:var(--ink-40);margin-top:20px;position:relative;z-index:1}
 .signin-row a{color:var(--saffron);font-weight:700}
-
-/* India flag logo */
-.logo{display:inline-flex;align-items:center;gap:9px;margin-bottom:24px}
-.logo-india-flag{width:26px;height:18px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.15);border:1.5px solid rgba(0,0,0,.08);transition:transform .22s}
-.logo-india-flag svg{width:100%;height:100%;display:block}
-.logo:hover .logo-india-flag{transform:scale(1.08)}
-.logo-sep{width:1px;height:20px;background:var(--ink-12);flex-shrink:0}
-
 /* Email sent success screen */
 .email-sent-screen{display:none;text-align:center;padding:8px 0}
 .es-envelope{font-size:64px;margin-bottom:16px;animation:bounce .6s ease}
@@ -126,26 +113,19 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
 .resend-btn:hover{border-color:var(--saffron);color:var(--saffron)}
 .resend-btn:disabled{opacity:.5;cursor:not-allowed}
 @media(max-width:540px){.card{padding:28px 20px}.frow{grid-template-columns:1fr}.id-type-grid{grid-template-columns:1fr 1fr}}
-
-.logo-mark{position:relative;overflow:visible!important}
-.logo-flag{position:absolute;bottom:-6px;right:-7px;width:17px;height:12px;border-radius:2px;overflow:hidden;border:1.5px solid rgba(255,255,255,.7);box-shadow:0 1px 5px rgba(0,0,0,.3);display:block;z-index:10}
-.logo-flag svg{width:100%;height:100%;display:block}
-
-@media(max-width:480px){
-  body{padding:32px 12px 60px}
-  .card{padding:24px 16px;border-radius:16px}
-  .role-grid{grid-template-columns:1fr}
-  .frow{grid-template-columns:1fr}
-  .id-type-grid{grid-template-columns:1fr 1fr}
-  h1{font-size:22px}
-}
+@media(max-width:480px){body{padding:32px 12px 60px}.card{padding:24px 16px;border-radius:16px}.role-grid{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.id-type-grid{grid-template-columns:1fr 1fr}h1{font-size:22px}}
 </style>
 </head>
 <body>
 
 <div class="page-top">
   <a class="logo" href="index.html">
-    <div class="logo-mark"><i class="bi bi-tools"></i><span class="logo-flag"><svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block"><rect width="36" height="12" fill="#FF9933"/><rect y="12" width="36" height="12" fill="#FFFFFF"/><rect y="24" width="36" height="12" fill="#138808"/><circle cx="18" cy="18" r="3.5" fill="none" stroke="#000080" stroke-width="0.8"/><circle cx="18" cy="18" r="0.9" fill="#000080"/><g stroke="#000080" stroke-width="0.45" transform="translate(18,18)"><line x1="0" y1="-3.5" x2="0" y2="3.5"/><line x1="-3.5" y1="0" x2="3.5" y2="0"/><line x1="-2.47" y1="-2.47" x2="2.47" y2="2.47"/><line x1="2.47" y1="-2.47" x2="-2.47" y2="2.47"/><line x1="-1.34" y1="-3.24" x2="1.34" y2="3.24"/><line x1="1.34" y1="-3.24" x2="-1.34" y2="3.24"/><line x1="-3.24" y1="-1.34" x2="3.24" y2="1.34"/><line x1="3.24" y1="-1.34" x2="-3.24" y2="1.34"/></g></svg></span></div>
+    <div class="logo-mark">
+      <i class="bi bi-tools"></i>
+      <span class="logo-flag">
+        <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="12" fill="#FF9933"/><rect y="12" width="36" height="12" fill="#FFFFFF"/><rect y="24" width="36" height="12" fill="#138808"/><circle cx="18" cy="18" r="3.5" fill="none" stroke="#000080" stroke-width="0.8"/><circle cx="18" cy="18" r="0.9" fill="#000080"/><g stroke="#000080" stroke-width="0.45" transform="translate(18,18)"><line x1="0" y1="-3.5" x2="0" y2="3.5"/><line x1="-3.5" y1="0" x2="3.5" y2="0"/><line x1="-2.47" y1="-2.47" x2="2.47" y2="2.47"/><line x1="2.47" y1="-2.47" x2="-2.47" y2="2.47"/><line x1="-1.34" y1="-3.24" x2="1.34" y2="3.24"/><line x1="1.34" y1="-3.24" x2="-1.34" y2="3.24"/><line x1="-3.24" y1="-1.34" x2="3.24" y2="1.34"/><line x1="3.24" y1="-1.34" x2="-3.24" y2="1.34"/></g></svg>
+      </span>
+    </div>
     <div class="logo-txt">Kaam<span>Connect</span></div>
   </a>
   <h1>Create Account</h1>
@@ -155,167 +135,165 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
 <div class="card">
   <div id="alertBox" style="display:none"></div>
 
-  <!-- Google Sign-Up Button -->
-  <button class="google-btn" onclick="googleSignUp()">
-    <svg class="google-ico" viewBox="0 0 48 48">
-      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/>
-      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-      <path fill="none" d="M0 0h48v48H0z"/>
-    </svg>
-    Sign up with Google
-  </button>
+  <!-- Form wrapper — hidden on success -->
+  <div id="formContent">
 
-  <div class="divider"><span>or create account with email</span></div>
+    <!-- Google Sign-Up Button -->
+    <button class="google-btn" onclick="googleSignUp()">
+      <svg class="google-ico" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </svg>
+      Sign up with Google
+    </button>
 
-  <div class="sec-lbl">I want to</div>
-  <div class="role-grid">
-    <div class="rbtn on" id="rb-c" onclick="setRole('customer')">
-      <div class="rbtn-check"><i class="bi bi-check"></i></div>
-      <div class="rbtn-ico">👤</div>
-      <div class="rbtn-role-tag">Customer</div>
-      <div class="rbtn-name">Hire a Worker</div>
-      <div class="rbtn-desc">Find verified help fast</div>
-    </div>
-    <div class="rbtn" id="rb-w" onclick="setRole('worker')">
-      <div class="rbtn-check"><i class="bi bi-check"></i></div>
-      <div class="rbtn-ico">👷</div>
-      <div class="rbtn-role-tag">Worker</div>
-      <div class="rbtn-name">Find Work</div>
-      <div class="rbtn-desc">Get jobs &amp; earn money</div>
-    </div>
-  </div>
+    <div class="divider"><span>or create account with email</span></div>
 
-  <input type="hidden" id="role" value="customer">
-
-  <div class="sec-lbl">Your Details</div>
-  <div class="frow">
-    <div class="fg">
-      <label class="fl">Full Name</label>
-      <div class="fw">
-        <input class="fi" type="text" id="name" placeholder="enter your full name">
-        <i class="bi bi-person fi-ico"></i>
+    <div class="sec-lbl">I want to</div>
+    <div class="role-grid">
+      <div class="rbtn on" id="rb-c" onclick="setRole('customer')">
+        <div class="rbtn-check"><i class="bi bi-check"></i></div>
+        <div class="rbtn-ico">👤</div>
+        <div class="rbtn-role-tag">Customer</div>
+        <div class="rbtn-name">Hire a Worker</div>
+        <div class="rbtn-desc">Find verified help fast</div>
       </div>
-    </div>
-    <div class="fg">
-      <label class="fl">Phone Number</label>
-      <div class="fw">
-        <input class="fi" type="text" id="phone" placeholder="enter your phone number">
-        <i class="bi bi-phone fi-ico"></i>
-      </div>
-    </div>
-  </div>
-
-  <div class="fg">
-    <label class="fl">Email Address</label>
-    <div class="fw">
-      <input class="fi" type="email" id="email" placeholder="enter your email address">
-      <i class="bi bi-envelope fi-ico"></i>
-    </div>
-  </div>
-
-  <div class="frow">
-    <div class="fg">
-      <label class="fl">City / Location</label>
-      <div class="fw">
-        <input class="fi" type="text" id="cityInput" placeholder="enter your city or area">
-        <i class="bi bi-geo-alt fi-ico"></i>
-      </div>
-    </div>
-    <div class="fg">
-      <label class="fl">Password</label>
-      <div class="fw">
-        <input class="fi" type="password" id="password" placeholder="Min 6 characters" oninput="checkPw(this.value)">
-        <i class="bi bi-lock fi-ico"></i>
-      </div>
-      <div class="pw-bars">
-        <div class="pw-bar" id="pb1"></div>
-        <div class="pw-bar" id="pb2"></div>
-        <div class="pw-bar" id="pb3"></div>
-        <div class="pw-bar" id="pb4"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WORKER EXTRA FIELDS -->
-  <div class="worker-extra" id="workerExtra">
-    <div class="sec-lbl" style="margin-top:4px">Worker Details</div>
-
-    <div class="fg">
-      <label class="fl">Primary Skill</label>
-      <div class="fw">
-        <select class="fi" id="skill">
-          <option value="">Select your main skill</option>
-          <option value="electrician">⚡ Electrician</option>
-          <option value="plumber">🔧 Plumber</option>
-          <option value="painter">🎨 Painter</option>
-          <option value="carpenter">🪚 Carpenter</option>
-          <option value="labour">👷 Labour</option>
-          <option value="mason">🧱 Mason</option>
-          <option value="ac technician">❄️ AC Technician</option>
-          <option value="driver">🚗 Driver</option>
-        </select>
-        <i class="bi bi-tools fi-ico"></i>
+      <div class="rbtn" id="rb-w" onclick="setRole('worker')">
+        <div class="rbtn-check"><i class="bi bi-check"></i></div>
+        <div class="rbtn-ico">👷</div>
+        <div class="rbtn-role-tag">Worker</div>
+        <div class="rbtn-name">Find Work</div>
+        <div class="rbtn-desc">Get jobs &amp; earn money</div>
       </div>
     </div>
 
-    <div class="fg">
-      <label class="fl">About You</label>
-      <textarea class="fi" id="bio" style="padding-left:14px" placeholder="Briefly describe your experience and specialties…"></textarea>
-    </div>
+    <input type="hidden" id="role" value="customer">
 
-    <div class="sec-lbl" style="margin-top:4px">Government ID Verification</div>
-
-    <div class="id-upload-section">
-      <div class="id-upload-head">
-        <div class="id-upload-icon"><i class="bi bi-shield-check"></i></div>
-        <div>
-          <div class="id-upload-title">Upload a valid Government ID</div>
-          <div class="id-upload-sub">Required for worker verification by admin</div>
+    <div class="sec-lbl">Your Details</div>
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">Full Name</label>
+        <div class="fw">
+          <input class="fi" type="text" id="name" placeholder="enter your full name">
+          <i class="bi bi-person fi-ico"></i>
         </div>
       </div>
-
-      <label class="fl" style="margin-bottom:10px">Select ID Type</label>
-      <div class="id-type-grid">
-        <button type="button" class="id-type-btn" data-type="aadhaar" onclick="selectIdType(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
-        <button type="button" class="id-type-btn" data-type="pan" onclick="selectIdType(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
-        <button type="button" class="id-type-btn" data-type="voter" onclick="selectIdType(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
-        <button type="button" class="id-type-btn" data-type="driving" onclick="selectIdType(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
-        <button type="button" class="id-type-btn" data-type="passport" onclick="selectIdType(this)"><i class="bi bi-book"></i> Passport</button>
-        <button type="button" class="id-type-btn" data-type="other" onclick="selectIdType(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
-      </div>
-      <input type="hidden" id="selectedIdType" value="">
-
-      <div class="id-dropzone" id="idDropzone">
-        <input type="file" id="idFileInput" accept="image/*,.pdf" onchange="handleFileSelect(this)">
-        <div class="id-dz-icon"><i class="bi bi-cloud-upload"></i></div>
-        <div class="id-dz-txt">Click to upload or drag &amp; drop</div>
-        <div class="id-dz-hint">JPG, PNG or PDF • Max 5MB</div>
-      </div>
-
-      <div class="id-preview" id="idPreview">
-        <span class="id-preview-icon" id="idPreviewIcon">📄</span>
-        <div>
-          <div class="id-preview-name" id="idPreviewName">—</div>
-          <div class="id-preview-size" id="idPreviewSize">—</div>
+      <div class="fg">
+        <label class="fl">Phone Number</label>
+        <div class="fw">
+          <input class="fi" type="text" id="phone" placeholder="enter your phone number">
+          <i class="bi bi-phone fi-ico"></i>
         </div>
-        <button type="button" class="id-preview-remove" onclick="removeFile()" title="Remove file">
-          <i class="bi bi-x-circle-fill"></i>
-        </button>
-      </div>
-
-      <div class="id-note">
-        <i class="bi bi-info-circle-fill"></i>
-        Your ID is kept confidential and used only for identity verification. It will be reviewed by our admin team within 24 hours. You can start working after verification.
       </div>
     </div>
-  </div>
 
-  <button class="submit-btn" id="regBtn" onclick="register()">
-    <i class="bi bi-person-plus-fill"></i> Create Account
-    <i class="bi bi-arrow-repeat spin" id="sp"></i>
-  </button>
+    <div class="fg">
+      <label class="fl">Email Address</label>
+      <div class="fw">
+        <input class="fi" type="email" id="email" placeholder="enter your email address">
+        <i class="bi bi-envelope fi-ico"></i>
+      </div>
+    </div>
+
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">City / Location</label>
+        <div class="fw">
+          <input class="fi" type="text" id="cityInput" placeholder="enter your city or area">
+          <i class="bi bi-geo-alt fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <div class="fw">
+          <input class="fi" type="password" id="password" placeholder="Min 6 characters" oninput="checkPw(this.value)">
+          <i class="bi bi-lock fi-ico"></i>
+        </div>
+        <div class="pw-bars">
+          <div class="pw-bar" id="pb1"></div>
+          <div class="pw-bar" id="pb2"></div>
+          <div class="pw-bar" id="pb3"></div>
+          <div class="pw-bar" id="pb4"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKER EXTRA FIELDS -->
+    <div class="worker-extra" id="workerExtra">
+      <div class="sec-lbl" style="margin-top:4px">Worker Details</div>
+      <div class="fg">
+        <label class="fl">Primary Skill</label>
+        <div class="fw">
+          <select class="fi" id="skill">
+            <option value="">Select your main skill</option>
+            <option value="electrician">⚡ Electrician</option>
+            <option value="plumber">🔧 Plumber</option>
+            <option value="painter">🎨 Painter</option>
+            <option value="carpenter">🪚 Carpenter</option>
+            <option value="labour">👷 Labour</option>
+            <option value="mason">🧱 Mason</option>
+            <option value="ac technician">❄️ AC Technician</option>
+            <option value="driver">🚗 Driver</option>
+          </select>
+          <i class="bi bi-tools fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">About You</label>
+        <textarea class="fi" id="bio" style="padding-left:14px" placeholder="Briefly describe your experience and specialties…"></textarea>
+      </div>
+      <div class="sec-lbl" style="margin-top:4px">Government ID Verification</div>
+      <div class="id-upload-section">
+        <div class="id-upload-head">
+          <div class="id-upload-icon"><i class="bi bi-shield-check"></i></div>
+          <div>
+            <div class="id-upload-title">Upload a valid Government ID</div>
+            <div class="id-upload-sub">Required for worker verification by admin</div>
+          </div>
+        </div>
+        <label class="fl" style="margin-bottom:10px">Select ID Type</label>
+        <div class="id-type-grid">
+          <button type="button" class="id-type-btn" data-type="aadhaar" onclick="selectIdType(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
+          <button type="button" class="id-type-btn" data-type="pan" onclick="selectIdType(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
+          <button type="button" class="id-type-btn" data-type="voter" onclick="selectIdType(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
+          <button type="button" class="id-type-btn" data-type="driving" onclick="selectIdType(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
+          <button type="button" class="id-type-btn" data-type="passport" onclick="selectIdType(this)"><i class="bi bi-book"></i> Passport</button>
+          <button type="button" class="id-type-btn" data-type="other" onclick="selectIdType(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
+        </div>
+        <input type="hidden" id="selectedIdType" value="">
+        <div class="id-dropzone" id="idDropzone">
+          <input type="file" id="idFileInput" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+          <div class="id-dz-icon"><i class="bi bi-cloud-upload"></i></div>
+          <div class="id-dz-txt">Click to upload or drag &amp; drop</div>
+          <div class="id-dz-hint">JPG, PNG or PDF • Max 5MB</div>
+        </div>
+        <div class="id-preview" id="idPreview">
+          <span class="id-preview-icon" id="idPreviewIcon">📄</span>
+          <div>
+            <div class="id-preview-name" id="idPreviewName">—</div>
+            <div class="id-preview-size" id="idPreviewSize">—</div>
+          </div>
+          <button type="button" class="id-preview-remove" onclick="removeFile()" title="Remove file">
+            <i class="bi bi-x-circle-fill"></i>
+          </button>
+        </div>
+        <div class="id-note">
+          <i class="bi bi-info-circle-fill"></i>
+          Your ID is kept confidential and used only for identity verification. Reviewed by our admin team within 24 hours.
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="regBtn" onclick="register()">
+      <i class="bi bi-person-plus-fill"></i> Create Account
+      <i class="bi bi-arrow-repeat spin" id="sp"></i>
+    </button>
+
+  </div><!-- end #formContent -->
+
   <!-- Email verification sent screen -->
   <div class="email-sent-screen" id="emailSentScreen">
     <div class="es-envelope">📧</div>
@@ -331,6 +309,7 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
     <button class="resend-btn" id="resendBtn" onclick="resendVerification()"><i class="bi bi-arrow-repeat"></i> Resend verification email</button>
     <div id="resendMsg" style="margin-top:10px;font-size:13px;color:var(--sage);display:none"><i class="bi bi-check-circle-fill"></i> Sent! Check your inbox.</div>
   </div>
+
 </div>
 
 <p class="signin-row">Already have an account? <a href="login.html">Sign in →</a></p>
@@ -339,10 +318,7 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
 // Pre-select worker if URL param
 if (new URLSearchParams(window.location.search).get('role') === 'worker') setRole('worker');
 
-// ── Google Sign-Up ──────────────────────────────────────────
-function googleSignUp() {
-  window.location.href = '/api/auth/google';
-}
+function googleSignUp() { window.location.href = '/api/auth/google'; }
 
 function setRole(r) {
   document.getElementById('role').value = r;
@@ -353,16 +329,24 @@ function setRole(r) {
 
 function checkPw(v) {
   const c = [v.length >= 6, v.length >= 8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
-  const cols = ['#DC2626', '#F59E0B', '#2E7D5E', '#15803D'];
+  const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
   const n = c.filter(Boolean).length;
   for (let i = 0; i < 4; i++)
-    document.getElementById('pb' + (i+1)).style.background = i < n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
+    document.getElementById('pb'+(i+1)).style.background = i < n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
 }
 
 function showAlert(t, m) {
   const b = document.getElementById('alertBox');
   b.style.display = 'flex'; b.className = 'alert '+(t==='error'?'ae':'as');
   b.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
+}
+
+function resetBtn() {
+  const btn = document.getElementById('regBtn');
+  const sp  = document.getElementById('sp');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="bi bi-person-plus-fill"></i> Create Account <i class="bi bi-arrow-repeat spin" id="sp"></i>';
+  document.getElementById('sp') && (document.getElementById('sp').style.display = 'none');
 }
 
 function selectIdType(btn) {
@@ -373,14 +357,12 @@ function selectIdType(btn) {
 
 let selectedFile = null;
 function handleFileSelect(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { showAlert('error', 'File too large. Max 5MB allowed.'); input.value=''; return; }
+  const file = input.files[0]; if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showAlert('error','File too large. Max 5MB.'); input.value=''; return; }
   selectedFile = file;
-  const isImg = file.type.startsWith('image/');
-  document.getElementById('idPreviewIcon').textContent = isImg ? '🖼️' : '📄';
+  document.getElementById('idPreviewIcon').textContent = file.type.startsWith('image/') ? '🖼️' : '📄';
   document.getElementById('idPreviewName').textContent = file.name;
-  document.getElementById('idPreviewSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+  document.getElementById('idPreviewSize').textContent = (file.size/1024).toFixed(1)+' KB';
   document.getElementById('idPreview').style.display = 'flex';
   document.getElementById('idDropzone').style.borderColor = 'var(--sage)';
 }
@@ -390,14 +372,13 @@ function removeFile() {
   document.getElementById('idPreview').style.display = 'none';
   document.getElementById('idDropzone').style.borderColor = '';
 }
-
 const dz = document.getElementById('idDropzone');
 dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
 dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
 dz.addEventListener('drop', e => {
   e.preventDefault(); dz.classList.remove('drag-over');
   const file = e.dataTransfer.files[0];
-  if (file) { const input = document.getElementById('idFileInput'); const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files; handleFileSelect(input); }
+  if (file) { const inp=document.getElementById('idFileInput'); const dt=new DataTransfer(); dt.items.add(file); inp.files=dt.files; handleFileSelect(inp); }
 });
 
 let userToken = null;
@@ -405,7 +386,8 @@ let userToken = null;
 async function resendVerification() {
   if (!userToken) return;
   const btn = document.getElementById('resendBtn');
-  btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
   try {
     const r = await fetch('/api/auth/resend-verification', {
       method: 'POST',
@@ -414,11 +396,19 @@ async function resendVerification() {
     const d = await r.json();
     if (d.success) {
       document.getElementById('resendMsg').style.display = 'block';
-      setTimeout(() => { btn.disabled = false; btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend verification email'; }, 30000);
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend verification email';
+        document.getElementById('resendMsg').style.display = 'none';
+      }, 30000);
     } else {
-      btn.disabled = false; btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend verification email';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend verification email';
     }
-  } catch(e) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend verification email'; }
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resend verification email';
+  }
 }
 
 async function register() {
@@ -432,24 +422,36 @@ async function register() {
   const bio      = document.getElementById('bio')?.value?.trim() || '';
   const idType   = document.getElementById('selectedIdType')?.value || '';
 
+  // ── Validation ───────────────────────────────────────────
   if (!name || !email || !password || !city) { showAlert('error','Please fill in all required fields'); return; }
   if (password.length < 6) { showAlert('error','Password must be at least 6 characters'); return; }
   if (role === 'worker') {
-    if (!skill) { showAlert('error','Please select your primary skill'); return; }
-    if (!idType) { showAlert('error','Please select your ID type for verification'); return; }
-    if (!selectedFile) { showAlert('error','Please upload your government ID document'); return; }
+    if (!skill)         { showAlert('error','Please select your primary skill'); return; }
+    if (!idType)        { showAlert('error','Please select your ID type for verification'); return; }
+    if (!selectedFile)  { showAlert('error','Please upload your government ID document'); return; }
   }
 
   const btn = document.getElementById('regBtn');
   const sp  = document.getElementById('sp');
-  btn.disabled = true; sp.style.display = 'inline-block';
+  btn.disabled = true;
+  sp.style.display = 'inline-block';
+
+  // ── FIX 1: Safety timer — always re-enable button after 30s ──
+  const safetyTimer = setTimeout(() => {
+    resetBtn();
+    showAlert('error', 'Request timed out. Please try again.');
+  }, 30000);
+
+  // ── FIX 2: Fetch with AbortController (25s timeout) ──────
+  const controller = new AbortController();
+  const fetchTimer = setTimeout(() => controller.abort(), 25000);
 
   try {
     let idDocumentData = null;
     if (role === 'worker' && selectedFile) {
       idDocumentData = await new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
+        reader.onload  = () => resolve(reader.result);
         reader.onerror = reject;
         reader.readAsDataURL(selectedFile);
       });
@@ -458,37 +460,51 @@ async function register() {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
       body: JSON.stringify({
         name, email, password, phone, role,
-        skill: skill || null,
-        location: city,
-        bio: bio || null,
-        idType: idType || null,
+        skill:      skill || null,
+        location:   city,
+        bio:        bio   || null,
+        idType:     idType || null,
         idDocument: idDocumentData || null,
       })
     });
 
+    clearTimeout(fetchTimer);
+    clearTimeout(safetyTimer);
+
     const data = await res.json();
+
     if (data.success) {
+      // Store auth
       localStorage.setItem('kc_token', data.token);
-      localStorage.setItem('kc_user', JSON.stringify(data.user));
-      // Show email verification sent screen
+      localStorage.setItem('kc_user',  JSON.stringify(data.user));
       userToken = data.token;
+
+      // ── FIX 3: Clean form-hide using a single wrapper div ──
       document.getElementById('sentToEmail').textContent = email;
-      document.getElementById('alertBox').style.display = 'none';
-      document.querySelector('.card > *:not(#emailSentScreen):not(#alertBox)') && 
-        Array.from(document.querySelectorAll('.card > *')).forEach(el => {
-          if (el.id !== 'emailSentScreen' && el.id !== 'alertBox') el.style.display = 'none';
-        });
+      document.getElementById('alertBox').style.display  = 'none';
+      document.getElementById('formContent').style.display = 'none';
       document.getElementById('emailSentScreen').style.display = 'block';
       return;
+
     } else {
+      clearTimeout(safetyTimer);
       showAlert('error', data.message || 'Registration failed.');
+      resetBtn();
     }
+
   } catch (err) {
-    showAlert('error', 'Cannot connect to server. Is it running?');
+    clearTimeout(fetchTimer);
+    clearTimeout(safetyTimer);
+    if (err.name === 'AbortError') {
+      showAlert('error', 'Request timed out. Please check your connection and try again.');
+    } else {
+      showAlert('error', 'Cannot connect to server. Is it running?');
+    }
+    resetBtn();
   }
-  btn.disabled = false; sp.style.display = 'none';
 }
 </script>
 </body>
