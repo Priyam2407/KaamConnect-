@@ -35,13 +35,14 @@ exports.chat = async (req, res) => {
         const r = await fetch("https://api.anthropic.com/v1/messages", {
           method:"POST",
           headers:{ "Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01" },
-          body:JSON.stringify({ model:"claude-haiku-4-5-20251001", max_tokens:400, system:"You are KaamBot, helper for KaamConnect — an Indian worker marketplace. Help users find electricians, plumbers, painters, carpenters etc. Be friendly, concise. Respond in user's language (English/Hindi/Hinglish).", messages:msgs })
+          body:JSON.stringify({ model:"claude-haiku-4-5", max_tokens:400, system:"You are KaamBot, helper for KaamConnect — an Indian worker marketplace. Help users find electricians, plumbers, painters, carpenters etc. Be friendly, concise. Respond in user's language (English/Hindi/Hinglish).", messages:msgs })
         });
-        if (r.ok) {
-          const d = await r.json();
+        const d = await r.json();
+        if (r.ok && d.content?.[0]?.text) {
           return res.json({ success:true, response:d.content[0].text, suggestions:["Tell me more","Book a service"], source:"ai" });
         }
-      } catch {}
+        console.error("[Chat] Claude API error:", d.error?.message || JSON.stringify(d));
+      } catch(aiErr) { console.error("[Chat] Claude fetch error:", aiErr.message); }
     }
 
     const { response, suggestions } = getRuleBasedResponse(message);
