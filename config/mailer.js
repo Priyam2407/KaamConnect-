@@ -78,7 +78,7 @@ exports.sendVerificationEmail = async ({ name, email, token }) => {
   // ── Verification link ────────────────────────────────────
   const isProduction = process.env.NODE_ENV === "production";
   const baseUrl = isProduction
-    ? (process.env.BASE_URL || "http://localhost:5000")
+    ? (process.env.BASE_URL || "https://kaamconnect-im6s.onrender.com")
     : (process.env.APP_URL  || process.env.BASE_URL || "http://localhost:5000");
   const link = `${baseUrl}/api/auth/verify-email?token=${token}`;
   console.log("[Mailer] Link     :", link);
