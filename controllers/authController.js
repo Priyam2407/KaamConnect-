@@ -138,7 +138,7 @@ exports.login = async (req, res) => {
     if (!valid) return res.status(401).json({ success: false, message: "Invalid password" });
 
     // Block login if email not verified (skip for Google-auth users & admins)
-    if (!user.googleId && user.role !== "admin" && user.emailVerified === false) {
+    if (!user.googleId && user.role !== "admin" && user.emailVerified !== true) {
       const token = signToken(user._id, user.role); // give token so they can resend
       return res.status(403).json({
         success:       false,
