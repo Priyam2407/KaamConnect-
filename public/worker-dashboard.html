@@ -183,6 +183,14 @@ a{text-decoration:none;color:inherit}
     </div>
     <button class="sb-logout" onclick="logout()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
   </div>
+
+  <div class="price-bar">
+    <div class="price-bar-lbl">My Base Price</div>
+    <div class="price-bar-val" id="sbBasePrice">Not set</div>
+    <button class="price-bar-btn" onclick="document.getElementById('setPriceModal').classList.add('open')">
+      <i class="bi bi-tag"></i> Set My Price
+    </button>
+  </div>
 </aside>
 
 <div class="main">
@@ -256,12 +264,21 @@ document.getElementById('sbName').textContent  = USER.name  || 'Worker';
 document.getElementById('sbSkill').textContent = (USER.skill||'Worker')[0].toUpperCase() + (USER.skill||'').slice(1);
 document.getElementById('sbAv').textContent    = (USER.name||'W')[0].toUpperCase();
 document.getElementById('wbName').textContent  = (USER.name||'').split(' ')[0] || 'Worker';
+const sbBP = document.getElementById('sbBasePrice');
+if (USER.basePrice) {
+  sbBP.textContent = '₹' + USER.basePrice + ' / ' + (USER.priceUnit || 'job');
+  document.getElementById('basePriceInput').value = USER.basePrice;
+  if (USER.priceUnit) document.getElementById('basePriceUnit').value = USER.priceUnit;
+  if (USER.priceNote) document.getElementById('basePriceNote').value = USER.priceNote;
+} else {
+  sbBP.textContent = 'Not set';
+}
 
 const API = url => fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
 
 const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
-const statusBadge = { pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
-const statusLabel = { pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
+const statusBadge = { pending_offer:'badge-pending', negotiating:'badge-negotiating', price_agreed:'badge-agreed', pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
+const statusLabel = { pending_offer:'New Request 🔔', negotiating:'Negotiating 💬', price_agreed:'Price Agreed ✅', pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
 
 /* ─── TOAST ─── */
 function showToast(msg, ico='🔔', duration=4000) {
@@ -397,7 +414,8 @@ async function loadOverview() {
   if (USER.verified) { vb.className='verify-badge v-yes'; vb.innerHTML='<i class="bi bi-patch-check-fill"></i> Verified'; }
   else { vb.className='verify-badge v-no'; vb.innerHTML='<i class="bi bi-hourglass-split"></i> Pending Verification'; }
 
-  const pj = await API('/api/workers/jobs?status=pending&limit=20');
+  const pj = await API('/api/workers/jobs?limit=50');
+  pj.jobs = (pj.jobs||[]).filter(j=>['pending_offer','negotiating','price_agreed'].includes(j.status));
   const el  = document.getElementById('pendingJobs');
   if (pj.jobs?.length) {
     el.innerHTML = `<div class="jobs-list">${pj.jobs.map(pendingCard).join('')}</div>`;
@@ -410,6 +428,59 @@ async function loadOverview() {
 function pendingCard(j) {
   const em    = skillEmoji[j.skill] || '🛠️';
   const cname = j.customerId?.name || 'Customer';
+  const st    = j.status;
+  const offers = j.offers || [];
+  const customerBudget = j.customerBudget || j.price || 0;
+
+  // Latest pending offer from customer
+  const latestCustOffer = [...offers].reverse().find(o => o.fromRole === 'customer' && o.status === 'pending');
+  const offerAmount = latestCustOffer ? latestCustOffer.amount : customerBudget;
+
+  // Build offer thread
+  let offerThread = '';
+  if (offers.length) {
+    offerThread = `<div class="offer-thread">${
+      offers.slice(-4).map(o => `<div class="ot-row ${o.fromRole}">
+        <span class="ot-who">${o.fromRole === 'worker' ? 'You' : cname}</span>
+        <span class="ot-amt">₹${o.amount}</span>
+        <span class="ot-status ot-${o.status}">${o.status}</span>
+        ${o.note ? `<span class="ot-note">${o.note}</span>` : ''}
+      </div>`).join('')
+    }</div>`;
+  }
+
+  // Build action buttons based on status
+  let actions = '';
+  if (st === 'pending_offer') {
+    actions = `
+      <button class="jc-btn jc-accept" id="accept-${j._id}" onclick="handleAcceptBudget('${j._id}', ${offerAmount})">
+        <i class="bi bi-check-lg"></i> Accept ₹${offerAmount}
+      </button>
+      <button class="jc-btn jc-counter" id="counter-${j._id}" onclick="openWorkerOffer('${j._id}', '${cname}', ${offerAmount})">
+        <i class="bi bi-chat-dots"></i> Send My Price
+      </button>
+      <button class="jc-btn jc-reject" id="reject-${j._id}" onclick="handleReject('${j._id}')">
+        <i class="bi bi-x-lg"></i> Reject
+      </button>`;
+  } else if (st === 'negotiating') {
+    const myLatestOffer = [...offers].reverse().find(o => o.fromRole === 'worker' && o.status === 'pending');
+    actions = `
+      <button class="jc-btn jc-accept" onclick="handleAcceptBudget('${j._id}', ${offerAmount})">
+        <i class="bi bi-check-lg"></i> Accept ₹${offerAmount}
+      </button>
+      <button class="jc-btn jc-counter" onclick="openWorkerOffer('${j._id}', '${cname}', ${offerAmount})">
+        <i class="bi bi-chat-dots"></i> Counter
+      </button>
+      <button class="jc-btn jc-reject" onclick="handleReject('${j._id}')">
+        <i class="bi bi-x-lg"></i> Reject
+      </button>`;
+  } else if (st === 'price_agreed') {
+    actions = `
+      <button class="jc-btn jc-accept" onclick="handleUpdate('${j._id}', 'accepted', this)">
+        <i class="bi bi-play-fill"></i> Start Job
+      </button>`;
+  }
+
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
@@ -417,19 +488,13 @@ function pendingCard(j) {
       <div class="jc-meta">
         <span><i class="bi bi-person"></i> ${cname}</span>
         <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
-        <span><i class="bi bi-currency-rupee"></i> ₹${j.price||0}</span>
-        ${j.description ? `<span><i class="bi bi-card-text"></i> ${j.description.slice(0,40)}${j.description.length>40?'…':''}</span>` : ''}
+        <span><i class="bi bi-currency-rupee"></i> Customer budget: ₹${offerAmount}</span>
+        ${j.description ? `<span><i class="bi bi-card-text"></i> ${j.description.slice(0,50)}${j.description.length>50?'…':''}</span>` : ''}
       </div>
+      ${offerThread}
     </div>
-    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:11px;color:var(--ink-40);font-weight:400">(yours)</span></div>
-    <div class="jc-actions">
-      <button class="jc-btn jc-accept" id="accept-${j._id}" onclick="handleAccept('${j._id}')">
-        <i class="bi bi-check-lg"></i> Accept
-      </button>
-      <button class="jc-btn jc-reject" id="reject-${j._id}" onclick="handleReject('${j._id}')">
-        <i class="bi bi-x-lg"></i> Reject
-      </button>
-    </div>
+    <span class="badge ${statusBadge[st]||''}">${statusLabel[st]||st}</span>
+    <div class="jc-actions">${actions}</div>
   </div>`;
 }
 
@@ -437,6 +502,7 @@ function jobCard(j) {
   const em    = skillEmoji[j.skill] || '🛠️';
   const cname = j.customerId?.name || 'Customer';
   const st    = j.status;
+  const agreedAmt = j.agreedPrice || j.price || 0;
   let actions = '';
   if (st === 'accepted')   actions = `<button class="jc-btn jc-progress" id="btn-${j._id}" onclick="handleUpdate('${j._id}','in_progress',this)"><i class="bi bi-play-fill"></i> Start Work</button>`;
   if (st === 'in_progress')actions = `<button class="jc-btn jc-complete" id="btn-${j._id}" onclick="handleUpdate('${j._id}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
@@ -448,65 +514,67 @@ function jobCard(j) {
         <span><i class="bi bi-person"></i> ${cname}</span>
         <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
         <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
+        <span><i class="bi bi-currency-rupee"></i> Agreed: ₹${agreedAmt}</span>
       </div>
     </div>
-    <div class="jc-price">₹${j.workerAmount||0}</div>
+    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:11px;color:var(--ink-40);font-weight:400">yours</span></div>
     <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
     ${actions ? `<div class="jc-actions">${actions}</div>` : ''}
   </div>`;
 }
 
 /* ─── INSTANT UI UPDATE (no reload needed) ─── */
-async function handleAccept(jobId) {
-  const acceptBtn = document.getElementById('accept-' + jobId);
-  const rejectBtn = document.getElementById('reject-' + jobId);
-  if (!acceptBtn) return;
-  acceptBtn.disabled = rejectBtn.disabled = true;
-  acceptBtn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Accepting…';
-
-  const d = await updateJobStatus(jobId, 'accepted');
-  if (d.success) {
-    // Remove card from pending list instantly
-    const card = document.getElementById('jcard-' + jobId);
-    if (card) {
-      card.style.transition = 'all .3s';
-      card.style.opacity = '0';
-      card.style.transform = 'translateX(20px)';
-      setTimeout(() => { card.remove(); checkEmptyPending(); }, 300);
+// ─── Accept customer's budget directly ──────────────────────
+async function handleAcceptBudget(jobId, amount) {
+  if (!confirm(`Accept customer budget of ₹${amount}?`)) return;
+  try {
+    const d = await respondOffer(jobId, 'accept', null, null);
+    if (d.success) {
+      removeCard(jobId);
+      showToast(`Price ₹${amount} agreed! 🎉 Start the job from My Jobs tab.`, '✅');
+      refreshStats();
+      setTimeout(() => loadOverview(), 1000);
+    } else {
+      showToast(d.message || 'Failed', '❌');
     }
-    showToast('Job accepted! It moved to <b>My Jobs</b>.', '✅');
-    // Refresh stats silently
-    refreshStats();
-  } else {
-    acceptBtn.disabled = rejectBtn.disabled = false;
-    acceptBtn.innerHTML = '<i class="bi bi-check-lg"></i> Accept';
-    showToast(d.message || 'Failed to accept job.', '❌');
+  } catch(e) { showToast('Server error', '❌'); }
+}
+
+// ─── Reject job ──────────────────────────────────────────────
+async function handleReject(jobId) {
+  if (!confirm('Reject this job?')) return;
+  try {
+    const d = await respondOffer(jobId, 'reject', null, null);
+    if (d.success) {
+      removeCard(jobId);
+      showToast('Job rejected.', '🗑️');
+      refreshStats();
+    } else {
+      showToast(d.message || 'Failed to reject', '❌');
+    }
+  } catch(e) { showToast('Server error', '❌'); }
+}
+
+// Kept for backward compat (price_agreed → accepted)
+async function handleAccept(jobId) { return handleAcceptBudget(jobId, 0); }
+
+function removeCard(jobId) {
+  const card = document.getElementById('jcard-' + jobId);
+  if (card) {
+    card.style.transition = 'all .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(20px)';
+    setTimeout(() => { card.remove(); checkEmptyPending(); }, 300);
   }
 }
 
-async function handleReject(jobId) {
-  const acceptBtn = document.getElementById('accept-' + jobId);
-  const rejectBtn = document.getElementById('reject-' + jobId);
-  if (!rejectBtn) return;
-  rejectBtn.disabled = acceptBtn.disabled = true;
-  rejectBtn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Rejecting…';
-
-  const d = await updateJobStatus(jobId, 'cancelled');
-  if (d.success) {
-    const card = document.getElementById('jcard-' + jobId);
-    if (card) {
-      card.style.transition = 'all .3s';
-      card.style.opacity = '0';
-      card.style.transform = 'translateX(-20px)';
-      setTimeout(() => { card.remove(); checkEmptyPending(); }, 300);
-    }
-    showToast('Job rejected and removed.', '🗑️');
-    refreshStats();
-  } else {
-    rejectBtn.disabled = acceptBtn.disabled = false;
-    rejectBtn.innerHTML = '<i class="bi bi-x-lg"></i> Reject';
-    showToast(d.message || 'Failed to reject job.', '❌');
-  }
+async function respondOffer(jobId, action, amount, note) {
+  const r = await fetch('/api/workers/respond-offer', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+    body: JSON.stringify({ job_id: jobId, action, amount, note })
+  });
+  return await r.json();
 }
 
 async function handleUpdate(jobId, newStatus, btn) {
@@ -607,8 +675,219 @@ function logout() {
   location.href = 'login.html';
 }
 
+
+// ─── Worker Price Offer Modal ────────────────────────────────
+let wOfferJobId = null;
+
+function openWorkerOffer(jobId, customerName, customerBudget) {
+  wOfferJobId = jobId;
+  document.getElementById('woCustName').textContent   = customerName;
+  document.getElementById('woCustBudget').textContent = '₹' + customerBudget;
+  document.getElementById('woAmount').value = '';
+  document.getElementById('woNote').value   = '';
+  document.getElementById('woAlert').style.display = 'none';
+  // Pre-fill with worker's base price if set
+  if (USER.basePrice) document.getElementById('woAmount').value = USER.basePrice;
+  document.getElementById('workerOfferModal').classList.add('open');
+}
+function closeWorkerOffer() { document.getElementById('workerOfferModal').classList.remove('open'); }
+
+async function sendWorkerOffer() {
+  const amount = parseFloat(document.getElementById('woAmount').value);
+  const note   = document.getElementById('woNote').value.trim();
+  if (!amount || amount < 1) { showWoAlert('error', 'Enter a valid price'); return; }
+
+  const btn = document.getElementById('woSubmitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
+
+  try {
+    const d = await respondOffer(wOfferJobId, 'counter', amount, note);
+    if (d.success) {
+      showToast(`Price ₹${amount} sent to customer 💬`, '📤');
+      closeWorkerOffer();
+      setTimeout(() => loadOverview(), 800);
+    } else {
+      showWoAlert('error', d.message || 'Failed to send');
+    }
+  } catch(e) { showWoAlert('error', 'Server error'); }
+  btn.disabled = false;
+  btn.innerHTML = '<i class="bi bi-send-fill"></i> Send My Price';
+}
+
+function showWoAlert(t, m) {
+  const el = document.getElementById('woAlert');
+  el.style.display = 'flex';
+  el.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
+  el.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
+}
+document.getElementById('workerOfferModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('workerOfferModal')) closeWorkerOffer();
+});
+
+// ─── Set Base Price ──────────────────────────────────────────
+async function saveBasePrice() {
+  const bp   = parseFloat(document.getElementById('basePriceInput').value);
+  const unit = document.getElementById('basePriceUnit').value;
+  const note = document.getElementById('basePriceNote').value.trim();
+  if (!bp || bp < 1) { showToast('Enter a valid price', '❌'); return; }
+  try {
+    const d = await fetch('/api/workers/set-price', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({ basePrice: bp, priceUnit: unit, priceNote: note })
+    }).then(r => r.json());
+    if (d.success) {
+      USER.basePrice  = bp;
+      USER.priceUnit  = unit;
+      USER.priceNote  = note;
+      localStorage.setItem('kc_user', JSON.stringify(USER));
+      showToast('Base price saved! ₹' + bp + '/' + unit, '✅');
+    } else showToast(d.message || 'Failed', '❌');
+  } catch(e) { showToast('Server error', '❌'); }
+}
+
+// Update polling to use new status
+async function pollForNewJobs() {
+  try {
+    const d = await API('/api/workers/jobs?limit=50');
+    const jobs = (d.jobs||[]).filter(j => ['pending_offer','negotiating','price_agreed'].includes(j.status));
+    const count = jobs.length;
+    if (lastJobCount !== null && count > lastJobCount) {
+      const diff = count - lastJobCount;
+      const newest = jobs[0];
+      const cname = newest?.customerId?.name || 'A customer';
+      const skill = newest?.skill || 'a job';
+      const budget = newest?.customerBudget || newest?.price || 0;
+      addNotif(
+        `New Job Request! 🎉`,
+        `${cname} needs ${skill} • Budget: ₹${budget}. Respond with your price.`,
+        skillEmoji[skill] || '📋'
+      );
+    }
+    lastJobCount = count;
+  } catch(e) {}
+}
+
 // Initial load
 loadOverview();
 </script>
+
+<style>
+/* Negotiation badges */
+.badge-negotiating{background:#FEF3C7;color:#92400E;border:1.5px solid #FDE68A}
+.badge-agreed{background:#D1FAE5;color:#065F46;border:1.5px solid #6EE7B7}
+
+/* Offer thread */
+.offer-thread{margin-top:8px;border-top:1px solid var(--ink-06);padding-top:8px;display:flex;flex-direction:column;gap:3px}
+.ot-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 8px;border-radius:7px}
+.ot-row.customer{background:rgba(232,96,28,.06)}
+.ot-row.worker{background:rgba(26,60,52,.06);justify-content:flex-end}
+.ot-who{font-weight:700;color:var(--ink-70);min-width:38px}
+.ot-amt{font-family:'Syne',sans-serif;font-weight:800;color:var(--forest);font-size:13px}
+.ot-status{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ot-pending{background:#FEF9C3;color:#854D0E}
+.ot-accepted{background:#DCFCE7;color:#166534}
+.ot-countered{background:#F3F4F6;color:#6B7280}
+.ot-rejected{background:#FEE2E2;color:#991B1B}
+.ot-note{font-size:11px;color:var(--ink-40);font-style:italic;flex:1}
+
+/* Counter button */
+.jc-btn.jc-counter{background:rgba(61,122,110,.12);color:var(--sage);border:1.5px solid rgba(61,122,110,.3)}
+.jc-btn.jc-counter:hover{background:var(--sage);color:#fff}
+.jc-btn.jc-set-price{background:rgba(232,96,28,.12);color:var(--saffron);border:1.5px solid rgba(232,96,28,.3)}
+.jc-btn.jc-set-price:hover{background:var(--saffron);color:#fff}
+
+/* Modals */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.6);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;width:100%;overflow:hidden;animation:mIn .3s ease}
+@keyframes mIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{background:var(--forest-2);padding:24px 28px;position:relative;display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+.modal-close{background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:14px}
+.alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
+.as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+.fg{margin-bottom:16px}
+.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
+.fw{position:relative}
+.fi{width:100%;padding:12px 14px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
+.fi:focus{border-color:var(--saffron);background:#fff;box-shadow:0 0 0 3px rgba(232,96,28,.1)}
+textarea.fi{min-height:70px;resize:vertical}
+.price-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.pb-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px}
+.pb-val{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#fff}
+
+/* Set price bar in sidebar */
+.price-bar{padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
+.price-bar-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
+.price-bar-val{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;margin-bottom:10px}
+.price-bar-btn{width:100%;padding:9px;background:rgba(232,96,28,.2);border:1px solid rgba(232,96,28,.3);border-radius:9px;color:var(--saffron-2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.price-bar-btn:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+</style>
+
+<!-- Worker Send Price Modal -->
+<div class="modal-backdrop" id="workerOfferModal">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-head">
+      <h3><i class="bi bi-currency-rupee" style="color:var(--saffron-2)"></i> Set Your Price</h3>
+      <button class="modal-close" onclick="closeWorkerOffer()"><i class="bi bi-x"></i></button>
+    </div>
+    <div style="padding:24px">
+      <div class="price-banner">
+        <div><div class="pb-label">Customer</div><div class="pb-val" id="woCustName">—</div></div>
+        <div style="text-align:right"><div class="pb-label">Their Budget</div><div class="pb-val" id="woCustBudget">₹0</div></div>
+      </div>
+      <div id="woAlert" style="display:none"></div>
+      <div class="fg">
+        <label class="fl">Your Price ₹ <small style="font-weight:400;color:var(--ink-40)">(what you want to earn)</small></label>
+        <input class="fi" type="number" id="woAmount" placeholder="e.g. 600" min="1">
+      </div>
+      <div class="fg">
+        <label class="fl">Note to Customer (optional)</label>
+        <textarea class="fi" id="woNote" placeholder="e.g. Includes materials, 2 hours work…"></textarea>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <button onclick="closeWorkerOffer()" style="padding:12px;border:1.5px solid var(--ink-12);border-radius:10px;background:none;font-size:14px;font-weight:600;color:var(--ink-40);cursor:pointer">Cancel</button>
+        <button id="woSubmitBtn" onclick="sendWorkerOffer()" style="padding:12px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s">
+          <i class="bi bi-send-fill"></i> Send My Price
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Set Base Price Modal -->
+<div class="modal-backdrop" id="setPriceModal">
+  <div class="modal-box" style="max-width:400px">
+    <div class="modal-head">
+      <h3><i class="bi bi-tag-fill" style="color:var(--saffron-2)"></i> Set Your Base Price</h3>
+      <button class="modal-close" onclick="document.getElementById('setPriceModal').classList.remove('open')"><i class="bi bi-x"></i></button>
+    </div>
+    <div style="padding:24px">
+      <p style="font-size:13.5px;color:var(--ink-40);margin-bottom:18px;line-height:1.6">This price is shown to customers when they view your profile. You can always negotiate per job.</p>
+      <div class="fg">
+        <label class="fl">My Base Price ₹</label>
+        <input class="fi" type="number" id="basePriceInput" placeholder="e.g. 500" min="1">
+      </div>
+      <div class="fg">
+        <label class="fl">Per</label>
+        <select class="fi" id="basePriceUnit">
+          <option value="job">Per Job</option>
+          <option value="hour">Per Hour</option>
+          <option value="day">Per Day</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Price Note (optional)</label>
+        <input class="fi" type="text" id="basePriceNote" placeholder="e.g. Materials extra, min 2 hrs">
+      </div>
+      <button onclick="saveBasePrice()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;transition:all .2s">
+        <i class="bi bi-check-circle-fill"></i> Save Price
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

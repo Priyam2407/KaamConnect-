@@ -421,14 +421,14 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
 <!-- HIRE MODAL -->
 <div class="modal-backdrop" id="hireModal">
   <div class="modal">
-    <div class="modal-head"><h3>Book Worker</h3><button class="modal-close" onclick="closeHire()"><i class="bi bi-x"></i></button></div>
+    <div class="modal-head"><h3><i class="bi bi-handshake" style="color:var(--saffron)"></i> Request & Negotiate</h3><button class="modal-close" onclick="closeHire()"><i class="bi bi-x"></i></button></div>
     <div class="modal-body">
       <div id="hireAlert" style="display:none"></div>
       <div id="hireWorkerInfo" style="background:var(--cream);border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:22px"></div>
       <input type="hidden" id="hireWorkerId">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div class="fg"><label class="fl">Service</label><input class="fi fi-no-icon" type="text" id="hireSkill" placeholder="e.g. Plumbing" style="padding:11px 14px"></div>
-        <div class="fg"><label class="fl">Budget ₹</label><input class="fi fi-no-icon" type="number" id="hirePrice" placeholder="500" min="100" style="padding:11px 14px"></div>
+        <div class="fg"><label class="fl">Your Budget ₹ <small style="font-weight:400;color:var(--ink-40)">(worker may counter-offer)</small></label><input class="fi fi-no-icon" type="number" id="hirePrice" placeholder="500" min="100" style="padding:11px 14px"></div>
       </div>
       <div class="fg"><label class="fl">Location</label><input class="fi fi-no-icon" type="text" id="hireLocation" placeholder="Your address" style="padding:11px 14px"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -437,7 +437,7 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
       </div>
       <div class="fg"><label class="fl">Details</label><textarea class="fi fi-no-icon" id="hireDesc" placeholder="Describe the work…" style="padding:11px 14px"></textarea></div>
       <button class="m-submit" id="hireSubmitBtn" onclick="confirmHire()">
-        <i class="bi bi-check-circle-fill"></i> Confirm Booking
+        <i class="bi bi-send-fill"></i> Send Request with Budget
         <i class="bi bi-arrow-repeat spin-sm" id="hireSpin"></i>
       </button>
     </div>
@@ -627,9 +627,59 @@ function jobCard(j) {
   const em    = skillEmoji[j.skill] || '🛠️';
   const wName = j.workerId?.name || 'Worker';
   const st    = j.status;
+  const offers = j.offers || [];
+
+  // Latest offer info
+  const latestWorkerOffer = [...offers].reverse().find(o => o.fromRole === 'worker' && o.status === 'pending');
+  const myBudget = j.customerBudget || j.price || 0;
+  const displayPrice = j.agreedPrice || (latestWorkerOffer ? latestWorkerOffer.amount : myBudget);
+
+  // Build price section
+  let priceHtml = `<div class="jc-price">₹${displayPrice}</div>`;
+  if (latestWorkerOffer && st === 'negotiating') {
+    priceHtml = `<div class="jc-price-block">
+      <div class="jc-price-worker">Worker: ₹${latestWorkerOffer.amount}</div>
+      <div class="jc-price-my">Your budget: ₹${myBudget}</div>
+    </div>`;
+  }
+  if (st === 'price_agreed') {
+    priceHtml = `<div class="jc-price" style="color:var(--sage)">₹${j.agreedPrice||j.price} ✅</div>`;
+  }
+
+  // Offer thread preview (last 3 rounds)
+  let offerThread = '';
+  if (offers.length && ['pending_offer','negotiating','price_agreed'].includes(st)) {
+    offerThread = `<div class="offer-thread">${
+      offers.slice(-4).map(o => `<div class="ot-row ${o.fromRole}">
+        <span class="ot-who">${o.fromRole === 'customer' ? 'You' : wName}</span>
+        <span class="ot-amt">₹${o.amount}</span>
+        <span class="ot-status ot-${o.status}">${o.status}</span>
+        ${o.note ? `<span class="ot-note">${o.note}</span>` : ''}
+      </div>`).join('')
+    }</div>`;
+  }
+
+  // Action buttons
   let actions = '';
-  if (st === 'pending')   actions = `<button class="jc-btn jc-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
-  if (st === 'completed') actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${j.workerId?._id||''}')"><i class="bi bi-star"></i> Review</button>`;
+  if (['pending_offer','negotiating'].includes(st)) {
+    actions = `<button class="jc-btn jc-negotiate" onclick="openNegotiate('${j._id}','${j.workerId?._id||''}','${wName}',${displayPrice},${myBudget},'${st}')">
+      <i class="bi bi-chat-dots"></i> Negotiate
+    </button>
+    <button class="jc-btn jc-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
+
+    if (latestWorkerOffer && st === 'negotiating') {
+      actions = `<button class="jc-btn jc-accept-price" onclick="acceptWorkerPrice('${j._id}',${latestWorkerOffer.amount},this)">
+        <i class="bi bi-check-circle-fill"></i> Accept ₹${latestWorkerOffer.amount}
+      </button>
+      <button class="jc-btn jc-negotiate" onclick="openNegotiate('${j._id}','${j.workerId?._id||''}','${wName}',${latestWorkerOffer.amount},${myBudget},'${st}')">
+        <i class="bi bi-chat-dots"></i> Counter
+      </button>
+      <button class="jc-btn jc-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
+    }
+  }
+  if (st === 'price_agreed') actions = `<div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-hourglass-split"></i> Waiting for worker to start</div>`;
+  if (st === 'completed')    actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${j.workerId?._id||''}')"><i class="bi bi-star"></i> Review</button>`;
+
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
@@ -639,8 +689,9 @@ function jobCard(j) {
         <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
         <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
       </div>
+      ${offerThread}
     </div>
-    <div class="jc-price">₹${j.price||0}</div>
+    ${priceHtml}
     <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
     ${actions?`<div class="jc-actions">${actions}</div>`:''}
   </div>`;
@@ -695,8 +746,9 @@ async function loadWorkers() {
             <div class="wc-rating"><span class="wc-stars">${'★'.repeat(Math.round(w.rating||0))}${'☆'.repeat(5-Math.round(w.rating||0))}</span> <b>${(w.rating||0).toFixed(1)}</b> (${w.totalJobs||0})</div>
             <div class="wc-bio">${w.bio||'Experienced professional.'}</div>
           </div>
-          <div class="wcard-foot">
-            <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Work'}','${skillEmoji[w.skill]||'🛠️'}')"><i class="bi bi-calendar-check"></i> Book Now</button>
+          <div class="wcard-foot" style="flex-direction:column;gap:8px;align-items:stretch">
+            ${w.basePrice ? `<div style="font-size:12px;text-align:center;color:var(--ink-40)"><i class="bi bi-tag"></i> Base: <strong style="color:var(--forest)">₹${w.basePrice}/${w.priceUnit||'job'}</strong>${w.priceNote?` — <em>${w.priceNote}</em>`:''}</div>` : '<div style="font-size:12px;text-align:center;color:var(--ink-40)">Open to negotiation</div>'}
+            <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Work'}','${skillEmoji[w.skill]||'🛠️'}',${w.basePrice||null})"><i class="bi bi-chat-dots"></i> Request & Negotiate</button>
           </div>
         </div>`).join('')
       : '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try different filters</p></div>';
@@ -706,29 +758,31 @@ async function loadWorkers() {
 }
 
 /* ══ HIRE MODAL — FIXED ══ */
-function openHire(id, name, skill, em) {
+function openHire(id, name, skill, em, basePrice) {
   document.getElementById('hireWorkerId').value = id;
+  const priceNote = basePrice ? `Starting from ₹${basePrice}` : 'Open to your offer';
   document.getElementById('hireWorkerInfo').innerHTML = `
     <div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:grid;place-items:center;font-size:22px;flex-shrink:0">${em}</div>
-    <div>
+    <div style="flex:1">
       <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest)">${name}</div>
       <div style="font-size:13px;color:var(--ink-40)">${skill}</div>
+      <div style="font-size:12px;color:var(--sage);margin-top:3px"><i class="bi bi-tag"></i> ${priceNote}</div>
     </div>`;
-  document.getElementById('hireSkill').value   = skill;
-  document.getElementById('hirePrice').value   = '';
-  document.getElementById('hireLocation').value= '';
-  document.getElementById('hireDate').value    = '';
-  document.getElementById('hireTime').value    = '';
-  document.getElementById('hireDesc').value    = '';
+  document.getElementById('hireSkill').value    = skill;
+  document.getElementById('hirePrice').value    = basePrice || '';
+  document.getElementById('hireLocation').value = '';
+  document.getElementById('hireDate').value     = '';
+  document.getElementById('hireTime').value     = '';
+  document.getElementById('hireDesc').value     = '';
   document.getElementById('hireAlert').style.display = 'none';
-  document.getElementById('hireSubmitBtn').disabled = false;
+  document.getElementById('hireSubmitBtn').disabled  = false;
   document.getElementById('hireModal').classList.add('open');
 }
 
 function closeHire() { document.getElementById('hireModal').classList.remove('open'); }
 
 async function confirmHire() {
-  const wid      = document.getElementById('hireWorkerId').value;
+  const wid     = document.getElementById('hireWorkerId').value;
   const skill    = document.getElementById('hireSkill').value.trim();
   const priceVal = document.getElementById('hirePrice').value;
   const loc      = document.getElementById('hireLocation').value.trim();
@@ -771,7 +825,7 @@ async function confirmHire() {
 
     if (res.ok && data.success) {
       // ✅ SUCCESS
-      showHA('ok', 'Job booked! Worker has been notified. 🎉');
+      showHA('ok', 'Job posted! Worker will respond with their price. You can negotiate from Jobs tab 💬');
       showToast('Job booked successfully!', '🎉');
       setTimeout(() => { closeHire(); showTab('jobs'); }, 1600);
     } else {
@@ -965,6 +1019,149 @@ document.querySelectorAll('.sb-item').forEach(el => {
   });
 });
 
+
+// ─── NEGOTIATION ────────────────────────────────────────────
+let negotiateJobId = null, negotiateWorkerId = null;
+
+function openNegotiate(jobId, workerId, workerName, workerPrice, myBudget, status) {
+  negotiateJobId   = jobId;
+  negotiateWorkerId = workerId;
+  document.getElementById('ngWorkerName').textContent = workerName;
+  document.getElementById('ngWorkerPrice').textContent = '₹' + workerPrice;
+  document.getElementById('ngMyBudget').textContent   = '₹' + myBudget;
+  document.getElementById('ngCounterAmt').value = '';
+  document.getElementById('ngNote').value = '';
+  document.getElementById('ngAlert').style.display = 'none';
+  document.getElementById('negotiateModal').classList.add('open');
+}
+function closeNegotiate() { document.getElementById('negotiateModal').classList.remove('open'); }
+
+async function sendCounterOffer() {
+  const amount = parseFloat(document.getElementById('ngCounterAmt').value);
+  const note   = document.getElementById('ngNote').value.trim();
+  if (!amount || amount < 1) { showNgAlert('error','Enter a valid amount'); return; }
+
+  const btn = document.getElementById('ngSubmitBtn');
+  btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Sending…';
+
+  try {
+    const d = await fetch('/api/jobs/offer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({ job_id: negotiateJobId, amount, note })
+    }).then(r => r.json());
+
+    if (d.success) {
+      showToast('Counter offer sent! ₹' + amount, '💬');
+      closeNegotiate();
+      showTab('jobs');
+    } else {
+      showNgAlert('error', d.message || 'Failed to send offer');
+    }
+  } catch (e) {
+    showNgAlert('error', 'Server error. Try again.');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<i class="bi bi-send-fill"></i> Send Counter Offer';
+}
+
+async function acceptWorkerPrice(jobId, price, btn) {
+  if (!confirm(`Accept worker price of ₹${price}?`)) return;
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="display:inline-block;animation:spin .8s linear infinite"></i>'; }
+  try {
+    const d = await fetch('/api/jobs/accept-price', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body: JSON.stringify({ job_id: jobId })
+    }).then(r => r.json());
+
+    if (d.success) {
+      showToast('Price agreed ₹' + price + '! Worker will start soon. 🎉', '✅');
+      setTimeout(() => loadAllJobs(), 800);
+    } else {
+      showToast(d.message || 'Failed to accept', '❌');
+      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Accept ₹' + price; }
+    }
+  } catch (e) {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Accept ₹' + price; }
+    showToast('Server error', '❌');
+  }
+}
+
+function showNgAlert(t, m) {
+  const el = document.getElementById('ngAlert');
+  el.style.display = 'flex';
+  el.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
+  el.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
+}
+document.getElementById('negotiateModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('negotiateModal')) closeNegotiate();
+});
+
 </script>
+
+<style>
+.badge-negotiating{background:#FEF3C7;color:#92400E;border:1.5px solid #FDE68A}
+.badge-agreed{background:#D1FAE5;color:#065F46;border:1.5px solid #6EE7B7}
+.jc-price-block{display:flex;flex-direction:column;gap:2px;text-align:right;min-width:90px}
+.jc-price-worker{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--forest)}
+.jc-price-my{font-size:12px;color:var(--ink-40);text-decoration:line-through}
+.jc-btn.jc-negotiate{background:var(--sage-light);color:var(--sage);border-color:rgba(61,122,110,.3)}
+.jc-btn.jc-negotiate:hover{background:var(--sage);color:#fff}
+.jc-btn.jc-accept-price{background:rgba(21,128,61,.1);color:#15803D;border-color:rgba(21,128,61,.3);font-weight:700}
+.jc-btn.jc-accept-price:hover{background:#15803D;color:#fff}
+.offer-thread{margin-top:8px;border-top:1px solid var(--ink-06);padding-top:8px;display:flex;flex-direction:column;gap:4px}
+.ot-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 8px;border-radius:7px}
+.ot-row.customer{background:rgba(232,96,28,.06);justify-content:flex-start}
+.ot-row.worker{background:rgba(26,60,52,.05);justify-content:flex-end}
+.ot-who{font-weight:700;color:var(--ink-70);min-width:38px}
+.ot-amt{font-family:'Syne',sans-serif;font-weight:800;color:var(--forest);font-size:13px}
+.ot-status{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ot-pending{background:#FEF9C3;color:#854D0E}
+.ot-accepted{background:#DCFCE7;color:#166534}
+.ot-countered{background:#F3F4F6;color:#6B7280}
+.ot-rejected{background:#FEE2E2;color:#991B1B}
+.ot-note{font-size:11px;color:var(--ink-40);font-style:italic;flex:1;text-align:right}
+</style>
+
+<!-- ── Negotiate Modal ──────────────────────────────────── -->
+<div class="modal-backdrop" id="negotiateModal">
+  <div class="modal-box" style="max-width:460px">
+    <div class="modal-head">
+      <h3><i class="bi bi-chat-dots" style="color:var(--saffron)"></i> Negotiate Price</h3>
+      <button class="modal-close" onclick="closeNegotiate()"><i class="bi bi-x"></i></button>
+    </div>
+    <div style="padding:24px">
+      <!-- Price comparison -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px">
+        <div style="background:rgba(232,96,28,.07);border:1.5px solid rgba(232,96,28,.2);border-radius:12px;padding:16px;text-align:center">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:6px">Worker Asks</div>
+          <div id="ngWorkerPrice" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--forest)">₹0</div>
+        </div>
+        <div style="background:rgba(61,122,110,.07);border:1.5px solid rgba(61,122,110,.2);border-radius:12px;padding:16px;text-align:center">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:6px">Your Budget</div>
+          <div id="ngMyBudget" style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--sage)">₹0</div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:13px;color:var(--ink-40);margin-bottom:20px">
+        Negotiating with <strong id="ngWorkerName">Worker</strong>
+      </div>
+      <div id="ngAlert" style="display:none;margin-bottom:14px"></div>
+      <div class="fg">
+        <label class="fl">Your Counter Offer ₹</label>
+        <div class="fw">
+          <input class="fi" type="number" id="ngCounterAmt" placeholder="e.g. 450" min="1" style="padding:12px 14px">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Message (optional)</label>
+        <input class="fi" type="text" id="ngNote" placeholder="e.g. I can pay this for 2 rooms" style="padding:12px 14px">
+      </div>
+      <button id="ngSubmitBtn" onclick="sendCounterOffer()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s">
+        <i class="bi bi-send-fill"></i> Send Counter Offer
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -8,11 +8,6 @@ const passport = require("passport");
 const connectDB = require("./config/db");
 const { Message, User, Job } = require("./models");
 
-// ✅ Fix fetch for Node < 18
-if (!global.fetch) {
-  global.fetch = require("node-fetch");
-}
-
 const app = express();
 const server = http.createServer(app);
 
