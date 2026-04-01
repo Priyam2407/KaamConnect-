@@ -6,8 +6,9 @@ exports.getDashboardStats = async (req, res) => {
       User.countDocuments({ role: "customer" }),
       User.countDocuments({ role: "worker" }),
       Job.countDocuments(),
-      User.countDocuments({ role: "worker", verified: false }),
-      Job.countDocuments({ status: "pending" }),
+      // ✅ FIX: count workers where idStatus=pending (have uploaded ID but not yet approved)
+      User.countDocuments({ role: "worker", idStatus: "pending" }),
+      Job.countDocuments({ status: { $in: ["pending", "pending_offer", "negotiating"] } }),
       Job.aggregate([
         { $match: { status: { $in: ["completed", "paid"] } } },
         { $group: { _id: null, total: { $sum: "$commission" } } },
@@ -40,19 +41,8 @@ exports.getDashboardStats = async (req, res) => {
 
     res.json({
       success: true,
-      stats: {
-        totalCustomers,
-        totalWorkers,
-        totalJobs,
-        totalRevenue,
-        pendingVerifications,
-        pendingJobs,
-      },
-      charts: {
-        monthlyData,
-        skillDistribution: skillData,
-        jobStatusDistribution: jobStatusData,
-      },
+      stats: { totalCustomers, totalWorkers, totalJobs, totalRevenue, pendingVerifications, pendingJobs },
+      charts: { monthlyData, skillDistribution: skillData, jobStatusDistribution: jobStatusData },
     });
   } catch (err) {
     console.error(err);
@@ -65,7 +55,10 @@ exports.getAllUsers = async (req, res) => {
     const { role, search, page = 1, limit = 20 } = req.query;
     const query = {};
     if (role) query.role = role;
-    if (search) query.$or = [{ name: { $regex: search, $options: "i" } }, { email: { $regex: search, $options: "i" } }];
+    if (search) query.$or = [
+      { name:  { $regex: search, $options: "i" } },
+      { email: { $regex: search, $options: "i" } },
+    ];
 
     const users = await User.find(query)
       .select("-password")
@@ -98,14 +91,18 @@ exports.getAllJobs = async (req, res) => {
   }
 };
 
+// ─── VERIFY WORKER ──────────────────────────────────────────
+// ✅ FIX: Sets BOTH verified=true AND idStatus="approved"
+//    The worker dashboard checks USER.verified from localStorage which
+//    gets stale — the real fix is to always fetch fresh from /api/auth/profile
 exports.verifyWorker = async (req, res) => {
   try {
     const { worker_id } = req.body;
     const worker = await User.findOneAndUpdate(
       { _id: worker_id, role: "worker" },
       {
-        verified:         true,
-        idStatus:         "approved",
+        verified:         true,        // ✅ admin-verified badge
+        idStatus:         "approved",  // ✅ ID document approved
         idVerifiedAt:     new Date(),
         idRejectedReason: null,
       },
@@ -114,13 +111,46 @@ exports.verifyWorker = async (req, res) => {
     if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
 
     await Notification.create({
-      userId: worker_id,
-      title: "Account Verified ✅",
-      message: "Congratulations! Your account has been verified by admin.",
-      type: "verification",
+      userId:  worker_id,
+      title:   "Account Verified ✅",
+      message: "Congratulations! Your ID has been verified. You are now a verified worker on KaamConnect.",
+      type:    "id_approved",
     });
 
-    res.json({ success: true, message: "Worker verified successfully" });
+    res.json({ success: true, message: "Worker verified successfully", worker: {
+      _id:          worker._id,
+      name:         worker.name,
+      verified:     worker.verified,
+      idStatus:     worker.idStatus,
+      idVerifiedAt: worker.idVerifiedAt,
+    }});
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+};
+
+exports.rejectWorker = async (req, res) => {
+  try {
+    const { worker_id, reason } = req.body;
+    const worker = await User.findOneAndUpdate(
+      { _id: worker_id, role: "worker" },
+      {
+        verified:         false,
+        idStatus:         "rejected",
+        idRejectedReason: reason || "Did not meet verification requirements",
+      },
+      { new: true }
+    );
+    if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
+
+    await Notification.create({
+      userId:  worker_id,
+      title:   "Verification Rejected ❌",
+      message: reason || "Your ID verification was rejected. Please upload a valid government ID.",
+      type:    "id_rejected",
+    });
+
+    res.json({ success: true, message: "Worker verification rejected" });
   } catch (err) {
     res.status(500).json({ success: false, message: "Database error" });
   }
@@ -162,7 +192,7 @@ exports.getRevenue = async (req, res) => {
             status: { $in: ["completed", "paid"] },
             createdAt: {
               $gte: new Date(now.getFullYear(), now.getMonth(), 1),
-              $lt: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+              $lt:  new Date(now.getFullYear(), now.getMonth() + 1, 1),
             },
           },
         },
@@ -172,8 +202,8 @@ exports.getRevenue = async (req, res) => {
         { $match: { status: { $in: ["completed", "paid"] } } },
         {
           $group: {
-            _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
-            revenue: { $sum: "$commission" },
+            _id:          { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+            revenue:      { $sum: "$commission" },
             transactions: { $sum: 1 },
           },
         },
@@ -184,41 +214,19 @@ exports.getRevenue = async (req, res) => {
 
     res.json({
       success: true,
-      totalRevenue: totalRes[0]?.total || 0,
+      totalRevenue:   totalRes[0]?.total || 0,
       monthlyRevenue: monthlyRes[0]?.total || 0,
-      revenueChart: chartRes,
+      revenueChart:   chartRes,
     });
   } catch (err) {
     res.status(500).json({ success: false, message: "Error fetching revenue" });
   }
 };
 
-exports.rejectWorker = async (req, res) => {
-  try {
-    const { worker_id, reason } = req.body;
-    const worker = await User.findOneAndUpdate(
-      { _id: worker_id, role: "worker" },
-      { verified: false, idStatus: "rejected", idRejectedReason: reason || "Did not meet verification requirements" },
-      { new: true }
-    );
-    if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
-
-    await Notification.create({
-      userId: worker_id,
-      title: "Verification Rejected ❌",
-      message: reason || "Your ID verification was rejected. Please upload a valid government ID.",
-      type: "id_rejected",
-    });
-
-    res.json({ success: true, message: "Worker verification rejected" });
-  } catch (err) {
-    res.status(500).json({ success: false, message: "Database error" });
-  }
-};
-
 exports.getWorkerDocument = async (req, res) => {
   try {
-    const worker = await User.findOne({ _id: req.params.id, role: "worker" }).select("name idType idDocument idStatus idRejectedReason idVerifiedAt");
+    const worker = await User.findOne({ _id: req.params.id, role: "worker" })
+      .select("name idType idDocument idStatus idRejectedReason idVerifiedAt verified");
     if (!worker) return res.status(404).json({ success: false, message: "Worker not found" });
     res.json({ success: true, worker });
   } catch (err) {
@@ -226,6 +234,7 @@ exports.getWorkerDocument = async (req, res) => {
   }
 };
 
+// ✅ FIX: Return workers with idStatus="pending" — these are the ones needing approval
 exports.getPendingVerifications = async (req, res) => {
   try {
     const workers = await User.find({ role: "worker", idStatus: "pending" })

@@ -7,6 +7,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
 router.post("/register",       auth.register);
 router.post("/login",          auth.login);
 router.get("/profile",         authenticateToken, auth.getProfile);
+router.get("/me",              authenticateToken, auth.getProfile); // alias for OAuth
 router.put("/profile",         authenticateToken, auth.updateProfile);
 router.put("/change-password", authenticateToken, auth.changePassword);
 
