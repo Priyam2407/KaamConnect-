@@ -6,31 +6,20 @@
 <title>Worker Dashboard — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-<!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-0TWZGCR7DB');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
 :root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
 a{text-decoration:none;color:inherit}
-
-/* SIDEBAR */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--forest-2);display:flex;flex-direction:column;z-index:100;overflow:hidden}
 .sb-bg{position:absolute;top:-60px;left:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
 .sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
 .sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff}
-.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
+.sb-logo-txt{font-family:"Syne",sans-serif;font-weight:800;font-size:18px;color:#fff}
 .sb-logo-txt span{color:var(--saffron-2)}
 .sb-nav{flex:1;padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
 .sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .22s;border:1px solid transparent}
@@ -40,19 +29,21 @@ a{text-decoration:none;color:inherit}
 .sb-divider{height:1px;background:rgba(255,255,255,.07);margin:12px 0}
 .sb-user{padding:18px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:relative;z-index:1}
 .sb-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
-.sb-uname{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-uname{font-family:"Syne",sans-serif;font-size:13.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sb-urole{font-size:11px;color:rgba(255,255,255,.4)}
 .sb-logout{margin-left:auto;background:rgba(255,255,255,.08);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
 .sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
-
-/* MAIN */
+/* Price bar in sidebar */
+.price-bar{padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
+.price-bar-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
+.price-bar-val{font-family:"Syne",sans-serif;font-size:16px;font-weight:800;color:#fff;margin-bottom:10px}
+.price-bar-btn{width:100%;padding:9px;background:rgba(232,96,28,.2);border:1px solid rgba(232,96,28,.3);border-radius:9px;color:var(--saffron-2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif}
+.price-bar-btn:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
 .main{margin-left:256px;min-height:100vh}
 .topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.topbar-title{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
 .topbar-right{display:flex;align-items:center;gap:12px}
 .content{padding:32px 36px}
-
-/* NOTIFICATION BELL */
 .notif-btn{position:relative;background:var(--cream);border:1.5px solid var(--ink-12);width:40px;height:40px;border-radius:11px;display:grid;place-items:center;cursor:pointer;font-size:17px;color:var(--ink-70);transition:all .2s}
 .notif-btn:hover{border-color:var(--saffron);color:var(--saffron)}
 .notif-dot{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:var(--saffron);border-radius:50%;border:2px solid var(--white);font-size:10px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center}
@@ -61,7 +52,7 @@ a{text-decoration:none;color:inherit}
 .notif-panel.open{display:block;animation:dropIn .2s ease}
 @keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .np-head{padding:18px 20px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
-.np-head h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--forest)}
+.np-head h3{font-family:"Syne",sans-serif;font-size:15px;font-weight:700;color:var(--forest)}
 .np-clear{font-size:12px;font-weight:600;color:var(--saffron);cursor:pointer;background:none;border:none}
 .np-list{max-height:340px;overflow-y:auto}
 .np-item{padding:14px 20px;border-bottom:1px solid var(--ink-06);display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:background .15s}
@@ -72,8 +63,6 @@ a{text-decoration:none;color:inherit}
 .np-msg{font-size:12.5px;color:var(--ink-40);line-height:1.45}
 .np-time{font-size:11px;color:var(--ink-40);margin-top:4px}
 .np-empty{padding:40px 20px;text-align:center;color:var(--ink-40);font-size:14px}
-
-/* TOAST */
 .toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
 .toast{background:var(--forest);color:#fff;padding:14px 18px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;box-shadow:0 8px 28px rgba(15,25,35,.2);pointer-events:all;animation:toastIn .3s ease;max-width:340px}
 .toast.removing{animation:toastOut .3s ease forwards}
@@ -81,85 +70,105 @@ a{text-decoration:none;color:inherit}
 @keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
 .toast-ico{font-size:20px;flex-shrink:0}
 .toast-close{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:16px}
-
-/* WELCOME */
 .welcome-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;position:relative;overflow:hidden}
 .wb-orb{position:absolute;bottom:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
-.wb-h{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.wb-h{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
 .wb-p{font-size:14px;color:rgba(255,255,255,.55)}
 .verify-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:100px;font-size:12.5px;font-weight:700;flex-shrink:0;position:relative;z-index:1}
 .v-yes{background:rgba(74,222,128,.2);border:1px solid rgba(74,222,128,.3);color:#4ADE80}
 .v-no{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.25);color:#FBBF24}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
 .stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
 .stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
 .stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
 .stat-ico.orange{background:var(--saffron-pale)}.stat-ico.green{background:var(--sage-light)}.stat-ico.blue{background:#EFF6FF}.stat-ico.gold{background:#FEF9C3}
-.stat-n{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
+.stat-n{font-family:"Syne",sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
 .stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
-
-/* JOBS */
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.sec-head h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.sec-head h2{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
 .jobs-list{display:flex;flex-direction:column;gap:14px}
-.job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px 22px;display:flex;align-items:center;gap:18px;transition:all .25s}
+.job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px 22px;display:flex;align-items:flex-start;gap:18px;transition:all .25s;flex-wrap:wrap}
 .job-card:hover{border-color:rgba(232,96,28,.15);box-shadow:0 6px 24px rgba(15,25,35,.06)}
 .jc-ico{width:48px;height:48px;border-radius:13px;background:var(--cream);display:grid;place-items:center;font-size:22px;flex-shrink:0}
-.jc-info{flex:1;min-width:0}
-.jc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--forest);margin-bottom:4px}
+.jc-info{flex:1;min-width:200px}
+.jc-title{font-family:"Syne",sans-serif;font-weight:700;font-size:15px;color:var(--forest);margin-bottom:4px}
 .jc-meta{font-size:12.5px;color:var(--ink-40);display:flex;flex-wrap:wrap;gap:14px}
 .jc-meta span{display:flex;align-items:center;gap:4px}
-.jc-price{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest);flex-shrink:0}
+.jc-price{font-family:"Syne",sans-serif;font-size:16px;font-weight:800;color:var(--forest);flex-shrink:0}
 .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:100px;font-size:11.5px;font-weight:700}
-.badge-pending{background:#FEF9C3;color:#A16207}.badge-accepted{background:#DBEAFE;color:#1D4ED8}.badge-inprogress{background:#EDE9FE;color:#7C3AED}.badge-completed{background:var(--sage-light);color:var(--sage)}.badge-cancelled{background:#FEE2E2;color:#B91C1C}.badge-paid{background:#F0FDF4;color:#15803D}
-.jc-actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
-.jc-btn{padding:8px 14px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
+.badge-pending{background:#FEF9C3;color:#A16207}
+.badge-accepted{background:#DBEAFE;color:#1D4ED8}
+.badge-inprogress{background:#EDE9FE;color:#7C3AED}
+.badge-completed{background:var(--sage-light);color:var(--sage)}
+.badge-cancelled{background:#FEE2E2;color:#B91C1C}
+.badge-paid{background:#F0FDF4;color:#15803D}
+.badge-negotiating{background:#FEF3C7;color:#92400E;border:1.5px solid #FDE68A}
+.badge-agreed{background:#D1FAE5;color:#065F46;border:1.5px solid #6EE7B7}
+.jc-actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;align-items:center}
+.jc-btn{padding:8px 14px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:"DM Sans",sans-serif;border:none}
 .jc-btn:disabled{opacity:.5;cursor:not-allowed}
-.jc-accept{background:var(--sage);border:none;color:#fff}
+.jc-accept{background:var(--sage);color:#fff}
 .jc-accept:hover:not(:disabled){background:var(--forest)}
-.jc-reject{background:#FEE2E2;border:1.5px solid #FECACA;color:#B91C1C}
-.jc-reject:hover:not(:disabled){background:#B91C1C;color:#fff;border-color:#B91C1C}
-.jc-progress{background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.25);color:var(--saffron)}
+.jc-reject{background:#FEE2E2;border:1.5px solid #FECACA !important;color:#B91C1C}
+.jc-reject:hover:not(:disabled){background:#B91C1C;color:#fff}
+.jc-counter{background:rgba(61,122,110,.12);color:var(--sage);border:1.5px solid rgba(61,122,110,.3) !important}
+.jc-counter:hover{background:var(--sage);color:#fff}
+.jc-progress{background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.25) !important;color:var(--saffron)}
 .jc-progress:hover:not(:disabled){background:var(--saffron);color:#fff}
-.jc-complete{background:var(--sage-light);border:1.5px solid rgba(61,122,110,.25);color:var(--sage)}
+.jc-complete{background:var(--sage-light);border:1.5px solid rgba(61,122,110,.25) !important;color:var(--sage)}
 .jc-complete:hover:not(:disabled){background:var(--sage);color:#fff}
+.offer-thread{margin-top:8px;border-top:1px solid var(--ink-06);padding-top:8px;display:flex;flex-direction:column;gap:3px}
+.ot-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 8px;border-radius:7px}
+.ot-row.customer{background:rgba(232,96,28,.06)}
+.ot-row.worker{background:rgba(26,60,52,.06);justify-content:flex-end}
+.ot-who{font-weight:700;color:var(--ink-70);min-width:38px}
+.ot-amt{font-family:"Syne",sans-serif;font-weight:800;color:var(--forest);font-size:13px}
+.ot-status{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ot-pending{background:#FEF9C3;color:#854D0E}
+.ot-accepted{background:#DCFCE7;color:#166534}
+.ot-countered{background:#F3F4F6;color:#6B7280}
+.ot-rejected{background:#FEE2E2;color:#991B1B}
+.ot-note{font-size:11px;color:var(--ink-40);font-style:italic;flex:1}
 .empty-state{text-align:center;padding:56px 24px;color:var(--ink-40)}
 .empty-state i{font-size:40px;opacity:.25;display:block;margin-bottom:14px}
-.empty-state h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
+.empty-state h3{font-family:"Syne",sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
 .spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* EARNINGS */
 .earnings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
 .earn-card{background:var(--forest);border-radius:16px;padding:28px;position:relative;overflow:hidden}
-.earn-card::after{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
+.earn-card::after{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
 .earn-card h4{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}
-.earn-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1.5px}
+.earn-num{font-family:"Syne",sans-serif;font-size:40px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1.5px}
 .earn-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:8px}
-
-@media(max-width:900px){
-  .sidebar{transform:translateX(-100%)}
-  .main{margin-left:0}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-}
+/* Modals */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.6);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;width:100%;overflow:hidden;animation:mIn .3s ease}
+@keyframes mIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{background:var(--forest-2);padding:24px 28px;display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-family:"Syne",sans-serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
+.modal-close{background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:14px}
+.alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
+.as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+.fg{margin-bottom:16px}
+.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
+.fi{width:100%;padding:12px 14px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
+.fi:focus{border-color:var(--saffron);background:#fff;box-shadow:0 0 0 3px rgba(232,96,28,.1)}
+textarea.fi{min-height:70px;resize:vertical}
+.price-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.pb-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px}
+.pb-val{font-family:"Syne",sans-serif;font-size:24px;font-weight:800;color:#fff}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<!-- TOAST CONTAINER -->
 <div class="toast-wrap" id="toastWrap"></div>
 
-<!-- NOTIFICATION PANEL -->
 <div class="notif-panel" id="notifPanel">
-  <div class="np-head">
-    <h3>Notifications</h3>
-    <button class="np-clear" onclick="clearNotifs()">Clear all</button>
-  </div>
-  <div class="np-list" id="notifList">
-    <div class="np-empty">No notifications yet</div>
-  </div>
+  <div class="np-head"><h3>Notifications</h3><button class="np-clear" onclick="clearNotifs()">Clear all</button></div>
+  <div class="np-list" id="notifList"><div class="np-empty">No notifications yet</div></div>
 </div>
 
 <aside class="sidebar">
@@ -177,13 +186,9 @@ a{text-decoration:none;color:inherit}
   </nav>
   <div class="sb-user">
     <div class="sb-av" id="sbAv">W</div>
-    <div>
-      <div class="sb-uname" id="sbName">Loading…</div>
-      <div class="sb-urole" id="sbSkill">Worker</div>
-    </div>
+    <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole" id="sbSkill">Worker</div></div>
     <button class="sb-logout" onclick="logout()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
   </div>
-
   <div class="price-bar">
     <div class="price-bar-lbl">My Base Price</div>
     <div class="price-bar-val" id="sbBasePrice">Not set</div>
@@ -203,16 +208,11 @@ a{text-decoration:none;color:inherit}
       </div>
     </div>
   </div>
-
   <div class="content">
-    <!-- OVERVIEW TAB -->
     <div id="tab-overview">
       <div class="welcome-banner">
         <div class="wb-orb"></div>
-        <div>
-          <div class="wb-h">Hello, <span id="wbName">Worker</span>! 🛠️</div>
-          <div class="wb-p">Check your pending job requests below.</div>
-        </div>
+        <div><div class="wb-h">Hello, <span id="wbName">Worker</span>! 🛠️</div><div class="wb-p">Respond to job offers and negotiate your price.</div></div>
         <div class="verify-badge" id="verifyBadge"><i class="bi bi-circle-fill" style="font-size:8px"></i> Checking…</div>
       </div>
       <div class="stats-grid">
@@ -221,16 +221,12 @@ a{text-decoration:none;color:inherit}
         <div class="stat-card"><div class="stat-ico blue">⏳</div><div class="stat-n" id="st-pend">—</div><div class="stat-l">Pending</div></div>
         <div class="stat-card"><div class="stat-ico gold">⭐</div><div class="stat-n" id="st-rating">—</div><div class="stat-l">Avg Rating</div></div>
       </div>
-      <div class="sec-head"><h2>Pending Requests</h2></div>
+      <div class="sec-head"><h2>Job Offers & Negotiations</h2></div>
       <div id="pendingJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
-
-    <!-- JOBS TAB -->
     <div id="tab-jobs" style="display:none">
       <div id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
-
-    <!-- EARNINGS TAB -->
     <div id="tab-earnings" style="display:none">
       <div class="earnings-grid">
         <div class="earn-card"><h4>Total Earnings</h4><div class="earn-num" id="totalEarnings">₹0</div><div class="earn-sub">Lifetime earnings</div></div>
@@ -242,592 +238,7 @@ a{text-decoration:none;color:inherit}
   </div>
 </div>
 
-<script>
-// ── Save token from Google OAuth redirect ──────────────────
-(function () {
-  const p = new URLSearchParams(window.location.search);
-  const t = p.get('token'), u = p.get('user');
-  if (t && u) {
-    try {
-      localStorage.setItem('kc_token', t);
-      localStorage.setItem('kc_user', u);
-      window.history.replaceState({}, '', window.location.pathname);
-    } catch(e) {}
-  }
-})();
-
-const TOKEN = localStorage.getItem('kc_token');
-const USER  = JSON.parse(localStorage.getItem('kc_user') || '{}');
-if (!TOKEN || USER.role !== 'worker') { location.href = 'login.html'; }
-
-document.getElementById('sbName').textContent  = USER.name  || 'Worker';
-document.getElementById('sbSkill').textContent = (USER.skill||'Worker')[0].toUpperCase() + (USER.skill||'').slice(1);
-document.getElementById('sbAv').textContent    = (USER.name||'W')[0].toUpperCase();
-document.getElementById('wbName').textContent  = (USER.name||'').split(' ')[0] || 'Worker';
-const sbBP = document.getElementById('sbBasePrice');
-if (USER.basePrice) {
-  sbBP.textContent = '₹' + USER.basePrice + ' / ' + (USER.priceUnit || 'job');
-  document.getElementById('basePriceInput').value = USER.basePrice;
-  if (USER.priceUnit) document.getElementById('basePriceUnit').value = USER.priceUnit;
-  if (USER.priceNote) document.getElementById('basePriceNote').value = USER.priceNote;
-} else {
-  sbBP.textContent = 'Not set';
-}
-
-const API = url => fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
-
-const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
-const statusBadge = { pending_offer:'badge-pending', negotiating:'badge-negotiating', price_agreed:'badge-agreed', pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
-const statusLabel = { pending_offer:'New Request 🔔', negotiating:'Negotiating 💬', price_agreed:'Price Agreed ✅', pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
-
-/* ─── TOAST ─── */
-function showToast(msg, ico='🔔', duration=4000) {
-  const wrap = document.getElementById('toastWrap');
-  const t = document.createElement('div');
-  t.className = 'toast';
-  t.innerHTML = `<span class="toast-ico">${ico}</span><span style="flex:1">${msg}</span><button class="toast-close" onclick="removeToast(this.parentElement)"><i class="bi bi-x"></i></button>`;
-  wrap.appendChild(t);
-  setTimeout(() => removeToast(t), duration);
-}
-function removeToast(el) {
-  if (!el || !el.parentElement) return;
-  el.classList.add('removing');
-  setTimeout(() => el.remove(), 300);
-}
-
-/* ─── NOTIFICATIONS ─── */
-let notifications = JSON.parse(localStorage.getItem('kc_notifs_' + USER._id) || '[]');
-let lastJobCount  = null;
-
-function saveNotifs() {
-  localStorage.setItem('kc_notifs_' + USER._id, JSON.stringify(notifications));
-}
-function addNotif(title, msg, ico='📋') {
-  notifications.unshift({ id: Date.now(), title, msg, ico, time: new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'}), read: false });
-  if (notifications.length > 30) notifications.pop();
-  saveNotifs();
-  renderNotifDot();
-  renderNotifList();
-  showToast(`<b>${title}</b><br><span style="opacity:.7;font-size:12px">${msg}</span>`, ico);
-}
-function renderNotifDot() {
-  const unread = notifications.filter(n => !n.read).length;
-  const dot = document.getElementById('notifDot');
-  if (unread > 0) { dot.textContent = unread > 9 ? '9+' : unread; dot.classList.add('show'); }
-  else dot.classList.remove('show');
-}
-function renderNotifList() {
-  const list = document.getElementById('notifList');
-  if (!notifications.length) { list.innerHTML = '<div class="np-empty">No notifications yet</div>'; return; }
-  list.innerHTML = notifications.map(n => `
-    <div class="np-item ${n.read ? '' : 'unread'}" onclick="markRead(${n.id})">
-      <div class="np-ico">${n.ico}</div>
-      <div>
-        <div class="np-title">${n.title}</div>
-        <div class="np-msg">${n.msg}</div>
-        <div class="np-time">${n.time}</div>
-      </div>
-    </div>`).join('');
-}
-function markRead(id) {
-  const n = notifications.find(x => x.id === id);
-  if (n) { n.read = true; saveNotifs(); renderNotifDot(); renderNotifList(); }
-}
-function clearNotifs() {
-  notifications = [];
-  saveNotifs();
-  renderNotifDot();
-  renderNotifList();
-}
-function toggleNotifPanel() {
-  const panel = document.getElementById('notifPanel');
-  panel.classList.toggle('open');
-  // Mark all read when opening
-  if (panel.classList.contains('open')) {
-    notifications.forEach(n => n.read = true);
-    saveNotifs();
-    renderNotifDot();
-    renderNotifList();
-  }
-}
-// Close notif panel when clicking outside
-document.addEventListener('click', e => {
-  const panel = document.getElementById('notifPanel');
-  const btn   = document.getElementById('notifBtn');
-  if (!panel.contains(e.target) && !btn.contains(e.target)) panel.classList.remove('open');
-});
-
-/* ─── POLL FOR NEW JOBS ─── */
-async function pollForNewJobs() {
-  try {
-    const d = await API('/api/workers/jobs?status=pending&limit=50');
-    const jobs = d.jobs || [];
-    const count = jobs.length;
-    if (lastJobCount !== null && count > lastJobCount) {
-      const diff = count - lastJobCount;
-      const newest = jobs[0];
-      const cname = newest?.customerId?.name || 'A customer';
-      const skill = newest?.skill || 'a job';
-      addNotif(
-        `New Job Request! 🎉`,
-        `${cname} needs a ${skill} in ${newest?.location || 'your area'}`,
-        skillEmoji[skill] || '📋'
-      );
-    }
-    lastJobCount = count;
-  } catch(e) {}
-}
-
-// Init
-renderNotifDot();
-renderNotifList();
-pollForNewJobs();
-setInterval(pollForNewJobs, 15000); // Poll every 15 seconds
-
-/* ─── TABS ─── */
-function showTab(t) {
-  ['overview','jobs','earnings'].forEach(name => {
-    document.getElementById('tab-' + name).style.display = 'none';
-  });
-  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + t).style.display = 'block';
-  const idx = ['overview','jobs','earnings'].indexOf(t);
-  document.querySelectorAll('.sb-item')[idx]?.classList.add('active');
-  const titles = { overview:'Overview', jobs:'My Jobs', earnings:'Earnings' };
-  document.getElementById('topbarTitle').textContent = titles[t] || t;
-  if (t === 'overview') loadOverview();
-  if (t === 'jobs')     loadAllJobs();
-  if (t === 'earnings') loadEarnings();
-}
-
-/* ─── OVERVIEW ─── */
-async function loadOverview() {
-  const d = await API('/api/workers/stats');
-  if (d.success) {
-    const s = d.stats;
-    document.getElementById('st-total').textContent  = s.total    || 0;
-    document.getElementById('st-done').textContent   = s.completed|| 0;
-    document.getElementById('st-pend').textContent   = s.pending  || 0;
-    document.getElementById('st-rating').textContent = (s.avg_rating || 0).toFixed ? (s.avg_rating||0).toFixed(1) : (s.avg_rating||0);
-  }
-  const vb = document.getElementById('verifyBadge');
-  if (USER.verified) { vb.className='verify-badge v-yes'; vb.innerHTML='<i class="bi bi-patch-check-fill"></i> Verified'; }
-  else { vb.className='verify-badge v-no'; vb.innerHTML='<i class="bi bi-hourglass-split"></i> Pending Verification'; }
-
-  const pj = await API('/api/workers/jobs?limit=50');
-  pj.jobs = (pj.jobs||[]).filter(j=>['pending_offer','negotiating','price_agreed'].includes(j.status));
-  const el  = document.getElementById('pendingJobs');
-  if (pj.jobs?.length) {
-    el.innerHTML = `<div class="jobs-list">${pj.jobs.map(pendingCard).join('')}</div>`;
-  } else {
-    el.innerHTML = '<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending requests</h3><p>New job requests will appear here.</p></div>';
-  }
-}
-
-/* ─── CARD BUILDERS ─── */
-function pendingCard(j) {
-  const em    = skillEmoji[j.skill] || '🛠️';
-  const cname = j.customerId?.name || 'Customer';
-  const st    = j.status;
-  const offers = j.offers || [];
-  const customerBudget = j.customerBudget || j.price || 0;
-
-  // Latest pending offer from customer
-  const latestCustOffer = [...offers].reverse().find(o => o.fromRole === 'customer' && o.status === 'pending');
-  const offerAmount = latestCustOffer ? latestCustOffer.amount : customerBudget;
-
-  // Build offer thread
-  let offerThread = '';
-  if (offers.length) {
-    offerThread = `<div class="offer-thread">${
-      offers.slice(-4).map(o => `<div class="ot-row ${o.fromRole}">
-        <span class="ot-who">${o.fromRole === 'worker' ? 'You' : cname}</span>
-        <span class="ot-amt">₹${o.amount}</span>
-        <span class="ot-status ot-${o.status}">${o.status}</span>
-        ${o.note ? `<span class="ot-note">${o.note}</span>` : ''}
-      </div>`).join('')
-    }</div>`;
-  }
-
-  // Build action buttons based on status
-  let actions = '';
-  if (st === 'pending_offer') {
-    actions = `
-      <button class="jc-btn jc-accept" id="accept-${j._id}" onclick="handleAcceptBudget('${j._id}', ${offerAmount})">
-        <i class="bi bi-check-lg"></i> Accept ₹${offerAmount}
-      </button>
-      <button class="jc-btn jc-counter" id="counter-${j._id}" onclick="openWorkerOffer('${j._id}', '${cname}', ${offerAmount})">
-        <i class="bi bi-chat-dots"></i> Send My Price
-      </button>
-      <button class="jc-btn jc-reject" id="reject-${j._id}" onclick="handleReject('${j._id}')">
-        <i class="bi bi-x-lg"></i> Reject
-      </button>`;
-  } else if (st === 'negotiating') {
-    const myLatestOffer = [...offers].reverse().find(o => o.fromRole === 'worker' && o.status === 'pending');
-    actions = `
-      <button class="jc-btn jc-accept" onclick="handleAcceptBudget('${j._id}', ${offerAmount})">
-        <i class="bi bi-check-lg"></i> Accept ₹${offerAmount}
-      </button>
-      <button class="jc-btn jc-counter" onclick="openWorkerOffer('${j._id}', '${cname}', ${offerAmount})">
-        <i class="bi bi-chat-dots"></i> Counter
-      </button>
-      <button class="jc-btn jc-reject" onclick="handleReject('${j._id}')">
-        <i class="bi bi-x-lg"></i> Reject
-      </button>`;
-  } else if (st === 'price_agreed') {
-    actions = `
-      <button class="jc-btn jc-accept" onclick="handleUpdate('${j._id}', 'accepted', this)">
-        <i class="bi bi-play-fill"></i> Start Job
-      </button>`;
-  }
-
-  return `<div class="job-card" id="jcard-${j._id}">
-    <div class="jc-ico">${em}</div>
-    <div class="jc-info">
-      <div class="jc-title">${j.title || j.skill || 'Job Request'}</div>
-      <div class="jc-meta">
-        <span><i class="bi bi-person"></i> ${cname}</span>
-        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
-        <span><i class="bi bi-currency-rupee"></i> Customer budget: ₹${offerAmount}</span>
-        ${j.description ? `<span><i class="bi bi-card-text"></i> ${j.description.slice(0,50)}${j.description.length>50?'…':''}</span>` : ''}
-      </div>
-      ${offerThread}
-    </div>
-    <span class="badge ${statusBadge[st]||''}">${statusLabel[st]||st}</span>
-    <div class="jc-actions">${actions}</div>
-  </div>`;
-}
-
-function jobCard(j) {
-  const em    = skillEmoji[j.skill] || '🛠️';
-  const cname = j.customerId?.name || 'Customer';
-  const st    = j.status;
-  const agreedAmt = j.agreedPrice || j.price || 0;
-  let actions = '';
-  if (st === 'accepted')   actions = `<button class="jc-btn jc-progress" id="btn-${j._id}" onclick="handleUpdate('${j._id}','in_progress',this)"><i class="bi bi-play-fill"></i> Start Work</button>`;
-  if (st === 'in_progress')actions = `<button class="jc-btn jc-complete" id="btn-${j._id}" onclick="handleUpdate('${j._id}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
-  return `<div class="job-card" id="jcard-${j._id}">
-    <div class="jc-ico">${em}</div>
-    <div class="jc-info">
-      <div class="jc-title">${j.title || j.skill || 'Job'}</div>
-      <div class="jc-meta">
-        <span><i class="bi bi-person"></i> ${cname}</span>
-        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
-        <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
-        <span><i class="bi bi-currency-rupee"></i> Agreed: ₹${agreedAmt}</span>
-      </div>
-    </div>
-    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:11px;color:var(--ink-40);font-weight:400">yours</span></div>
-    <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
-    ${actions ? `<div class="jc-actions">${actions}</div>` : ''}
-  </div>`;
-}
-
-/* ─── INSTANT UI UPDATE (no reload needed) ─── */
-// ─── Accept customer's budget directly ──────────────────────
-async function handleAcceptBudget(jobId, amount) {
-  if (!confirm(`Accept customer budget of ₹${amount}?`)) return;
-  try {
-    const d = await respondOffer(jobId, 'accept', null, null);
-    if (d.success) {
-      removeCard(jobId);
-      showToast(`Price ₹${amount} agreed! 🎉 Start the job from My Jobs tab.`, '✅');
-      refreshStats();
-      setTimeout(() => loadOverview(), 1000);
-    } else {
-      showToast(d.message || 'Failed', '❌');
-    }
-  } catch(e) { showToast('Server error', '❌'); }
-}
-
-// ─── Reject job ──────────────────────────────────────────────
-async function handleReject(jobId) {
-  if (!confirm('Reject this job?')) return;
-  try {
-    const d = await respondOffer(jobId, 'reject', null, null);
-    if (d.success) {
-      removeCard(jobId);
-      showToast('Job rejected.', '🗑️');
-      refreshStats();
-    } else {
-      showToast(d.message || 'Failed to reject', '❌');
-    }
-  } catch(e) { showToast('Server error', '❌'); }
-}
-
-// Kept for backward compat (price_agreed → accepted)
-async function handleAccept(jobId) { return handleAcceptBudget(jobId, 0); }
-
-function removeCard(jobId) {
-  const card = document.getElementById('jcard-' + jobId);
-  if (card) {
-    card.style.transition = 'all .3s';
-    card.style.opacity = '0';
-    card.style.transform = 'translateX(20px)';
-    setTimeout(() => { card.remove(); checkEmptyPending(); }, 300);
-  }
-}
-
-async function respondOffer(jobId, action, amount, note) {
-  const r = await fetch('/api/workers/respond-offer', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-    body: JSON.stringify({ job_id: jobId, action, amount, note })
-  });
-  return await r.json();
-}
-
-async function handleUpdate(jobId, newStatus, btn) {
-  if (!btn) return;
-  btn.disabled = true;
-  const origHTML = btn.innerHTML;
-  btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Updating…';
-
-  const d = await updateJobStatus(jobId, newStatus);
-  if (d.success) {
-    // Update badge instantly
-    const badge = document.getElementById('badge-' + jobId);
-    if (badge) {
-      badge.className = 'badge ' + (statusBadge[newStatus] || '');
-      badge.textContent = statusLabel[newStatus] || newStatus;
-    }
-    // Swap button instantly
-    const actions = btn.closest('.jc-actions');
-    if (actions) {
-      if (newStatus === 'in_progress') {
-        actions.innerHTML = `<button class="jc-btn jc-complete" id="btn-${jobId}" onclick="handleUpdate('${jobId}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
-      } else if (newStatus === 'completed') {
-        actions.innerHTML = ''; // No more actions
-      }
-    }
-    const msgs = { in_progress: 'Work started! Customer has been notified.', completed: 'Job marked as done! Great work 🎉' };
-    showToast(msgs[newStatus] || 'Status updated!', '✅');
-    refreshStats();
-  } else {
-    btn.disabled = false;
-    btn.innerHTML = origHTML;
-    showToast(d.message || 'Failed to update status.', '❌');
-  }
-}
-
-function checkEmptyPending() {
-  const list = document.querySelector('#pendingJobs .jobs-list');
-  if (list && list.children.length === 0) {
-    document.getElementById('pendingJobs').innerHTML = '<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending requests</h3><p>New job requests will appear here.</p></div>';
-  }
-}
-
-async function refreshStats() {
-  const d = await API('/api/workers/stats');
-  if (d.success) {
-    const s = d.stats;
-    document.getElementById('st-total').textContent  = s.total     || 0;
-    document.getElementById('st-done').textContent   = s.completed || 0;
-    document.getElementById('st-pend').textContent   = s.pending   || 0;
-    document.getElementById('st-rating').textContent = (s.avg_rating||0).toFixed ? (s.avg_rating||0).toFixed(1) : (s.avg_rating||0);
-  }
-}
-
-async function updateJobStatus(jobId, status) {
-  try {
-    const r = await fetch('/api/workers/job-status', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify({ job_id: jobId, status })
-    });
-    return await r.json();
-  } catch(e) {
-    return { success: false, message: 'Network error. Please try again.' };
-  }
-}
-
-/* ─── ALL JOBS TAB ─── */
-async function loadAllJobs() {
-  const el = document.getElementById('allJobs');
-  el.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
-  const d = await API('/api/workers/jobs?limit=50');
-  if (d.jobs?.length) {
-    el.innerHTML = `<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`;
-  } else {
-    el.innerHTML = '<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Accept job requests to see them here.</p></div>';
-  }
-}
-
-/* ─── EARNINGS TAB ─── */
-async function loadEarnings() {
-  const d = await API('/api/workers/earnings');
-  if (d.success) {
-    document.getElementById('totalEarnings').textContent  = '₹' + Math.round(d.totalEarnings  || 0);
-    document.getElementById('monthlyEarnings').textContent = '₹' + Math.round(d.monthlyEarnings || 0);
-  }
-  const jobs = await API('/api/workers/jobs?status=completed&limit=50');
-  const el   = document.getElementById('earningsJobs');
-  if (jobs.jobs?.length) {
-    el.innerHTML = `<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`;
-  } else {
-    el.innerHTML = '<div class="empty-state"><i class="bi bi-wallet2"></i><h3>No completed jobs</h3><p>Completed jobs will show here.</p></div>';
-  }
-}
-
-function logout() {
-  localStorage.removeItem('kc_token');
-  localStorage.removeItem('kc_user');
-  location.href = 'login.html';
-}
-
-
-// ─── Worker Price Offer Modal ────────────────────────────────
-let wOfferJobId = null;
-
-function openWorkerOffer(jobId, customerName, customerBudget) {
-  wOfferJobId = jobId;
-  document.getElementById('woCustName').textContent   = customerName;
-  document.getElementById('woCustBudget').textContent = '₹' + customerBudget;
-  document.getElementById('woAmount').value = '';
-  document.getElementById('woNote').value   = '';
-  document.getElementById('woAlert').style.display = 'none';
-  // Pre-fill with worker's base price if set
-  if (USER.basePrice) document.getElementById('woAmount').value = USER.basePrice;
-  document.getElementById('workerOfferModal').classList.add('open');
-}
-function closeWorkerOffer() { document.getElementById('workerOfferModal').classList.remove('open'); }
-
-async function sendWorkerOffer() {
-  const amount = parseFloat(document.getElementById('woAmount').value);
-  const note   = document.getElementById('woNote').value.trim();
-  if (!amount || amount < 1) { showWoAlert('error', 'Enter a valid price'); return; }
-
-  const btn = document.getElementById('woSubmitBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
-
-  try {
-    const d = await respondOffer(wOfferJobId, 'counter', amount, note);
-    if (d.success) {
-      showToast(`Price ₹${amount} sent to customer 💬`, '📤');
-      closeWorkerOffer();
-      setTimeout(() => loadOverview(), 800);
-    } else {
-      showWoAlert('error', d.message || 'Failed to send');
-    }
-  } catch(e) { showWoAlert('error', 'Server error'); }
-  btn.disabled = false;
-  btn.innerHTML = '<i class="bi bi-send-fill"></i> Send My Price';
-}
-
-function showWoAlert(t, m) {
-  const el = document.getElementById('woAlert');
-  el.style.display = 'flex';
-  el.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
-  el.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
-}
-document.getElementById('workerOfferModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('workerOfferModal')) closeWorkerOffer();
-});
-
-// ─── Set Base Price ──────────────────────────────────────────
-async function saveBasePrice() {
-  const bp   = parseFloat(document.getElementById('basePriceInput').value);
-  const unit = document.getElementById('basePriceUnit').value;
-  const note = document.getElementById('basePriceNote').value.trim();
-  if (!bp || bp < 1) { showToast('Enter a valid price', '❌'); return; }
-  try {
-    const d = await fetch('/api/workers/set-price', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify({ basePrice: bp, priceUnit: unit, priceNote: note })
-    }).then(r => r.json());
-    if (d.success) {
-      USER.basePrice  = bp;
-      USER.priceUnit  = unit;
-      USER.priceNote  = note;
-      localStorage.setItem('kc_user', JSON.stringify(USER));
-      showToast('Base price saved! ₹' + bp + '/' + unit, '✅');
-    } else showToast(d.message || 'Failed', '❌');
-  } catch(e) { showToast('Server error', '❌'); }
-}
-
-// Update polling to use new status
-async function pollForNewJobs() {
-  try {
-    const d = await API('/api/workers/jobs?limit=50');
-    const jobs = (d.jobs||[]).filter(j => ['pending_offer','negotiating','price_agreed'].includes(j.status));
-    const count = jobs.length;
-    if (lastJobCount !== null && count > lastJobCount) {
-      const diff = count - lastJobCount;
-      const newest = jobs[0];
-      const cname = newest?.customerId?.name || 'A customer';
-      const skill = newest?.skill || 'a job';
-      const budget = newest?.customerBudget || newest?.price || 0;
-      addNotif(
-        `New Job Request! 🎉`,
-        `${cname} needs ${skill} • Budget: ₹${budget}. Respond with your price.`,
-        skillEmoji[skill] || '📋'
-      );
-    }
-    lastJobCount = count;
-  } catch(e) {}
-}
-
-// Initial load
-loadOverview();
-</script>
-
-<style>
-/* Negotiation badges */
-.badge-negotiating{background:#FEF3C7;color:#92400E;border:1.5px solid #FDE68A}
-.badge-agreed{background:#D1FAE5;color:#065F46;border:1.5px solid #6EE7B7}
-
-/* Offer thread */
-.offer-thread{margin-top:8px;border-top:1px solid var(--ink-06);padding-top:8px;display:flex;flex-direction:column;gap:3px}
-.ot-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 8px;border-radius:7px}
-.ot-row.customer{background:rgba(232,96,28,.06)}
-.ot-row.worker{background:rgba(26,60,52,.06);justify-content:flex-end}
-.ot-who{font-weight:700;color:var(--ink-70);min-width:38px}
-.ot-amt{font-family:'Syne',sans-serif;font-weight:800;color:var(--forest);font-size:13px}
-.ot-status{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.ot-pending{background:#FEF9C3;color:#854D0E}
-.ot-accepted{background:#DCFCE7;color:#166534}
-.ot-countered{background:#F3F4F6;color:#6B7280}
-.ot-rejected{background:#FEE2E2;color:#991B1B}
-.ot-note{font-size:11px;color:var(--ink-40);font-style:italic;flex:1}
-
-/* Counter button */
-.jc-btn.jc-counter{background:rgba(61,122,110,.12);color:var(--sage);border:1.5px solid rgba(61,122,110,.3)}
-.jc-btn.jc-counter:hover{background:var(--sage);color:#fff}
-.jc-btn.jc-set-price{background:rgba(232,96,28,.12);color:var(--saffron);border:1.5px solid rgba(232,96,28,.3)}
-.jc-btn.jc-set-price:hover{background:var(--saffron);color:#fff}
-
-/* Modals */
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.6);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
-.modal-backdrop.open{display:flex}
-.modal-box{background:#fff;border-radius:20px;width:100%;overflow:hidden;animation:mIn .3s ease}
-@keyframes mIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.modal-head{background:var(--forest-2);padding:24px 28px;position:relative;display:flex;align-items:center;justify-content:space-between}
-.modal-head h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
-.modal-close{background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:14px}
-.alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
-.as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
-.fw{position:relative}
-.fi{width:100%;padding:12px 14px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
-.fi:focus{border-color:var(--saffron);background:#fff;box-shadow:0 0 0 3px rgba(232,96,28,.1)}
-textarea.fi{min-height:70px;resize:vertical}
-.price-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
-.pb-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px}
-.pb-val{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#fff}
-
-/* Set price bar in sidebar */
-.price-bar{padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
-.price-bar-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
-.price-bar-val{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#fff;margin-bottom:10px}
-.price-bar-btn{width:100%;padding:9px;background:rgba(232,96,28,.2);border:1px solid rgba(232,96,28,.3);border-radius:9px;color:var(--saffron-2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
-.price-bar-btn:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
-</style>
-
-<!-- Worker Send Price Modal -->
+<!-- Worker Offer Modal -->
 <div class="modal-backdrop" id="workerOfferModal">
   <div class="modal-box" style="max-width:440px">
     <div class="modal-head">
@@ -849,8 +260,8 @@ textarea.fi{min-height:70px;resize:vertical}
         <textarea class="fi" id="woNote" placeholder="e.g. Includes materials, 2 hours work…"></textarea>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <button onclick="closeWorkerOffer()" style="padding:12px;border:1.5px solid var(--ink-12);border-radius:10px;background:none;font-size:14px;font-weight:600;color:var(--ink-40);cursor:pointer">Cancel</button>
-        <button id="woSubmitBtn" onclick="sendWorkerOffer()" style="padding:12px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s">
+        <button onclick="closeWorkerOffer()" style="padding:12px;border:1.5px solid var(--ink-12);border-radius:10px;background:none;font-size:14px;font-weight:600;color:var(--ink-40);cursor:pointer;font-family:inherit">Cancel</button>
+        <button id="woSubmitBtn" onclick="sendWorkerOffer()" style="padding:12px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit">
           <i class="bi bi-send-fill"></i> Send My Price
         </button>
       </div>
@@ -866,28 +277,328 @@ textarea.fi{min-height:70px;resize:vertical}
       <button class="modal-close" onclick="document.getElementById('setPriceModal').classList.remove('open')"><i class="bi bi-x"></i></button>
     </div>
     <div style="padding:24px">
-      <p style="font-size:13.5px;color:var(--ink-40);margin-bottom:18px;line-height:1.6">This price is shown to customers when they view your profile. You can always negotiate per job.</p>
-      <div class="fg">
-        <label class="fl">My Base Price ₹</label>
-        <input class="fi" type="number" id="basePriceInput" placeholder="e.g. 500" min="1">
+      <p style="font-size:13.5px;color:var(--ink-40);margin-bottom:18px;line-height:1.6">This price is shown to customers when they browse workers. You can always negotiate per job.</p>
+      <div class="fg"><label class="fl">My Base Price ₹</label><input class="fi" type="number" id="basePriceInput" placeholder="e.g. 500" min="1"></div>
+      <div class="fg"><label class="fl">Per</label>
+        <select class="fi" id="basePriceUnit"><option value="job">Per Job</option><option value="hour">Per Hour</option><option value="day">Per Day</option></select>
       </div>
-      <div class="fg">
-        <label class="fl">Per</label>
-        <select class="fi" id="basePriceUnit">
-          <option value="job">Per Job</option>
-          <option value="hour">Per Hour</option>
-          <option value="day">Per Day</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label class="fl">Price Note (optional)</label>
-        <input class="fi" type="text" id="basePriceNote" placeholder="e.g. Materials extra, min 2 hrs">
-      </div>
-      <button onclick="saveBasePrice()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;transition:all .2s">
+      <div class="fg"><label class="fl">Price Note (optional)</label><input class="fi" type="text" id="basePriceNote" placeholder="e.g. Materials extra, min 2 hrs"></div>
+      <button onclick="saveBasePrice()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit">
         <i class="bi bi-check-circle-fill"></i> Save Price
       </button>
     </div>
   </div>
 </div>
+
+<script>
+(function(){
+  const p=new URLSearchParams(window.location.search);
+  const t=p.get("token"),u=p.get("user");
+  if(t&&u){try{localStorage.setItem("kc_token",t);localStorage.setItem("kc_user",u);window.history.replaceState({},"",window.location.pathname);}catch(e){}}
+})();
+
+const TOKEN=localStorage.getItem("kc_token");
+const USER=JSON.parse(localStorage.getItem("kc_user")||"{}");
+if(!TOKEN||USER.role!=="worker"){location.href="login.html";}
+
+document.getElementById("sbName").textContent=USER.name||"Worker";
+document.getElementById("sbSkill").textContent=(USER.skill||"worker")[0].toUpperCase()+(USER.skill||"").slice(1);
+document.getElementById("sbAv").textContent=(USER.name||"W")[0].toUpperCase();
+document.getElementById("wbName").textContent=(USER.name||"").split(" ")[0]||"Worker";
+
+if(USER.basePrice){
+  document.getElementById("sbBasePrice").textContent="₹"+USER.basePrice+"/"+(USER.priceUnit||"job");
+  document.getElementById("basePriceInput").value=USER.basePrice;
+  if(USER.priceUnit)document.getElementById("basePriceUnit").value=USER.priceUnit;
+  if(USER.priceNote)document.getElementById("basePriceNote").value=USER.priceNote;
+}
+
+const API=url=>fetch(url,{headers:{"Authorization":"Bearer "+TOKEN}}).then(r=>r.json());
+const skillEmoji={electrician:"⚡",plumber:"🔧",painter:"🎨",carpenter:"🪚",labour:"👷",mason:"🧱","ac technician":"❄️",driver:"🚗"};
+const statusBadge={pending_offer:"badge-pending",negotiating:"badge-negotiating",price_agreed:"badge-agreed",pending:"badge-pending",accepted:"badge-accepted",in_progress:"badge-inprogress",completed:"badge-completed",cancelled:"badge-cancelled",paid:"badge-paid"};
+const statusLabel={pending_offer:"New Offer 🔔",negotiating:"Negotiating 💬",price_agreed:"Price Agreed ✅",pending:"Pending",accepted:"Accepted",in_progress:"In Progress",completed:"Completed",cancelled:"Cancelled",paid:"Paid ✅"};
+
+function showToast(msg,ico="🔔",duration=4000){
+  const wrap=document.getElementById("toastWrap");
+  const t=document.createElement("div");t.className="toast";
+  t.innerHTML=`<span class="toast-ico">${ico}</span><span style="flex:1">${msg}</span><button class="toast-close" onclick="removeToast(this.parentElement)"><i class="bi bi-x"></i></button>`;
+  wrap.appendChild(t);setTimeout(()=>removeToast(t),duration);
+}
+function removeToast(el){if(!el||!el.parentElement)return;el.classList.add("removing");setTimeout(()=>el.remove(),300);}
+
+let notifications=JSON.parse(localStorage.getItem("kc_notifs_"+(USER._id||"x"))||"[]");
+let lastJobCount=null;
+function saveNotifs(){localStorage.setItem("kc_notifs_"+(USER._id||"x"),JSON.stringify(notifications));}
+function addNotif(title,msg,ico="📋"){
+  notifications.unshift({id:Date.now(),title,msg,ico,time:new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"}),read:false});
+  if(notifications.length>30)notifications.pop();
+  saveNotifs();renderNotifDot();renderNotifList();
+  showToast(`<b>${title}</b><br><span style="opacity:.7;font-size:12px">${msg}</span>`,ico);
+}
+function renderNotifDot(){
+  const unread=notifications.filter(n=>!n.read).length;
+  const dot=document.getElementById("notifDot");
+  if(unread>0){dot.textContent=unread>9?"9+":unread;dot.classList.add("show");}else dot.classList.remove("show");
+}
+function renderNotifList(){
+  const list=document.getElementById("notifList");
+  if(!notifications.length){list.innerHTML='<div class="np-empty">No notifications yet</div>';return;}
+  list.innerHTML=notifications.map(n=>`<div class="np-item ${n.read?"":"unread"}" onclick="markRead(${n.id})"><div class="np-ico">${n.ico}</div><div><div class="np-title">${n.title}</div><div class="np-msg">${n.msg}</div><div class="np-time">${n.time}</div></div></div>`).join("");
+}
+function markRead(id){const n=notifications.find(x=>x.id===id);if(n){n.read=true;saveNotifs();renderNotifDot();renderNotifList();}}
+function clearNotifs(){notifications=[];saveNotifs();renderNotifDot();renderNotifList();}
+function toggleNotifPanel(){
+  const panel=document.getElementById("notifPanel");panel.classList.toggle("open");
+  if(panel.classList.contains("open")){notifications.forEach(n=>n.read=true);saveNotifs();renderNotifDot();renderNotifList();}
+}
+document.addEventListener("click",e=>{
+  const panel=document.getElementById("notifPanel"),btn=document.getElementById("notifBtn");
+  if(!panel.contains(e.target)&&!btn.contains(e.target))panel.classList.remove("open");
+});
+
+async function pollForNewJobs(){
+  try{
+    const d=await API("/api/workers/jobs?limit=50");
+    const jobs=(d.jobs||[]).filter(j=>["pending_offer","negotiating","price_agreed"].includes(j.status));
+    const count=jobs.length;
+    if(lastJobCount!==null&&count>lastJobCount){
+      const newest=jobs[0];
+      const cname=newest?.customerId?.name||"A customer";
+      const skill=newest?.skill||"a job";
+      const budget=newest?.customerBudget||newest?.price||0;
+      addNotif("New Job Offer! 🎉",`${cname} offered ₹${budget} for ${skill}. Respond now!`,skillEmoji[skill]||"📋");
+    }
+    lastJobCount=count;
+  }catch(e){}
+}
+renderNotifDot();renderNotifList();pollForNewJobs();
+setInterval(pollForNewJobs,15000);
+
+function showTab(t){
+  ["overview","jobs","earnings"].forEach(name=>document.getElementById("tab-"+name).style.display="none");
+  document.querySelectorAll(".sb-item").forEach(el=>el.classList.remove("active"));
+  document.getElementById("tab-"+t).style.display="block";
+  const idx=["overview","jobs","earnings"].indexOf(t);
+  document.querySelectorAll(".sb-item")[idx]?.classList.add("active");
+  const titles={overview:"Overview",jobs:"My Jobs",earnings:"Earnings"};
+  document.getElementById("topbarTitle").textContent=titles[t]||t;
+  if(t==="overview")loadOverview();
+  if(t==="jobs")loadAllJobs();
+  if(t==="earnings")loadEarnings();
+}
+
+async function loadOverview(){
+  const d=await API("/api/workers/stats");
+  if(d.success){
+    const s=d.stats;
+    document.getElementById("st-total").textContent=s.total||0;
+    document.getElementById("st-done").textContent=s.completed||0;
+    document.getElementById("st-pend").textContent=s.pending||0;
+    document.getElementById("st-rating").textContent=parseFloat(s.avg_rating||0).toFixed(1);
+  }
+  const vb=document.getElementById("verifyBadge");
+  if(USER.verified){vb.className="verify-badge v-yes";vb.innerHTML='<i class="bi bi-patch-check-fill"></i> Verified';}
+  else{vb.className="verify-badge v-no";vb.innerHTML='<i class="bi bi-hourglass-split"></i> Pending Verification';}
+  const pj=await API("/api/workers/jobs?limit=50");
+  const activeJobs=(pj.jobs||[]).filter(j=>["pending_offer","negotiating","price_agreed"].includes(j.status));
+  const el=document.getElementById("pendingJobs");
+  if(activeJobs.length){
+    el.innerHTML=`<div class="jobs-list">${activeJobs.map(pendingCard).join("")}</div>`;
+  }else{
+    el.innerHTML='<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending offers</h3><p>New job offers from customers will appear here.</p></div>';
+  }
+}
+
+function pendingCard(j){
+  const em=skillEmoji[j.skill]||"🛠️";
+  const cname=j.customerId?.name||"Customer";
+  const st=j.status;
+  const offers=j.offers||[];
+  const latestCustOffer=[...offers].reverse().find(o=>o.fromRole==="customer"&&o.status==="pending");
+  const offerAmount=latestCustOffer?latestCustOffer.amount:(j.customerBudget||j.price||0);
+  let offerThread="";
+  if(offers.length){
+    offerThread=`<div class="offer-thread">${offers.slice(-4).map(o=>`<div class="ot-row ${o.fromRole}"><span class="ot-who">${o.fromRole==="worker"?"You":cname}</span><span class="ot-amt">₹${o.amount}</span><span class="ot-status ot-${o.status}">${o.status}</span>${o.note?`<span class="ot-note">${o.note}</span>`:""}</div>`).join("")}</div>`;
+  }
+  let actions="";
+  if(st==="pending_offer"||st==="negotiating"){
+    actions=`
+      <button class="jc-btn jc-accept" onclick="handleAcceptBudget('${j._id}',${offerAmount})"><i class="bi bi-check-lg"></i> Accept ₹${offerAmount}</button>
+      <button class="jc-btn jc-counter" onclick="openWorkerOffer('${j._id}','${cname.replace(/'/g,"\'")}',${offerAmount})"><i class="bi bi-chat-dots"></i> Counter</button>
+      <button class="jc-btn jc-reject" onclick="handleReject('${j._id}')"><i class="bi bi-x-lg"></i> Reject</button>`;
+  }else if(st==="price_agreed"){
+    actions=`<button class="jc-btn jc-accept" onclick="handleUpdate('${j._id}','accepted',this)"><i class="bi bi-play-fill"></i> Start Job</button>`;
+  }
+  return `<div class="job-card" id="jcard-${j._id}">
+    <div class="jc-ico">${em}</div>
+    <div class="jc-info">
+      <div class="jc-title">${j.title||j.skill||"Job Request"}</div>
+      <div class="jc-meta">
+        <span><i class="bi bi-person"></i> ${cname}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||"—"}</span>
+        <span><i class="bi bi-currency-rupee"></i> Budget: ₹${offerAmount}</span>
+        ${j.description?`<span><i class="bi bi-card-text"></i> ${j.description.slice(0,50)}${j.description.length>50?"…":""}</span>`:""}
+      </div>
+      ${offerThread}
+    </div>
+    <span class="badge ${statusBadge[st]||""}">${statusLabel[st]||st}</span>
+    <div class="jc-actions">${actions}</div>
+  </div>`;
+}
+
+function jobCard(j){
+  const em=skillEmoji[j.skill]||"🛠️";
+  const cname=j.customerId?.name||"Customer";
+  const st=j.status;
+  const agreedAmt=j.agreedPrice||j.price||0;
+  let actions="";
+  if(st==="accepted")actions=`<button class="jc-btn jc-progress" id="btn-${j._id}" onclick="handleUpdate('${j._id}','in_progress',this)"><i class="bi bi-play-fill"></i> Start Work</button>`;
+  if(st==="in_progress")actions=`<button class="jc-btn jc-complete" id="btn-${j._id}" onclick="handleUpdate('${j._id}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
+  return `<div class="job-card" id="jcard-${j._id}">
+    <div class="jc-ico">${em}</div>
+    <div class="jc-info">
+      <div class="jc-title">${j.title||j.skill||"Job"}</div>
+      <div class="jc-meta">
+        <span><i class="bi bi-person"></i> ${cname}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||"—"}</span>
+        <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString("en-IN")}</span>
+        <span><i class="bi bi-currency-rupee"></i> Agreed: ₹${agreedAmt}</span>
+      </div>
+    </div>
+    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:11px;color:var(--ink-40);font-weight:400">yours</span></div>
+    <span class="badge ${statusBadge[st]||""}" id="badge-${j._id}">${statusLabel[st]||st}</span>
+    ${actions?`<div class="jc-actions">${actions}</div>`:""}
+  </div>`;
+}
+
+async function handleAcceptBudget(jobId,amount){
+  if(!confirm(`Accept customer offer of ₹${amount}?`))return;
+  try{
+    const d=await respondOffer(jobId,"accept",null,null);
+    if(d.success){removeCard(jobId);showToast(`₹${amount} agreed! 🎉 Go to My Jobs to start work.`,"✅");refreshStats();setTimeout(()=>loadOverview(),800);}
+    else showToast(d.message||"Failed","❌");
+  }catch(e){showToast("Server error","❌");}
+}
+
+async function handleReject(jobId){
+  if(!confirm("Reject this job offer?"))return;
+  try{
+    const d=await respondOffer(jobId,"reject",null,null);
+    if(d.success){removeCard(jobId);showToast("Job rejected.","🗑️");refreshStats();}
+    else showToast(d.message||"Failed to reject","❌");
+  }catch(e){showToast("Server error","❌");}
+}
+
+function removeCard(jobId){
+  const card=document.getElementById("jcard-"+jobId);
+  if(card){card.style.transition="all .3s";card.style.opacity="0";card.style.transform="translateX(20px)";setTimeout(()=>{card.remove();checkEmptyPending();},300);}
+}
+
+async function respondOffer(jobId,action,amount,note){
+  const r=await fetch("/api/workers/respond-offer",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({job_id:jobId,action,amount,note})});
+  return await r.json();
+}
+
+async function handleUpdate(jobId,newStatus,btn){
+  if(!btn)return;
+  btn.disabled=true;const origHTML=btn.innerHTML;
+  btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Updating…';
+  const d=await updateJobStatus(jobId,newStatus);
+  if(d.success){
+    const badge=document.getElementById("badge-"+jobId);
+    if(badge){badge.className="badge "+(statusBadge[newStatus]||"");badge.textContent=statusLabel[newStatus]||newStatus;}
+    const actions=btn.closest(".jc-actions");
+    if(actions){
+      if(newStatus==="in_progress")actions.innerHTML=`<button class="jc-btn jc-complete" id="btn-${jobId}" onclick="handleUpdate('${jobId}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
+      else if(newStatus==="completed")actions.innerHTML="";
+    }
+    const msgs={in_progress:"Work started! Customer notified.",completed:"Job done! Great work 🎉"};
+    showToast(msgs[newStatus]||"Updated!","✅");refreshStats();
+  }else{btn.disabled=false;btn.innerHTML=origHTML;showToast(d.message||"Failed","❌");}
+}
+
+function checkEmptyPending(){
+  const list=document.querySelector("#pendingJobs .jobs-list");
+  if(list&&list.children.length===0)document.getElementById("pendingJobs").innerHTML='<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending offers</h3><p>New job offers will appear here.</p></div>';
+}
+
+async function refreshStats(){
+  const d=await API("/api/workers/stats");
+  if(d.success){const s=d.stats;document.getElementById("st-total").textContent=s.total||0;document.getElementById("st-done").textContent=s.completed||0;document.getElementById("st-pend").textContent=s.pending||0;document.getElementById("st-rating").textContent=parseFloat(s.avg_rating||0).toFixed(1);}
+}
+
+async function updateJobStatus(jobId,status){
+  try{const r=await fetch("/api/workers/job-status",{method:"PUT",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({job_id:jobId,status})});return await r.json();}
+  catch(e){return{success:false,message:"Network error"};}
+}
+
+async function loadAllJobs(){
+  const el=document.getElementById("allJobs");el.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  const d=await API("/api/workers/jobs?limit=50");
+  el.innerHTML=d.jobs?.length?`<div class="jobs-list">${d.jobs.map(jobCard).join("")}</div>`:'<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Accept offers to see them here.</p></div>';
+}
+
+async function loadEarnings(){
+  const d=await API("/api/workers/earnings");
+  if(d.success){document.getElementById("totalEarnings").textContent="₹"+Math.round(d.totalEarnings||0);document.getElementById("monthlyEarnings").textContent="₹"+Math.round(d.monthlyEarnings||0);}
+  const jobs=await API("/api/workers/jobs?status=completed&limit=50");
+  const el=document.getElementById("earningsJobs");
+  el.innerHTML=jobs.jobs?.length?`<div class="jobs-list">${jobs.jobs.map(jobCard).join("")}</div>`:'<div class="empty-state"><i class="bi bi-wallet2"></i><h3>No completed jobs</h3></div>';
+}
+
+let wOfferJobId=null;
+function openWorkerOffer(jobId,customerName,customerBudget){
+  wOfferJobId=jobId;
+  document.getElementById("woCustName").textContent=customerName;
+  document.getElementById("woCustBudget").textContent="₹"+customerBudget;
+  document.getElementById("woAmount").value=USER.basePrice||"";
+  document.getElementById("woNote").value="";
+  document.getElementById("woAlert").style.display="none";
+  document.getElementById("workerOfferModal").classList.add("open");
+}
+function closeWorkerOffer(){document.getElementById("workerOfferModal").classList.remove("open");}
+
+async function sendWorkerOffer(){
+  const amount=parseFloat(document.getElementById("woAmount").value);
+  const note=document.getElementById("woNote").value.trim();
+  if(!amount||amount<1){showWoAlert("error","Enter a valid price");return;}
+  const btn=document.getElementById("woSubmitBtn");
+  btn.disabled=true;btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
+  try{
+    const d=await respondOffer(wOfferJobId,"counter",amount,note);
+    if(d.success){showToast(`Your price ₹${amount} sent to customer 💬`,"📤");closeWorkerOffer();setTimeout(()=>loadOverview(),800);}
+    else showWoAlert("error",d.message||"Failed to send");
+  }catch(e){showWoAlert("error","Server error");}
+  btn.disabled=false;btn.innerHTML='<i class="bi bi-send-fill"></i> Send My Price';
+}
+
+function showWoAlert(t,m){
+  const el=document.getElementById("woAlert");el.style.display="flex";
+  el.className="alert "+(t==="error"?"ae":"as");
+  el.innerHTML=`<i class="bi bi-${t==="error"?"exclamation-circle-fill":"check-circle-fill"}"></i> ${m}`;
+}
+document.getElementById("workerOfferModal").addEventListener("click",e=>{if(e.target===document.getElementById("workerOfferModal"))closeWorkerOffer();});
+
+async function saveBasePrice(){
+  const bp=parseFloat(document.getElementById("basePriceInput").value);
+  const unit=document.getElementById("basePriceUnit").value;
+  const note=document.getElementById("basePriceNote").value.trim();
+  if(!bp||bp<1){showToast("Enter a valid price","❌");return;}
+  try{
+    const d=await fetch("/api/workers/set-price",{method:"PUT",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({basePrice:bp,priceUnit:unit,priceNote:note})}).then(r=>r.json());
+    if(d.success){
+      USER.basePrice=bp;USER.priceUnit=unit;USER.priceNote=note;
+      localStorage.setItem("kc_user",JSON.stringify(USER));
+      document.getElementById("sbBasePrice").textContent="₹"+bp+"/"+unit;
+      document.getElementById("setPriceModal").classList.remove("open");
+      showToast("Base price saved! ₹"+bp+"/"+unit,"✅");
+    }else showToast(d.message||"Failed","❌");
+  }catch(e){showToast("Server error","❌");}
+}
+
+function logout(){localStorage.removeItem("kc_token");localStorage.removeItem("kc_user");location.href="login.html";}
+
+loadOverview();
+</script>
 </body>
 </html>
