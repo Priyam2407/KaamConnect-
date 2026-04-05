@@ -70,14 +70,23 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
+  // Skip if password not modified
   if (!this.isModified("password")) return next();
+  // Skip if password is null (Google-only accounts)
   if (!this.password) return next();
-  if (this.password.startsWith("google_oauth_") && !this.isNew) return next();
+  // ✅ Skip ALL google_oauth_ placeholder passwords — both new and existing users
+  // This prevents hashing the placeholder on User.create() for Google signups
+  if (typeof this.password === "string" && this.password.startsWith("google_oauth_")) return next();
+  // Skip already-hashed bcrypt strings (starts with $2b$ or $2a$)
+  if (typeof this.password === "string" && this.password.startsWith("$2")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 userSchema.methods.comparePassword = async function (p) {
+  // Null password = Google-only account, can't compare
   if (!this.password) return false;
+  // google_oauth_ placeholder = not a real password
+  if (this.password.startsWith("google_oauth_") || this.password.startsWith("$") === false) return false;
   return bcrypt.compare(p, this.password);
 };
 userSchema.methods.toJSON = function () {

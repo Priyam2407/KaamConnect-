@@ -205,10 +205,16 @@ a{text-decoration:none;color:inherit}
   }
 
   if (error === 'google_failed') {
-    const b = document.getElementById('alertBox');
+    const b      = document.getElementById('alertBox');
+    const reason = params.get('reason');
+    let msg = 'Google sign-in failed. Please try again or use email/password below.';
+    if (reason && reason.includes('deactivated')) msg = 'Your account has been deactivated. Please contact support.';
+    if (reason && reason.includes('email')) msg = 'Your Google account has no email. Please use email/password registration.';
     b.style.display = 'flex';
     b.className     = 'alert ae';
-    b.innerHTML     = '<i class="bi bi-exclamation-circle-fill"></i> Google sign-in failed. Please try again or use email.';
+    b.innerHTML     = `<i class="bi bi-exclamation-circle-fill"></i> ${msg}`;
+    // Clear the error from URL bar
+    window.history.replaceState({}, '', window.location.pathname);
   }
 
   if (params.get('verified') === '1') {

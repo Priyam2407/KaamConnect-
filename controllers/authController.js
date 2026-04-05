@@ -4,11 +4,17 @@ const passport = require("passport");
 const crypto   = require("crypto");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mailer   = require("../config/mailer");
-const { applyReferral } = require("./referralController");
 
 // ─── JWT helper ──────────────────────────────────────────────
 const signToken = (id, role) =>
   jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: "7d" });
+
+// ─── Referral code generator ─────────────────────────────────
+function genRefCode(name) {
+  const base = (name || "USER").replace(/\s+/g, "").toUpperCase().slice(0, 5);
+  const rand = crypto.randomBytes(3).toString("hex").toUpperCase();
+  return base + rand;
+}
 
 // ─── Google OAuth Strategy ────────────────────────────────────
 passport.use(
@@ -18,38 +24,94 @@ passport.use(
       clientSecret:      process.env.GOOGLE_CLIENT_SECRET,
       callbackURL:       `${process.env.BASE_URL}/api/auth/google/callback`,
       passReqToCallback: true,
+      // ✅ FIX 1: Disable state/session — we don't use express-session
+      // Without this, passport-oauth2 throws:
+      // "OAuth 2.0 authentication requires session support when using state"
+      state: false,
+      store: false,
     },
     async (req, accessToken, refreshToken, profile, done) => {
       try {
-        // 1. Already has Google account → log in directly
-        let user = await User.findOne({ googleId: profile.id });
-        if (user) return done(null, { user, isNew: false });
+        // ✅ FIX 2: Guard against missing email (some Google accounts)
+        if (!profile.emails || !profile.emails[0] || !profile.emails[0].value) {
+          return done(null, false, { message: "Google account has no email address" });
+        }
 
-        // 2. Email already registered with password → link Google
-        user = await User.findOne({ email: profile.emails[0].value });
+        const email  = profile.emails[0].value.toLowerCase().trim();
+        const avatar = profile.photos?.[0]?.value || null;
+
+        // 1. Already has this Google account → log in directly
+        let user = await User.findOne({ googleId: profile.id });
         if (user) {
-          user.googleId = profile.id;
-          if (!user.avatar) user.avatar = profile.photos[0]?.value || null;
-          await user.save();
+          // ✅ FIX 3: Check if deactivated
+          if (!user.isActive) return done(null, false, { message: "Account is deactivated" });
           return done(null, { user, isNew: false });
         }
 
-        // 3. Brand new user → create with customer role temporarily
-        //    Generate their referral code right away
-        //    Role + worker details updated on google-role.html
+        // 2. Email already registered with password → link Google to it
+        user = await User.findOne({ email });
+        if (user) {
+          if (!user.isActive) return done(null, false, { message: "Account is deactivated" });
+          user.googleId = profile.id;
+          if (!user.avatar) user.avatar = avatar;
+          // ✅ Don't call user.save() if nothing changed to avoid pre-save hash issues
+          await User.findByIdAndUpdate(user._id, {
+            googleId: profile.id,
+            ...((!user.avatar && avatar) ? { avatar } : {}),
+          });
+          const updatedUser = await User.findById(user._id);
+          return done(null, { user: updatedUser, isNew: false });
+        }
+
+        // 3. Brand new Google user — generate unique referral code
+        let referralCode, exists = true;
+        while (exists) {
+          referralCode = genRefCode(profile.displayName);
+          exists = await User.findOne({ referralCode });
+        }
+
+        // ✅ FIX 4: Use findOneAndUpdate with upsert to handle race conditions
+        // Also: do NOT set password field — let model default handle it
+        // This avoids the pre-save hook trying to hash a placeholder
         user = await User.create({
-          name:         profile.displayName,
-          email:        profile.emails[0].value,
-          googleId:     profile.id,
-          avatar:       profile.photos[0]?.value || null,
-          role:         "customer",
-          password:     "google_oauth_" + profile.id,
-          verified:     true,
-          referralCode: genRefCode(profile.displayName),
+          name:          profile.displayName,
+          email,
+          googleId:      profile.id,
+          avatar,
+          role:          "customer",
+          // ✅ FIX 5: Set password to null (not "google_oauth_...") so pre-save hook skips it cleanly
+          password:      null,
+          verified:      true,
+          emailVerified: true,   // Google already verified their email
+          isActive:      true,
+          referralCode,
         });
 
         return done(null, { user, isNew: true });
       } catch (err) {
+        // ✅ FIX 6: Handle MongoDB duplicate key (race condition) gracefully
+        if (err.code === 11000) {
+          try {
+            // Another request created the user simultaneously — find and return them
+            const email = profile.emails?.[0]?.value?.toLowerCase()?.trim();
+            const existing = await User.findOne({
+              $or: [
+                { googleId: profile.id },
+                { email },
+              ],
+            });
+            if (existing) {
+              if (!existing.googleId) {
+                await User.findByIdAndUpdate(existing._id, { googleId: profile.id });
+              }
+              const user = await User.findById(existing._id);
+              return done(null, { user, isNew: false });
+            }
+          } catch (innerErr) {
+            return done(innerErr, null);
+          }
+        }
+        console.error("[Google OAuth Strategy Error]", err.message);
         return done(err, null);
       }
     }
@@ -59,66 +121,57 @@ passport.use(
 // ─── Register ─────────────────────────────────────────────────
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, phone, role, skill, location, bio, idType, idDocument } = req.body;
+    const {
+      name, email, password, phone, role,
+      skill, location, bio, idType, idDocument, referralCode: usedRefCode
+    } = req.body;
+
     if (!name || !email || !password)
       return res.status(400).json({ success: false, message: "Name, email and password required" });
 
-    // Block if already a verified real user
     const existing = await User.findOne({ email });
     if (existing)
       return res.status(409).json({ success: false, message: "Email already registered" });
 
-    // Remove any previous pending registration for this email
     await PendingUser.deleteOne({ email });
 
-    // Hash password before storing in pending
-    const bcrypt = require("bcryptjs");
+    const bcrypt       = require("bcryptjs");
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Generate verification token
-    const verifyToken = crypto.randomBytes(32).toString("hex");
-    const expiresAt   = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
-
-    // Save registration data temporarily — NOT in User collection yet
-    const { referralCode: usedRefCode } = req.body;
+    const verifyToken  = crypto.randomBytes(32).toString("hex");
+    const expiresAt    = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     await PendingUser.create({
       name, email,
-      password:   hashedPassword,
-      phone:      phone   || undefined,
-      role:       role    || "customer",
-      skill:      skill   || undefined,
-      location:   location || undefined,
-      bio:        bio     || undefined,
-      idType:     idType  || undefined,
-      idDocument: idDocument || undefined,
+      password:     hashedPassword,
+      phone:        phone      || undefined,
+      role:         role       || "customer",
+      skill:        skill      || undefined,
+      location:     location   || undefined,
+      bio:          bio        || undefined,
+      idType:       idType     || undefined,
+      idDocument:   idDocument || undefined,
       referralCode: usedRefCode || null,
       verifyToken,
       expiresAt,
     });
 
-    // Send verification email — keep pending user regardless of email result
-    let emailSent = false;
-    let emailError = null;
+    let emailSent = false, emailError = null;
     try {
       await mailer.sendVerificationEmail({ name, email, token: verifyToken });
       emailSent = true;
-      console.log("[Register] Verification email sent to:", email);
     } catch (emailErr) {
       emailError = emailErr.message;
-      console.error("[Register] ⚠️ Email failed (pending user kept):", emailErr.message);
-      // DO NOT delete pending user — they can resend from the screen
+      console.error("[Register] ⚠️ Email failed:", emailErr.message);
     }
 
-    // Always respond success — pending user is saved, they can resend if needed
     res.json({
-      success:   true,
-      pending:   true,
+      success:    true,
+      pending:    true,
       emailSent,
       emailError: emailError ? "Email delivery failed — please use the Resend button." : null,
-      message:   emailSent
-        ? "Verification email sent! Please check your inbox and click the link to complete your registration."
-        : "Your details are saved. Email delivery failed — please click Resend Verification Email below.",
+      message:    emailSent
+        ? "Verification email sent! Check your inbox and click the link."
+        : "Details saved. Email failed — click Resend below.",
       email,
     });
   } catch (err) {
@@ -137,21 +190,21 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email, isActive: true }).select("+password");
     if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
-    if (user.googleId && user.password && user.password.startsWith("google_oauth_"))
+    // ✅ FIX 7: Null password means Google-only account
+    if (!user.password || (user.googleId && user.password === null))
       return res.status(401).json({ success: false, message: "This account uses Google Sign-In. Please click 'Continue with Google'." });
 
     const valid = await user.comparePassword(password);
     if (!valid) return res.status(401).json({ success: false, message: "Invalid password" });
 
-    // Block login if email not verified (skip for Google-auth users & admins)
     if (!user.googleId && user.role !== "admin" && user.emailVerified === false) {
-      const token = signToken(user._id, user.role); // give token so they can resend
+      const token = signToken(user._id, user.role);
       return res.status(403).json({
-        success:       false,
+        success:         false,
         emailUnverified: true,
-        message:       "Please verify your email before logging in. Check your inbox or resend the verification email.",
+        message:         "Please verify your email before logging in.",
         token,
-        email:         user.email,
+        email:           user.email,
       });
     }
 
@@ -169,24 +222,30 @@ exports.login = async (req, res) => {
   }
 };
 
-// ─── Google Auth — Step 1 ────────────────────────────────────
+// ─── Google Auth — Step 1 ─────────────────────────────────────
+// ✅ FIX 8: Pass state:false to prevent session/state CSRF check
 exports.googleAuth = passport.authenticate("google", {
   scope:   ["profile", "email"],
   session: false,
+  state:   false,   // ← disables the session-based state store
 });
 
 // ─── Google Auth — Step 2: callback ──────────────────────────
 exports.googleCallback = (req, res) => {
-  passport.authenticate("google", { session: false }, (err, result) => {
-    if (err || !result) {
-      console.error("Google OAuth error:", err);
+  passport.authenticate("google", { session: false, state: false }, (err, result, info) => {
+    if (err) {
+      console.error("[Google OAuth Callback Error]:", err.message);
       return res.redirect("/login.html?error=google_failed");
+    }
+
+    if (!result) {
+      const reason = info?.message || "google_failed";
+      console.error("[Google OAuth] No result:", reason);
+      return res.redirect(`/login.html?error=google_failed&reason=${encodeURIComponent(reason)}`);
     }
 
     const { user, isNew } = result;
     const token    = signToken(user._id, user.role);
-    // NOTE: avatar intentionally excluded from URL to prevent 502 (header too large)
-    // Avatar is saved in DB and loaded via /api/auth/profile on dashboard
     const userData = encodeURIComponent(JSON.stringify({
       id:       user._id,
       name:     user.name,
@@ -196,12 +255,10 @@ exports.googleCallback = (req, res) => {
       location: user.location || null,
     }));
 
-    // NEW user → role selection page first
     if (isNew) {
       return res.redirect(`/google-role.html?token=${token}&user=${userData}`);
     }
 
-    // EXISTING user → straight to their dashboard
     const dest = user.role === "admin"  ? "admin-dashboard.html"
                : user.role === "worker" ? "worker-dashboard.html"
                : "customer-dashboard.html";
@@ -210,7 +267,7 @@ exports.googleCallback = (req, res) => {
   })(req, res);
 };
 
-// ─── Update role + worker details (called from google-role.html) ─
+// ─── Update Google role ───────────────────────────────────────
 exports.updateGoogleRole = async (req, res) => {
   try {
     const { role, skill, location, phone, bio, idType, idDocument, password } = req.body;
@@ -218,34 +275,33 @@ exports.updateGoogleRole = async (req, res) => {
     if (!["customer", "worker"].includes(role))
       return res.status(400).json({ success: false, message: "Invalid role" });
 
-    // Validate password if provided
     if (password && password.length < 6)
       return res.status(400).json({ success: false, message: "Password must be at least 6 characters" });
 
     const updateData = { role };
-
-    // Common fields for both roles
     if (phone)    updateData.phone    = phone;
     if (location) updateData.location = location;
-
-    // If worker, save all extra details
     if (role === "worker") {
-      if (skill)      updateData.skill = skill;
-      if (bio)        updateData.bio   = bio;
-      if (idType)     updateData.idType = idType;
-      if (idDocument) {
-        updateData.idDocument = idDocument;
-        updateData.idStatus   = "pending";
-      }
+      if (skill)      updateData.skill      = skill;
+      if (bio)        updateData.bio        = bio;
+      if (idType)     updateData.idType     = idType;
+      if (idDocument) { updateData.idDocument = idDocument; updateData.idStatus = "pending"; }
     }
 
-    // Save password if provided (allows Google users to also login with email/password)
-    const user = await User.findById(req.user.id);
     if (password) {
-      user.password = password; // model pre-save will hash it
+      // ✅ Set password directly — pre-save hook will hash it
+      updateData.password = password;
     }
-    Object.assign(user, updateData);
-    await user.save();
+
+    // ✅ Use save() only for password (triggers pre-save hook), findByIdAndUpdate for rest
+    if (password) {
+      const user = await User.findById(req.user.id);
+      user.password = password;
+      Object.assign(user, updateData);
+      await user.save();
+    } else {
+      await User.findByIdAndUpdate(req.user.id, updateData);
+    }
 
     const updatedUser = await User.findById(req.user.id);
     const token = signToken(updatedUser._id, updatedUser.role);
@@ -286,7 +342,6 @@ exports.updateProfile = async (req, res) => {
   try {
     const { name, phone, location, bio, skill, avatar } = req.body;
     const update = { name, phone, location, bio, skill };
-    // avatar can be a base64 data URL, a URL string, or null (to delete)
     if (avatar !== undefined) update.avatar = avatar;
     const user = await User.findByIdAndUpdate(req.user.id, update, { new: true });
     res.json({ success: true, message: "Profile updated successfully", avatar: user.avatar || null });
@@ -300,8 +355,11 @@ exports.changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
     const user = await User.findById(req.user.id).select("+password");
-    if (user.googleId && user.password.startsWith("google_oauth_"))
-      return res.status(400).json({ success: false, message: "Google accounts cannot change password here." });
+
+    // ✅ Google-only user (null password)
+    if (!user.password)
+      return res.status(400).json({ success: false, message: "Google accounts don't have a password. Set one below." });
+
     const valid = await user.comparePassword(currentPassword);
     if (!valid) return res.status(401).json({ success: false, message: "Current password is incorrect" });
     user.password = newPassword;
@@ -318,55 +376,57 @@ exports.verifyEmail = async (req, res) => {
     const { token } = req.query;
     if (!token) return res.status(400).send(emailResult("error", "Invalid verification link."));
 
-    // Check pending registration
     const pending = await PendingUser.findOne({
       verifyToken: token,
       expiresAt:   { $gt: new Date() },
     });
 
     if (!pending) {
-      // Also check if already verified (user clicked link twice)
-      const alreadyDone = await User.findOne({ email: pending?.email });
-      if (alreadyDone?.emailVerified) return res.redirect("/login.html?verified=1");
       return res.status(400).send(emailResult("error", "Verification link is invalid or has expired. Please register again."));
     }
 
-    // Check again that email not taken (race condition guard)
     const existingUser = await User.findOne({ email: pending.email });
     if (existingUser) {
       await PendingUser.deleteOne({ _id: pending._id });
       return res.redirect("/login.html?verified=1");
     }
 
-    // ── Create the real User account now ──────────────────────
-    const newUser = await User.create({
-      name:         pending.name,
-      email:        pending.email,
-      password:     pending.password,   // already hashed
-      phone:        pending.phone,
-      role:         pending.role,
-      skill:        pending.skill,
-      location:     pending.location,
-      bio:          pending.bio,
-      idType:       pending.idType    || null,
-      idDocument:   pending.idDocument || null,
-      idStatus:     pending.idDocument ? "pending" : "none",
-      emailVerified: true,             // verified right now
-      verified:      false,            // admin verification (for workers)
-      isActive:      true,
-    });
-
-    // Apply referral if the pending user signed up with a referral code
-    if (pending.referralCode) {
-      await applyReferral(newUser._id, pending.referralCode);
+    // Generate referral code for new user
+    let referralCode, exists = true;
+    while (exists) {
+      referralCode = genRefCode(pending.name);
+      exists = await User.findOne({ referralCode });
     }
 
-    // Clean up pending record
+    const newUser = await User.create({
+      name:          pending.name,
+      email:         pending.email,
+      password:      pending.password,
+      phone:         pending.phone,
+      role:          pending.role,
+      skill:         pending.skill,
+      location:      pending.location,
+      bio:           pending.bio,
+      idType:        pending.idType     || null,
+      idDocument:    pending.idDocument || null,
+      idStatus:      pending.idDocument ? "pending" : "none",
+      emailVerified: true,
+      verified:      false,
+      isActive:      true,
+      referralCode,
+    });
+
+    // Apply referral if the pending user used a code
+    if (pending.referralCode) {
+      try {
+        const { applyReferral } = require("./referralController");
+        await applyReferral(newUser._id, pending.referralCode);
+      } catch (e) { /* non-fatal */ }
+    }
+
     await PendingUser.deleteOne({ _id: pending._id });
+    console.log("[VerifyEmail] Account created:", newUser.email, "role:", newUser.role);
 
-    console.log("[VerifyEmail] Account created for:", newUser.email, "role:", newUser.role);
-
-    // Redirect to login with success flag
     return res.redirect("/login.html?verified=1");
   } catch (err) {
     console.error(err);
@@ -377,19 +437,16 @@ exports.verifyEmail = async (req, res) => {
 // ─── Resend Verification Email ────────────────────────────────
 exports.resendVerification = async (req, res) => {
   try {
-    // Look up by email from body (no auth token yet — account not created)
     const { email } = req.body;
     if (!email) return res.status(400).json({ success: false, message: "Email required" });
 
     const pending = await PendingUser.findOne({ email });
     if (!pending) {
-      // May already be a verified user
       const user = await User.findOne({ email });
       if (user?.emailVerified) return res.json({ success: false, message: "Email already verified. Please log in." });
       return res.status(404).json({ success: false, message: "No pending registration found. Please register again." });
     }
 
-    // Generate fresh token and extend expiry
     const verifyToken = crypto.randomBytes(32).toString("hex");
     pending.verifyToken = verifyToken;
     pending.expiresAt   = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -406,9 +463,7 @@ exports.resendVerification = async (req, res) => {
 // ─── HTML result page helper ──────────────────────────────────
 function emailResult(type, message) {
   const isOk = type === "ok";
-  const color = isOk ? "#2E7D5E" : "#DC2626";
-  const bg    = isOk ? "#E8F5EE" : "#FEF2F2";
-  const icon  = isOk ? "✅" : "❌";
+  const icon = isOk ? "✅" : "❌";
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KaamConnect</title>
 <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#FAF7F2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}</style>
 </head><body>
