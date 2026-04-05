@@ -69,7 +69,9 @@ app.use("/api/workers", require("./routes/workerRoutes"));
 app.use("/api/jobs", require("./routes/jobRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/payment", require("./routes/paymentRoutes"));
-app.use("/api/chat", require("./routes/chatRoutes"));
+app.use("/api/chat",         require("./routes/chatRoutes"));
+app.use("/api/referral",     require("./routes/referralRoutes"));
+app.use("/api/subscription", require("./routes/subscriptionRoutes"));
 
 // ── Health Check (VERY IMPORTANT for Render) ────────────────
 app.get("/api/health", (req, res) => {

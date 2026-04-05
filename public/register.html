@@ -400,7 +400,16 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
   </div>
 
   <!-- Submit -->
-  <button class="submit-btn" id="regBtn" onclick="register()">
+    <!-- Referral code (auto-filled from URL if present) -->
+  <div class="fg" id="refFieldWrap" style="display:none">
+    <label class="fl">Referral Code <span style="font-weight:400;color:var(--ink-40)">(auto-applied)</span></label>
+    <div class="fw">
+      <input class="fi" type="text" id="refCodeDisplay" readonly style="background:var(--sage-light);color:var(--sage);font-weight:700;letter-spacing:2px;padding-left:14px">
+      <i class="bi bi-gift fi-ico" style="color:var(--sage)"></i>
+    </div>
+  </div>
+
+<button class="submit-btn" id="regBtn" onclick="register()">
     <i class="bi bi-person-plus-fill"></i> Create Account
     <i class="bi bi-arrow-repeat spin" id="sp"></i>
   </button>

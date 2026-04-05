@@ -259,6 +259,7 @@ textarea.fi{min-height:90px;resize:vertical;padding:12px 14px;line-height:1.6}
     <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> My Jobs</div>
     <div class="sb-item" onclick="showTab('profile')"><i class="bi bi-person-circle"></i> My Profile</div>
     <div class="sb-divider"></div>
+    <div class="sb-item" onclick="location.href='referral.html'"><i class="bi bi-gift-fill"></i> Referral & Wallet</div>
     <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
   </nav>
   <div class="sb-user">
@@ -678,7 +679,13 @@ function jobCard(j) {
     }
   }
   if (st === 'price_agreed') actions = `<div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-hourglass-split"></i> Waiting for worker to start</div>`;
-  if (st === 'completed')    actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${j.workerId?._id||''}')"><i class="bi bi-star"></i> Review</button>`;
+  if (st === 'completed') {
+    const wid = j.workerId?._id || '';
+    const wname = j.workerId?.name || 'Worker';
+    const lastPrice = j.agreedPrice || j.price || 0;
+    actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>
+    <button class="jc-btn" style="background:rgba(26,60,52,.08);border:1.5px solid rgba(26,60,52,.2);color:var(--forest)" onclick="openRebook('${j._id}','${wname}',${lastPrice})"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
+  }
 
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
@@ -738,7 +745,15 @@ async function loadWorkers() {
             <div class="wc-av">${skillEmoji[w.skill]||'🛠️'}</div>
             <div style="z-index:1">
               <div class="wc-skill">${w.skill||'worker'}</div>
-              <div class="wc-name">${w.name}${w.verified?'<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>':''}</div>
+              <div class="wc-name">
+                ${w.name}
+                ${w.verified ? '<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>' : ''}
+                ${w.subscriptionStatus === 'premium' ? '<span style="background:#FBBF24;color:#78350F;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;margin-left:4px">GOLD</span>' : ''}
+                ${w.subscriptionStatus === 'basic' ? '<span style="background:#DBEAFE;color:#1D4ED8;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;margin-left:4px">PRO</span>' : ''}
+              </div>
+              <div style="font-size:11px;color:${w.isAvailable !== false ? 'rgba(74,222,128,.8)' : 'rgba(255,255,255,.35)'}">
+                <i class="bi bi-circle-fill" style="font-size:7px"></i> ${w.isAvailable !== false ? 'Available now' : 'Unavailable'}
+              </div>
               <div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div>
             </div>
           </div>
@@ -1159,6 +1174,25 @@ document.getElementById('negotiateModal').addEventListener('click', e => {
       </div>
       <button id="ngSubmitBtn" onclick="sendCounterOffer()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s">
         <i class="bi bi-send-fill"></i> Send Counter Offer
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Re-book Modal ────────────────────────────────────── -->
+<div class="modal-backdrop" id="rebookModal">
+  <div class="modal">
+    <div class="modal-head"><h3><i class="bi bi-arrow-repeat" style="color:var(--saffron)"></i> Re-book Worker</h3><button class="modal-close" onclick="closeRebook()"><i class="bi bi-x"></i></button></div>
+    <div class="modal-body">
+      <div id="rbAlert" style="display:none"></div>
+      <div style="background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:12px;padding:14px;margin-bottom:18px;font-size:14px;color:var(--forest)">
+        <i class="bi bi-person-check-fill" style="color:var(--sage)"></i> Re-booking <strong id="rbWorkerName">Worker</strong>
+      </div>
+      <div class="fg"><label class="fl">Your Budget ₹</label><input class="fi fi-no-icon" type="number" id="rbPrice" placeholder="Same as last time" min="1" style="padding:11px 14px"></div>
+      <div class="fg"><label class="fl">Preferred Date <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><input class="fi fi-no-icon" type="date" id="rbDate" style="padding:11px 14px"></div>
+      <div class="fg"><label class="fl">Details <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><textarea class="fi fi-no-icon" id="rbDesc" placeholder="Anything different from last time?" style="padding:11px 14px;min-height:70px"></textarea></div>
+      <button id="rbSubmitBtn" onclick="confirmRebook()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+        <i class="bi bi-arrow-repeat"></i> Send Re-book Request
       </button>
     </div>
   </div>

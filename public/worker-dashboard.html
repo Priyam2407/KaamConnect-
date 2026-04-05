@@ -182,8 +182,23 @@ textarea.fi{min-height:70px;resize:vertical}
     <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> My Jobs</div>
     <div class="sb-item" onclick="showTab('earnings')"><i class="bi bi-wallet2"></i> Earnings</div>
     <div class="sb-divider"></div>
+    <div class="sb-item" onclick="location.href='referral.html'"><i class="bi bi-gift-fill"></i> Referral & Wallet</div>
     <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
   </nav>
+  <!-- Availability toggle -->
+  <div style="padding:10px 20px 12px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35)">Status</span>
+      <label style="cursor:pointer;display:flex;align-items:center;gap:8px">
+        <span id="availLabel" style="font-size:12px;color:rgba(74,222,128,.7)">Online</span>
+        <span style="position:relative;width:38px;height:22px;display:inline-block">
+          <input type="checkbox" id="availToggle" checked style="opacity:0;width:0;height:0;position:absolute" onchange="toggleAvailability(this.checked)">
+          <span id="availTrack" style="position:absolute;inset:0;border-radius:11px;background:#4ADE80;transition:all .3s;pointer-events:none"></span>
+          <span id="availThumb" style="position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s;pointer-events:none"></span>
+        </span>
+      </label>
+    </div>
+  </div>
   <div class="sb-user">
     <div class="sb-av" id="sbAv">W</div>
     <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole" id="sbSkill">Worker</div></div>

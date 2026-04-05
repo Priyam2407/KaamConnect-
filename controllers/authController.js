@@ -4,6 +4,7 @@ const passport = require("passport");
 const crypto   = require("crypto");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mailer   = require("../config/mailer");
+const { applyReferral } = require("./referralController");
 
 // ─── JWT helper ──────────────────────────────────────────────
 const signToken = (id, role) =>
@@ -34,15 +35,17 @@ passport.use(
         }
 
         // 3. Brand new user → create with customer role temporarily
+        //    Generate their referral code right away
         //    Role + worker details updated on google-role.html
         user = await User.create({
-          name:     profile.displayName,
-          email:    profile.emails[0].value,
-          googleId: profile.id,
-          avatar:   profile.photos[0]?.value || null,
-          role:     "customer",
-          password: "google_oauth_" + profile.id,
-          verified: true,
+          name:         profile.displayName,
+          email:        profile.emails[0].value,
+          googleId:     profile.id,
+          avatar:       profile.photos[0]?.value || null,
+          role:         "customer",
+          password:     "google_oauth_" + profile.id,
+          verified:     true,
+          referralCode: genRefCode(profile.displayName),
         });
 
         return done(null, { user, isNew: true });
@@ -77,6 +80,8 @@ exports.register = async (req, res) => {
     const expiresAt   = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
 
     // Save registration data temporarily — NOT in User collection yet
+    const { referralCode: usedRefCode } = req.body;
+
     await PendingUser.create({
       name, email,
       password:   hashedPassword,
@@ -87,6 +92,7 @@ exports.register = async (req, res) => {
       bio:        bio     || undefined,
       idType:     idType  || undefined,
       idDocument: idDocument || undefined,
+      referralCode: usedRefCode || null,
       verifyToken,
       expiresAt,
     });
@@ -349,6 +355,11 @@ exports.verifyEmail = async (req, res) => {
       verified:      false,            // admin verification (for workers)
       isActive:      true,
     });
+
+    // Apply referral if the pending user signed up with a referral code
+    if (pending.referralCode) {
+      await applyReferral(newUser._id, pending.referralCode);
+    }
 
     // Clean up pending record
     await PendingUser.deleteOne({ _id: pending._id });

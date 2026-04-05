@@ -17,14 +17,17 @@ async function notify(userId, title, message, type, jobId = null) {
 exports.findWorkers = async (req, res) => {
   try {
     const { skill, location, min_rating } = req.query;
+    const { show_offline } = req.query;
     const query = { role: "worker", isActive: true };
+    // Show only available workers unless show_offline=1
+    if (!show_offline || show_offline !== "1") query.isAvailable = true;
     if (skill && skill !== "all") query.skill = skill.toLowerCase();
     if (location) query.location = { $regex: location, $options: "i" };
     if (min_rating) query.rating = { $gte: parseFloat(min_rating) };
 
     const workers = await User.find(query)
       .select("-password")
-      .sort({ verified: -1, rating: -1, totalJobs: -1 });
+      .sort({ subscriptionStatus: -1, isAvailable: -1, verified: -1, rating: -1, totalJobs: -1 });
 
     res.json({ success: true, workers, count: workers.length });
   } catch (err) {
