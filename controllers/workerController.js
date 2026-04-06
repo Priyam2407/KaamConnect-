@@ -19,8 +19,10 @@ exports.findWorkers = async (req, res) => {
     const { skill, location, min_rating } = req.query;
     const { show_offline } = req.query;
     const query = { role: "worker", isActive: true };
-    // Show only available workers unless show_offline=1
-    if (!show_offline || show_offline !== "1") query.isAvailable = true;
+    // ✅ FIX: Only filter offline workers when explicitly requested (show_offline=0)
+    // Default shows ALL workers — isAvailable:true would exclude seed/old workers
+    // who have no isAvailable field set (undefined !== true)
+    if (show_offline === "0") query.isAvailable = true;
     if (skill && skill !== "all") query.skill = skill.toLowerCase();
     if (location) query.location = { $regex: location, $options: "i" };
     if (min_rating) query.rating = { $gte: parseFloat(min_rating) };

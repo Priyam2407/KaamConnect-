@@ -6,204 +6,265 @@
 <title>Worker Dashboard — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
 :root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
 a{text-decoration:none;color:inherit}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:var(--forest-2);display:flex;flex-direction:column;z-index:100;overflow:hidden}
+
+/* ── SIDEBAR ─────────────────────────────────────────────── */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:var(--forest-2);display:flex;flex-direction:column;z-index:100;transition:transform .3s ease}
 .sb-bg{position:absolute;top:-60px;left:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
-.sb-logo{padding:28px 24px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
-.sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff}
-.sb-logo-txt{font-family:"Syne",sans-serif;font-weight:800;font-size:18px;color:#fff}
+.sb-logo{padding:26px 22px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;flex-shrink:0}
+.sb-logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:#fff}
 .sb-logo-txt span{color:var(--saffron-2)}
-.sb-nav{flex:1;padding:20px 12px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
-.sb-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .22s;border:1px solid transparent}
+.sb-nav{flex:1;padding:18px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;position:relative;z-index:1}
+.sb-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);cursor:pointer;transition:all .22s;border:1px solid transparent;user-select:none}
 .sb-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.85)}
 .sb-item.active{background:var(--saffron);color:#fff;box-shadow:0 4px 16px rgba(232,96,28,.35)}
-.sb-item i{font-size:17px;flex-shrink:0}
-.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:12px 0}
-.sb-user{padding:18px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;position:relative;z-index:1}
-.sb-av{width:38px;height:38px;border-radius:11px;background:var(--saffron);display:grid;place-items:center;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
-.sb-uname{font-family:"Syne",sans-serif;font-size:13.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sb-urole{font-size:11px;color:rgba(255,255,255,.4)}
-.sb-logout{margin-left:auto;background:rgba(255,255,255,.08);border:none;width:32px;height:32px;border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
+.sb-item i{font-size:16px;flex-shrink:0}
+.sb-divider{height:1px;background:rgba(255,255,255,.07);margin:10px 0}
+
+/* availability toggle */
+.avail-section{padding:12px 20px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
+.avail-row{display:flex;align-items:center;justify-content:space-between}
+.avail-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.avail-status{font-size:11.5px;margin-top:5px;font-weight:600;transition:color .3s}
+.toggle-wrap{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0}
+.toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;border-radius:11px;background:rgba(255,255,255,.2);transition:background .3s}
+.toggle-thumb{position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.toggle-wrap input:checked~.toggle-track{background:#4ADE80}
+.toggle-wrap input:checked~.toggle-thumb{transform:translateX(18px)}
+
+/* price bar */
+.price-bar{padding:12px 20px 0;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
+.price-bar-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px}
+.price-bar-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#fff;margin-bottom:8px}
+.price-bar-btn{width:100%;padding:8px;background:rgba(232,96,28,.18);border:1px solid rgba(232,96,28,.3);border-radius:9px;color:var(--saffron-2);font-size:12.5px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.price-bar-btn:hover{background:var(--saffron);color:#fff}
+
+/* user section */
+.sb-user{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:11px;position:relative;z-index:1}
+.sb-av{width:36px;height:36px;border-radius:10px;background:var(--saffron);display:grid;place-items:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden}
+.sb-av img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.sb-uname{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-urole{font-size:10.5px;color:rgba(255,255,255,.4)}
+.sb-logout{margin-left:auto;background:rgba(255,255,255,.08);border:none;width:30px;height:30px;border-radius:8px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;display:grid;place-items:center;transition:all .2s;flex-shrink:0}
 .sb-logout:hover{background:rgba(220,38,38,.3);color:#FCA5A5}
-/* Price bar in sidebar */
-.price-bar{padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1}
-.price-bar-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px}
-.price-bar-val{font-family:"Syne",sans-serif;font-size:16px;font-weight:800;color:#fff;margin-bottom:10px}
-.price-bar-btn{width:100%;padding:9px;background:rgba(232,96,28,.2);border:1px solid rgba(232,96,28,.3);border-radius:9px;color:var(--saffron-2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif}
-.price-bar-btn:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
-.main{margin-left:256px;min-height:100vh}
-.topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 36px;height:66px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.topbar-title{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
-.topbar-right{display:flex;align-items:center;gap:12px}
-.content{padding:32px 36px}
-.notif-btn{position:relative;background:var(--cream);border:1.5px solid var(--ink-12);width:40px;height:40px;border-radius:11px;display:grid;place-items:center;cursor:pointer;font-size:17px;color:var(--ink-70);transition:all .2s}
-.notif-btn:hover{border-color:var(--saffron);color:var(--saffron)}
-.notif-dot{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:var(--saffron);border-radius:50%;border:2px solid var(--white);font-size:10px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center}
-.notif-dot.show{display:flex}
-.notif-panel{position:absolute;top:56px;right:36px;width:360px;background:var(--white);border:1.5px solid var(--ink-06);border-radius:18px;box-shadow:0 20px 60px rgba(15,25,35,.12);z-index:200;display:none;overflow:hidden}
-.notif-panel.open{display:block;animation:dropIn .2s ease}
-@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.np-head{padding:18px 20px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
-.np-head h3{font-family:"Syne",sans-serif;font-size:15px;font-weight:700;color:var(--forest)}
-.np-clear{font-size:12px;font-weight:600;color:var(--saffron);cursor:pointer;background:none;border:none}
-.np-list{max-height:340px;overflow-y:auto}
-.np-item{padding:14px 20px;border-bottom:1px solid var(--ink-06);display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:background .15s}
-.np-item:hover{background:var(--cream)}
-.np-item.unread{background:var(--saffron-pale)}
-.np-ico{width:38px;height:38px;border-radius:11px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.np-title{font-size:13.5px;font-weight:600;color:var(--forest);margin-bottom:3px}
-.np-msg{font-size:12.5px;color:var(--ink-40);line-height:1.45}
-.np-time{font-size:11px;color:var(--ink-40);margin-top:4px}
-.np-empty{padding:40px 20px;text-align:center;color:var(--ink-40);font-size:14px}
-.toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
-.toast{background:var(--forest);color:#fff;padding:14px 18px;border-radius:14px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;box-shadow:0 8px 28px rgba(15,25,35,.2);pointer-events:all;animation:toastIn .3s ease;max-width:340px}
+
+/* ── MAIN ───────────────────────────────────────────────── */
+.main{margin-left:260px;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--white);border-bottom:1px solid var(--ink-06);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;gap:16px}
+.topbar-left{display:flex;align-items:center;gap:14px}
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+.mob-menu-btn span{display:block;width:20px;height:2px;border-radius:2px;background:var(--ink);transition:all .3s}
+.mob-menu-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mob-menu-btn.open span:nth-child(2){opacity:0}
+.mob-menu-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.topbar-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.content{flex:1;padding:28px 32px}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;backdrop-filter:blur(3px)}
+.sb-overlay.open{display:block}
+
+/* ── TOAST ──────────────────────────────────────────────── */
+.toast-wrap{position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--forest);color:#fff;padding:13px 16px;border-radius:13px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:500;box-shadow:0 8px 28px rgba(15,25,35,.2);pointer-events:all;animation:toastIn .3s ease;max-width:320px}
 .toast.removing{animation:toastOut .3s ease forwards}
 @keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
-.toast-ico{font-size:20px;flex-shrink:0}
-.toast-close{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:16px}
-.welcome-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:20px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;position:relative;overflow:hidden}
-.wb-orb{position:absolute;bottom:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
-.wb-h{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
-.wb-p{font-size:14px;color:rgba(255,255,255,.55)}
-.verify-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:100px;font-size:12.5px;font-weight:700;flex-shrink:0;position:relative;z-index:1}
+
+/* ── WELCOME BANNER ─────────────────────────────────────── */
+.welcome-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:20px;padding:26px 30px;display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;position:relative;overflow:hidden;gap:16px}
+.wb-orb{position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.wb-h{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;margin-bottom:5px}
+.wb-p{font-size:13.5px;color:rgba(255,255,255,.5)}
+.verify-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;flex-shrink:0;position:relative;z-index:1;transition:all .3s}
 .v-yes{background:rgba(74,222,128,.2);border:1px solid rgba(74,222,128,.3);color:#4ADE80}
 .v-no{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.25);color:#FBBF24}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
-.stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
+.v-rejected{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);color:#FCA5A5}
+.v-none{background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);color:#A5B4FC}
+
+/* ── STATS ──────────────────────────────────────────────── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px;transition:all .25s}
 .stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(15,25,35,.08)}
-.stat-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:14px}
+.stat-ico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-size:19px;margin-bottom:12px}
 .stat-ico.orange{background:var(--saffron-pale)}.stat-ico.green{background:var(--sage-light)}.stat-ico.blue{background:#EFF6FF}.stat-ico.gold{background:#FEF9C3}
-.stat-n{font-family:"Syne",sans-serif;font-size:30px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
-.stat-l{font-size:13px;color:var(--ink-40);margin-top:5px}
-.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.sec-head h2{font-family:"Syne",sans-serif;font-size:18px;font-weight:700;color:var(--forest)}
-.jobs-list{display:flex;flex-direction:column;gap:14px}
-.job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:20px 22px;display:flex;align-items:flex-start;gap:18px;transition:all .25s;flex-wrap:wrap}
+.stat-n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--forest);line-height:1;letter-spacing:-1px}
+.stat-l{font-size:12.5px;color:var(--ink-40);margin-top:4px}
+
+/* ── NOTIF ──────────────────────────────────────────────── */
+.notif-btn{position:relative;background:var(--cream);border:1.5px solid var(--ink-12);width:38px;height:38px;border-radius:10px;display:grid;place-items:center;cursor:pointer;font-size:16px;color:var(--ink-70);transition:all .2s}
+.notif-btn:hover{border-color:var(--saffron);color:var(--saffron)}
+.notif-dot{position:absolute;top:-4px;right:-4px;width:17px;height:17px;background:var(--saffron);border-radius:50%;border:2px solid var(--white);font-size:9px;font-weight:700;color:#fff;display:none;align-items:center;justify-content:center}
+.notif-dot.show{display:flex}
+.notif-panel{position:absolute;top:54px;right:32px;width:340px;background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;box-shadow:0 20px 60px rgba(15,25,35,.12);z-index:200;display:none;overflow:hidden}
+.notif-panel.open{display:block;animation:dropIn .2s ease}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.np-head{padding:16px 18px;border-bottom:1px solid var(--ink-06);display:flex;align-items:center;justify-content:space-between}
+.np-head h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
+.np-clear{font-size:12px;font-weight:600;color:var(--saffron);cursor:pointer;background:none;border:none}
+.np-list{max-height:320px;overflow-y:auto}
+.np-item{padding:13px 18px;border-bottom:1px solid var(--ink-06);display:flex;gap:11px;align-items:flex-start;cursor:pointer;transition:background .15s}
+.np-item:hover{background:var(--cream)}
+.np-item.unread{background:var(--saffron-pale)}
+.np-ico{width:36px;height:36px;border-radius:10px;background:var(--sage-light);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+.np-title{font-size:13px;font-weight:600;color:var(--forest);margin-bottom:2px}
+.np-msg{font-size:12px;color:var(--ink-40);line-height:1.45}
+.np-time{font-size:10.5px;color:var(--ink-40);margin-top:3px}
+.np-empty{padding:36px 18px;text-align:center;color:var(--ink-40);font-size:13.5px}
+
+/* ── JOBS ───────────────────────────────────────────────── */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.sec-head h2{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--forest)}
+.jobs-list{display:flex;flex-direction:column;gap:12px}
+.job-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:18px 20px;display:flex;align-items:flex-start;gap:16px;transition:all .25s;flex-wrap:wrap}
 .job-card:hover{border-color:rgba(232,96,28,.15);box-shadow:0 6px 24px rgba(15,25,35,.06)}
-.jc-ico{width:48px;height:48px;border-radius:13px;background:var(--cream);display:grid;place-items:center;font-size:22px;flex-shrink:0}
-.jc-info{flex:1;min-width:200px}
-.jc-title{font-family:"Syne",sans-serif;font-weight:700;font-size:15px;color:var(--forest);margin-bottom:4px}
-.jc-meta{font-size:12.5px;color:var(--ink-40);display:flex;flex-wrap:wrap;gap:14px}
+.jc-ico{width:46px;height:46px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:21px;flex-shrink:0}
+.jc-info{flex:1;min-width:180px}
+.jc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:14.5px;color:var(--forest);margin-bottom:4px}
+.jc-meta{font-size:12px;color:var(--ink-40);display:flex;flex-wrap:wrap;gap:12px}
 .jc-meta span{display:flex;align-items:center;gap:4px}
-.jc-price{font-family:"Syne",sans-serif;font-size:16px;font-weight:800;color:var(--forest);flex-shrink:0}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:100px;font-size:11.5px;font-weight:700}
+.jc-price{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--forest);flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700}
 .badge-pending{background:#FEF9C3;color:#A16207}
 .badge-accepted{background:#DBEAFE;color:#1D4ED8}
 .badge-inprogress{background:#EDE9FE;color:#7C3AED}
 .badge-completed{background:var(--sage-light);color:var(--sage)}
 .badge-cancelled{background:#FEE2E2;color:#B91C1C}
 .badge-paid{background:#F0FDF4;color:#15803D}
-.badge-negotiating{background:#FEF3C7;color:#92400E;border:1.5px solid #FDE68A}
-.badge-agreed{background:#D1FAE5;color:#065F46;border:1.5px solid #6EE7B7}
+.badge-negotiating{background:#FEF3C7;color:#92400E}
+.badge-agreed{background:#D1FAE5;color:#065F46}
 .jc-actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;align-items:center}
-.jc-btn{padding:8px 14px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:"DM Sans",sans-serif;border:none}
+.jc-btn{padding:7px 13px;border-radius:9px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;font-family:'DM Sans',sans-serif;border:none}
 .jc-btn:disabled{opacity:.5;cursor:not-allowed}
 .jc-accept{background:var(--sage);color:#fff}
 .jc-accept:hover:not(:disabled){background:var(--forest)}
 .jc-reject{background:#FEE2E2;border:1.5px solid #FECACA !important;color:#B91C1C}
 .jc-reject:hover:not(:disabled){background:#B91C1C;color:#fff}
-.jc-counter{background:rgba(61,122,110,.12);color:var(--sage);border:1.5px solid rgba(61,122,110,.3) !important}
+.jc-counter{background:rgba(61,122,110,.1);color:var(--sage);border:1.5px solid rgba(61,122,110,.3) !important}
 .jc-counter:hover{background:var(--sage);color:#fff}
 .jc-progress{background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.25) !important;color:var(--saffron)}
 .jc-progress:hover:not(:disabled){background:var(--saffron);color:#fff}
 .jc-complete{background:var(--sage-light);border:1.5px solid rgba(61,122,110,.25) !important;color:var(--sage)}
 .jc-complete:hover:not(:disabled){background:var(--sage);color:#fff}
 .offer-thread{margin-top:8px;border-top:1px solid var(--ink-06);padding-top:8px;display:flex;flex-direction:column;gap:3px}
-.ot-row{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 8px;border-radius:7px}
-.ot-row.customer{background:rgba(232,96,28,.06)}
-.ot-row.worker{background:rgba(26,60,52,.06);justify-content:flex-end}
-.ot-who{font-weight:700;color:var(--ink-70);min-width:38px}
-.ot-amt{font-family:"Syne",sans-serif;font-weight:800;color:var(--forest);font-size:13px}
-.ot-status{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.ot-row{display:flex;align-items:center;gap:7px;font-size:11.5px;padding:3px 7px;border-radius:7px}
+.ot-row.customer{background:rgba(232,96,28,.05)}
+.ot-row.worker{background:rgba(26,60,52,.05);justify-content:flex-end}
+.ot-who{font-weight:700;color:var(--ink-70);min-width:34px}
+.ot-amt{font-family:'Syne',sans-serif;font-weight:800;color:var(--forest);font-size:12.5px}
+.ot-status{font-size:9.5px;padding:2px 6px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .ot-pending{background:#FEF9C3;color:#854D0E}
 .ot-accepted{background:#DCFCE7;color:#166534}
 .ot-countered{background:#F3F4F6;color:#6B7280}
 .ot-rejected{background:#FEE2E2;color:#991B1B}
-.ot-note{font-size:11px;color:var(--ink-40);font-style:italic;flex:1}
-.empty-state{text-align:center;padding:56px 24px;color:var(--ink-40)}
-.empty-state i{font-size:40px;opacity:.25;display:block;margin-bottom:14px}
-.empty-state h3{font-family:"Syne",sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
-.spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
+.ot-note{font-size:10.5px;color:var(--ink-40);font-style:italic;flex:1}
+
+/* ── EARNINGS ───────────────────────────────────────────── */
+.earnings-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.earn-card{background:var(--forest);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+.earn-card::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.05)}
+.earn-card h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:10px}
+.earn-num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1.5px}
+.earn-sub{font-size:12.5px;color:rgba(255,255,255,.4);margin-top:6px}
+
+/* ── EMPTY + LOADER ─────────────────────────────────────── */
+.empty-state{text-align:center;padding:48px 24px;color:var(--ink-40)}
+.empty-state i{font-size:36px;opacity:.2;display:block;margin-bottom:12px}
+.empty-state h3{font-family:'Syne',sans-serif;font-size:16px;color:var(--forest);margin-bottom:5px;opacity:.6}
+.spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:24px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.earnings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
-.earn-card{background:var(--forest);border-radius:16px;padding:28px;position:relative;overflow:hidden}
-.earn-card::after{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05)}
-.earn-card h4{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}
-.earn-num{font-family:"Syne",sans-serif;font-size:40px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1.5px}
-.earn-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:8px}
-/* Modals */
+.spin-loader i,.spin{animation:spin .8s linear infinite}
+
+/* ── MODALS ─────────────────────────────────────────────── */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.6);z-index:1000;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
 .modal-backdrop.open{display:flex}
 .modal-box{background:#fff;border-radius:20px;width:100%;overflow:hidden;animation:mIn .3s ease}
 @keyframes mIn{from{transform:scale(.94) translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.modal-head{background:var(--forest-2);padding:24px 28px;display:flex;align-items:center;justify-content:space-between}
-.modal-head h3{font-family:"Syne",sans-serif;font-size:17px;font-weight:700;color:#fff;display:flex;align-items:center;gap:10px}
-.modal-close{background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:50%;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:14px}
-.alert{padding:10px 14px;border-radius:9px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.modal-head{background:var(--forest-2);padding:22px 26px;display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;display:flex;align-items:center;gap:9px}
+.modal-close{background:rgba(255,255,255,.1);border:none;width:28px;height:28px;border-radius:50%;color:#fff;cursor:pointer;display:grid;place-items:center;font-size:13px}
+.alert{padding:10px 13px;border-radius:9px;font-size:12.5px;font-weight:500;display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
-.fi{width:100%;padding:12px 14px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:11.5px;font-weight:700;color:var(--forest);margin-bottom:6px;letter-spacing:.3px}
+.fi{width:100%;padding:11px 13px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
 .fi:focus{border-color:var(--saffron);background:#fff;box-shadow:0 0 0 3px rgba(232,96,28,.1)}
-textarea.fi{min-height:70px;resize:vertical}
-.price-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:14px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
-.pb-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px}
-.pb-val{font-family:"Syne",sans-serif;font-size:24px;font-weight:800;color:#fff}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+textarea.fi{min-height:65px;resize:vertical}
+.price-banner{background:linear-gradient(135deg,var(--forest-2),var(--sage));border-radius:12px;padding:16px 18px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.pb-label{font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:3px}
+.pb-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:960px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .main{margin-left:0}
+  .mob-menu-btn{display:flex}
+  .topbar{padding:0 16px}
+  .content{padding:20px 16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .earnings-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .stat-n{font-size:22px}
+  .job-card{flex-wrap:wrap;gap:10px;padding:14px 16px}
+  .jc-actions{width:100%}
+  .jc-btn{flex:1;justify-content:center}
+  .welcome-banner{flex-direction:column;align-items:flex-start;padding:20px}
+  .notif-panel{right:12px;width:300px}
+}
 </style>
 </head>
 <body>
-
 <div class="toast-wrap" id="toastWrap"></div>
 
+<!-- Notification panel -->
 <div class="notif-panel" id="notifPanel">
   <div class="np-head"><h3>Notifications</h3><button class="np-clear" onclick="clearNotifs()">Clear all</button></div>
   <div class="np-list" id="notifList"><div class="np-empty">No notifications yet</div></div>
 </div>
 
-<aside class="sidebar">
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
   <div class="sb-bg"></div>
   <div class="sb-logo">
     <div class="sb-logo-mark"><i class="bi bi-tools"></i></div>
     <div class="sb-logo-txt">Kaam<span>Connect</span></div>
   </div>
   <nav class="sb-nav">
-    <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
-    <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> My Jobs</div>
-    <div class="sb-item" onclick="showTab('earnings')"><i class="bi bi-wallet2"></i> Earnings</div>
+    <div class="sb-item active" onclick="showTab('overview');closeMobile()"><i class="bi bi-grid-fill"></i> Overview</div>
+    <div class="sb-item" onclick="showTab('jobs');closeMobile()"><i class="bi bi-briefcase-fill"></i> My Jobs</div>
+    <div class="sb-item" onclick="showTab('earnings');closeMobile()"><i class="bi bi-wallet2"></i> Earnings</div>
     <div class="sb-divider"></div>
     <div class="sb-item" onclick="location.href='referral.html'"><i class="bi bi-gift-fill"></i> Referral & Wallet</div>
     <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
   </nav>
+
   <!-- Availability toggle -->
-  <div style="padding:10px 20px 12px;border-top:1px solid rgba(255,255,255,.07);position:relative;z-index:1">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-      <span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35)">Status</span>
-      <label style="cursor:pointer;display:flex;align-items:center;gap:8px">
-        <span id="availLabel" style="font-size:12px;color:rgba(74,222,128,.7)">Online</span>
-        <span style="position:relative;width:38px;height:22px;display:inline-block">
-          <input type="checkbox" id="availToggle" checked style="opacity:0;width:0;height:0;position:absolute" onchange="toggleAvailability(this.checked)">
-          <span id="availTrack" style="position:absolute;inset:0;border-radius:11px;background:#4ADE80;transition:all .3s;pointer-events:none"></span>
-          <span id="availThumb" style="position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .3s;pointer-events:none"></span>
-        </span>
+  <div class="avail-section">
+    <div class="avail-row">
+      <span class="avail-lbl">Status</span>
+      <label class="toggle-wrap">
+        <input type="checkbox" id="availToggle" onchange="toggleAvailability(this.checked)">
+        <span class="toggle-track"></span>
+        <span class="toggle-thumb"></span>
       </label>
     </div>
+    <div class="avail-status" id="availStatus" style="color:rgba(255,255,255,.35)">Loading…</div>
   </div>
-  <div class="sb-user">
-    <div class="sb-av" id="sbAv">W</div>
-    <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole" id="sbSkill">Worker</div></div>
-    <button class="sb-logout" onclick="logout()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
-  </div>
+
+  <!-- Price bar -->
   <div class="price-bar">
     <div class="price-bar-lbl">My Base Price</div>
     <div class="price-bar-val" id="sbBasePrice">Not set</div>
@@ -211,11 +272,27 @@ textarea.fi{min-height:70px;resize:vertical}
       <i class="bi bi-tag"></i> Set My Price
     </button>
   </div>
+
+  <!-- User -->
+  <div class="sb-user">
+    <div class="sb-av" id="sbAv">W</div>
+    <div style="min-width:0">
+      <div class="sb-uname" id="sbName">Loading…</div>
+      <div class="sb-urole" id="sbSkill">Worker</div>
+    </div>
+    <button class="sb-logout" onclick="logout()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
+  </div>
 </aside>
+
+<!-- Mobile overlay -->
+<div class="sb-overlay" id="sbOverlay" onclick="closeMobile()"></div>
 
 <div class="main">
   <div class="topbar">
-    <div class="topbar-title" id="topbarTitle">Overview</div>
+    <div class="topbar-left">
+      <button class="mob-menu-btn" id="mobMenuBtn" onclick="openMobile()"><span></span><span></span><span></span></button>
+      <div class="topbar-title" id="topbarTitle">Overview</div>
+    </div>
     <div class="topbar-right">
       <div class="notif-btn" id="notifBtn" onclick="toggleNotifPanel()">
         <i class="bi bi-bell-fill"></i>
@@ -223,12 +300,18 @@ textarea.fi{min-height:70px;resize:vertical}
       </div>
     </div>
   </div>
+
   <div class="content">
+
+    <!-- OVERVIEW -->
     <div id="tab-overview">
       <div class="welcome-banner">
         <div class="wb-orb"></div>
-        <div><div class="wb-h">Hello, <span id="wbName">Worker</span>! 🛠️</div><div class="wb-p">Respond to job offers and negotiate your price.</div></div>
-        <div class="verify-badge" id="verifyBadge"><i class="bi bi-circle-fill" style="font-size:8px"></i> Checking…</div>
+        <div>
+          <div class="wb-h">Hello, <span id="wbName">Worker</span>! 🛠️</div>
+          <div class="wb-p" id="wbSub">Respond to job offers and negotiate your price.</div>
+        </div>
+        <div class="verify-badge v-none" id="verifyBadge"><i class="bi bi-shield-exclamation" style="font-size:11px"></i> Checking…</div>
       </div>
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-ico orange">📋</div><div class="stat-n" id="st-total">—</div><div class="stat-l">Total Jobs</div></div>
@@ -239,9 +322,13 @@ textarea.fi{min-height:70px;resize:vertical}
       <div class="sec-head"><h2>Job Offers & Negotiations</h2></div>
       <div id="pendingJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
+
+    <!-- MY JOBS -->
     <div id="tab-jobs" style="display:none">
       <div id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
+
+    <!-- EARNINGS -->
     <div id="tab-earnings" style="display:none">
       <div class="earnings-grid">
         <div class="earn-card"><h4>Total Earnings</h4><div class="earn-num" id="totalEarnings">₹0</div><div class="earn-sub">Lifetime earnings</div></div>
@@ -250,33 +337,34 @@ textarea.fi{min-height:70px;resize:vertical}
       <div class="sec-head"><h2>Completed Jobs</h2></div>
       <div id="earningsJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
+
   </div>
 </div>
 
-<!-- Worker Offer Modal -->
+<!-- Worker Price Offer Modal -->
 <div class="modal-backdrop" id="workerOfferModal">
-  <div class="modal-box" style="max-width:440px">
+  <div class="modal-box" style="max-width:430px">
     <div class="modal-head">
       <h3><i class="bi bi-currency-rupee" style="color:var(--saffron-2)"></i> Set Your Price</h3>
       <button class="modal-close" onclick="closeWorkerOffer()"><i class="bi bi-x"></i></button>
     </div>
-    <div style="padding:24px">
+    <div style="padding:22px">
       <div class="price-banner">
         <div><div class="pb-label">Customer</div><div class="pb-val" id="woCustName">—</div></div>
         <div style="text-align:right"><div class="pb-label">Their Budget</div><div class="pb-val" id="woCustBudget">₹0</div></div>
       </div>
       <div id="woAlert" style="display:none"></div>
       <div class="fg">
-        <label class="fl">Your Price ₹ <small style="font-weight:400;color:var(--ink-40)">(what you want to earn)</small></label>
+        <label class="fl">Your Price ₹</label>
         <input class="fi" type="number" id="woAmount" placeholder="e.g. 600" min="1">
       </div>
       <div class="fg">
-        <label class="fl">Note to Customer (optional)</label>
+        <label class="fl">Note to Customer <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
         <textarea class="fi" id="woNote" placeholder="e.g. Includes materials, 2 hours work…"></textarea>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <button onclick="closeWorkerOffer()" style="padding:12px;border:1.5px solid var(--ink-12);border-radius:10px;background:none;font-size:14px;font-weight:600;color:var(--ink-40);cursor:pointer;font-family:inherit">Cancel</button>
-        <button id="woSubmitBtn" onclick="sendWorkerOffer()" style="padding:12px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit">
+        <button onclick="closeWorkerOffer()" style="padding:11px;border:1.5px solid var(--ink-12);border-radius:10px;background:none;font-size:13.5px;font-weight:600;color:var(--ink-40);cursor:pointer;font-family:inherit">Cancel</button>
+        <button id="woSubmitBtn" onclick="sendWorkerOffer()" style="padding:11px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;font-family:inherit">
           <i class="bi bi-send-fill"></i> Send My Price
         </button>
       </div>
@@ -286,19 +374,19 @@ textarea.fi{min-height:70px;resize:vertical}
 
 <!-- Set Base Price Modal -->
 <div class="modal-backdrop" id="setPriceModal">
-  <div class="modal-box" style="max-width:400px">
+  <div class="modal-box" style="max-width:380px">
     <div class="modal-head">
       <h3><i class="bi bi-tag-fill" style="color:var(--saffron-2)"></i> Set Your Base Price</h3>
       <button class="modal-close" onclick="document.getElementById('setPriceModal').classList.remove('open')"><i class="bi bi-x"></i></button>
     </div>
-    <div style="padding:24px">
-      <p style="font-size:13.5px;color:var(--ink-40);margin-bottom:18px;line-height:1.6">This price is shown to customers when they browse workers. You can always negotiate per job.</p>
+    <div style="padding:22px">
+      <p style="font-size:13px;color:var(--ink-40);margin-bottom:16px;line-height:1.6">Shown to customers browsing workers. You can always negotiate per job.</p>
       <div class="fg"><label class="fl">My Base Price ₹</label><input class="fi" type="number" id="basePriceInput" placeholder="e.g. 500" min="1"></div>
       <div class="fg"><label class="fl">Per</label>
         <select class="fi" id="basePriceUnit"><option value="job">Per Job</option><option value="hour">Per Hour</option><option value="day">Per Day</option></select>
       </div>
-      <div class="fg"><label class="fl">Price Note (optional)</label><input class="fi" type="text" id="basePriceNote" placeholder="e.g. Materials extra, min 2 hrs"></div>
-      <button onclick="saveBasePrice()" style="width:100%;padding:13px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14.5px;font-weight:700;cursor:pointer;font-family:inherit">
+      <div class="fg"><label class="fl">Price Note <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><input class="fi" type="text" id="basePriceNote" placeholder="e.g. Materials extra, min 2 hrs"></div>
+      <button onclick="saveBasePrice()" style="width:100%;padding:12px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">
         <i class="bi bi-check-circle-fill"></i> Save Price
       </button>
     </div>
@@ -306,314 +394,436 @@ textarea.fi{min-height:70px;resize:vertical}
 </div>
 
 <script>
+// ── Token from OAuth redirect ────────────────────────────────
 (function(){
   const p=new URLSearchParams(window.location.search);
-  const t=p.get("token"),u=p.get("user");
-  if(t&&u){try{localStorage.setItem("kc_token",t);localStorage.setItem("kc_user",u);window.history.replaceState({},"",window.location.pathname);}catch(e){}}
+  const t=p.get('token'),u=p.get('user');
+  if(t&&u){try{localStorage.setItem('kc_token',t);localStorage.setItem('kc_user',u);window.history.replaceState({},'',window.location.pathname);}catch(e){}}
 })();
 
-const TOKEN=localStorage.getItem("kc_token");
-const USER=JSON.parse(localStorage.getItem("kc_user")||"{}");
-if(!TOKEN||USER.role!=="worker"){location.href="login.html";}
+const TOKEN=localStorage.getItem('kc_token');
+let USER=JSON.parse(localStorage.getItem('kc_user')||'{}');
+if(!TOKEN||USER.role!=='worker'){location.href='login.html';}
 
-document.getElementById("sbName").textContent=USER.name||"Worker";
-document.getElementById("sbSkill").textContent=(USER.skill||"worker")[0].toUpperCase()+(USER.skill||"").slice(1);
-document.getElementById("sbAv").textContent=(USER.name||"W")[0].toUpperCase();
-document.getElementById("wbName").textContent=(USER.name||"").split(" ")[0]||"Worker";
+// ── Init UI from cached USER ─────────────────────────────────
+function initUI(){
+  document.getElementById('sbName').textContent  = USER.name||'Worker';
+  document.getElementById('sbSkill').textContent = ((USER.skill||'worker')[0].toUpperCase()+(USER.skill||'').slice(1));
+  document.getElementById('wbName').textContent  = (USER.name||'').split(' ')[0]||'Worker';
+  // Avatar
+  const av=document.getElementById('sbAv');
+  if(USER.avatar){av.innerHTML=`<img src="${USER.avatar}" alt="">`;} 
+  else{av.textContent=(USER.name||'W')[0].toUpperCase();}
+  // Base price
+  if(USER.basePrice){
+    document.getElementById('sbBasePrice').textContent='₹'+USER.basePrice+'/'+(USER.priceUnit||'job');
+    document.getElementById('basePriceInput').value=USER.basePrice;
+    if(USER.priceUnit)document.getElementById('basePriceUnit').value=USER.priceUnit;
+    if(USER.priceNote)document.getElementById('basePriceNote').value=USER.priceNote;
+  }
+  // Show cached verification status immediately (will be refreshed from server)
+  updateVerifyBadge(USER.verified, USER.idStatus);
+}
+initUI();
 
-if(USER.basePrice){
-  document.getElementById("sbBasePrice").textContent="₹"+USER.basePrice+"/"+(USER.priceUnit||"job");
-  document.getElementById("basePriceInput").value=USER.basePrice;
-  if(USER.priceUnit)document.getElementById("basePriceUnit").value=USER.priceUnit;
-  if(USER.priceNote)document.getElementById("basePriceNote").value=USER.priceNote;
+// ── API helper ───────────────────────────────────────────────
+const API=url=>fetch(url,{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+
+const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
+const statusBadge={pending_offer:'badge-pending',negotiating:'badge-negotiating',price_agreed:'badge-agreed',pending:'badge-pending',accepted:'badge-accepted',in_progress:'badge-inprogress',completed:'badge-completed',cancelled:'badge-cancelled',paid:'badge-paid'};
+const statusLabel={pending_offer:'New Offer 🔔',negotiating:'Negotiating 💬',price_agreed:'Price Agreed ✅',pending:'Pending',accepted:'Accepted',in_progress:'In Progress',completed:'Completed',cancelled:'Cancelled',paid:'Paid ✅'};
+
+// ── Toast ────────────────────────────────────────────────────
+function showToast(msg,ico='🔔',dur=4000){
+  const w=document.getElementById('toastWrap');
+  const t=document.createElement('div');t.className='toast';
+  t.innerHTML=`<span style="font-size:18px">${ico}</span><span style="flex:1">${msg}</span><button style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;margin-left:auto" onclick="this.parentElement.remove()">✕</button>`;
+  w.appendChild(t);
+  setTimeout(()=>{t.classList.add('removing');setTimeout(()=>t.remove(),300);},dur);
 }
 
-const API=url=>fetch(url,{headers:{"Authorization":"Bearer "+TOKEN}}).then(r=>r.json());
-const skillEmoji={electrician:"⚡",plumber:"🔧",painter:"🎨",carpenter:"🪚",labour:"👷",mason:"🧱","ac technician":"❄️",driver:"🚗"};
-const statusBadge={pending_offer:"badge-pending",negotiating:"badge-negotiating",price_agreed:"badge-agreed",pending:"badge-pending",accepted:"badge-accepted",in_progress:"badge-inprogress",completed:"badge-completed",cancelled:"badge-cancelled",paid:"badge-paid"};
-const statusLabel={pending_offer:"New Offer 🔔",negotiating:"Negotiating 💬",price_agreed:"Price Agreed ✅",pending:"Pending",accepted:"Accepted",in_progress:"In Progress",completed:"Completed",cancelled:"Cancelled",paid:"Paid ✅"};
-
-function showToast(msg,ico="🔔",duration=4000){
-  const wrap=document.getElementById("toastWrap");
-  const t=document.createElement("div");t.className="toast";
-  t.innerHTML=`<span class="toast-ico">${ico}</span><span style="flex:1">${msg}</span><button class="toast-close" onclick="removeToast(this.parentElement)"><i class="bi bi-x"></i></button>`;
-  wrap.appendChild(t);setTimeout(()=>removeToast(t),duration);
-}
-function removeToast(el){if(!el||!el.parentElement)return;el.classList.add("removing");setTimeout(()=>el.remove(),300);}
-
-let notifications=JSON.parse(localStorage.getItem("kc_notifs_"+(USER._id||"x"))||"[]");
+// ── Notifications ────────────────────────────────────────────
+let notifications=JSON.parse(localStorage.getItem('kc_notifs_'+(USER._id||'x'))||'[]');
 let lastJobCount=null;
-function saveNotifs(){localStorage.setItem("kc_notifs_"+(USER._id||"x"),JSON.stringify(notifications));}
-function addNotif(title,msg,ico="📋"){
-  notifications.unshift({id:Date.now(),title,msg,ico,time:new Date().toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"}),read:false});
+function saveNotifs(){localStorage.setItem('kc_notifs_'+(USER._id||'x'),JSON.stringify(notifications));}
+function addNotif(title,msg,ico='📋'){
+  notifications.unshift({id:Date.now(),title,msg,ico,time:new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),read:false});
   if(notifications.length>30)notifications.pop();
   saveNotifs();renderNotifDot();renderNotifList();
-  showToast(`<b>${title}</b><br><span style="opacity:.7;font-size:12px">${msg}</span>`,ico);
+  showToast(`<b>${title}</b><br><span style="opacity:.7;font-size:11.5px">${msg}</span>`,ico);
 }
 function renderNotifDot(){
-  const unread=notifications.filter(n=>!n.read).length;
-  const dot=document.getElementById("notifDot");
-  if(unread>0){dot.textContent=unread>9?"9+":unread;dot.classList.add("show");}else dot.classList.remove("show");
+  const u=notifications.filter(n=>!n.read).length;
+  const d=document.getElementById('notifDot');
+  if(u>0){d.textContent=u>9?'9+':u;d.classList.add('show');}else d.classList.remove('show');
 }
 function renderNotifList(){
-  const list=document.getElementById("notifList");
-  if(!notifications.length){list.innerHTML='<div class="np-empty">No notifications yet</div>';return;}
-  list.innerHTML=notifications.map(n=>`<div class="np-item ${n.read?"":"unread"}" onclick="markRead(${n.id})"><div class="np-ico">${n.ico}</div><div><div class="np-title">${n.title}</div><div class="np-msg">${n.msg}</div><div class="np-time">${n.time}</div></div></div>`).join("");
+  const l=document.getElementById('notifList');
+  if(!notifications.length){l.innerHTML='<div class="np-empty">No notifications yet</div>';return;}
+  l.innerHTML=notifications.map(n=>`<div class="np-item ${n.read?'':'unread'}" onclick="markRead(${n.id})"><div class="np-ico">${n.ico}</div><div><div class="np-title">${n.title}</div><div class="np-msg">${n.msg}</div><div class="np-time">${n.time}</div></div></div>`).join('');
 }
 function markRead(id){const n=notifications.find(x=>x.id===id);if(n){n.read=true;saveNotifs();renderNotifDot();renderNotifList();}}
 function clearNotifs(){notifications=[];saveNotifs();renderNotifDot();renderNotifList();}
 function toggleNotifPanel(){
-  const panel=document.getElementById("notifPanel");panel.classList.toggle("open");
-  if(panel.classList.contains("open")){notifications.forEach(n=>n.read=true);saveNotifs();renderNotifDot();renderNotifList();}
+  const p=document.getElementById('notifPanel');p.classList.toggle('open');
+  if(p.classList.contains('open')){notifications.forEach(n=>n.read=true);saveNotifs();renderNotifDot();renderNotifList();}
 }
-document.addEventListener("click",e=>{
-  const panel=document.getElementById("notifPanel"),btn=document.getElementById("notifBtn");
-  if(!panel.contains(e.target)&&!btn.contains(e.target))panel.classList.remove("open");
+document.addEventListener('click',e=>{
+  const p=document.getElementById('notifPanel'),b=document.getElementById('notifBtn');
+  if(!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');
 });
+renderNotifDot();renderNotifList();
 
+// ── Poll for new jobs ────────────────────────────────────────
 async function pollForNewJobs(){
   try{
-    const d=await API("/api/workers/jobs?limit=50");
-    const jobs=(d.jobs||[]).filter(j=>["pending_offer","negotiating","price_agreed"].includes(j.status));
-    const count=jobs.length;
-    if(lastJobCount!==null&&count>lastJobCount){
-      const newest=jobs[0];
-      const cname=newest?.customerId?.name||"A customer";
-      const skill=newest?.skill||"a job";
-      const budget=newest?.customerBudget||newest?.price||0;
-      addNotif("New Job Offer! 🎉",`${cname} offered ₹${budget} for ${skill}. Respond now!`,skillEmoji[skill]||"📋");
+    const d=await API('/api/workers/jobs?limit=50');
+    const jobs=(d.jobs||[]).filter(j=>['pending_offer','negotiating','price_agreed'].includes(j.status));
+    if(lastJobCount!==null&&jobs.length>lastJobCount){
+      const n=jobs[0];
+      addNotif('New Job Offer! 🎉',`${n?.customerId?.name||'A customer'} offered ₹${n?.customerBudget||n?.price||0} for ${n?.skill||'a job'}`,skillEmoji[n?.skill]||'📋');
     }
-    lastJobCount=count;
+    lastJobCount=jobs.length;
   }catch(e){}
 }
-renderNotifDot();renderNotifList();pollForNewJobs();
+pollForNewJobs();
 setInterval(pollForNewJobs,15000);
 
-function showTab(t){
-  ["overview","jobs","earnings"].forEach(name=>document.getElementById("tab-"+name).style.display="none");
-  document.querySelectorAll(".sb-item").forEach(el=>el.classList.remove("active"));
-  document.getElementById("tab-"+t).style.display="block";
-  const idx=["overview","jobs","earnings"].indexOf(t);
-  document.querySelectorAll(".sb-item")[idx]?.classList.add("active");
-  const titles={overview:"Overview",jobs:"My Jobs",earnings:"Earnings"};
-  document.getElementById("topbarTitle").textContent=titles[t]||t;
-  if(t==="overview")loadOverview();
-  if(t==="jobs")loadAllJobs();
-  if(t==="earnings")loadEarnings();
+// ── Verification badge ────────────────────────────────────────
+// ✅ FIX: 4 states — always reflects server truth, not stale localStorage
+function updateVerifyBadge(verified,idStatus){
+  const vb=document.getElementById('verifyBadge');
+  if(verified&&idStatus==='approved'){
+    vb.className='verify-badge v-yes';
+    vb.innerHTML='<i class="bi bi-patch-check-fill" style="font-size:11px"></i> Verified ✅';
+  }else if(idStatus==='rejected'){
+    vb.className='verify-badge v-rejected';
+    vb.innerHTML='<i class="bi bi-x-circle-fill" style="font-size:11px"></i> ID Rejected';
+  }else if(idStatus==='pending'){
+    vb.className='verify-badge v-no';
+    vb.innerHTML='<i class="bi bi-hourglass-split" style="font-size:11px"></i> ID Under Review';
+  }else{
+    vb.className='verify-badge v-none';
+    vb.innerHTML='<i class="bi bi-shield-exclamation" style="font-size:11px"></i> Upload ID';
+  }
 }
 
-async function loadOverview(){
-  const d=await API("/api/workers/stats");
-  if(d.success){
-    const s=d.stats;
-    document.getElementById("st-total").textContent=s.total||0;
-    document.getElementById("st-done").textContent=s.completed||0;
-    document.getElementById("st-pend").textContent=s.pending||0;
-    document.getElementById("st-rating").textContent=parseFloat(s.avg_rating||0).toFixed(1);
+// ── Availability toggle ──────────────────────────────────────
+// ✅ FIX: loads real state from server on init, updates immediately on toggle
+function setAvailUI(isOn){
+  const toggle=document.getElementById('availToggle');
+  const status=document.getElementById('availStatus');
+  toggle.checked=isOn;
+  status.textContent=isOn?'Online — accepting jobs':'Offline — not visible';
+  status.style.color=isOn?'rgba(74,222,128,.8)':'rgba(255,255,255,.35)';
+}
+
+async function loadAvailability(){
+  try{
+    const d=await API('/api/workers/availability');
+    // ✅ If server returns no field, treat as online (default)
+    const isOn=d.isAvailable!==false;
+    setAvailUI(isOn);
+    // Update cached USER
+    USER.isAvailable=isOn;
+    localStorage.setItem('kc_user',JSON.stringify(USER));
+  }catch(e){
+    // Fallback to cached value or default true
+    setAvailUI(USER.isAvailable!==false);
   }
-  const vb=document.getElementById("verifyBadge");
-  if(USER.verified){vb.className="verify-badge v-yes";vb.innerHTML='<i class="bi bi-patch-check-fill"></i> Verified';}
-  else{vb.className="verify-badge v-no";vb.innerHTML='<i class="bi bi-hourglass-split"></i> Pending Verification';}
-  const pj=await API("/api/workers/jobs?limit=50");
-  const activeJobs=(pj.jobs||[]).filter(j=>["pending_offer","negotiating","price_agreed"].includes(j.status));
-  const el=document.getElementById("pendingJobs");
+}
+
+async function toggleAvailability(isOn){
+  // Update UI instantly
+  setAvailUI(isOn);
+  try{
+    const d=await fetch('/api/workers/availability',{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+      body:JSON.stringify({isAvailable:isOn})
+    }).then(r=>r.json());
+    if(d.success){
+      USER.isAvailable=isOn;
+      localStorage.setItem('kc_user',JSON.stringify(USER));
+      showToast(isOn?'You are now online! Customers can find you.':'You are offline. Hidden from search.',isOn?'🟢':'🔴');
+    }else{
+      // Revert UI on failure
+      setAvailUI(!isOn);
+      document.getElementById('availToggle').checked=!isOn;
+      showToast(d.message||'Failed to update','❌');
+    }
+  }catch(e){setAvailUI(!isOn);document.getElementById('availToggle').checked=!isOn;showToast('Server error','❌');}
+}
+
+// ── Tabs ─────────────────────────────────────────────────────
+function showTab(t){
+  ['overview','jobs','earnings'].forEach(n=>document.getElementById('tab-'+n).style.display='none');
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).style.display='block';
+  const idx=['overview','jobs','earnings'].indexOf(t);
+  document.querySelectorAll('.sb-item')[idx]?.classList.add('active');
+  document.getElementById('topbarTitle').textContent={overview:'Overview',jobs:'My Jobs',earnings:'Earnings'}[t]||t;
+  if(t==='overview')loadOverview();
+  if(t==='jobs')    loadAllJobs();
+  if(t==='earnings')loadEarnings();
+}
+
+// ── Overview ─────────────────────────────────────────────────
+// ✅ FIX: always fetches fresh profile — updates badge & availability from server
+async function loadOverview(){
+  // Show loader for pending jobs section
+  document.getElementById('pendingJobs').innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+
+  // Fetch stats + fresh profile + pending jobs in parallel
+  const [statsRes, profileRes, jobsRes] = await Promise.all([
+    API('/api/workers/stats').catch(()=>({})),
+    API('/api/auth/profile').catch(()=>({})),
+    API('/api/workers/jobs?limit=50').catch(()=>({})),
+  ]);
+
+  // Stats
+  if(statsRes.success){
+    const s=statsRes.stats;
+    document.getElementById('st-total').textContent  = s.total    ||0;
+    document.getElementById('st-done').textContent   = s.completed||0;
+    document.getElementById('st-pend').textContent   = s.pending  ||0;
+    document.getElementById('st-rating').textContent = parseFloat(s.avg_rating||0).toFixed(1);
+  }
+
+  // ✅ FIX: Fresh profile → update verification badge + availability from server
+  if(profileRes.success){
+    const u=profileRes.user;
+    // Update cached USER with fresh server data
+    USER={...USER, verified:u.verified, idStatus:u.idStatus, isAvailable:u.isAvailable, name:u.name, skill:u.skill, avatar:u.avatar, basePrice:u.basePrice, priceUnit:u.priceUnit, priceNote:u.priceNote};
+    localStorage.setItem('kc_user',JSON.stringify(USER));
+    // Update all UI elements
+    updateVerifyBadge(u.verified, u.idStatus);
+    setAvailUI(u.isAvailable!==false);
+    document.getElementById('sbName').textContent=(u.name||'Worker');
+    document.getElementById('wbName').textContent=(u.name||'').split(' ')[0]||'Worker';
+    document.getElementById('sbSkill').textContent=((u.skill||'worker')[0].toUpperCase()+(u.skill||'').slice(1));
+    if(u.avatar){const av=document.getElementById('sbAv');av.innerHTML=`<img src="${u.avatar}" alt="">`;}
+    if(u.basePrice){
+      document.getElementById('sbBasePrice').textContent='₹'+u.basePrice+'/'+(u.priceUnit||'job');
+      document.getElementById('basePriceInput').value=u.basePrice;
+      if(u.priceUnit)document.getElementById('basePriceUnit').value=u.priceUnit;
+      if(u.priceNote)document.getElementById('basePriceNote').value=u.priceNote;
+    }
+  }
+
+  // Pending / active jobs
+  const activeJobs=(jobsRes.jobs||[]).filter(j=>['pending_offer','negotiating','price_agreed'].includes(j.status));
+  const el=document.getElementById('pendingJobs');
   if(activeJobs.length){
-    el.innerHTML=`<div class="jobs-list">${activeJobs.map(pendingCard).join("")}</div>`;
+    el.innerHTML=`<div class="jobs-list">${activeJobs.map(pendingCard).join('')}</div>`;
   }else{
     el.innerHTML='<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending offers</h3><p>New job offers from customers will appear here.</p></div>';
   }
 }
 
+// ── Card builders ─────────────────────────────────────────────
 function pendingCard(j){
-  const em=skillEmoji[j.skill]||"🛠️";
-  const cname=j.customerId?.name||"Customer";
+  const em=skillEmoji[j.skill]||'🛠️';
+  const cname=j.customerId?.name||'Customer';
   const st=j.status;
   const offers=j.offers||[];
-  const latestCustOffer=[...offers].reverse().find(o=>o.fromRole==="customer"&&o.status==="pending");
-  const offerAmount=latestCustOffer?latestCustOffer.amount:(j.customerBudget||j.price||0);
-  let offerThread="";
+  const latestCust=[...offers].reverse().find(o=>o.fromRole==='customer'&&o.status==='pending');
+  const offerAmt=latestCust?latestCust.amount:(j.customerBudget||j.price||0);
+  let offerThread='';
   if(offers.length){
-    offerThread=`<div class="offer-thread">${offers.slice(-4).map(o=>`<div class="ot-row ${o.fromRole}"><span class="ot-who">${o.fromRole==="worker"?"You":cname}</span><span class="ot-amt">₹${o.amount}</span><span class="ot-status ot-${o.status}">${o.status}</span>${o.note?`<span class="ot-note">${o.note}</span>`:""}</div>`).join("")}</div>`;
+    offerThread=`<div class="offer-thread">${offers.slice(-4).map(o=>`<div class="ot-row ${o.fromRole}"><span class="ot-who">${o.fromRole==='worker'?'You':cname}</span><span class="ot-amt">₹${o.amount}</span><span class="ot-status ot-${o.status}">${o.status}</span>${o.note?`<span class="ot-note">${o.note}</span>`:''}</div>`).join('')}</div>`;
   }
-  let actions="";
-  if(st==="pending_offer"||st==="negotiating"){
-    actions=`
-      <button class="jc-btn jc-accept" onclick="handleAcceptBudget('${j._id}',${offerAmount})"><i class="bi bi-check-lg"></i> Accept ₹${offerAmount}</button>
-      <button class="jc-btn jc-counter" onclick="openWorkerOffer('${j._id}','${cname.replace(/'/g,"\'")}',${offerAmount})"><i class="bi bi-chat-dots"></i> Counter</button>
-      <button class="jc-btn jc-reject" onclick="handleReject('${j._id}')"><i class="bi bi-x-lg"></i> Reject</button>`;
-  }else if(st==="price_agreed"){
+  let actions='';
+  if(st==='pending_offer'||st==='negotiating'){
+    actions=`<button class="jc-btn jc-accept" onclick="handleAcceptBudget('${j._id}',${offerAmt})"><i class="bi bi-check-lg"></i> Accept ₹${offerAmt}</button><button class="jc-btn jc-counter" onclick="openWorkerOffer('${j._id}','${(cname).replace(/'/g,"\\'")}',${offerAmt})"><i class="bi bi-chat-dots"></i> Counter</button><button class="jc-btn jc-reject" onclick="handleReject('${j._id}')"><i class="bi bi-x-lg"></i> Reject</button>`;
+  }else if(st==='price_agreed'){
     actions=`<button class="jc-btn jc-accept" onclick="handleUpdate('${j._id}','accepted',this)"><i class="bi bi-play-fill"></i> Start Job</button>`;
   }
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
-      <div class="jc-title">${j.title||j.skill||"Job Request"}</div>
+      <div class="jc-title">${j.title||j.skill||'Job Request'}</div>
       <div class="jc-meta">
         <span><i class="bi bi-person"></i> ${cname}</span>
-        <span><i class="bi bi-geo-alt"></i> ${j.location||"—"}</span>
-        <span><i class="bi bi-currency-rupee"></i> Budget: ₹${offerAmount}</span>
-        ${j.description?`<span><i class="bi bi-card-text"></i> ${j.description.slice(0,50)}${j.description.length>50?"…":""}</span>`:""}
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
+        <span><i class="bi bi-currency-rupee"></i> Budget: ₹${offerAmt}</span>
+        ${j.description?`<span><i class="bi bi-card-text"></i> ${j.description.slice(0,50)}${j.description.length>50?'…':''}</span>`:''}
       </div>
       ${offerThread}
     </div>
-    <span class="badge ${statusBadge[st]||""}">${statusLabel[st]||st}</span>
+    <span class="badge ${statusBadge[st]||''}">${statusLabel[st]||st}</span>
     <div class="jc-actions">${actions}</div>
   </div>`;
 }
 
 function jobCard(j){
-  const em=skillEmoji[j.skill]||"🛠️";
-  const cname=j.customerId?.name||"Customer";
+  const em=skillEmoji[j.skill]||'🛠️';
+  const cname=j.customerId?.name||'Customer';
   const st=j.status;
   const agreedAmt=j.agreedPrice||j.price||0;
-  let actions="";
-  if(st==="accepted")actions=`<button class="jc-btn jc-progress" id="btn-${j._id}" onclick="handleUpdate('${j._id}','in_progress',this)"><i class="bi bi-play-fill"></i> Start Work</button>`;
-  if(st==="in_progress")actions=`<button class="jc-btn jc-complete" id="btn-${j._id}" onclick="handleUpdate('${j._id}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
+  let actions='';
+  if(st==='accepted')  actions=`<button class="jc-btn jc-progress" id="btn-${j._id}" onclick="handleUpdate('${j._id}','in_progress',this)"><i class="bi bi-play-fill"></i> Start Work</button>`;
+  if(st==='in_progress')actions=`<button class="jc-btn jc-complete" id="btn-${j._id}" onclick="handleUpdate('${j._id}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
-      <div class="jc-title">${j.title||j.skill||"Job"}</div>
+      <div class="jc-title">${j.title||j.skill||'Job'}</div>
       <div class="jc-meta">
         <span><i class="bi bi-person"></i> ${cname}</span>
-        <span><i class="bi bi-geo-alt"></i> ${j.location||"—"}</span>
-        <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString("en-IN")}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
+        <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
         <span><i class="bi bi-currency-rupee"></i> Agreed: ₹${agreedAmt}</span>
       </div>
     </div>
-    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:11px;color:var(--ink-40);font-weight:400">yours</span></div>
-    <span class="badge ${statusBadge[st]||""}" id="badge-${j._id}">${statusLabel[st]||st}</span>
-    ${actions?`<div class="jc-actions">${actions}</div>`:""}
+    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:10.5px;color:var(--ink-40);font-weight:400">yours</span></div>
+    <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
+    ${actions?`<div class="jc-actions">${actions}</div>`:''}
   </div>`;
 }
 
+// ── Job actions ──────────────────────────────────────────────
 async function handleAcceptBudget(jobId,amount){
   if(!confirm(`Accept customer offer of ₹${amount}?`))return;
   try{
-    const d=await respondOffer(jobId,"accept",null,null);
-    if(d.success){removeCard(jobId);showToast(`₹${amount} agreed! 🎉 Go to My Jobs to start work.`,"✅");refreshStats();setTimeout(()=>loadOverview(),800);}
-    else showToast(d.message||"Failed","❌");
-  }catch(e){showToast("Server error","❌");}
+    const d=await respondOffer(jobId,'accept',null,null);
+    if(d.success){removeCard(jobId);showToast(`₹${amount} agreed! 🎉 Check My Jobs to start work.`,'✅');refreshStats();setTimeout(loadOverview,800);}
+    else showToast(d.message||'Failed','❌');
+  }catch(e){showToast('Server error','❌');}
 }
 
 async function handleReject(jobId){
-  if(!confirm("Reject this job offer?"))return;
+  if(!confirm('Reject this job offer?'))return;
   try{
-    const d=await respondOffer(jobId,"reject",null,null);
-    if(d.success){removeCard(jobId);showToast("Job rejected.","🗑️");refreshStats();}
-    else showToast(d.message||"Failed to reject","❌");
-  }catch(e){showToast("Server error","❌");}
+    const d=await respondOffer(jobId,'reject',null,null);
+    if(d.success){removeCard(jobId);showToast('Job rejected.','🗑️');refreshStats();}
+    else showToast(d.message||'Failed','❌');
+  }catch(e){showToast('Server error','❌');}
 }
 
 function removeCard(jobId){
-  const card=document.getElementById("jcard-"+jobId);
-  if(card){card.style.transition="all .3s";card.style.opacity="0";card.style.transform="translateX(20px)";setTimeout(()=>{card.remove();checkEmptyPending();},300);}
+  const c=document.getElementById('jcard-'+jobId);
+  if(c){c.style.transition='all .3s';c.style.opacity='0';c.style.transform='translateX(20px)';setTimeout(()=>{c.remove();checkEmptyPending();},300);}
 }
 
 async function respondOffer(jobId,action,amount,note){
-  const r=await fetch("/api/workers/respond-offer",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({job_id:jobId,action,amount,note})});
-  return await r.json();
+  const r=await fetch('/api/workers/respond-offer',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:jobId,action,amount,note})});
+  return r.json();
 }
 
 async function handleUpdate(jobId,newStatus,btn){
   if(!btn)return;
-  btn.disabled=true;const origHTML=btn.innerHTML;
-  btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Updating…';
+  btn.disabled=true;const orig=btn.innerHTML;
+  btn.innerHTML='<i class="bi bi-arrow-repeat spin"></i>';
   const d=await updateJobStatus(jobId,newStatus);
   if(d.success){
-    const badge=document.getElementById("badge-"+jobId);
-    if(badge){badge.className="badge "+(statusBadge[newStatus]||"");badge.textContent=statusLabel[newStatus]||newStatus;}
-    const actions=btn.closest(".jc-actions");
-    if(actions){
-      if(newStatus==="in_progress")actions.innerHTML=`<button class="jc-btn jc-complete" id="btn-${jobId}" onclick="handleUpdate('${jobId}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
-      else if(newStatus==="completed")actions.innerHTML="";
+    const badge=document.getElementById('badge-'+jobId);
+    if(badge){badge.className='badge '+(statusBadge[newStatus]||'');badge.textContent=statusLabel[newStatus]||newStatus;}
+    const acts=btn.closest('.jc-actions');
+    if(acts){
+      if(newStatus==='in_progress')acts.innerHTML=`<button class="jc-btn jc-complete" id="btn-${jobId}" onclick="handleUpdate('${jobId}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
+      else if(newStatus==='completed')acts.innerHTML='';
     }
-    const msgs={in_progress:"Work started! Customer notified.",completed:"Job done! Great work 🎉"};
-    showToast(msgs[newStatus]||"Updated!","✅");refreshStats();
-  }else{btn.disabled=false;btn.innerHTML=origHTML;showToast(d.message||"Failed","❌");}
+    showToast({in_progress:'Work started! Customer notified.',completed:'Job done! Great work 🎉',accepted:'Job accepted!'}[newStatus]||'Updated!','✅');
+    refreshStats();
+  }else{btn.disabled=false;btn.innerHTML=orig;showToast(d.message||'Failed','❌');}
 }
 
 function checkEmptyPending(){
-  const list=document.querySelector("#pendingJobs .jobs-list");
-  if(list&&list.children.length===0)document.getElementById("pendingJobs").innerHTML='<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending offers</h3><p>New job offers will appear here.</p></div>';
+  const l=document.querySelector('#pendingJobs .jobs-list');
+  if(l&&l.children.length===0)document.getElementById('pendingJobs').innerHTML='<div class="empty-state"><i class="bi bi-inbox"></i><h3>No pending offers</h3><p>New job offers will appear here.</p></div>';
 }
 
 async function refreshStats(){
-  const d=await API("/api/workers/stats");
-  if(d.success){const s=d.stats;document.getElementById("st-total").textContent=s.total||0;document.getElementById("st-done").textContent=s.completed||0;document.getElementById("st-pend").textContent=s.pending||0;document.getElementById("st-rating").textContent=parseFloat(s.avg_rating||0).toFixed(1);}
+  const d=await API('/api/workers/stats');
+  if(d.success){const s=d.stats;document.getElementById('st-total').textContent=s.total||0;document.getElementById('st-done').textContent=s.completed||0;document.getElementById('st-pend').textContent=s.pending||0;document.getElementById('st-rating').textContent=parseFloat(s.avg_rating||0).toFixed(1);}
 }
 
 async function updateJobStatus(jobId,status){
-  try{const r=await fetch("/api/workers/job-status",{method:"PUT",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({job_id:jobId,status})});return await r.json();}
-  catch(e){return{success:false,message:"Network error"};}
+  try{const r=await fetch('/api/workers/job-status',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:jobId,status})});return r.json();}
+  catch(e){return{success:false,message:'Network error'};}
 }
 
+// ── All Jobs ─────────────────────────────────────────────────
 async function loadAllJobs(){
-  const el=document.getElementById("allJobs");el.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
-  const d=await API("/api/workers/jobs?limit=50");
-  el.innerHTML=d.jobs?.length?`<div class="jobs-list">${d.jobs.map(jobCard).join("")}</div>`:'<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Accept offers to see them here.</p></div>';
+  const el=document.getElementById('allJobs');
+  el.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  const d=await API('/api/workers/jobs?limit=50');
+  el.innerHTML=d.jobs?.length?`<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`:'<div class="empty-state"><i class="bi bi-briefcase"></i><h3>No jobs yet</h3><p>Accept offers to see them here.</p></div>';
 }
 
+// ── Earnings ─────────────────────────────────────────────────
 async function loadEarnings(){
-  const d=await API("/api/workers/earnings");
-  if(d.success){document.getElementById("totalEarnings").textContent="₹"+Math.round(d.totalEarnings||0);document.getElementById("monthlyEarnings").textContent="₹"+Math.round(d.monthlyEarnings||0);}
-  const jobs=await API("/api/workers/jobs?status=completed&limit=50");
-  const el=document.getElementById("earningsJobs");
-  el.innerHTML=jobs.jobs?.length?`<div class="jobs-list">${jobs.jobs.map(jobCard).join("")}</div>`:'<div class="empty-state"><i class="bi bi-wallet2"></i><h3>No completed jobs</h3></div>';
+  const [earnRes,jobsRes]=await Promise.all([API('/api/workers/earnings'),API('/api/workers/jobs?status=completed&limit=50')]);
+  if(earnRes.success){document.getElementById('totalEarnings').textContent='₹'+Math.round(earnRes.totalEarnings||0);document.getElementById('monthlyEarnings').textContent='₹'+Math.round(earnRes.monthlyEarnings||0);}
+  const el=document.getElementById('earningsJobs');
+  el.innerHTML=jobsRes.jobs?.length?`<div class="jobs-list">${jobsRes.jobs.map(jobCard).join('')}</div>`:'<div class="empty-state"><i class="bi bi-wallet2"></i><h3>No completed jobs yet</h3></div>';
 }
 
+// ── Worker offer modal ────────────────────────────────────────
 let wOfferJobId=null;
-function openWorkerOffer(jobId,customerName,customerBudget){
+function openWorkerOffer(jobId,customerName,budget){
   wOfferJobId=jobId;
-  document.getElementById("woCustName").textContent=customerName;
-  document.getElementById("woCustBudget").textContent="₹"+customerBudget;
-  document.getElementById("woAmount").value=USER.basePrice||"";
-  document.getElementById("woNote").value="";
-  document.getElementById("woAlert").style.display="none";
-  document.getElementById("workerOfferModal").classList.add("open");
+  document.getElementById('woCustName').textContent=customerName;
+  document.getElementById('woCustBudget').textContent='₹'+budget;
+  document.getElementById('woAmount').value=USER.basePrice||'';
+  document.getElementById('woNote').value='';
+  document.getElementById('woAlert').style.display='none';
+  document.getElementById('workerOfferModal').classList.add('open');
 }
-function closeWorkerOffer(){document.getElementById("workerOfferModal").classList.remove("open");}
+function closeWorkerOffer(){document.getElementById('workerOfferModal').classList.remove('open');}
 
 async function sendWorkerOffer(){
-  const amount=parseFloat(document.getElementById("woAmount").value);
-  const note=document.getElementById("woNote").value.trim();
-  if(!amount||amount<1){showWoAlert("error","Enter a valid price");return;}
-  const btn=document.getElementById("woSubmitBtn");
-  btn.disabled=true;btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
+  const amount=parseFloat(document.getElementById('woAmount').value);
+  const note=document.getElementById('woNote').value.trim();
+  if(!amount||amount<1){showWoAlert('error','Enter a valid price');return;}
+  const btn=document.getElementById('woSubmitBtn');
+  btn.disabled=true;btn.innerHTML='<i class="bi bi-arrow-repeat spin"></i> Sending…';
   try{
-    const d=await respondOffer(wOfferJobId,"counter",amount,note);
-    if(d.success){showToast(`Your price ₹${amount} sent to customer 💬`,"📤");closeWorkerOffer();setTimeout(()=>loadOverview(),800);}
-    else showWoAlert("error",d.message||"Failed to send");
-  }catch(e){showWoAlert("error","Server error");}
+    const d=await respondOffer(wOfferJobId,'counter',amount,note);
+    if(d.success){showToast(`Your price ₹${amount} sent to customer 💬`,'📤');closeWorkerOffer();setTimeout(loadOverview,800);}
+    else showWoAlert('error',d.message||'Failed to send');
+  }catch(e){showWoAlert('error','Server error');}
   btn.disabled=false;btn.innerHTML='<i class="bi bi-send-fill"></i> Send My Price';
 }
+function showWoAlert(t,m){const el=document.getElementById('woAlert');el.style.display='flex';el.className='alert '+(t==='error'?'ae':'as');el.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;}
+document.getElementById('workerOfferModal').addEventListener('click',e=>{if(e.target===document.getElementById('workerOfferModal'))closeWorkerOffer();});
 
-function showWoAlert(t,m){
-  const el=document.getElementById("woAlert");el.style.display="flex";
-  el.className="alert "+(t==="error"?"ae":"as");
-  el.innerHTML=`<i class="bi bi-${t==="error"?"exclamation-circle-fill":"check-circle-fill"}"></i> ${m}`;
-}
-document.getElementById("workerOfferModal").addEventListener("click",e=>{if(e.target===document.getElementById("workerOfferModal"))closeWorkerOffer();});
-
+// ── Set base price ────────────────────────────────────────────
 async function saveBasePrice(){
-  const bp=parseFloat(document.getElementById("basePriceInput").value);
-  const unit=document.getElementById("basePriceUnit").value;
-  const note=document.getElementById("basePriceNote").value.trim();
-  if(!bp||bp<1){showToast("Enter a valid price","❌");return;}
+  const bp=parseFloat(document.getElementById('basePriceInput').value);
+  const unit=document.getElementById('basePriceUnit').value;
+  const note=document.getElementById('basePriceNote').value.trim();
+  if(!bp||bp<1){showToast('Enter a valid price','❌');return;}
   try{
-    const d=await fetch("/api/workers/set-price",{method:"PUT",headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:JSON.stringify({basePrice:bp,priceUnit:unit,priceNote:note})}).then(r=>r.json());
+    const d=await fetch('/api/workers/set-price',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({basePrice:bp,priceUnit:unit,priceNote:note})}).then(r=>r.json());
     if(d.success){
       USER.basePrice=bp;USER.priceUnit=unit;USER.priceNote=note;
-      localStorage.setItem("kc_user",JSON.stringify(USER));
-      document.getElementById("sbBasePrice").textContent="₹"+bp+"/"+unit;
-      document.getElementById("setPriceModal").classList.remove("open");
-      showToast("Base price saved! ₹"+bp+"/"+unit,"✅");
-    }else showToast(d.message||"Failed","❌");
-  }catch(e){showToast("Server error","❌");}
+      localStorage.setItem('kc_user',JSON.stringify(USER));
+      document.getElementById('sbBasePrice').textContent='₹'+bp+'/'+unit;
+      document.getElementById('setPriceModal').classList.remove('open');
+      showToast('Base price saved! ₹'+bp+'/'+unit,'✅');
+    }else showToast(d.message||'Failed','❌');
+  }catch(e){showToast('Server error','❌');}
 }
 
-function logout(){localStorage.removeItem("kc_token");localStorage.removeItem("kc_user");location.href="login.html";}
+// ── Mobile sidebar ────────────────────────────────────────────
+function openMobile(){
+  document.getElementById('sidebar').classList.add('mobile-open');
+  document.getElementById('sbOverlay').classList.add('open');
+  document.getElementById('mobMenuBtn').classList.add('open');
+}
+function closeMobile(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sbOverlay').classList.remove('open');
+  document.getElementById('mobMenuBtn').classList.remove('open');
+}
 
+// ── Logout ────────────────────────────────────────────────────
+function logout(){localStorage.removeItem('kc_token');localStorage.removeItem('kc_user');location.href='login.html';}
+
+// ── Init ──────────────────────────────────────────────────────
 loadOverview();
+loadAvailability();
 </script>
 </body>
 </html>

@@ -74,6 +74,21 @@ app.use("/api/referral",     require("./routes/referralRoutes"));
 app.use("/api/subscription", require("./routes/subscriptionRoutes"));
 
 // ── Health Check (VERY IMPORTANT for Render) ────────────────
+
+// ── Fix existing workers missing isAvailable field ─────────────
+app.post("/api/admin/fix-workers", async (req, res) => {
+  try {
+    // Set isAvailable=true for all workers who have no isAvailable field
+    const result = await User.updateMany(
+      { role: "worker", isAvailable: { $exists: false } },
+      { $set: { isAvailable: true } }
+    );
+    res.json({ success: true, message: `Fixed ${result.modifiedCount} workers`, modifiedCount: result.modifiedCount });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 app.get("/api/health", (req, res) => {
   res.json({
     success: true,
@@ -151,10 +166,10 @@ app.post("/api/admin/seed", async (req, res) => {
 
     await User.insertMany([
       { name: "Admin", email: "admin@kaamconnect.com", password: hashedPass, role: "admin", verified: true },
-      { name: "Rajesh Kumar", email: "rajesh@example.com", password: hashedPass, phone: "9876543210", role: "worker", skill: "electrician", location: "Ludhiana", verified: true, rating: 4.8, totalJobs: 124 },
-      { name: "Suresh Sharma", email: "suresh@example.com", password: hashedPass, phone: "9876543211", role: "worker", skill: "plumber", location: "Chandigarh", verified: true, rating: 4.6, totalJobs: 98 },
-      { name: "Amit Singh", email: "amit@example.com", password: hashedPass, phone: "9876543212", role: "worker", skill: "painter", location: "Delhi", verified: true, rating: 4.9, totalJobs: 156 },
-      { name: "Vikram Patel", email: "vikram@example.com", password: hashedPass, phone: "9876543213", role: "worker", skill: "carpenter", location: "Mumbai", verified: true, rating: 4.7, totalJobs: 87 },
+      { name: "Rajesh Kumar", email: "rajesh@example.com", password: hashedPass, phone: "9876543210", role: "worker", skill: "electrician", location: "Ludhiana", verified: true, idStatus: "approved", isAvailable: true, emailVerified: true, rating: 4.8, totalJobs: 124 },
+      { name: "Suresh Sharma", email: "suresh@example.com", password: hashedPass, phone: "9876543211", role: "worker", skill: "plumber", location: "Chandigarh", verified: true, idStatus: "approved", isAvailable: true, emailVerified: true, rating: 4.6, totalJobs: 98 },
+      { name: "Amit Singh", email: "amit@example.com", password: hashedPass, phone: "9876543212", role: "worker", skill: "painter", location: "Delhi", verified: true, idStatus: "approved", isAvailable: true, emailVerified: true, rating: 4.9, totalJobs: 156 },
+      { name: "Vikram Patel", email: "vikram@example.com", password: hashedPass, phone: "9876543213", role: "worker", skill: "carpenter", location: "Mumbai", verified: true, idStatus: "approved", isAvailable: true, emailVerified: true, rating: 4.7, totalJobs: 87 },
       { name: "Priya Sharma", email: "priya@example.com", password: hashedPass, phone: "9876543220", role: "customer", location: "Ludhiana" },
     ]);
 
