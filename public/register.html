@@ -4,456 +4,476 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Account — KaamConnect</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <!-- Bootstrap Icons -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
-:root{
-  --saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;
-  --forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;
-  --cream:#FAF7F2;--white:#FFFFFF;
-  --ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)
-}
+:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'DM Sans',sans-serif;background:var(--cream);
-  min-height:100vh;display:flex;flex-direction:column;align-items:center;
-  padding:52px 20px 80px;-webkit-font-smoothing:antialiased;position:relative
-}
-body::before{content:'';position:fixed;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(232,96,28,.07),transparent 60%);pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-100px;left:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(26,60,52,.08),transparent 60%);pointer-events:none;z-index:0}
+html,body{height:100%;font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+body{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;background:var(--cream)}
 a{text-decoration:none;color:inherit}
 
-/* PAGE TOP */
-.page-top{text-align:center;margin-bottom:32px;position:relative;z-index:1}
-.logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:24px}
-.logo-mark{width:40px;height:40px;border-radius:12px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 4px 16px rgba(232,96,28,.3);transition:transform .22s,box-shadow .22s}
-.logo:hover .logo-mark{transform:rotate(-8deg) scale(1.1);box-shadow:0 6px 22px rgba(232,96,28,.45)}
-.logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:21px;color:var(--forest);letter-spacing:-.4px}
-.logo-txt span{color:var(--saffron)}
-h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--forest);letter-spacing:-1px;margin-bottom:6px}
-.subtitle{font-size:14.5px;color:var(--ink-40);font-weight:300}
+/* ── LEFT PANEL (same as login) ──────────────────────────── */
+.left{background:var(--forest);display:flex;flex-direction:column;justify-content:space-between;padding:52px;position:relative;overflow:hidden;position:sticky;top:0;height:100vh}
+.l-orb1{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%);top:-150px;right:-150px;pointer-events:none}
+.l-orb2{position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.3),transparent 65%);bottom:-100px;left:-80px;pointer-events:none}
+.l-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:52px 52px}
+.logo{display:inline-flex;align-items:center;gap:11px;position:relative;z-index:1}
+.logo-mark{width:38px;height:38px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:18px;color:#fff;box-shadow:0 4px 14px rgba(232,96,28,.4)}
+.logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#fff;letter-spacing:-.3px}
+.logo-txt span{color:var(--saffron-2)}
+.l-body{position:relative;z-index:1}
+.l-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(232,96,28,.15);border:1px solid rgba(232,96,28,.25);border-radius:100px;padding:6px 14px;font-size:11.5px;font-weight:600;color:var(--saffron-2);margin-bottom:24px;letter-spacing:.3px}
+.l-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--saffron-2);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.l-h{font-family:'Instrument Serif',serif;font-size:clamp(34px,3.2vw,50px);color:#fff;line-height:1.06;letter-spacing:-1.5px;margin-bottom:16px}
+.l-h em{font-style:italic;color:var(--saffron-2)}
+.l-p{font-size:15px;color:rgba(255,255,255,.5);line-height:1.78;max-width:300px;margin-bottom:38px;font-weight:300}
+/* Steps replacing features on register */
+.steps{display:flex;flex-direction:column;gap:6px}
+.step{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;border-radius:13px;border:1px solid transparent;transition:all .22s}
+.step:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--saffron);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;flex-shrink:0;margin-top:1px}
+.step-body{}
+.step-title{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:2px}
+.step-desc{font-size:12px;color:rgba(255,255,255,.4);line-height:1.45}
+/* Referral promo on left */
+.ref-promo{background:rgba(232,96,28,.12);border:1px solid rgba(232,96,28,.2);border-radius:14px;padding:16px 18px;position:relative;z-index:1}
+.ref-promo-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ref-promo-ico{width:34px;height:34px;border-radius:9px;background:rgba(232,96,28,.2);display:grid;place-items:center;font-size:16px;flex-shrink:0}
+.ref-promo-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#fff}
+.ref-promo-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
+.l-stats{display:flex;gap:40px;position:relative;z-index:1}
+.ls-n{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1px}
+.ls-l{font-size:11.5px;color:rgba(255,255,255,.35);margin-top:4px}
 
-/* CARD */
-.card{
-  background:var(--white);border:1.5px solid var(--ink-06);border-radius:20px;
-  padding:44px;width:100%;max-width:580px;
-  box-shadow:0 16px 60px rgba(15,25,35,.07);position:relative;z-index:1
-}
+/* ── RIGHT PANEL ──────────────────────────────────────────── */
+.right{display:flex;align-items:flex-start;justify-content:center;padding:52px 52px 80px;background:var(--cream);overflow-y:auto}
+.form-box{width:100%;max-width:440px}
+.back-link{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-40);margin-bottom:32px;transition:color .2s;cursor:pointer}
+.back-link:hover{color:var(--saffron)}
+.back-link i{font-size:11px}
+.f-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--forest);letter-spacing:-1px;margin-bottom:5px}
+.f-sub{font-size:14px;color:var(--ink-40);margin-bottom:26px;font-weight:300}
 
-/* GOOGLE BUTTON */
-.google-btn{
-  width:100%;padding:13px 16px;border:1.5px solid var(--ink-12);border-radius:11px;
-  background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  gap:10px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;color:var(--ink);
-  transition:all .22s;margin-bottom:18px;box-shadow:0 2px 8px rgba(15,25,35,.04)
-}
-.google-btn:hover{border-color:#4285F4;background:#F8FAFF;box-shadow:0 4px 18px rgba(66,133,244,.14);transform:translateY(-1px)}
+/* Google button */
+.google-btn{width:100%;padding:12.5px 16px;border:1.5px solid var(--ink-12);border-radius:11px;background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',sans-serif;font-size:14.5px;font-weight:600;color:var(--ink);transition:all .22s;margin-bottom:18px}
+.google-btn:hover{border-color:#4285F4;background:#F8FAFF;box-shadow:0 4px 16px rgba(66,133,244,.12)}
 .google-ico{width:20px;height:20px;flex-shrink:0}
-
-/* DIVIDER */
-.divider{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.divider{display:flex;align-items:center;gap:12px;margin-bottom:20px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--ink-06)}
 .divider span{font-size:12px;color:var(--ink-40);font-weight:500;white-space:nowrap}
 
-/* ROLE GRID */
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
-.rbtn{
-  padding:20px 16px;border:2px solid var(--ink-12);border-radius:16px;
-  text-align:center;cursor:pointer;background:var(--cream);
-  transition:all .22s;user-select:none;position:relative
-}
+/* Role selector — pill style */
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.rbtn{padding:16px;border:2px solid var(--ink-12);border-radius:14px;text-align:center;cursor:pointer;background:var(--cream);transition:all .22s;user-select:none;position:relative}
 .rbtn:hover{border-color:var(--saffron-2);background:var(--saffron-pale)}
 .rbtn.on{border-color:var(--saffron);background:var(--saffron-pale);box-shadow:0 4px 20px rgba(232,96,28,.15)}
-.rbtn-check{
-  position:absolute;top:12px;right:12px;width:20px;height:20px;
-  border-radius:50%;background:var(--saffron);display:none;
-  align-items:center;justify-content:center;color:#fff;font-size:11px
-}
+.rbtn-check{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--saffron);display:none;align-items:center;justify-content:center;color:#fff;font-size:10px}
 .rbtn.on .rbtn-check{display:flex}
-.rbtn-ico{
-  width:50px;height:50px;border-radius:14px;background:var(--sage-light);
-  border:1.5px solid var(--ink-06);display:grid;place-items:center;
-  font-size:24px;margin:0 auto 10px;transition:all .22s
-}
+.rbtn-ico{width:44px;height:44px;border-radius:12px;background:var(--sage-light);border:1.5px solid var(--ink-06);display:grid;place-items:center;font-size:22px;margin:0 auto 8px;transition:all .22s}
 .rbtn.on .rbtn-ico{background:var(--forest);border-color:var(--forest)}
-.rbtn-role-tag{
-  display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--saffron);background:var(--saffron-pale);
-  border:1px solid rgba(232,96,28,.2);border-radius:100px;padding:3px 10px;margin-bottom:6px
-}
-.rbtn.on .rbtn-role-tag{background:rgba(232,96,28,.15);border-color:rgba(232,96,28,.3)}
-.rbtn-name{font-family:'Syne',sans-serif;font-size:14.5px;font-weight:700;color:var(--forest);margin-bottom:3px}
-.rbtn-desc{font-size:12.5px;color:var(--ink-40)}
+.rbtn-name{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:var(--forest);margin-bottom:2px}
+.rbtn-desc{font-size:11.5px;color:var(--ink-40)}
 
-/* SECTION LABEL */
-.sec-lbl{
-  font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px
-}
+/* Section label */
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-40);margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
 
-/* FORM */
+/* Fields */
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
+.fg{margin-bottom:14px}
+.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:6px;letter-spacing:.3px}
 .fw{position:relative}
-.fi{
-  width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);
-  border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;
-  color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none
-}
+.fi{width:100%;padding:11px 14px 11px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:all .2s;appearance:none}
 .fi::placeholder{color:var(--ink-40);font-weight:300}
-.fi:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
-.fi-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:13px;pointer-events:none;transition:color .2s}
+.fi:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
+.fi-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:13px;pointer-events:none;transition:color .2s}
 .fw:focus-within .fi-ico{color:var(--saffron)}
-textarea.fi{min-height:80px;resize:vertical;padding-top:11px;padding-left:14px}
+.fi-nopad{padding-left:14px}
+.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:4px;transition:color .2s}
+.eye-btn:hover{color:var(--ink)}
+textarea.fi{min-height:72px;resize:vertical;padding-top:10px}
 
-/* PASSWORD BARS */
-.pw-bars{display:flex;gap:4px;margin-top:8px}
+/* Password bars */
+.pw-bars{display:flex;gap:4px;margin-top:7px}
 .pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
 
-/* WORKER EXTRA */
-.worker-extra{display:none;border-top:1.5px solid var(--ink-06);margin-top:8px;padding-top:24px;animation:slideIn .26s ease}
+/* Referral field */
+.ref-field{background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:12px;padding:13px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.ref-field-ico{width:34px;height:34px;border-radius:9px;background:var(--sage);display:grid;place-items:center;color:#fff;font-size:15px;flex-shrink:0}
+.ref-field-info{flex:1}
+.ref-field-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sage);margin-bottom:3px}
+.ref-field-code{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest);letter-spacing:2px}
+.ref-manual{display:none}
+.ref-manual-row{display:flex;gap:8px;align-items:flex-end}
+.ref-manual-row .fg{flex:1;margin-bottom:0}
+.ref-apply-btn{padding:11px 16px;background:var(--sage);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s}
+.ref-apply-btn:hover{background:var(--forest)}
+.ref-toggle{font-size:12.5px;color:var(--saffron);font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;margin-bottom:14px}
+
+/* Worker extra */
+.worker-extra{display:none;border-top:1.5px solid var(--ink-06);margin-top:4px;padding-top:20px;animation:slideIn .26s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 
-/* ID UPLOAD */
-.id-upload-section{
-  background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.04));
-  border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:16px
-}
-.id-upload-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.id-upload-icon{width:36px;height:36px;border-radius:10px;background:var(--sage-light);display:grid;place-items:center;font-size:16px;color:var(--sage);flex-shrink:0}
-.id-upload-title{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:var(--forest)}
-.id-upload-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
-.id-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.id-type-btn{
-  padding:10px 12px;border:1.5px solid var(--ink-12);border-radius:10px;
-  background:var(--white);cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-70);
-  font-family:'DM Sans',sans-serif
-}
-.id-type-btn:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-light)}
+/* ID upload */
+.id-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.04));border:1.5px solid var(--sage-light);border-radius:14px;padding:18px;margin-bottom:14px}
+.id-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.id-head-ico{width:34px;height:34px;border-radius:9px;background:var(--sage-light);display:grid;place-items:center;font-size:15px;color:var(--sage);flex-shrink:0}
+.id-head-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--forest)}
+.id-head-sub{font-size:11.5px;color:var(--ink-40);margin-top:2px}
+.id-types{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
+.id-type-btn{padding:9px 10px;border:1.5px solid var(--ink-12);border-radius:9px;background:var(--white);cursor:pointer;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;color:var(--ink-70);font-family:'DM Sans',sans-serif;transition:all .2s}
+.id-type-btn:hover{border-color:var(--sage);color:var(--sage)}
 .id-type-btn.selected{border-color:var(--saffron);background:var(--saffron-pale);color:var(--saffron);font-weight:700}
-.id-type-btn i{font-size:15px}
-.id-dropzone{
-  border:2px dashed var(--ink-12);border-radius:12px;padding:28px 20px;
-  text-align:center;cursor:pointer;transition:all .25s;
-  background:var(--white);position:relative
-}
+.id-dropzone{border:2px dashed var(--ink-12);border-radius:11px;padding:24px 16px;text-align:center;cursor:pointer;background:var(--white);position:relative;transition:all .25s}
 .id-dropzone:hover,.id-dropzone.drag-over{border-color:var(--saffron);background:var(--saffron-pale)}
-.id-dropzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.id-dz-icon{font-size:32px;color:var(--ink-12);margin-bottom:10px;transition:color .2s;display:block}
-.id-dropzone:hover .id-dz-icon,.id-dropzone.drag-over .id-dz-icon{color:var(--saffron)}
-.id-dz-txt{font-size:13.5px;font-weight:600;color:var(--ink-40);margin-bottom:4px}
-.id-dz-hint{font-size:12px;color:var(--ink-40)}
-.id-preview{
-  display:none;align-items:center;gap:12px;background:var(--sage-light);
-  border:1.5px solid rgba(61,122,110,.2);border-radius:10px;padding:12px 14px;margin-top:10px
-}
-.id-preview-icon{font-size:22px;flex-shrink:0}
-.id-preview-name{font-size:13px;font-weight:600;color:var(--forest);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.id-preview-size{font-size:11px;color:var(--ink-40)}
-.id-preview-remove{background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:16px;transition:color .2s;flex-shrink:0}
-.id-preview-remove:hover{color:#DC2626}
-.id-note{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.id-dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.id-dz-ico{font-size:28px;color:var(--ink-12);margin-bottom:8px;display:block;transition:color .2s}
+.id-dropzone:hover .id-dz-ico{color:var(--saffron)}
+.id-dz-txt{font-size:13px;font-weight:600;color:var(--ink-40);margin-bottom:3px}
+.id-dz-hint{font-size:11.5px;color:var(--ink-40)}
+.id-preview{display:none;align-items:center;gap:10px;background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:9px;padding:10px 13px;margin-top:8px}
+.id-prev-ico{font-size:20px}
+.id-prev-name{font-size:12.5px;font-weight:600;color:var(--forest);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.id-prev-size{font-size:11px;color:var(--ink-40)}
+.id-prev-rm{background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:15px;transition:color .2s}
+.id-prev-rm:hover{color:#DC2626}
+.id-note{font-size:11.5px;color:var(--ink-40);margin-top:10px;display:flex;gap:6px;line-height:1.5}
 .id-note i{color:var(--sage);flex-shrink:0;margin-top:1px}
 
-/* SUBMIT */
-.submit-btn{
-  width:100%;padding:14px;background:var(--saffron);border:none;border-radius:11px;
-  color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:all .22s;box-shadow:0 4px 16px rgba(232,96,28,.3);margin-top:8px
-}
+/* Submit */
+.submit-btn{width:100%;padding:14px;background:var(--saffron);border:none;border-radius:11px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .22s;box-shadow:0 4px 16px rgba(232,96,28,.3);margin-top:6px}
 .submit-btn:hover{background:var(--saffron-2);transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,96,28,.38)}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 .spin{display:none;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ALERTS */
-.alert{padding:11px 14px;border-radius:10px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.alert{padding:11px 14px;border-radius:10px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:9px;margin-bottom:14px}
 .ae{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
 .as{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+.signin-row{text-align:center;font-size:13.5px;color:var(--ink-40);margin-top:20px}
+.signin-row a{color:var(--saffron);font-weight:700}
 
-/* SIGN-IN ROW */
-.signin-row{text-align:center;font-size:13.5px;color:var(--ink-40);margin-top:20px;position:relative;z-index:1}
-.signin-row a{color:var(--saffron);font-weight:700;transition:color .2s}
-.signin-row a:hover{color:var(--saffron-2)}
-
-/* EMAIL SENT SCREEN */
+/* Email sent screen */
 .email-sent-screen{display:none;text-align:center;padding:8px 0}
-.es-envelope{font-size:64px;margin-bottom:16px;display:block;animation:bounce .6s ease}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.es-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--forest);margin-bottom:8px;letter-spacing:-.5px}
-.es-sub{font-size:14.5px;color:var(--ink-40);line-height:1.7;margin-bottom:24px;font-weight:300}
-.es-email-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--saffron-pale);border:1.5px solid var(--saffron-light);
-  border-radius:100px;padding:8px 20px;font-size:14px;font-weight:600;color:var(--saffron);margin-bottom:28px
-}
-.es-steps{background:var(--cream);border:1.5px solid var(--ink-06);border-radius:14px;padding:20px 24px;text-align:left;margin-bottom:24px}
-.es-step{display:flex;align-items:flex-start;gap:12px;padding:8px 0}
+.es-envelope{font-size:56px;margin-bottom:14px;display:block;animation:bounce .6s ease}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.es-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--forest);margin-bottom:7px;letter-spacing:-.5px}
+.es-sub{font-size:14px;color:var(--ink-40);line-height:1.7;margin-bottom:16px;font-weight:300}
+.es-badge{display:inline-flex;align-items:center;gap:8px;background:var(--saffron-pale);border:1.5px solid rgba(232,96,28,.2);border-radius:100px;padding:7px 18px;font-size:13.5px;font-weight:600;color:var(--saffron);margin-bottom:22px}
+.es-steps{background:var(--cream);border:1.5px solid var(--ink-06);border-radius:13px;padding:16px 20px;text-align:left;margin-bottom:20px}
+.es-step{display:flex;gap:11px;padding:8px 0}
 .es-step+.es-step{border-top:1px solid var(--ink-06)}
-.es-step-num{width:24px;height:24px;border-radius:50%;background:var(--saffron);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;flex-shrink:0;margin-top:1px}
-.es-step-txt{font-size:13.5px;color:var(--ink-70);line-height:1.55}
+.es-step-num{width:22px;height:22px;border-radius:50%;background:var(--saffron);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
+.es-step-txt{font-size:13px;color:var(--ink-70);line-height:1.55}
 .es-step-txt strong{color:var(--forest)}
-.resend-btn{
-  background:none;border:1.5px solid var(--ink-12);border-radius:10px;
-  padding:11px 20px;font-size:13.5px;font-weight:600;color:var(--ink-40);
-  cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;
-  display:inline-flex;align-items:center;gap:6px
-}
+.resend-btn{background:none;border:1.5px solid var(--ink-12);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;color:var(--ink-40);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:6px}
 .resend-btn:hover{border-color:var(--saffron);color:var(--saffron)}
 .resend-btn:disabled{opacity:.5;cursor:not-allowed}
 
-/* RESPONSIVE */
-@media(max-width:540px){
-  .card{padding:28px 20px}
+/* Responsive */
+@media(max-width:900px){
+  body{grid-template-columns:1fr}
+  .left{display:none}
+  .right{padding:44px 28px 80px}
+}
+@media(max-width:560px){
+  .right{padding:32px 16px 60px}
+  .form-box{max-width:100%}
   .frow{grid-template-columns:1fr}
-  .id-type-grid{grid-template-columns:1fr 1fr}
-  .role-grid{grid-template-columns:1fr}
+  .id-types{grid-template-columns:1fr 1fr}
+  .f-title{font-size:24px}
+  .role-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:400px){
-  body{padding:32px 12px 60px}
-  .card{padding:22px 14px;border-radius:16px}
-  h1{font-size:22px}
-  .id-type-grid{grid-template-columns:1fr}
+  .right{padding:24px 12px 50px}
+  .id-types{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<div class="page-top">
+<!-- ── LEFT PANEL ──────────────────────────────────────────── -->
+<div class="left">
+  <div class="l-orb1"></div><div class="l-orb2"></div><div class="l-grid"></div>
+
   <a class="logo" href="index.html">
     <div class="logo-mark"><i class="bi bi-tools"></i></div>
     <div class="logo-txt">Kaam<span>Connect</span></div>
   </a>
-  <h1>Create Account</h1>
-  <p class="subtitle">Join India's fastest growing worker marketplace &mdash; free forever.</p>
+
+  <div class="l-body">
+    <div class="l-tag"><div class="l-tag-dot"></div>Free to join — always</div>
+    <h2 class="l-h">Start earning<br>or get help<br><em>in minutes.</em></h2>
+    <p class="l-p">Join thousands of verified workers and satisfied customers on India's fastest-growing labour marketplace.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Create your account</div>
+          <div class="step-desc">Takes less than 2 minutes. No credit card needed.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Verify your identity</div>
+          <div class="step-desc">Workers upload a government ID — admin approves within 24h.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Book or get booked</div>
+          <div class="step-desc">Negotiate prices InDrive-style. Pay only after work is done.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ref-promo">
+    <div class="ref-promo-top">
+      <div class="ref-promo-ico">🎁</div>
+      <div class="ref-promo-title">Referral Bonus — ₹50 per friend</div>
+    </div>
+    <div class="ref-promo-desc">After joining, share your unique referral code. Every friend who signs up earns you ₹50 in wallet credits — use them on any booking.</div>
+  </div>
 </div>
 
-<div class="card">
-  <div id="alertBox" style="display:none"></div>
+<!-- ── RIGHT PANEL ─────────────────────────────────────────── -->
+<div class="right">
+  <div class="form-box">
+    <div class="back-link" onclick="location.href='login.html'"><i class="bi bi-arrow-left"></i> Back to sign in</div>
+    <h1 class="f-title">Create Account</h1>
+    <p class="f-sub">Join free — India's most trusted worker marketplace.</p>
 
-  <!-- Google Sign-Up -->
-  <button class="google-btn" onclick="googleSignUp()">
-    <svg class="google-ico" viewBox="0 0 48 48">
-      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/>
-      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-    </svg>
-    Sign up with Google
-  </button>
+    <div id="alertBox" style="display:none"></div>
 
-  <div class="divider"><span>or create account with email</span></div>
-
-  <!-- Role Selection -->
-  <div class="sec-lbl">I want to</div>
-  <div class="role-grid">
-    <div class="rbtn on" id="rb-c" onclick="setRole('customer')">
-      <div class="rbtn-check"><i class="bi bi-check"></i></div>
-      <div class="rbtn-ico">&#128100;</div>
-      <div class="rbtn-role-tag">Customer</div>
-      <div class="rbtn-name">Hire a Worker</div>
-      <div class="rbtn-desc">Find verified help fast</div>
-    </div>
-    <div class="rbtn" id="rb-w" onclick="setRole('worker')">
-      <div class="rbtn-check"><i class="bi bi-check"></i></div>
-      <div class="rbtn-ico">&#128119;</div>
-      <div class="rbtn-role-tag">Worker</div>
-      <div class="rbtn-name">Find Work</div>
-      <div class="rbtn-desc">Get jobs &amp; earn money</div>
-    </div>
-  </div>
-
-  <input type="hidden" id="role" value="customer">
-
-  <!-- Personal Details -->
-  <div class="sec-lbl">Your Details</div>
-  <div class="frow">
-    <div class="fg">
-      <label class="fl">Full Name</label>
-      <div class="fw">
-        <input class="fi" type="text" id="name" placeholder="enter your full name">
-        <i class="bi bi-person fi-ico"></i>
-      </div>
-    </div>
-    <div class="fg">
-      <label class="fl">Phone Number</label>
-      <div class="fw">
-        <input class="fi" type="text" id="phone" placeholder="enter your phone number">
-        <i class="bi bi-phone fi-ico"></i>
-      </div>
-    </div>
-  </div>
-
-  <div class="fg">
-    <label class="fl">Email Address</label>
-    <div class="fw">
-      <input class="fi" type="email" id="email" placeholder="enter your email address">
-      <i class="bi bi-envelope fi-ico"></i>
-    </div>
-  </div>
-
-  <div class="frow">
-    <div class="fg">
-      <label class="fl">City / Location</label>
-      <div class="fw">
-        <input class="fi" type="text" id="cityInput" placeholder="enter your city or area">
-        <i class="bi bi-geo-alt fi-ico"></i>
-      </div>
-    </div>
-    <div class="fg">
-      <label class="fl">Password</label>
-      <div class="fw">
-        <input class="fi" type="password" id="password" placeholder="Min 6 characters" oninput="checkPw(this.value)">
-        <i class="bi bi-lock fi-ico"></i>
-      </div>
-      <div class="pw-bars">
-        <div class="pw-bar" id="pb1"></div>
-        <div class="pw-bar" id="pb2"></div>
-        <div class="pw-bar" id="pb3"></div>
-        <div class="pw-bar" id="pb4"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Worker Extra Fields -->
-  <div class="worker-extra" id="workerExtra">
-    <div class="sec-lbl" style="margin-top:4px">Worker Details</div>
-
-    <div class="fg">
-      <label class="fl">Primary Skill</label>
-      <div class="fw">
-        <select class="fi" id="skill">
-          <option value="">Select your main skill</option>
-          <option value="electrician">&#9889; Electrician</option>
-          <option value="plumber">&#128295; Plumber</option>
-          <option value="painter">&#127912; Painter</option>
-          <option value="carpenter">&#129306; Carpenter</option>
-          <option value="labour">&#128119; Labour</option>
-          <option value="mason">&#129522; Mason</option>
-          <option value="ac technician">&#10052; AC Technician</option>
-          <option value="driver">&#128663; Driver</option>
-        </select>
-        <i class="bi bi-tools fi-ico"></i>
-      </div>
-    </div>
-
-    <div class="fg">
-      <label class="fl">About You</label>
-      <textarea class="fi" id="bio" style="padding-left:14px" placeholder="Briefly describe your experience and specialties&hellip;"></textarea>
-    </div>
-
-    <!-- Government ID -->
-    <div class="sec-lbl" style="margin-top:4px">Government ID Verification</div>
-
-    <div class="id-upload-section">
-      <div class="id-upload-head">
-        <div class="id-upload-icon"><i class="bi bi-shield-check"></i></div>
-        <div>
-          <div class="id-upload-title">Upload a valid Government ID</div>
-          <div class="id-upload-sub">Required for worker verification by admin</div>
-        </div>
-      </div>
-
-      <label class="fl" style="margin-bottom:10px">Select ID Type</label>
-      <div class="id-type-grid">
-        <button type="button" class="id-type-btn" data-type="aadhaar" onclick="selectIdType(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
-        <button type="button" class="id-type-btn" data-type="pan" onclick="selectIdType(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
-        <button type="button" class="id-type-btn" data-type="voter" onclick="selectIdType(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
-        <button type="button" class="id-type-btn" data-type="driving" onclick="selectIdType(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
-        <button type="button" class="id-type-btn" data-type="passport" onclick="selectIdType(this)"><i class="bi bi-book"></i> Passport</button>
-        <button type="button" class="id-type-btn" data-type="other" onclick="selectIdType(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
-      </div>
-      <input type="hidden" id="selectedIdType" value="">
-
-      <div class="id-dropzone" id="idDropzone">
-        <input type="file" id="idFileInput" accept="image/*,.pdf" onchange="handleFileSelect(this)">
-        <i class="bi bi-cloud-upload id-dz-icon"></i>
-        <div class="id-dz-txt">Click to upload or drag &amp; drop</div>
-        <div class="id-dz-hint">JPG, PNG or PDF &bull; Max 5MB</div>
-      </div>
-
-      <div class="id-preview" id="idPreview">
-        <span class="id-preview-icon" id="idPreviewIcon">&#128196;</span>
-        <div>
-          <div class="id-preview-name" id="idPreviewName">&mdash;</div>
-          <div class="id-preview-size" id="idPreviewSize">&mdash;</div>
-        </div>
-        <button type="button" class="id-preview-remove" onclick="removeFile()" title="Remove file">
-          <i class="bi bi-x-circle-fill"></i>
-        </button>
-      </div>
-
-      <div class="id-note">
-        <i class="bi bi-info-circle-fill"></i>
-        Your ID is kept confidential and used only for identity verification. It will be reviewed by our admin team within 24 hours. You can start working after verification.
-      </div>
-    </div>
-  </div>
-
-  <!-- Submit -->
-    <!-- Referral code (auto-filled from URL if present) -->
-  <div class="fg" id="refFieldWrap" style="display:none">
-    <label class="fl">Referral Code <span style="font-weight:400;color:var(--ink-40)">(auto-applied)</span></label>
-    <div class="fw">
-      <input class="fi" type="text" id="refCodeDisplay" readonly style="background:var(--sage-light);color:var(--sage);font-weight:700;letter-spacing:2px;padding-left:14px">
-      <i class="bi bi-gift fi-ico" style="color:var(--sage)"></i>
-    </div>
-  </div>
-
-<button class="submit-btn" id="regBtn" onclick="register()">
-    <i class="bi bi-person-plus-fill"></i> Create Account
-    <i class="bi bi-arrow-repeat spin" id="sp"></i>
-  </button>
-
-  <!-- Email Sent Screen (shown after successful registration) -->
-  <div class="email-sent-screen" id="emailSentScreen">
-    <span class="es-envelope">&#128231;</span>
-    <h2 class="es-title">Check your inbox!</h2>
-    <p class="es-sub">We've sent a verification link to:</p>
-    <div class="es-email-badge"><i class="bi bi-envelope-fill"></i> <span id="sentToEmail">your email</span></div>
-    <div class="es-steps">
-      <div class="es-step">
-        <div class="es-step-num">1</div>
-        <div class="es-step-txt"><strong>Open your email inbox</strong> &mdash; check Gmail, Outlook or whatever you use</div>
-      </div>
-      <div class="es-step">
-        <div class="es-step-num">2</div>
-        <div class="es-step-txt">Find the email from <strong>KaamConnect</strong> with subject &ldquo;Verify your KaamConnect email address&rdquo;</div>
-      </div>
-      <div class="es-step">
-        <div class="es-step-num">3</div>
-        <div class="es-step-txt">Click the <strong>&ldquo;Verify My Email&rdquo;</strong> button inside &mdash; you&rsquo;re in!</div>
-      </div>
-    </div>
-    <p style="font-size:13px;color:var(--ink-40);margin-bottom:12px">Didn't receive it? Check your spam folder or:</p>
-    <button class="resend-btn" id="resendBtn" onclick="resendVerification()">
-      <i class="bi bi-arrow-repeat"></i> Resend verification email
+    <!-- Google -->
+    <button class="google-btn" onclick="googleSignUp()">
+      <svg class="google-ico" viewBox="0 0 48 48">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      Sign up with Google
     </button>
-    <div id="resendMsg" style="margin-top:10px;font-size:13px;color:var(--sage);display:none">
-      <i class="bi bi-check-circle-fill"></i> Sent! Check your inbox.
+
+    <div class="divider"><span>or create account with email</span></div>
+
+    <!-- Role -->
+    <div class="sec-lbl">I want to</div>
+    <div class="role-grid">
+      <div class="rbtn on" id="rb-c" onclick="setRole('customer')">
+        <div class="rbtn-check"><i class="bi bi-check"></i></div>
+        <div class="rbtn-ico">👤</div>
+        <div class="rbtn-name">Hire a Worker</div>
+        <div class="rbtn-desc">Find skilled help fast</div>
+      </div>
+      <div class="rbtn" id="rb-w" onclick="setRole('worker')">
+        <div class="rbtn-check"><i class="bi bi-check"></i></div>
+        <div class="rbtn-ico">🔨</div>
+        <div class="rbtn-name">Find Work</div>
+        <div class="rbtn-desc">Get jobs & earn money</div>
+      </div>
     </div>
+    <input type="hidden" id="role" value="customer">
+
+    <!-- Details -->
+    <div class="sec-lbl">Your Details</div>
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">Full Name</label>
+        <div class="fw"><input class="fi" type="text" id="name" placeholder="Your full name"><i class="bi bi-person fi-ico"></i></div>
+      </div>
+      <div class="fg">
+        <label class="fl">Phone Number</label>
+        <div class="fw"><input class="fi" type="text" id="phone" placeholder="10-digit mobile"><i class="bi bi-phone fi-ico"></i></div>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl">Email Address</label>
+      <div class="fw"><input class="fi" type="email" id="email" placeholder="your@email.com"><i class="bi bi-envelope fi-ico"></i></div>
+    </div>
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">City / Location</label>
+        <div class="fw"><input class="fi" type="text" id="cityInput" placeholder="e.g. Delhi, Mumbai"><i class="bi bi-geo-alt fi-ico"></i></div>
+      </div>
+      <div class="fg">
+        <label class="fl">Password</label>
+        <div class="fw">
+          <input class="fi" type="password" id="password" placeholder="Min 6 characters" oninput="checkPw(this.value)"><i class="bi bi-lock fi-ico"></i>
+          <button class="eye-btn" type="button" onclick="togglePw()"><i class="bi bi-eye" id="eyeI"></i></button>
+        </div>
+        <div class="pw-bars"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div><div class="pw-bar" id="pb4"></div></div>
+      </div>
+    </div>
+
+    <!-- Referral code section -->
+    <div class="sec-lbl">Referral Code <span style="font-size:10px;opacity:.6;text-transform:none;letter-spacing:0;margin-left:4px">(optional — earn ₹50 bonus)</span></div>
+
+    <!-- Auto-applied from URL -->
+    <div id="refApplied" style="display:none">
+      <div class="ref-field">
+        <div class="ref-field-ico"><i class="bi bi-gift-fill"></i></div>
+        <div class="ref-field-info">
+          <div class="ref-field-label">Referral code applied</div>
+          <div class="ref-field-code" id="refCodeDisplay">—</div>
+        </div>
+        <button style="background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:13px;padding:4px 8px;border-radius:6px;font-family:inherit" onclick="removeRef()"><i class="bi bi-x-circle"></i> Remove</button>
+      </div>
+    </div>
+
+    <!-- Manual entry -->
+    <div id="refManual">
+      <div class="ref-manual-row" style="display:flex;gap:8px;align-items:flex-end;margin-bottom:4px">
+        <div class="fg" style="flex:1;margin-bottom:0">
+          <div class="fw"><input class="fi fi-nopad" type="text" id="refCodeInput" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase()"><i class="bi bi-ticket-perforated fi-ico"></i></div>
+        </div>
+        <button onclick="applyManualRef()" style="padding:11px 16px;background:var(--sage);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;margin-bottom:0">Apply</button>
+      </div>
+      <div id="refManualMsg" style="display:none;font-size:12.5px;margin-bottom:12px"></div>
+    </div>
+
+    <!-- Worker fields -->
+    <div class="worker-extra" id="workerExtra">
+      <div class="sec-lbl" style="margin-top:4px">Worker Details</div>
+      <div class="fg">
+        <label class="fl">Primary Skill</label>
+        <div class="fw">
+          <select class="fi" id="skill">
+            <option value="">Select your main skill</option>
+            <option value="electrician">⚡ Electrician</option>
+            <option value="plumber">🔧 Plumber</option>
+            <option value="painter">🎨 Painter</option>
+            <option value="carpenter">🪚 Carpenter</option>
+            <option value="labour">👷 Labour</option>
+            <option value="mason">🧱 Mason</option>
+            <option value="ac technician">❄️ AC Technician</option>
+            <option value="driver">🚗 Driver</option>
+          </select>
+          <i class="bi bi-tools fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">About You <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
+        <textarea class="fi fi-nopad" id="bio" placeholder="Describe your experience and specialties…"></textarea>
+      </div>
+
+      <div class="sec-lbl" style="margin-top:2px">Government ID Verification</div>
+      <div class="id-section">
+        <div class="id-head">
+          <div class="id-head-ico"><i class="bi bi-shield-check"></i></div>
+          <div>
+            <div class="id-head-title">Upload a valid Government ID</div>
+            <div class="id-head-sub">Required for admin verification — reviewed within 24h</div>
+          </div>
+        </div>
+        <label class="fl" style="margin-bottom:8px">Select ID Type</label>
+        <div class="id-types">
+          <button type="button" class="id-type-btn" data-type="aadhaar" onclick="selectIdType(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar</button>
+          <button type="button" class="id-type-btn" data-type="pan" onclick="selectIdType(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
+          <button type="button" class="id-type-btn" data-type="voter" onclick="selectIdType(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
+          <button type="button" class="id-type-btn" data-type="driving" onclick="selectIdType(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
+          <button type="button" class="id-type-btn" data-type="passport" onclick="selectIdType(this)"><i class="bi bi-book"></i> Passport</button>
+          <button type="button" class="id-type-btn" data-type="other" onclick="selectIdType(this)"><i class="bi bi-file-earmark-person"></i> Other</button>
+        </div>
+        <input type="hidden" id="selectedIdType" value="">
+        <div class="id-dropzone" id="idDropzone">
+          <input type="file" id="idFileInput" accept="image/*,.pdf" onchange="handleFileSelect(this)">
+          <i class="bi bi-cloud-upload id-dz-ico"></i>
+          <div class="id-dz-txt">Click to upload or drag & drop</div>
+          <div class="id-dz-hint">JPG, PNG or PDF · Max 5MB</div>
+        </div>
+        <div class="id-preview" id="idPreview">
+          <span class="id-prev-ico" id="idPrevIco">📄</span>
+          <div style="flex:1;min-width:0">
+            <div class="id-prev-name" id="idPrevName">—</div>
+            <div class="id-prev-size" id="idPrevSize">—</div>
+          </div>
+          <button type="button" class="id-prev-rm" onclick="removeFile()"><i class="bi bi-x-circle-fill"></i></button>
+        </div>
+        <div class="id-note"><i class="bi bi-info-circle-fill"></i> Kept confidential. Used only for identity verification. You can start working after admin approves.</div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button class="submit-btn" id="regBtn" onclick="register()">
+      <i class="bi bi-person-plus-fill"></i> Create Account
+      <i class="bi bi-arrow-repeat spin" id="sp"></i>
+    </button>
+
+    <!-- Email sent screen -->
+    <div class="email-sent-screen" id="emailSentScreen">
+      <span class="es-envelope">📩</span>
+      <h2 class="es-title">Check your inbox!</h2>
+      <p class="es-sub">We've sent a verification link to:</p>
+      <div class="es-badge"><i class="bi bi-envelope-fill"></i> <span id="sentToEmail">your email</span></div>
+      <div class="es-steps">
+        <div class="es-step"><div class="es-step-num">1</div><div class="es-step-txt"><strong>Open your inbox</strong> — check Gmail, Outlook, or your mail app</div></div>
+        <div class="es-step"><div class="es-step-num">2</div><div class="es-step-txt">Find the email from <strong>KaamConnect</strong> — subject: "Verify your email"</div></div>
+        <div class="es-step"><div class="es-step-num">3</div><div class="es-step-txt">Click <strong>"Verify My Email"</strong> — then sign in and you're ready!</div></div>
+      </div>
+      <p style="font-size:12.5px;color:var(--ink-40);margin-bottom:10px">Didn't receive it? Check spam or:</p>
+      <button class="resend-btn" id="resendBtn" onclick="resendVerification()"><i class="bi bi-arrow-repeat"></i> Resend verification email</button>
+      <div id="resendMsg" style="margin-top:10px;font-size:13px;color:var(--sage);display:none"><i class="bi bi-check-circle-fill"></i> Sent! Check your inbox.</div>
+    </div>
+
+    <p class="signin-row">Already have an account? <a href="login.html">Sign in →</a></p>
   </div>
 </div>
-
-<p class="signin-row">Already have an account? <a href="login.html">Sign in &rarr;</a></p>
 
 <script>
-// Pre-select worker role from URL
-if(new URLSearchParams(window.location.search).get('role')==='worker') setRole('worker');
+// ── Referral code from URL ───────────────────────────────────
+let appliedRefCode = null;
 
-// ── Google Sign-Up ──────────────────────────────────────────────
-function googleSignUp(){window.location.href='/api/auth/google';}
+(function(){
+  const ref = new URLSearchParams(window.location.search).get('ref') || sessionStorage.getItem('kc_referral');
+  if(ref) applyCode(ref.toUpperCase());
+  if(new URLSearchParams(window.location.search).get('role')==='worker') setRole('worker');
+})();
 
-// ── Role toggle ─────────────────────────────────────────────────
+function applyCode(code){
+  if(!code) return;
+  appliedRefCode = code.toUpperCase();
+  sessionStorage.setItem('kc_referral', appliedRefCode);
+  document.getElementById('refCodeDisplay').textContent = appliedRefCode;
+  document.getElementById('refApplied').style.display = 'block';
+  document.getElementById('refManual').style.display = 'none';
+}
+
+function removeRef(){
+  appliedRefCode = null;
+  sessionStorage.removeItem('kc_referral');
+  document.getElementById('refApplied').style.display = 'none';
+  document.getElementById('refManual').style.display = 'block';
+  document.getElementById('refCodeInput').value = '';
+  document.getElementById('refManualMsg').style.display = 'none';
+}
+
+function applyManualRef(){
+  const code = document.getElementById('refCodeInput').value.trim().toUpperCase();
+  const msg  = document.getElementById('refManualMsg');
+  if(!code || code.length < 6){
+    msg.style.display='block'; msg.style.color='#DC2626';
+    msg.innerHTML='<i class="bi bi-exclamation-circle-fill"></i> Enter a valid referral code'; return;
+  }
+  applyCode(code);
+  msg.style.display='block'; msg.style.color='var(--sage)';
+  msg.innerHTML='<i class="bi bi-check-circle-fill"></i> Code applied — ₹50 will be given to your referrer on signup!';
+}
+
+function googleSignUp(){ window.location.href='/api/auth/google'; }
+
 function setRole(r){
   document.getElementById('role').value=r;
   document.getElementById('rb-c').classList.toggle('on',r==='customer');
@@ -461,41 +481,40 @@ function setRole(r){
   document.getElementById('workerExtra').style.display=r==='worker'?'block':'none';
 }
 
-// ── Password strength ───────────────────────────────────────────
 function checkPw(v){
   const c=[v.length>=6,v.length>=8,/[A-Z0-9]/.test(v),/[^A-Za-z0-9]/.test(v)];
   const cols=['#DC2626','#F59E0B','#2E7D5E','#15803D'];
   const n=c.filter(Boolean).length;
-  for(let i=0;i<4;i++)
-    document.getElementById('pb'+(i+1)).style.background=i<n?cols[Math.min(n-1,3)]:'var(--ink-06)';
+  for(let i=0;i<4;i++) document.getElementById('pb'+(i+1)).style.background=i<n?cols[Math.min(n-1,3)]:'var(--ink-06)';
 }
 
-// ── Alert helper ────────────────────────────────────────────────
+function togglePw(){
+  const p=document.getElementById('password'),i=document.getElementById('eyeI');
+  p.type=p.type==='password'?'text':'password';
+  i.className=p.type==='password'?'bi bi-eye':'bi bi-eye-slash';
+}
+
 function showAlert(t,m){
   const b=document.getElementById('alertBox');
-  b.style.display='flex';
-  b.className='alert '+(t==='error'?'ae':'as');
+  b.style.display='flex'; b.className='alert '+(t==='error'?'ae':'as');
   b.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
+  b.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-// ── ID Type selection ───────────────────────────────────────────
 function selectIdType(btn){
   document.querySelectorAll('.id-type-btn').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
   document.getElementById('selectedIdType').value=btn.dataset.type;
 }
 
-// ── File upload ─────────────────────────────────────────────────
 let selectedFile=null;
 function handleFileSelect(input){
-  const file=input.files[0];
-  if(!file) return;
-  if(file.size>5*1024*1024){showAlert('error','File too large. Max 5MB allowed.');input.value='';return;}
+  const file=input.files[0]; if(!file) return;
+  if(file.size>5*1024*1024){showAlert('error','File too large. Max 5MB.');input.value='';return;}
   selectedFile=file;
-  const isImg=file.type.startsWith('image/');
-  document.getElementById('idPreviewIcon').textContent=isImg?'🖼️':'📄';
-  document.getElementById('idPreviewName').textContent=file.name;
-  document.getElementById('idPreviewSize').textContent=(file.size/1024).toFixed(1)+' KB';
+  document.getElementById('idPrevIco').textContent=file.type.startsWith('image/')?'🖼️':'📄';
+  document.getElementById('idPrevName').textContent=file.name;
+  document.getElementById('idPrevSize').textContent=(file.size/1024).toFixed(1)+' KB';
   document.getElementById('idPreview').style.display='flex';
   document.getElementById('idDropzone').style.borderColor='var(--sage)';
 }
@@ -506,48 +525,40 @@ function removeFile(){
   document.getElementById('idDropzone').style.borderColor='';
 }
 
-// ── Drag & drop ─────────────────────────────────────────────────
 const dz=document.getElementById('idDropzone');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over');});
 dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
 dz.addEventListener('drop',e=>{
   e.preventDefault();dz.classList.remove('drag-over');
   const file=e.dataTransfer.files[0];
-  if(file){const input=document.getElementById('idFileInput');const dt=new DataTransfer();dt.items.add(file);input.files=dt.files;handleFileSelect(input);}
+  if(file){const inp=document.getElementById('idFileInput');const dt=new DataTransfer();dt.items.add(file);inp.files=dt.files;handleFileSelect(inp);}
 });
 
-// ── Resend verification ─────────────────────────────────────────
 let pendingEmail=null;
 async function resendVerification(){
   if(!pendingEmail) return;
   const btn=document.getElementById('resendBtn');
-  btn.disabled=true;
-  btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
+  btn.disabled=true; btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
   try{
     const r=await fetch('/api/auth/resend-verification',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:pendingEmail})});
     const d=await r.json();
     if(d.success){
       document.getElementById('resendMsg').style.display='block';
-      setTimeout(()=>{
-        btn.disabled=false;
-        btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Resend verification email';
-        document.getElementById('resendMsg').style.display='none';
-      },30000);
+      setTimeout(()=>{btn.disabled=false;btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Resend verification email';document.getElementById('resendMsg').style.display='none';},30000);
     }else{btn.disabled=false;btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Resend verification email';}
   }catch{btn.disabled=false;btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Resend verification email';}
 }
 
-// ── Register ────────────────────────────────────────────────────
 async function register(){
-  const role    =document.getElementById('role').value;
-  const name    =document.getElementById('name').value.trim();
-  const phone   =document.getElementById('phone').value.trim();
-  const email   =document.getElementById('email').value.trim();
-  const password=document.getElementById('password').value;
-  const city    =document.getElementById('cityInput').value.trim();
-  const skill   =document.getElementById('skill')?.value||'';
-  const bio     =document.getElementById('bio')?.value?.trim()||'';
-  const idType  =document.getElementById('selectedIdType')?.value||'';
+  const role    = document.getElementById('role').value;
+  const name    = document.getElementById('name').value.trim();
+  const phone   = document.getElementById('phone').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const password= document.getElementById('password').value;
+  const city    = document.getElementById('cityInput').value.trim();
+  const skill   = document.getElementById('skill')?.value||'';
+  const bio     = document.getElementById('bio')?.value?.trim()||'';
+  const idType  = document.getElementById('selectedIdType')?.value||'';
 
   if(!name||!email||!password||!city){showAlert('error','Please fill in all required fields');return;}
   if(password.length<6){showAlert('error','Password must be at least 6 characters');return;}
@@ -557,68 +568,51 @@ async function register(){
     if(!selectedFile){showAlert('error','Please upload your government ID document');return;}
   }
 
-  const btn=document.getElementById('regBtn');
-  const sp =document.getElementById('sp');
-  btn.disabled=true;sp.style.display='inline-block';
-
-  const safetyTimer=setTimeout(()=>{
-    btn.disabled=false;sp.style.display='none';
-    showAlert('error','Request timed out. Please try again.');
-  },30000);
+  const btn=document.getElementById('regBtn'), sp=document.getElementById('sp');
+  btn.disabled=true; sp.style.display='inline-block';
+  const timer=setTimeout(()=>{btn.disabled=false;sp.style.display='none';showAlert('error','Request timed out. Please try again.');},30000);
 
   try{
     let idDocumentData=null;
     if(role==='worker'&&selectedFile){
-      idDocumentData=await new Promise((resolve,reject)=>{
-        const reader=new FileReader();
-        reader.onload=()=>resolve(reader.result);
-        reader.onerror=reject;
-        reader.readAsDataURL(selectedFile);
-      });
+      idDocumentData=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(selectedFile);});
     }
 
-    const res=await fetch('/api/auth/register',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+    const resp=await fetch('/api/auth/register',{
+      method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         name,email,password,phone,role,
-        skill:skill||null,
-        location:city,
-        bio:bio||null,
-        idType:idType||null,
-        idDocument:idDocumentData||null,
+        skill:skill||null, location:city, bio:bio||null,
+        idType:idType||null, idDocument:idDocumentData||null,
+        referralCode: appliedRefCode||null,
       })
     });
-
-    const data=await res.json();
-    clearTimeout(safetyTimer);
+    const data=await resp.json();
+    clearTimeout(timer);
 
     if(data.success){
       pendingEmail=email;
       document.getElementById('sentToEmail').textContent=email;
       document.getElementById('alertBox').style.display='none';
-      // Hide all card children except the email screen
-      Array.from(document.querySelectorAll('.card > *')).forEach(el=>{
-        if(el.id!=='emailSentScreen'&&el.id!=='alertBox') el.style.display='none';
+      // Hide form, show email screen
+      Array.from(document.querySelectorAll('.form-box > *')).forEach(el=>{
+        if(el.id!=='emailSentScreen') el.style.display='none';
       });
       document.getElementById('emailSentScreen').style.display='block';
-      // Warn if email sending failed
       if(!data.emailSent){
-        const warn=document.createElement('div');
-        warn.style.cssText='background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:12px 16px;font-size:13px;color:#DC2626;margin-bottom:16px;display:flex;align-items:center;gap:8px;text-align:left';
-        warn.innerHTML='<i class="bi bi-exclamation-triangle-fill" style="flex-shrink:0"></i> Email delivery failed. Click <strong style="margin:0 4px">Resend</strong> below to try again.';
-        document.getElementById('emailSentScreen').insertBefore(warn,document.getElementById('resendBtn'));
-        document.getElementById('resendBtn').style.cssText='background:var(--saffron);color:#fff;border:none;font-weight:700';
+        const w=document.createElement('div');
+        w.style.cssText='background:#FEF2F2;border:1.5px solid #FECACA;border-radius:10px;padding:11px 14px;font-size:13px;color:#DC2626;margin-bottom:14px;display:flex;align-items:center;gap:8px';
+        w.innerHTML='<i class="bi bi-exclamation-triangle-fill" style="flex-shrink:0"></i> Email delivery failed. Click <strong style="margin:0 3px">Resend</strong> below.';
+        document.getElementById('emailSentScreen').prepend(w);
       }
-      return;
     }else{
-      showAlert('error',data.message||'Registration failed.');
-      btn.disabled=false;sp.style.display='none';
+      showAlert('error',data.message||'Registration failed. Please try again.');
+      btn.disabled=false; sp.style.display='none';
     }
-  }catch(err){
-    clearTimeout(safetyTimer);
+  }catch{
+    clearTimeout(timer);
     showAlert('error','Cannot connect to server. Is it running?');
-    btn.disabled=false;sp.style.display='none';
+    btn.disabled=false; sp.style.display='none';
   }
 }
 </script>
