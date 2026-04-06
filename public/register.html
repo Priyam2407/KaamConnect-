@@ -41,7 +41,7 @@ a{text-decoration:none;color:inherit}
 .step{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;border-radius:13px;border:1px solid transparent;transition:all .22s}
 .step:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--saffron);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;flex-shrink:0;margin-top:1px}
-.step-body{}
+
 .step-title{font-size:13.5px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:2px}
 .step-desc{font-size:12px;color:rgba(255,255,255,.4);line-height:1.45}
 /* Referral promo on left */
@@ -276,12 +276,14 @@ textarea.fi{min-height:72px;resize:vertical;padding-top:10px}
         <div class="rbtn-check"><i class="bi bi-check"></i></div>
         <div class="rbtn-ico">👤</div>
         <div class="rbtn-name">Hire a Worker</div>
+        <div class="rbtn-role-tag">Customer</div>
         <div class="rbtn-desc">Find skilled help fast</div>
       </div>
       <div class="rbtn" id="rb-w" onclick="setRole('worker')">
         <div class="rbtn-check"><i class="bi bi-check"></i></div>
         <div class="rbtn-ico">🔨</div>
         <div class="rbtn-name">Find Work</div>
+        <div class="rbtn-role-tag">Worker</div>
         <div class="rbtn-desc">Get jobs & earn money</div>
       </div>
     </div>
