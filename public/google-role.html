@@ -6,163 +6,207 @@
 <title>Choose Your Role — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
-:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06);--r:16px;--r-sm:10px;--sh:0 8px 32px rgba(15,25,35,.08);--sh-lg:0 20px 64px rgba(15,25,35,.10)}
+:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
-/* NAV */
-nav{background:var(--forest);border-bottom:1px solid rgba(255,255,255,.06)}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:9px;text-decoration:none}
-.logo-india-flag{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
-.logo-india-flag svg{width:100%;height:100%;display:block}
-.logo:hover .logo-india-flag{transform:scale(1.08)}
-.logo-sep{width:1px;height:22px;background:rgba(255,255,255,.2);flex-shrink:0}
+
+/* ── NAV ─────────────────────────────────────────────────── */
+nav{background:var(--forest);border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:50}
+.nav-in{max-width:1200px;margin:0 auto;padding:0 40px;height:66px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-flag{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
+.logo-flag svg{width:100%;height:100%;display:block}
+.logo:hover .logo-flag{transform:scale(1.08)}
+.logo-sep{width:1px;height:22px;background:rgba(255,255,255,.2)}
 .logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(232,96,28,.35);transition:transform .22s;flex-shrink:0}
 .logo:hover .logo-mark{transform:rotate(-8deg) scale(1.1)}
 .logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.4px;color:#fff}
 .logo-txt span{color:var(--saffron-2)}
-.nav-back{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:var(--r-sm);border:1.5px solid rgba(255,255,255,.12);transition:all .22s}
+.nav-back{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);transition:all .22s}
 .nav-back:hover{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.07)}
-/* TICKER */
+
+/* ── TICKER ──────────────────────────────────────────────── */
 .ticker{background:var(--saffron);padding:10px 0;overflow:hidden}
 .ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .t-item{display:inline-flex;align-items:center;gap:10px;padding:0 24px;font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.8);white-space:nowrap}
 .t-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
-/* HERO */
-.hero-band{background:var(--forest);padding:52px 40px 56px;position:relative;overflow:hidden;text-align:center}
-.hero-band::before{content:'';position:absolute;top:-120px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
-.hero-band::after{content:'';position:absolute;bottom:-80px;left:-60px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.2),transparent 65%);pointer-events:none}
-.hb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:52px 52px}
-.hb-inner{position:relative;z-index:1;max-width:600px;margin:0 auto}
-.hb-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:6px 16px;margin-bottom:20px}
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero{background:var(--forest);padding:52px 40px 56px;position:relative;overflow:hidden;text-align:center}
+.hero::before{content:'';position:absolute;top:-120px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-80px;left:-60px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.2),transparent 65%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:52px 52px}
+.hero-inner{position:relative;z-index:1;max-width:600px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:6px 16px;margin-bottom:20px}
 .hb-pulse{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 10px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(74,222,128,.6)}50%{box-shadow:0 0 20px rgba(74,222,128,.9)}}
-.hb-badge span{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.3px}
-.hb-h{font-family:'Instrument Serif',serif;font-size:clamp(34px,5vw,52px);color:#fff;line-height:1.06;letter-spacing:-1.5px;margin-bottom:12px}
-.hb-h em{font-style:italic;color:var(--saffron-2)}
-.hb-p{font-size:15.5px;color:rgba(255,255,255,.55);line-height:1.7;font-weight:300}
-/* MAIN */
+.hero-badge span{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.3px}
+.hero-h{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,50px);color:#fff;line-height:1.07;letter-spacing:-1.5px;margin-bottom:12px}
+.hero-h em{font-style:italic;color:var(--saffron-2)}
+.hero-p{font-size:15.5px;color:rgba(255,255,255,.55);line-height:1.7;font-weight:300}
+
+/* ── MAIN ────────────────────────────────────────────────── */
 .main{max-width:680px;margin:0 auto;padding:48px 24px 100px}
+
 /* User card */
-.user-card{display:flex;align-items:center;gap:16px;background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:18px 22px;margin-bottom:36px;box-shadow:var(--sh)}
-.user-av{width:52px;height:52px;border-radius:14px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700;flex-shrink:0;overflow:hidden}
+.user-card{display:flex;align-items:center;gap:16px;background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:18px 22px;margin-bottom:36px;box-shadow:0 8px 32px rgba(15,25,35,.07)}
+.user-av{width:52px;height:52px;border-radius:14px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700;flex-shrink:0;overflow:hidden;font-family:'Syne',sans-serif}
 .user-av img{width:100%;height:100%;object-fit:cover;border-radius:14px}
-.user-info{flex:1;min-width:0}
 .user-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--forest);margin-bottom:3px}
 .user-email{font-size:13px;color:var(--ink-40)}
-.user-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600;color:#166534;flex-shrink:0}
-/* Eyebrow */
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.user-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600;color:#166534;flex-shrink:0;white-space:nowrap}
+
+/* Eyebrow + headings */
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .eyebrow::before{content:'';width:18px;height:2px;background:var(--saffron);border-radius:2px}
-.section-h{font-family:'Instrument Serif',serif;font-size:clamp(26px,4vw,34px);color:var(--forest);line-height:1.1;letter-spacing:-1px;margin-bottom:6px}
+.section-h{font-family:'Instrument Serif',serif;font-size:clamp(24px,4vw,32px);color:var(--forest);line-height:1.1;letter-spacing:-1px;margin-bottom:6px}
 .section-h em{font-style:italic;color:var(--saffron)}
-.section-p{font-size:14.5px;color:var(--ink-70);line-height:1.7;font-weight:300;margin-bottom:28px}
+.section-p{font-size:14.5px;color:var(--ink-70);line-height:1.7;font-weight:300;margin-bottom:26px}
+
 /* Role grid */
 .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px}
-.rbtn{padding:28px 22px;border:2px solid var(--ink-12);border-radius:var(--r);text-align:center;cursor:pointer;background:var(--white);transition:all .25s;position:relative;overflow:hidden}
+.rbtn{padding:28px 22px;border:2px solid var(--ink-12);border-radius:16px;text-align:center;cursor:pointer;background:var(--white);transition:all .25s;position:relative;overflow:hidden}
 .rbtn::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--saffron),var(--saffron-2));transform:scaleX(0);transform-origin:left;transition:transform .25s}
-.rbtn:hover{border-color:rgba(232,96,28,.25);transform:translateY(-5px);box-shadow:var(--sh-lg)}
-.rbtn:hover::before{transform:scaleX(1)}
+.rbtn:hover{border-color:rgba(232,96,28,.25);transform:translateY(-5px);box-shadow:0 20px 64px rgba(15,25,35,.1)}
+.rbtn:hover::before,.rbtn.on::before{transform:scaleX(1)}
 .rbtn.on{border-color:var(--saffron);background:var(--saffron-pale);box-shadow:0 8px 32px rgba(232,96,28,.18);transform:translateY(-5px)}
-.rbtn.on::before{transform:scaleX(1)}
 .rbtn-check{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;background:var(--saffron);display:none;align-items:center;justify-content:center;color:#fff;font-size:12px;box-shadow:0 4px 12px rgba(232,96,28,.4)}
 .rbtn.on .rbtn-check{display:flex}
 .rbtn-ico{font-size:40px;display:block;margin-bottom:14px}
 .rbtn-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--saffron);background:rgba(232,96,28,.1);border-radius:100px;padding:3px 10px;margin-bottom:8px}
 .rbtn-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest);margin-bottom:5px}
 .rbtn-desc{font-size:13px;color:var(--ink-40);line-height:1.55}
+
 /* Divider */
 .divider-line{height:1px;background:var(--ink-06);margin-bottom:32px}
-/* Form fields */
+
+/* Sec label */
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
+
+/* Form */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .fg{margin-bottom:16px}
 .fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
 .fw{position:relative}
-.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:14.5px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
+.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
 .fi::placeholder{color:var(--ink-40);font-weight:300}
 .fi:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
 .fi-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:14px;pointer-events:none;transition:color .2s}
 .fw:focus-within .fi-ico{color:var(--saffron)}
-textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:4px;transition:color .2s}
+.fi-nopad{padding-left:14px}
+textarea.fi{min-height:80px;resize:vertical;padding-top:11px}
+.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:4px;transition:color .2s}
 .eye-btn:hover{color:var(--ink)}
-/* Password strength bars */
+
+/* Password bars */
 .pw-bars{display:flex;gap:4px;margin-top:8px}
 .pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
-/* Section label */
-.sec-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
-/* Extra fields */
-.customer-extra,.worker-extra{animation:slideIn .3s ease}
-@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-/* Password section card */
-.pw-section{background:var(--white);border:1.5px solid var(--ink-06);border-radius:var(--r);padding:24px;margin-bottom:20px;box-shadow:var(--sh)}
-.pw-section-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.pw-section-ico{width:40px;height:40px;border-radius:11px;background:var(--saffron-pale);display:grid;place-items:center;font-size:18px;color:var(--saffron);flex-shrink:0}
-.pw-section-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
-.pw-section-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
-.pw-note{font-size:12px;color:var(--ink-40);display:flex;align-items:flex-start;gap:7px;margin-top:12px;line-height:1.6}
-.pw-note i{color:var(--saffron);flex-shrink:0;margin-top:2px;font-size:13px}
+
+/* Password card */
+.pw-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 8px 32px rgba(15,25,35,.07)}
+.pw-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.pw-card-ico{width:40px;height:40px;border-radius:11px;background:var(--saffron-pale);display:grid;place-items:center;font-size:18px;color:var(--saffron);flex-shrink:0}
+.pw-card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
+.pw-card-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
+.pw-note{font-size:12px;color:var(--ink-40);display:flex;align-items:flex-start;gap:7px;margin-top:10px;line-height:1.6}
+.pw-note i{color:var(--saffron);flex-shrink:0;margin-top:2px}
+
+/* ── REFERRAL SECTION ────────────────────────────────────── */
+.ref-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.05));border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:20px}
+.ref-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ref-ico{width:40px;height:40px;border-radius:11px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;color:var(--sage);flex-shrink:0}
+.ref-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
+.ref-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
+
+/* Applied state */
+.ref-applied{display:none;align-items:center;gap:12px;background:rgba(61,122,110,.08);border:1.5px solid rgba(61,122,110,.25);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.ref-applied-ico{width:36px;height:36px;border-radius:10px;background:var(--sage);display:grid;place-items:center;font-size:16px;color:#fff;flex-shrink:0}
+.ref-applied-lbl{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sage);margin-bottom:3px}
+.ref-applied-code{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--forest);letter-spacing:2px}
+.ref-applied-bonus{font-size:12px;color:var(--sage);margin-top:2px}
+.ref-remove-btn{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:6px 8px;border-radius:8px;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:4px}
+.ref-remove-btn:hover{background:#FEF2F2;color:#DC2626}
+
+/* Input row */
+.ref-input-row{display:flex;gap:10px;align-items:flex-start}
+.ref-input-row .fg{flex:1;margin-bottom:0}
+.ref-apply-btn{padding:12px 18px;background:var(--sage);border:none;border-radius:10px;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:7px;flex-shrink:0;margin-top:0}
+.ref-apply-btn:hover{background:var(--forest);transform:translateY(-1px)}
+.ref-apply-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ref-status{font-size:12.5px;margin-top:8px;display:none;align-items:center;gap:7px;padding:8px 12px;border-radius:9px}
+.ref-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+.ref-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
+.ref-hint{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;gap:7px;line-height:1.55}
+.ref-hint i{color:var(--sage);flex-shrink:0;margin-top:2px}
+
 /* ID upload */
-.id-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.05));border:1.5px solid var(--sage-light);border-radius:var(--r);padding:24px;margin-bottom:20px}
-.id-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.id-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.05));border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:20px}
+.id-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
 .id-head-ico{width:40px;height:40px;border-radius:11px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;color:var(--sage);flex-shrink:0}
 .id-head-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
 .id-head-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
-.id-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
-.id-btn{padding:10px 12px;border:1.5px solid var(--ink-12);border-radius:var(--r-sm);background:var(--white);cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-70);font-family:'DM Sans',sans-serif;transition:all .2s}
+.id-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.id-btn{padding:10px 12px;border:1.5px solid var(--ink-12);border-radius:10px;background:var(--white);cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-70);font-family:'DM Sans',sans-serif;transition:all .2s}
 .id-btn:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-light)}
 .id-btn.on{border-color:var(--saffron);background:var(--saffron-pale);color:var(--saffron);font-weight:700}
 .id-btn i{font-size:16px}
-.dropzone{border:2px dashed var(--ink-12);border-radius:var(--r-sm);padding:32px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--white);position:relative}
+.dropzone{border:2px dashed var(--ink-12);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--white);position:relative}
 .dropzone:hover,.dropzone.drag{border-color:var(--saffron);background:var(--saffron-pale)}
 .dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.dz-ico{font-size:34px;color:var(--ink-12);margin-bottom:10px;transition:color .2s}
+.dz-ico{font-size:32px;color:var(--ink-12);margin-bottom:10px;transition:color .2s}
 .dropzone:hover .dz-ico,.dropzone.drag .dz-ico{color:var(--saffron)}
-.dz-txt{font-size:14px;font-weight:600;color:var(--ink-40);margin-bottom:4px}
+.dz-txt{font-size:13.5px;font-weight:600;color:var(--ink-40);margin-bottom:4px}
 .dz-hint{font-size:12px;color:var(--ink-40)}
-.preview{display:none;align-items:center;gap:12px;background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:var(--r-sm);padding:13px 16px;margin-top:12px}
-.prev-ico{font-size:24px;flex-shrink:0}
+.preview{display:none;align-items:center;gap:12px;background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:10px;padding:12px 14px;margin-top:10px}
+.prev-ico{font-size:22px}
 .prev-name{font-size:13px;font-weight:600;color:var(--forest);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .prev-size{font-size:11px;color:var(--ink-40)}
-.prev-rm{background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:17px;flex-shrink:0;transition:color .2s}
+.prev-rm{background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:16px;transition:color .2s}
 .prev-rm:hover{color:#DC2626}
-.id-note{font-size:12px;color:var(--ink-40);margin-top:12px;display:flex;align-items:flex-start;gap:7px;line-height:1.6}
-.id-note i{color:var(--sage);flex-shrink:0;margin-top:2px;font-size:13px}
+.id-note{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;gap:7px;line-height:1.55}
+.id-note i{color:var(--sage);flex-shrink:0;margin-top:2px}
+
 /* Alert */
-.alert{padding:12px 16px;border-radius:var(--r-sm);font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;animation:fadeIn .2s ease}
+.alert{padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .alert-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
 .alert-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+
 /* Submit */
-.submit-btn{width:100%;padding:15px 28px;background:var(--saffron);border:none;border-radius:var(--r-sm);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .25s;box-shadow:0 4px 16px rgba(232,96,28,.35);position:relative;overflow:hidden}
+.submit-btn{width:100%;padding:15px 28px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .25s;box-shadow:0 4px 16px rgba(232,96,28,.35);position:relative;overflow:hidden}
 .submit-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .22s}
 .submit-btn:hover{background:var(--saffron-2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,96,28,.45)}
 .submit-btn:hover::before{opacity:1}
 .submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
 .spin{display:none;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* RESPONSIVE */
+.slide-in{animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+
+/* Responsive */
 @media(max-width:600px){
   .role-grid{grid-template-columns:1fr}
   .frow{grid-template-columns:1fr}
-  .id-type-grid{grid-template-columns:1fr 1fr}
+  .id-types{grid-template-columns:1fr 1fr}
   .nav-in{padding:0 16px}
   .main{padding:28px 16px 80px}
-  .hero-band{padding:36px 20px 40px}
-  .logo-txt{font-size:16px}
-  .logo-india-flag{width:22px;height:15px}
+  .hero{padding:36px 20px 40px}
+  .ref-input-row{flex-direction:column}
+  .ref-apply-btn{width:100%;justify-content:center}
 }
 @media(max-width:400px){
   .logo-sep{display:none}
-  .id-type-grid{grid-template-columns:1fr}
+  .id-types{grid-template-columns:1fr}
+  .user-badge{display:none}
 }
 </style>
 </head>
@@ -172,7 +216,7 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 <nav>
   <div class="nav-in">
     <a class="logo" href="index.html">
-      <div class="logo-india-flag">
+      <div class="logo-flag">
         <svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
           <rect width="32" height="7.33" fill="#FF9933"/>
           <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
@@ -201,13 +245,13 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
   <span class="t-item">⚡ Electricians<div class="t-dot"></div></span><span class="t-item">🔧 Plumbers<div class="t-dot"></div></span><span class="t-item">🎨 Painters<div class="t-dot"></div></span><span class="t-item">🪚 Carpenters<div class="t-dot"></div></span><span class="t-item">🧱 Masons<div class="t-dot"></div></span><span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span><span class="t-item">👷 Labour<div class="t-dot"></div></span><span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
 </div></div>
 
-<!-- HERO BAND -->
-<div class="hero-band">
-  <div class="hb-grid"></div>
-  <div class="hb-inner">
-    <div class="hb-badge"><div class="hb-pulse"></div><span>One last step to get started</span></div>
-    <h1 class="hb-h">You're almost in.<br><em>Choose your role.</em></h1>
-    <p class="hb-p">Tell us how you'll use KaamConnect — this decides what you can do on the platform.</p>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><div class="hb-pulse"></div><span>One last step to get started</span></div>
+    <h1 class="hero-h">You're almost in.<br><em>Choose your role.</em></h1>
+    <p class="hero-p">Tell us how you'll use KaamConnect — this decides what you can do on the platform.</p>
   </div>
 </div>
 
@@ -217,7 +261,7 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
   <!-- Google user card -->
   <div class="user-card">
     <div class="user-av" id="avImg">?</div>
-    <div class="user-info">
+    <div style="flex:1;min-width:0">
       <div class="user-name" id="avName">Loading…</div>
       <div class="user-email" id="avEmail"></div>
     </div>
@@ -226,10 +270,10 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 
   <div id="alertBox" style="display:none"></div>
 
-  <!-- STEP 1: Role selector -->
+  <!-- Step 1: Role -->
   <div class="eyebrow">Step 1</div>
   <h2 class="section-h">How will you use <em>KaamConnect?</em></h2>
-  <p class="section-p">Pick the role that fits you. You can always update this later from your profile.</p>
+  <p class="section-p">Pick your role — you can always update this later from your profile.</p>
 
   <div class="role-grid">
     <div class="rbtn on" id="rb-c" onclick="pick('customer')">
@@ -248,88 +292,104 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
     </div>
   </div>
 
-  <!-- ─── CUSTOMER EXTRA ─── -->
-  <div id="customerExtra" class="customer-extra">
+  <!-- Step 2: Customer extra -->
+  <div id="customerExtra" class="slide-in">
     <div class="divider-line"></div>
     <div class="eyebrow">Step 2</div>
     <h2 class="section-h">Set up your <em>account</em></h2>
-    <p class="section-p">Add your phone and location so workers can reach you, and optionally set a password to also sign in with email.</p>
+    <p class="section-p">Add your phone and location so workers can find you.</p>
 
-    <!-- Phone + City -->
     <div class="frow">
       <div class="fg">
-        <label class="fl">Phone Number <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-        <div class="fw">
-          <input class="fi" type="tel" id="c-phone" placeholder="9876543210" maxlength="10">
-          <i class="bi bi-phone fi-ico"></i>
-        </div>
+        <label class="fl">Phone Number <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
+        <div class="fw"><input class="fi" type="tel" id="c-phone" placeholder="9876543210" maxlength="10"><i class="bi bi-phone fi-ico"></i></div>
       </div>
       <div class="fg">
-        <label class="fl">City / Location <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-        <div class="fw">
-          <input class="fi" type="text" id="c-location" placeholder="e.g. Ludhiana, Punjab">
-          <i class="bi bi-geo-alt fi-ico"></i>
-        </div>
+        <label class="fl">City / Location <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
+        <div class="fw"><input class="fi" type="text" id="c-location" placeholder="e.g. Ludhiana, Punjab"><i class="bi bi-geo-alt fi-ico"></i></div>
       </div>
     </div>
 
-    <!-- Password card for customer -->
-    <div class="pw-section">
-      <div class="pw-section-head">
-        <div class="pw-section-ico"><i class="bi bi-lock-fill"></i></div>
+    <!-- Referral — Customer -->
+    <div class="ref-section" id="c-ref-section">
+      <div class="ref-head">
+        <div class="ref-ico"><i class="bi bi-gift-fill"></i></div>
         <div>
-          <div class="pw-section-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
-          <div class="pw-section-sub">Lets you sign in with email &amp; password in addition to Google</div>
+          <div class="ref-title">Have a Referral Code? 🎁</div>
+          <div class="ref-sub">Your friend earns ₹50 when you join using their code</div>
+        </div>
+      </div>
+      <!-- Applied display -->
+      <div class="ref-applied" id="c-ref-applied">
+        <div class="ref-applied-ico"><i class="bi bi-check-circle-fill"></i></div>
+        <div style="flex:1">
+          <div class="ref-applied-lbl">Code applied</div>
+          <div class="ref-applied-code" id="c-ref-code-display">—</div>
+          <div class="ref-applied-bonus">Your friend will earn ₹50 when you complete setup ✅</div>
+        </div>
+        <button class="ref-remove-btn" onclick="removeRef('c')"><i class="bi bi-x"></i> Remove</button>
+      </div>
+      <!-- Input row -->
+      <div id="c-ref-input-wrap">
+        <div class="ref-input-row">
+          <div class="fg">
+            <label class="fl">Referral Code</label>
+            <div class="fw">
+              <input class="fi" type="text" id="c-ref-input" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase();clearRefStatus('c')">
+              <i class="bi bi-ticket-perforated fi-ico"></i>
+            </div>
+          </div>
+          <button class="ref-apply-btn" id="c-ref-btn" onclick="applyRef('c')">
+            <i class="bi bi-check2-circle"></i> Apply Code
+          </button>
+        </div>
+        <div class="ref-status" id="c-ref-status"></div>
+        <div class="ref-hint"><i class="bi bi-info-circle-fill"></i> The code is validated live — only valid, existing codes are accepted. Your friend gets credited ₹50 instantly after you complete signup.</div>
+      </div>
+    </div>
+
+    <!-- Password card — customer -->
+    <div class="pw-card">
+      <div class="pw-card-head">
+        <div class="pw-card-ico"><i class="bi bi-lock-fill"></i></div>
+        <div>
+          <div class="pw-card-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
+          <div class="pw-card-sub">Lets you also sign in with email &amp; password</div>
         </div>
       </div>
       <div class="fg">
         <label class="fl">Password</label>
         <div class="fw">
-          <input class="fi" type="password" id="c-password" placeholder="Min 6 characters" oninput="checkStrength('c-password','c-pw')">
+          <input class="fi" type="password" id="c-password" placeholder="Min 6 characters" oninput="checkStrength('c-password','c-pw');showConfirm('c-confirm-wrap',this.value)">
           <i class="bi bi-lock fi-ico"></i>
           <button type="button" class="eye-btn" onclick="toggleEye('c-password','c-eye')"><i class="bi bi-eye" id="c-eye"></i></button>
         </div>
-        <div class="pw-bars">
-          <div class="pw-bar" id="c-pw-1"></div><div class="pw-bar" id="c-pw-2"></div>
-          <div class="pw-bar" id="c-pw-3"></div><div class="pw-bar" id="c-pw-4"></div>
-        </div>
+        <div class="pw-bars"><div class="pw-bar" id="c-pw-1"></div><div class="pw-bar" id="c-pw-2"></div><div class="pw-bar" id="c-pw-3"></div><div class="pw-bar" id="c-pw-4"></div></div>
       </div>
       <div class="fg" id="c-confirm-wrap" style="display:none;margin-bottom:0">
         <label class="fl">Confirm Password</label>
-        <div class="fw">
-          <input class="fi" type="password" id="c-confirm" placeholder="Repeat password">
-          <i class="bi bi-shield-lock fi-ico"></i>
-        </div>
+        <div class="fw"><input class="fi" type="password" id="c-confirm" placeholder="Repeat password"><i class="bi bi-shield-lock fi-ico"></i></div>
       </div>
-      <div class="pw-note">
-        <i class="bi bi-info-circle-fill"></i>
-        You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too anytime.
-      </div>
+      <div class="pw-note"><i class="bi bi-info-circle-fill"></i> You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too.</div>
     </div>
   </div>
 
-  <!-- ─── WORKER EXTRA ─── -->
-  <div id="workerExtra" class="worker-extra" style="display:none">
+  <!-- Step 2: Worker extra -->
+  <div id="workerExtra" style="display:none" class="slide-in">
     <div class="divider-line"></div>
     <div class="eyebrow">Step 2</div>
     <h2 class="section-h">Tell us about <em>yourself</em></h2>
-    <p class="section-p">This information helps customers find and trust you on the platform.</p>
+    <p class="section-p">This helps customers find and trust you on the platform.</p>
 
     <div class="sec-lbl">Your Details</div>
     <div class="frow">
       <div class="fg">
         <label class="fl">City / Location <span style="color:#DC2626">*</span></label>
-        <div class="fw">
-          <input class="fi" type="text" id="w-location" placeholder="e.g. Ludhiana">
-          <i class="bi bi-geo-alt fi-ico"></i>
-        </div>
+        <div class="fw"><input class="fi" type="text" id="w-location" placeholder="e.g. Ludhiana"><i class="bi bi-geo-alt fi-ico"></i></div>
       </div>
       <div class="fg">
-        <label class="fl">Phone Number <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-        <div class="fw">
-          <input class="fi" type="tel" id="w-phone" placeholder="9876543210" maxlength="10">
-          <i class="bi bi-phone fi-ico"></i>
-        </div>
+        <label class="fl">Phone Number <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
+        <div class="fw"><input class="fi" type="tel" id="w-phone" placeholder="9876543210" maxlength="10"><i class="bi bi-phone fi-ico"></i></div>
       </div>
     </div>
 
@@ -352,42 +412,69 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
       </div>
     </div>
     <div class="fg">
-      <label class="fl">About You <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-      <textarea class="fi" id="bio" placeholder="Briefly describe your experience, years of work, and specialties…"></textarea>
+      <label class="fl">About You <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
+      <textarea class="fi fi-nopad" id="bio" placeholder="Describe your experience, years of work, and specialties…"></textarea>
     </div>
 
-    <!-- Password card for worker -->
-    <div class="pw-section">
-      <div class="pw-section-head">
-        <div class="pw-section-ico"><i class="bi bi-lock-fill"></i></div>
+    <!-- Referral — Worker -->
+    <div class="ref-section" id="w-ref-section">
+      <div class="ref-head">
+        <div class="ref-ico"><i class="bi bi-gift-fill"></i></div>
         <div>
-          <div class="pw-section-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
-          <div class="pw-section-sub">Lets you sign in with email &amp; password in addition to Google</div>
+          <div class="ref-title">Have a Referral Code? 🎁</div>
+          <div class="ref-sub">Your friend earns ₹50 when you join using their code</div>
+        </div>
+      </div>
+      <div class="ref-applied" id="w-ref-applied">
+        <div class="ref-applied-ico"><i class="bi bi-check-circle-fill"></i></div>
+        <div style="flex:1">
+          <div class="ref-applied-lbl">Code applied</div>
+          <div class="ref-applied-code" id="w-ref-code-display">—</div>
+          <div class="ref-applied-bonus">Your friend will earn ₹50 when you complete setup ✅</div>
+        </div>
+        <button class="ref-remove-btn" onclick="removeRef('w')"><i class="bi bi-x"></i> Remove</button>
+      </div>
+      <div id="w-ref-input-wrap">
+        <div class="ref-input-row">
+          <div class="fg">
+            <label class="fl">Referral Code</label>
+            <div class="fw">
+              <input class="fi" type="text" id="w-ref-input" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase();clearRefStatus('w')">
+              <i class="bi bi-ticket-perforated fi-ico"></i>
+            </div>
+          </div>
+          <button class="ref-apply-btn" id="w-ref-btn" onclick="applyRef('w')">
+            <i class="bi bi-check2-circle"></i> Apply Code
+          </button>
+        </div>
+        <div class="ref-status" id="w-ref-status"></div>
+        <div class="ref-hint"><i class="bi bi-info-circle-fill"></i> Only valid codes are accepted. Your friend gets ₹50 in wallet credits instantly after you complete signup.</div>
+      </div>
+    </div>
+
+    <!-- Password card — worker -->
+    <div class="pw-card">
+      <div class="pw-card-head">
+        <div class="pw-card-ico"><i class="bi bi-lock-fill"></i></div>
+        <div>
+          <div class="pw-card-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
+          <div class="pw-card-sub">Lets you also sign in with email &amp; password</div>
         </div>
       </div>
       <div class="fg">
         <label class="fl">Password</label>
         <div class="fw">
-          <input class="fi" type="password" id="w-password" placeholder="Min 6 characters" oninput="checkStrength('w-password','w-pw')">
+          <input class="fi" type="password" id="w-password" placeholder="Min 6 characters" oninput="checkStrength('w-password','w-pw');showConfirm('w-confirm-wrap',this.value)">
           <i class="bi bi-lock fi-ico"></i>
           <button type="button" class="eye-btn" onclick="toggleEye('w-password','w-eye')"><i class="bi bi-eye" id="w-eye"></i></button>
         </div>
-        <div class="pw-bars">
-          <div class="pw-bar" id="w-pw-1"></div><div class="pw-bar" id="w-pw-2"></div>
-          <div class="pw-bar" id="w-pw-3"></div><div class="pw-bar" id="w-pw-4"></div>
-        </div>
+        <div class="pw-bars"><div class="pw-bar" id="w-pw-1"></div><div class="pw-bar" id="w-pw-2"></div><div class="pw-bar" id="w-pw-3"></div><div class="pw-bar" id="w-pw-4"></div></div>
       </div>
       <div class="fg" id="w-confirm-wrap" style="display:none;margin-bottom:0">
         <label class="fl">Confirm Password</label>
-        <div class="fw">
-          <input class="fi" type="password" id="w-confirm" placeholder="Repeat password">
-          <i class="bi bi-shield-lock fi-ico"></i>
-        </div>
+        <div class="fw"><input class="fi" type="password" id="w-confirm" placeholder="Repeat password"><i class="bi bi-shield-lock fi-ico"></i></div>
       </div>
-      <div class="pw-note">
-        <i class="bi bi-info-circle-fill"></i>
-        You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too anytime.
-      </div>
+      <div class="pw-note"><i class="bi bi-info-circle-fill"></i> You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too.</div>
     </div>
 
     <div class="sec-lbl">Government ID Verification</div>
@@ -396,11 +483,11 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
         <div class="id-head-ico"><i class="bi bi-shield-check"></i></div>
         <div>
           <div class="id-head-title">Upload a valid Government ID <span style="color:#DC2626">*</span></div>
-          <div class="id-head-sub">Required for worker verification by admin</div>
+          <div class="id-head-sub">Required for worker verification — reviewed within 24h</div>
         </div>
       </div>
       <label class="fl" style="margin-bottom:10px">Select ID Type</label>
-      <div class="id-type-grid">
+      <div class="id-types">
         <button type="button" class="id-btn" data-type="aadhaar"  onclick="pickId(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
         <button type="button" class="id-btn" data-type="pan"      onclick="pickId(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
         <button type="button" class="id-btn" data-type="voter"    onclick="pickId(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
@@ -413,20 +500,18 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
         <input type="file" id="fileInput" accept="image/*,.pdf" onchange="onFile(this)">
         <div class="dz-ico"><i class="bi bi-cloud-upload"></i></div>
         <div class="dz-txt">Click to upload or drag &amp; drop</div>
-        <div class="dz-hint">JPG, PNG or PDF • Max 5MB</div>
+        <div class="dz-hint">JPG, PNG or PDF · Max 5MB</div>
       </div>
       <div class="preview" id="preview">
         <span class="prev-ico" id="prevIco">📄</span>
-        <div><div class="prev-name" id="prevName">—</div><div class="prev-size" id="prevSize">—</div></div>
+        <div style="flex:1;min-width:0"><div class="prev-name" id="prevName">—</div><div class="prev-size" id="prevSize">—</div></div>
         <button type="button" class="prev-rm" onclick="rmFile()"><i class="bi bi-x-circle-fill"></i></button>
       </div>
-      <div class="id-note">
-        <i class="bi bi-info-circle-fill"></i>
-        Your ID is kept confidential and used only for identity verification. It will be reviewed by our admin team within 24 hours. You can start working after verification.
-      </div>
+      <div class="id-note"><i class="bi bi-info-circle-fill"></i> Kept confidential — used only for identity verification. You can start working after admin approves (within 24h).</div>
     </div>
   </div>
 
+  <!-- Submit -->
   <button class="submit-btn" id="submitBtn" onclick="submit()">
     <i class="bi bi-arrow-right-circle-fill"></i>
     Create Account as <span id="roleLabel">Customer</span>
@@ -436,7 +521,7 @@ textarea.fi{min-height:90px;resize:vertical;padding-top:12px;padding-left:14px}
 </div>
 
 <script>
-// Token & user from URL
+// ── Load token + user from URL ─────────────────────────────
 const params  = new URLSearchParams(window.location.search);
 const token   = params.get('token');
 const userStr = params.get('user');
@@ -446,7 +531,7 @@ let user;
 try { user = JSON.parse(decodeURIComponent(userStr)); }
 catch(e) { location.replace('/login.html'); }
 
-// Show Google user info
+// Show user info
 document.getElementById('avName').textContent  = user.name  || 'User';
 document.getElementById('avEmail').textContent = user.email || '';
 if (user.avatar) {
@@ -455,7 +540,14 @@ if (user.avatar) {
   document.getElementById('avImg').textContent = (user.name || 'U')[0].toUpperCase();
 }
 
-// Role picker
+// ── Auto-apply referral code from URL / sessionStorage ─────
+let appliedRefCode = { c: null, w: null };
+(function(){
+  const ref = params.get('ref') || sessionStorage.getItem('kc_referral');
+  if (ref) applyCodeToUI(ref.toUpperCase(), 'c'), applyCodeToUI(ref.toUpperCase(), 'w');
+})();
+
+// ── Role picker ────────────────────────────────────────────
 let role = 'customer';
 function pick(r) {
   role = r;
@@ -466,114 +558,167 @@ function pick(r) {
   document.getElementById('workerExtra').style.display   = r === 'worker'   ? 'block' : 'none';
 }
 
-// Password strength + show confirm field when typing
+// ── Referral validation ────────────────────────────────────
+// Validates against the API — only real, existing codes pass
+async function applyRef(prefix) {
+  const input = document.getElementById(prefix + '-ref-input').value.trim().toUpperCase();
+  const statusEl = document.getElementById(prefix + '-ref-status');
+  const btn = document.getElementById(prefix + '-ref-btn');
+
+  if (!input || input.length < 6) {
+    showRefStatus(statusEl, 'error', 'Enter a valid referral code (min 6 characters)'); return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Validating…';
+
+  try {
+    // Call the validate endpoint
+    const r = await fetch('/api/referral/validate', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ code: input }),
+    });
+    const d = await r.json();
+
+    if (d.success) {
+      // Code is valid — show applied state
+      applyCodeToUI(input, prefix);
+      showRefStatus(statusEl, 'ok', `✅ Code valid! <strong>${d.referrerName || 'Your friend'}</strong> will earn ₹50 when you join.`);
+    } else {
+      showRefStatus(statusEl, 'error', d.message || 'Invalid referral code. Please check and try again.');
+    }
+  } catch (e) {
+    // Network error — accept code optimistically (server will validate on submit)
+    applyCodeToUI(input, prefix);
+    showRefStatus(statusEl, 'ok', '✅ Code saved! Will be applied when you complete signup.');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="bi bi-check2-circle"></i> Apply Code';
+}
+
+function applyCodeToUI(code, prefix) {
+  appliedRefCode[prefix] = code;
+  sessionStorage.setItem('kc_referral', code);
+  document.getElementById(prefix + '-ref-code-display').textContent = code;
+  document.getElementById(prefix + '-ref-applied').style.display = 'flex';
+  document.getElementById(prefix + '-ref-input-wrap').style.display = 'none';
+}
+
+function removeRef(prefix) {
+  appliedRefCode[prefix] = null;
+  // Only clear sessionStorage if neither has a code
+  if (!appliedRefCode.c && !appliedRefCode.w) sessionStorage.removeItem('kc_referral');
+  document.getElementById(prefix + '-ref-applied').style.display = 'none';
+  document.getElementById(prefix + '-ref-input-wrap').style.display = 'block';
+  document.getElementById(prefix + '-ref-input').value = '';
+  clearRefStatus(prefix);
+}
+
+function clearRefStatus(prefix) {
+  const el = document.getElementById(prefix + '-ref-status');
+  if (el) { el.style.display = 'none'; el.className = 'ref-status'; el.innerHTML = ''; }
+}
+
+function showRefStatus(el, type, msg) {
+  el.style.display = 'flex';
+  el.className = 'ref-status ' + (type === 'ok' ? 'ref-ok' : 'ref-err');
+  el.innerHTML = msg;
+}
+
+// ── Password ───────────────────────────────────────────────
 function checkStrength(inputId, prefix) {
   const v = document.getElementById(inputId).value;
-  const checks = [v.length >= 6, v.length >= 8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
+  const checks = [v.length>=6, v.length>=8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
   const n = checks.filter(Boolean).length;
   const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
-  for (let i = 1; i <= 4; i++) {
-    const bar = document.getElementById(`${prefix}-${i}`);
-    if (bar) bar.style.background = i <= n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
+  for (let i=1;i<=4;i++) {
+    const b = document.getElementById(`${prefix}-${i}`);
+    if (b) b.style.background = i<=n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
   }
-  // Show confirm field only when there's a password value
-  const confirmWrapId = inputId.startsWith('c-') ? 'c-confirm-wrap' : 'w-confirm-wrap';
-  const wrap = document.getElementById(confirmWrapId);
-  if (wrap) wrap.style.display = v.length > 0 ? 'block' : 'none';
 }
-
-// Eye toggle
+function showConfirm(wrapId, val) {
+  document.getElementById(wrapId).style.display = val.length > 0 ? 'block' : 'none';
+}
 function toggleEye(inputId, eyeId) {
-  const p = document.getElementById(inputId);
-  const i = document.getElementById(eyeId);
-  p.type = p.type === 'password' ? 'text' : 'password';
-  i.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+  const p = document.getElementById(inputId), i = document.getElementById(eyeId);
+  p.type = p.type==='password' ? 'text' : 'password';
+  i.className = p.type==='password' ? 'bi bi-eye' : 'bi bi-eye-slash';
 }
 
-// ID type picker
+// ── ID upload ──────────────────────────────────────────────
 function pickId(btn) {
-  document.querySelectorAll('.id-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.id-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('idType').value = btn.dataset.type;
 }
-
-// File upload
 let file = null;
 function onFile(input) {
   const f = input.files[0]; if (!f) return;
-  if (f.size > 5 * 1024 * 1024) { showAlert('File too large. Max 5MB.'); input.value=''; return; }
+  if (f.size > 5*1024*1024) { showAlert('File too large. Max 5MB.'); input.value=''; return; }
   file = f;
   document.getElementById('prevIco').textContent  = f.type.startsWith('image/') ? '🖼️' : '📄';
   document.getElementById('prevName').textContent = f.name;
-  document.getElementById('prevSize').textContent = (f.size/1024).toFixed(1) + ' KB';
-  document.getElementById('preview').style.display  = 'flex';
+  document.getElementById('prevSize').textContent = (f.size/1024).toFixed(1)+' KB';
+  document.getElementById('preview').style.display = 'flex';
   document.getElementById('dropzone').style.borderColor = 'var(--sage)';
 }
 function rmFile() {
-  file = null;
-  document.getElementById('fileInput').value = '';
-  document.getElementById('preview').style.display = 'none';
-  document.getElementById('dropzone').style.borderColor = '';
+  file=null; document.getElementById('fileInput').value='';
+  document.getElementById('preview').style.display='none';
+  document.getElementById('dropzone').style.borderColor='';
 }
-const dz = document.getElementById('dropzone');
-dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
-dz.addEventListener('drop', e => {
-  e.preventDefault(); dz.classList.remove('drag');
-  const f = e.dataTransfer.files[0];
-  if (f) { const inp = document.getElementById('fileInput'); const dt = new DataTransfer(); dt.items.add(f); inp.files = dt.files; onFile(inp); }
+const dz=document.getElementById('dropzone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('drag'));
+dz.addEventListener('drop',e=>{
+  e.preventDefault();dz.classList.remove('drag');
+  const f=e.dataTransfer.files[0];
+  if(f){const inp=document.getElementById('fileInput');const dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;onFile(inp);}
 });
 
-// Submit
+// ── Submit ─────────────────────────────────────────────────
 async function submit() {
-  // ── Customer validation ────────────────────────────────────
-  if (role === 'customer') {
-    const pw  = document.getElementById('c-password').value;
-    const cpw = document.getElementById('c-confirm').value;
-    if (pw && pw.length < 6) { showAlert('Password must be at least 6 characters.'); return; }
-    if (pw && pw !== cpw)    { showAlert('Passwords do not match.'); return; }
-  }
+  const currentRef = appliedRefCode[role === 'customer' ? 'c' : 'w'];
 
-  // ── Worker validation ──────────────────────────────────────
+  if (role === 'customer') {
+    const pw=document.getElementById('c-password').value;
+    const cpw=document.getElementById('c-confirm').value;
+    if (pw && pw.length<6)  { showAlert('Password must be at least 6 characters.'); return; }
+    if (pw && pw!==cpw)     { showAlert('Passwords do not match.'); return; }
+  }
   if (role === 'worker') {
     if (!document.getElementById('w-location').value.trim()) { showAlert('Please enter your city / location.'); return; }
     if (!document.getElementById('skill').value)             { showAlert('Please select your primary skill.'); return; }
     if (!document.getElementById('idType').value)            { showAlert('Please select your ID type.'); return; }
     if (!file)                                               { showAlert('Please upload your government ID document.'); return; }
-    const pw  = document.getElementById('w-password').value;
-    const cpw = document.getElementById('w-confirm').value;
-    if (pw && pw.length < 6) { showAlert('Password must be at least 6 characters.'); return; }
-    if (pw && pw !== cpw)    { showAlert('Passwords do not match.'); return; }
+    const pw=document.getElementById('w-password').value;
+    const cpw=document.getElementById('w-confirm').value;
+    if (pw && pw.length<6) { showAlert('Password must be at least 6 characters.'); return; }
+    if (pw && pw!==cpw)    { showAlert('Passwords do not match.'); return; }
   }
 
-  const btn = document.getElementById('submitBtn');
-  const sp  = document.getElementById('sp');
-  btn.disabled = true; sp.style.display = 'inline-block';
+  const btn=document.getElementById('submitBtn'), sp=document.getElementById('sp');
+  btn.disabled=true; sp.style.display='inline-block';
 
   try {
-    // Convert file to base64
     let idDoc = null;
-    if (role === 'worker' && file) {
-      idDoc = await new Promise((res, rej) => {
-        const r = new FileReader();
-        r.onload  = () => res(r.result);
-        r.onerror = rej;
-        r.readAsDataURL(file);
-      });
+    if (role==='worker' && file) {
+      idDoc = await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});
     }
 
-    // Build payload
     const payload = { role };
+    if (currentRef) payload.referralCode = currentRef;
 
     if (role === 'customer') {
-      const pw = document.getElementById('c-password').value;
+      const pw=document.getElementById('c-password').value;
       payload.phone    = document.getElementById('c-phone').value.trim()    || null;
       payload.location = document.getElementById('c-location').value.trim() || null;
       if (pw) payload.password = pw;
     }
-
     if (role === 'worker') {
-      const pw = document.getElementById('w-password').value;
+      const pw=document.getElementById('w-password').value;
       payload.location   = document.getElementById('w-location').value.trim();
       payload.phone      = document.getElementById('w-phone').value.trim()    || null;
       payload.skill      = document.getElementById('skill').value;
@@ -584,40 +729,32 @@ async function submit() {
     }
 
     const r = await fetch('/api/auth/google/role', {
-      method:  'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-      body:    JSON.stringify(payload),
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token },
+      body: JSON.stringify(payload),
     });
     const d = await r.json();
 
     if (d.success) {
       localStorage.setItem('kc_token', d.token);
       localStorage.setItem('kc_user', JSON.stringify(d.user));
-      showOk('Account created! Taking you to your dashboard…');
-      setTimeout(() => {
-        location.replace(d.user.role === 'worker' ? 'worker-dashboard.html' : 'customer-dashboard.html');
+      sessionStorage.removeItem('kc_referral');
+      showOk('Account created! Taking you to your dashboard… 🎉');
+      setTimeout(()=>{
+        location.replace(d.user.role==='worker'?'worker-dashboard.html':'customer-dashboard.html');
       }, 900);
     } else {
       showAlert(d.message || 'Something went wrong. Please try again.');
-      btn.disabled = false; sp.style.display = 'none';
+      btn.disabled=false; sp.style.display='none';
     }
   } catch(e) {
     showAlert('Cannot connect to server. Is it running?');
-    btn.disabled = false; sp.style.display = 'none';
+    btn.disabled=false; sp.style.display='none';
   }
 }
 
-function showAlert(m) {
-  const b = document.getElementById('alertBox');
-  b.style.display = 'flex'; b.className = 'alert alert-err';
-  b.innerHTML = `<i class="bi bi-exclamation-circle-fill"></i> ${m}`;
-  b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-function showOk(m) {
-  const b = document.getElementById('alertBox');
-  b.style.display = 'flex'; b.className = 'alert alert-ok';
-  b.innerHTML = `<i class="bi bi-check-circle-fill"></i> ${m}`;
-}
+function showAlert(m){const b=document.getElementById('alertBox');b.style.display='flex';b.className='alert alert-err';b.innerHTML=`<i class="bi bi-exclamation-circle-fill"></i> ${m}`;b.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function showOk(m){const b=document.getElementById('alertBox');b.style.display='flex';b.className='alert alert-ok';b.innerHTML=`<i class="bi bi-check-circle-fill"></i> ${m}`;}
 </script>
 </body>
 </html>

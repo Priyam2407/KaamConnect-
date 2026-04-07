@@ -99,3 +99,31 @@ exports.redeemCredits = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
+// ─── POST /api/referral/validate ────────────────────────────
+// Public endpoint — checks if a referral code exists (no auth needed)
+// Used by google-role.html and register.html to validate codes live
+exports.validateCode = async (req, res) => {
+  try {
+    const { code } = req.body;
+    if (!code || code.trim().length < 3)
+      return res.status(400).json({ success: false, message: "Enter a valid code" });
+
+    const referrer = await User.findOne({
+      referralCode: code.trim().toUpperCase(),
+      isActive:     true,
+    }).select("name referralCode");
+
+    if (!referrer)
+      return res.status(404).json({ success: false, message: "Referral code not found. Please check and try again." });
+
+    res.json({
+      success:      true,
+      referrerName: referrer.name,
+      code:         referrer.referralCode,
+      message:      `Valid! ${referrer.name} will earn ₹50 when you join.`,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};

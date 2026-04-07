@@ -270,7 +270,7 @@ exports.googleCallback = (req, res) => {
 // ─── Update Google role ───────────────────────────────────────
 exports.updateGoogleRole = async (req, res) => {
   try {
-    const { role, skill, location, phone, bio, idType, idDocument, password } = req.body;
+    const { role, skill, location, phone, bio, idType, idDocument, password, referralCode } = req.body;
 
     if (!["customer", "worker"].includes(role))
       return res.status(400).json({ success: false, message: "Invalid role" });
@@ -289,11 +289,9 @@ exports.updateGoogleRole = async (req, res) => {
     }
 
     if (password) {
-      // ✅ Set password directly — pre-save hook will hash it
       updateData.password = password;
     }
 
-    // ✅ Use save() only for password (triggers pre-save hook), findByIdAndUpdate for rest
     if (password) {
       const user = await User.findById(req.user.id);
       user.password = password;
@@ -301,6 +299,14 @@ exports.updateGoogleRole = async (req, res) => {
       await user.save();
     } else {
       await User.findByIdAndUpdate(req.user.id, updateData);
+    }
+
+    // ✅ Apply referral code if provided
+    if (referralCode && referralCode.trim()) {
+      try {
+        const { applyReferral } = require("./referralController");
+        await applyReferral(req.user.id, referralCode.trim().toUpperCase());
+      } catch (e) { /* non-fatal */ }
     }
 
     const updatedUser = await User.findById(req.user.id);
