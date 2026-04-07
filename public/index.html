@@ -624,7 +624,7 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
     </div>
     <div class="footer-col"><h4>Platform</h4><ul><li><a href="#">Find Workers</a></li><li><a href="#">How It Works</a></li><li><a href="#">Pricing</a></li><li><a href="#">Safety</a></li></ul></div>
     <div class="footer-col"><h4>For Workers</h4><ul><li><a href="register.html">Join as Worker</a></li><li><a href="#">Worker Guidelines</a></li><li><a href="#">Earnings</a></li><li><a href="#">Verification</a></li></ul></div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="#about-section" onclick="openAbout()">About Us</a></li><li><a href="#about-section" onclick="openAbout()">Our Team</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
   </div>
   <div style="border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center">
     <p style="font-size:13px;color:rgba(255,255,255,.35)">Built &amp; Designed with <span style="color:#E8601C">&#9829;</span> by <strong style="color:rgba(255,255,255,.65);font-weight:700">Priyam Yadav</strong></p>
@@ -720,5 +720,194 @@ function setChips(arr){const c=document.getElementById('chatChips');c.innerHTML=
 async function sendChat(){const inp=document.getElementById('chatInput');const msg=inp.value.trim();if(!msg)return;inp.value='';addMsg(msg,'user');try{const r=await fetch('/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();if(d.success){addMsg(d.response,'bot');if(d.suggestions)setChips(d.suggestions);}else addMsg('Sorry, I could not understand that. Please try again.','bot');}catch{addMsg('Server is offline. Please check if the app is running.','bot');}}
 function sendChip(el){document.getElementById('chatInput').value=el.textContent;sendChat();}
 </script>
+
+<!-- ══ ABOUT MODAL ══ -->
+<style>
+.about-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(15,25,35,.75);z-index:1100;backdrop-filter:blur(8px);align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto}
+.about-modal-backdrop.open{display:flex}
+.about-modal{background:var(--white);border-radius:24px;max-width:720px;width:100%;margin:auto;overflow:hidden;animation:modalIn .35s ease;box-shadow:0 40px 100px rgba(15,25,35,.25)}
+.am-hero{background:linear-gradient(135deg,var(--forest) 0%,#1e4a40 50%,var(--forest-2) 100%);padding:52px 48px 44px;position:relative;overflow:hidden}
+.am-hero::before{content:"";position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%)}
+.am-hero::after{content:"";position:absolute;bottom:-60px;left:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.25),transparent 65%)}
+.am-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.1);border:none;width:36px;height:36px;border-radius:50%;color:#fff;font-size:16px;cursor:pointer;display:grid;place-items:center;transition:background .2s;z-index:2}
+.am-close:hover{background:rgba(255,255,255,.2)}
+.am-hero-content{position:relative;z-index:1}
+.am-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(232,96,28,.2);border:1px solid rgba(232,96,28,.3);border-radius:100px;padding:5px 14px;font-size:11.5px;font-weight:700;color:var(--saffron-2);letter-spacing:.5px;margin-bottom:20px}
+.am-hero h2{font-family:"Instrument Serif",serif;font-size:clamp(28px,4vw,42px);color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:12px}
+.am-hero h2 em{font-style:italic;color:var(--saffron-2)}
+.am-hero p{font-size:15px;color:rgba(255,255,255,.6);line-height:1.75;max-width:480px}
+.am-body{padding:0}
+.am-section{padding:36px 48px;border-bottom:1px solid var(--ink-06)}
+.am-section:last-child{border-bottom:none}
+.am-section-tag{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--saffron);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.am-section-tag::before{content:"";width:16px;height:2px;background:var(--saffron);border-radius:2px}
+.am-section h3{font-family:"Syne",sans-serif;font-size:20px;font-weight:800;color:var(--forest);margin-bottom:10px;letter-spacing:-.4px}
+.am-section p{font-size:14.5px;color:var(--ink-70);line-height:1.8}
+.am-team-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.am-person{background:var(--cream);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;transition:all .25s}
+.am-person:hover{border-color:rgba(232,96,28,.2);box-shadow:0 8px 28px rgba(15,25,35,.08);transform:translateY(-2px)}
+.am-person-av{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--saffron-pale),var(--saffron-light));display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.am-person-name{font-family:"Syne",sans-serif;font-size:15px;font-weight:800;color:var(--forest);margin-bottom:3px}
+.am-person-role{font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--saffron);margin-bottom:8px}
+.am-person-bio{font-size:13px;color:var(--ink-40);line-height:1.65}
+.am-tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.am-tech{background:var(--cream);border:1.5px solid var(--ink-06);border-radius:12px;padding:16px 14px;text-align:center;transition:all .22s}
+.am-tech:hover{border-color:var(--saffron);background:var(--saffron-pale)}
+.am-tech-ico{font-size:22px;display:block;margin-bottom:8px}
+.am-tech-name{font-family:"Syne",sans-serif;font-size:12.5px;font-weight:700;color:var(--forest)}
+.am-tech-cat{font-size:11px;color:var(--ink-40);margin-top:2px}
+.am-diff-list{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.am-diff{display:flex;gap:14px;align-items:flex-start}
+.am-diff-ico{width:40px;height:40px;border-radius:11px;background:var(--saffron-pale);display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.am-diff-title{font-family:"Syne",sans-serif;font-size:14px;font-weight:700;color:var(--forest);margin-bottom:3px}
+.am-diff-desc{font-size:13px;color:var(--ink-70);line-height:1.6}
+.am-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.am-stat{background:var(--forest);border-radius:14px;padding:22px 18px;text-align:center}
+.am-stat-n{font-family:"Syne",sans-serif;font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1}
+.am-stat-l{font-size:11.5px;color:rgba(255,255,255,.45);margin-top:6px}
+.am-contact-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+.am-contact-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;font-size:13.5px;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none}
+.am-contact-primary{background:var(--saffron);color:#fff;border:none;box-shadow:0 4px 14px rgba(232,96,28,.3)}
+.am-contact-primary:hover{background:var(--saffron-2);transform:translateY(-1px)}
+.am-contact-outline{background:transparent;color:var(--ink-70);border:1.5px solid var(--ink-12)}
+.am-contact-outline:hover{border-color:var(--saffron);color:var(--saffron)}
+@media(max-width:600px){
+  .am-hero{padding:36px 24px 32px}
+  .am-section{padding:28px 24px}
+  .am-team-grid{grid-template-columns:1fr}
+  .am-tech-grid{grid-template-columns:repeat(2,1fr)}
+  .am-stats-row{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div class="about-modal-backdrop" id="aboutModal">
+  <div class="about-modal">
+
+    <!-- Hero -->
+    <div class="am-hero">
+      <button class="am-close" onclick="closeAbout()"><i class="bi bi-x"></i></button>
+      <div class="am-hero-content">
+        <div class="am-tag"><i class="bi bi-info-circle-fill"></i> About KaamConnect</div>
+        <h2>Built for <em>Bharat</em>,<br>by a developer who cares.</h2>
+        <p>KaamConnect is India's smartest worker marketplace — connecting skilled professionals with customers through a transparent, fair, and tech-driven platform.</p>
+      </div>
+    </div>
+
+    <div class="am-body">
+
+      <!-- Company Overview -->
+      <div class="am-section">
+        <div class="am-section-tag">The Company</div>
+        <h3>What is KaamConnect?</h3>
+        <p>KaamConnect is a full-stack worker marketplace platform built from scratch in 2026. We connect verified skilled workers — electricians, plumbers, painters, carpenters and more — with customers across Indian cities. Our mission is simple: make hiring local professionals as easy, safe and transparent as booking a cab.</p>
+        <div class="am-stats-row" style="margin-top:24px">
+          <div class="am-stat"><div class="am-stat-n">50+</div><div class="am-stat-l">Verified Workers</div></div>
+          <div class="am-stat"><div class="am-stat-n">100+</div><div class="am-stat-l">Jobs Completed</div></div>
+          <div class="am-stat"><div class="am-stat-n">4.8★</div><div class="am-stat-l">Avg Rating</div></div>
+        </div>
+      </div>
+
+      <!-- Founder & Developer -->
+      <div class="am-section">
+        <div class="am-section-tag">Our Team</div>
+        <h3>The people behind it</h3>
+        <p>KaamConnect is bootstrapped and built by a passionate developer with a vision to digitise India's unorganised labour sector.</p>
+        <div class="am-team-grid">
+          <div class="am-person">
+            <div class="am-person-av">👨‍💼</div>
+            <div class="am-person-name">Priyam Yadav</div>
+            <div class="am-person-role">Founder & CEO</div>
+            <div class="am-person-bio">Visionary behind KaamConnect. Identified the gap in India's unorganised labour market and built a platform to bridge it — making life better for both workers and customers.</div>
+          </div>
+          <div class="am-person">
+            <div class="am-person-av">👨‍💻</div>
+            <div class="am-person-name">Priyam Yadav</div>
+            <div class="am-person-role">Lead Developer</div>
+            <div class="am-person-bio">Full-stack developer who designed and built the entire platform — from database architecture to UI design. Specialises in Node.js, MongoDB, and modern web technologies.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="am-section">
+        <div class="am-section-tag">Technology</div>
+        <h3>How we built it</h3>
+        <p>KaamConnect is built on a modern, scalable full-stack architecture designed to handle real-time job matching, secure payments and thousands of concurrent users.</p>
+        <div class="am-tech-grid">
+          <div class="am-tech"><span class="am-tech-ico">🟢</span><div class="am-tech-name">Node.js</div><div class="am-tech-cat">Backend Runtime</div></div>
+          <div class="am-tech"><span class="am-tech-ico">⚡</span><div class="am-tech-name">Express.js</div><div class="am-tech-cat">API Framework</div></div>
+          <div class="am-tech"><span class="am-tech-ico">🍃</span><div class="am-tech-name">MongoDB</div><div class="am-tech-cat">Database</div></div>
+          <div class="am-tech"><span class="am-tech-ico">🌐</span><div class="am-tech-name">HTML / CSS / JS</div><div class="am-tech-cat">Frontend</div></div>
+          <div class="am-tech"><span class="am-tech-ico">🔐</span><div class="am-tech-name">JWT + Passport</div><div class="am-tech-cat">Auth & Security</div></div>
+          <div class="am-tech"><span class="am-tech-ico">💳</span><div class="am-tech-name">Razorpay</div><div class="am-tech-cat">Payments</div></div>
+          <div class="am-tech"><span class="am-tech-ico">📧</span><div class="am-tech-name">Brevo SMTP</div><div class="am-tech-cat">Email Service</div></div>
+          <div class="am-tech"><span class="am-tech-ico">☁️</span><div class="am-tech-name">Render</div><div class="am-tech-cat">Cloud Hosting</div></div>
+          <div class="am-tech"><span class="am-tech-ico">🤖</span><div class="am-tech-name">Claude AI</div><div class="am-tech-cat">KaamBot Assistant</div></div>
+        </div>
+      </div>
+
+      <!-- Why we're different -->
+      <div class="am-section">
+        <div class="am-section-tag">Why KaamConnect</div>
+        <h3>What makes us different</h3>
+        <p>There are other platforms in India, but none built with the same depth, fairness and transparency that KaamConnect offers.</p>
+        <div class="am-diff-list">
+          <div class="am-diff">
+            <div class="am-diff-ico">🤝</div>
+            <div><div class="am-diff-title">InDrive-Style Negotiation</div><div class="am-diff-desc">Unlike Urban Company where prices are fixed by the platform, KaamConnect lets customers make offers and workers counter — a fair, transparent negotiation just like InDrive.</div></div>
+          </div>
+          <div class="am-diff">
+            <div class="am-diff-ico">✅</div>
+            <div><div class="am-diff-title">Admin-Verified Workers</div><div class="am-diff-desc">Every worker goes through government ID verification and admin approval before they can accept jobs. No fake profiles, no unverified workers.</div></div>
+          </div>
+          <div class="am-diff">
+            <div class="am-diff-ico">🔒</div>
+            <div><div class="am-diff-title">Pay Only After Job Done</div><div class="am-diff-desc">Secure escrow via Razorpay — your money stays safe until you confirm the job is complete. Zero risk for customers.</div></div>
+          </div>
+          <div class="am-diff">
+            <div class="am-diff-ico">📱</div>
+            <div><div class="am-diff-title">Real-Time Job Matching</div><div class="am-diff-desc">Workers get instant notifications for new job offers and can respond in seconds. Our 15-second polling keeps everything live without a heavy WebSocket infrastructure.</div></div>
+          </div>
+          <div class="am-diff">
+            <div class="am-diff-ico">💰</div>
+            <div><div class="am-diff-title">Only 10% Platform Fee</div><div class="am-diff-desc">We charge just 10% commission — far lower than competitors who charge 20-30%. Workers keep more of what they earn. Customers pay fair prices.</div></div>
+          </div>
+          <div class="am-diff">
+            <div class="am-diff-ico">🇮🇳</div>
+            <div><div class="am-diff-title">Built Specifically for India</div><div class="am-diff-desc">Designed with Indian workers and customers in mind — supports Hindi/Hinglish in the AI chatbot, focuses on local city-level matching, and understands Indian work culture.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Website Details -->
+      <div class="am-section">
+        <div class="am-section-tag">Platform Details</div>
+        <h3>Website information</h3>
+        <div style="background:var(--cream);border:1.5px solid var(--ink-06);border-radius:14px;padding:20px;margin-top:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:4px">Website</div><div style="font-size:14px;font-weight:600;color:var(--forest)">kaamconnect-im6s.onrender.com</div></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:4px">Founded</div><div style="font-size:14px;font-weight:600;color:var(--forest)">2026</div></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:4px">Type</div><div style="font-size:14px;font-weight:600;color:var(--forest)">B2C Marketplace</div></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:4px">Market</div><div style="font-size:14px;font-weight:600;color:var(--forest)">India (Pan-India)</div></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:4px">Commission</div><div style="font-size:14px;font-weight:600;color:var(--forest)">10% per transaction</div></div>
+            <div><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:4px">Status</div><div style="font-size:14px;font-weight:600;color:#15803D">🟢 Live & Active</div></div>
+          </div>
+        </div>
+        <div class="am-contact-row">
+          <a href="register.html" class="am-contact-btn am-contact-primary"><i class="bi bi-rocket-takeoff-fill"></i> Get Started Free</a>
+          <a href="mailto:priyamyadav2407@gmail.com" class="am-contact-btn am-contact-outline"><i class="bi bi-envelope-fill"></i> Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function openAbout(){document.getElementById('aboutModal').classList.add('open');document.body.style.overflow='hidden';}
+function closeAbout(){document.getElementById('aboutModal').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('aboutModal').addEventListener('click',e=>{if(e.target===document.getElementById('aboutModal'))closeAbout();});
+</script>
+
 </body>
 </html>
