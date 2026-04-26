@@ -133,6 +133,38 @@ app.get("/api/analytics/platform", async (req, res) => {
   }
 });
 
+
+// ── Public Reviews ──────────────────────────────────────────
+// Returns latest reviews with customer + worker name for homepage
+app.get("/api/reviews/public", async (req, res) => {
+  try {
+    const { Review } = require("./models");
+    const limit = parseInt(req.query.limit) || 6;
+
+    const reviews = await Review.find({ review: { $exists: true, $ne: "" } })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .populate("customerId", "name location")
+      .populate("workerId", "name skill");
+
+    const formatted = reviews.map(r => ({
+      _id:          r._id,
+      rating:       r.rating,
+      review:       r.review,
+      createdAt:    r.createdAt,
+      customerName: r.customerId?.name     || "Customer",
+      customerCity: r.customerId?.location || "India",
+      workerName:   r.workerId?.name       || "Worker",
+      workerSkill:  r.workerId?.skill      || "",
+    }));
+
+    res.json({ success: true, reviews: formatted });
+  } catch (err) {
+    console.error("Public reviews error:", err.message);
+    res.json({ success: true, reviews: [] });
+  }
+});
+
 // ── DB test ─────────────────────────────────────────────────
 app.get("/api/test-db", async (req, res) => {
   try {

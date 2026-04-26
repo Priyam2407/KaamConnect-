@@ -660,10 +660,10 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
   <div class="eyebrow">Testimonials</div>
   <h2 class="section-h">What our users <em>say</em></h2>
   <div class="tgrid" id="testimonialsGrid">
-    <div class="workers-empty" style="grid-column:1/-1;padding:48px 24px">
-      <i class="bi bi-chat-quote" style="font-size:36px;opacity:.2;display:block;margin-bottom:12px;color:var(--forest)"></i>
-      <h3 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--forest);margin-bottom:6px">Reviews coming soon</h3>
-      <p style="font-size:14px;color:var(--ink-40)">Real reviews from verified customers will appear here after jobs are completed.</p>
+    <!-- Reviews load here from /api/reviews/public -->
+    <div class="workers-empty" id="reviewsPlaceholder" style="grid-column:1/-1;padding:48px 24px">
+      <i class="bi bi-arrow-repeat" style="font-size:28px;opacity:.3;display:block;margin-bottom:12px;color:var(--forest);animation:spin 1s linear infinite"></i>
+      <p style="font-size:14px;color:var(--ink-40)">Loading reviews...</p>
     </div>
   </div>
 </div></section>
@@ -852,6 +852,56 @@ function buildStars(r){return '★'.repeat(Math.round(r))+'☆'.repeat(5-Math.ro
 function workerCard(w){const em=skillEmoji[w.skill]||'🛠️';const vBadge=w.verified?'<i class="bi bi-patch-check-fill" style="color:#4ADE80;font-size:11px"></i>':'';return `<div class="wcard"><div class="wcard-header"><div class="wc-av">${em}</div><div><div class="wc-skill">${w.skill||'Worker'}</div><div class="wc-name">${w.name} ${vBadge}</div><div class="wc-loc"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div></div></div><div class="wcard-body"><div class="wc-rating"><span class="wc-stars">${buildStars(w.rating||0)}</span><span class="wc-rnum">${(w.rating||0).toFixed(1)}</span><span class="wc-rjobs">(${w.totalJobs||0} jobs)</span></div><div class="wc-bio">${w.bio||'Experienced professional ready to help.'}</div></div><div class="wcard-foot"><button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Worker'}','${em}')"><i class="bi bi-calendar-check"></i> Book Now</button><button class="btn-view" onclick="viewProfile('${w._id}')"><i class="bi bi-person"></i> Profile</button></div></div>`;}
 let allWorkers=[];
 async function loadWorkers(skill='all'){const grid=document.getElementById('workersGrid');grid.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';try{const url='/api/workers/find'+(skill&&skill!=='all'?`?skill=${skill}`:'');const r=await fetch(url);const d=await r.json();allWorkers=d.workers||[];if(!allWorkers.length){grid.innerHTML='<div class="workers-empty"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>';return;}grid.innerHTML=allWorkers.slice(0,6).map(workerCard).join('');}catch{grid.innerHTML='<div class="workers-empty"><i class="bi bi-wifi-off"></i><h3>Could not load workers</h3><p>Make sure the server is running</p></div>';}}
+
+// TESTIMONIALS — load real reviews from API
+async function loadTestimonials() {
+  const grid = document.getElementById('testimonialsGrid');
+  try {
+    const r = await fetch('/api/reviews/public?limit=6');
+    const d = await r.json();
+    const reviews = d.reviews || [];
+
+    if (!reviews.length) {
+      grid.innerHTML = `
+        <div class="workers-empty" style="grid-column:1/-1;padding:48px 24px">
+          <i class="bi bi-chat-quote" style="font-size:36px;opacity:.2;display:block;margin-bottom:12px;color:var(--forest)"></i>
+          <h3 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--forest);margin-bottom:6px">No reviews yet</h3>
+          <p style="font-size:14px;color:var(--ink-40)">Real reviews from verified customers will appear here after jobs are completed.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = reviews.map(rv => {
+      const stars = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
+      const skill = rv.workerSkill ? rv.workerSkill.charAt(0).toUpperCase() + rv.workerSkill.slice(1) : '';
+      const role = skill ? `${skill} job` : 'Service';
+      const city = rv.customerCity || 'India';
+      const initials = rv.customerName.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      return `
+        <div class="tcard">
+          <div class="tcard-quote">"</div>
+          <p class="tcard-text">${rv.review}</p>
+          <div class="tcard-person">
+            <div class="tcp-av" style="background:var(--saffron);color:#fff;font-size:13px;font-weight:700;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center">${initials}</div>
+            <div>
+              <div class="tcp-name">${rv.customerName}</div>
+              <div class="tcp-role">Customer · ${city} · ${role}</div>
+            </div>
+            <div class="tcp-stars" style="margin-left:auto;color:#FBBF24;font-size:13px">${stars}</div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = `
+      <div class="workers-empty" style="grid-column:1/-1;padding:48px 24px">
+        <i class="bi bi-chat-quote" style="font-size:36px;opacity:.2;display:block;margin-bottom:12px;color:var(--forest)"></i>
+        <h3 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--forest);margin-bottom:6px">No reviews yet</h3>
+        <p style="font-size:14px;color:var(--ink-40)">Real reviews from verified customers will appear here after jobs are completed.</p>
+      </div>`;
+  }
+}
+loadTestimonials();
+
 loadWorkers();
 function filterWorkers(el,skill){document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));el.classList.add('on');loadWorkers(skill);}
 function heroSearch(){doSearch(document.getElementById('heroSkill').value,document.getElementById('heroLocation').value.trim());}
