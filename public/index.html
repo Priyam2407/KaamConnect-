@@ -1,18 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
+
+<!-- Web Push Notifications -->
 <script charset="UTF-8" src="//web.webpushs.com/js/push/9d5d495a8001670246797de22b8b1148_1.js" async></script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580415002485035"
-     crossorigin="anonymous"></script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580415002485035"
-     crossorigin="anonymous"></script>
+<!-- Google AdSense (single tag only) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580415002485035" crossorigin="anonymous"></script>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KaamConnect — India's Trusted Worker Marketplace</title>
+
+<!-- SEO Meta Tags -->
+<title>KaamConnect — Book Verified Electricians, Plumbers & More | India's Worker Marketplace</title>
+<meta name="description" content="KaamConnect is India's trusted worker marketplace. Book verified electricians, plumbers, painters, carpenters and more in Chandigarh, Ludhiana, Delhi and across India. Secure escrow payment — pay only after the job is done.">
+<meta name="keywords" content="book electrician India, plumber near me Chandigarh, hire skilled workers, worker marketplace India, home services Chandigarh, KaamConnect, electrician plumber painter India">
+<meta name="author" content="Priyam Yadav, KaamConnect">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.kaamconnect.in/">
+
+<!-- Open Graph (for social sharing) -->
+<meta property="og:title" content="KaamConnect — Book Verified Electricians, Plumbers & More in India">
+<meta property="og:description" content="Find and book verified skilled workers in your city — electricians, plumbers, painters, carpenters and more. Secure escrow payment. Serving Chandigarh, Ludhiana, Delhi and across India.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.kaamconnect.in/">
+<meta property="og:locale" content="en_IN">
+<meta property="og:site_name" content="KaamConnect">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KaamConnect — India's Trusted Worker Marketplace">
+<meta name="twitter:description" content="Book verified electricians, plumbers, painters and more in your city. Pay only after the job is done.">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "KaamConnect",
+  "url": "https://www.kaamconnect.in",
+  "description": "India's trusted marketplace connecting customers with verified skilled workers including electricians, plumbers, painters, carpenters and more.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.kaamconnect.in/?search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "KaamConnect",
+  "url": "https://www.kaamconnect.in",
+  "description": "India's trusted online marketplace for booking verified skilled workers — electricians, plumbers, painters, carpenters and more.",
+  "email": "priyamyadav2407@gmail.com",
+  "foundingDate": "2026",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Chandigarh",
+    "addressCountry": "IN"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "India"
+  },
+  "sameAs": []
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Home Services & Skilled Worker Booking",
+  "provider": {
+    "@type": "Organization",
+    "name": "KaamConnect"
+  },
+  "areaServed": "India",
+  "description": "Book verified electricians, plumbers, painters, carpenters, AC technicians, drivers and labourers across Indian cities with secure escrow payment.",
+  "serviceType": ["Electrician", "Plumber", "Painter", "Carpenter", "AC Technician", "Driver", "Labour", "Mason"]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -460,7 +533,7 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
   <div class="hero-bg"><div class="hbg-grid"></div><div class="hbg-orb1"></div><div class="hbg-orb2"></div><div class="hbg-orb3"></div></div>
   <div class="hero-body">
     <div class="hero-left">
-      <div class="hero-badge"><div class="badge-pulse"></div><span class="badge-txt">200 verified workers • Live now</span></div>
+      <div class="hero-badge"><div class="badge-pulse"></div><span class="badge-txt" id="heroBadgeTxt">Verified workers • Live now</span></div>
       <h1 class="hero-h">India's most trusted<br><em>worker marketplace</em></h1>
       <p class="hero-p">Book verified electricians, plumbers, painters and more in your city — fast, safe, and guaranteed.</p>
       <div class="hero-search">
@@ -486,21 +559,21 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
       </div>
     </div>
     <div class="hero-panel">
-      <div class="hp-card hp1"><div class="hp-avatar">⚡</div><div class="hp-skill">Electrician</div><div class="hp-name">Rajesh Kumar <i class="bi bi-patch-check-fill"></i></div><div class="hp-loc"><i class="bi bi-geo-alt"></i> Ludhiana, Punjab</div><div class="hp-stars">★★★★★</div><div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div></div>
-      <div class="hp-card hp2"><div class="hp-bignum" id="liveJobs">100+</div><div class="hp-numlbl">Jobs Completed</div><div class="hp-bar"><div class="hp-barfill"></div></div><div class="hp-jobs" style="margin-top:10px"><b>47</b> active today</div></div>
-      <div class="hp-card hp3"><div class="hp-avatar">🎨</div><div class="hp-skill">Painter</div><div class="hp-name">Amit Singh <i class="bi bi-patch-check-fill"></i></div><div class="hp-loc"><i class="bi bi-geo-alt"></i> Delhi</div><div class="hp-stars">★★★★★</div><div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div></div>
-      <div class="hp-card hp4"><div class="hp-bignum">4.8</div><div class="hp-numlbl">Average Rating</div><div class="hp-stars" style="margin-top:10px;font-size:18px">★★★★★</div></div>
+      <div class="hp-card hp1" id="heroCard1"><div class="hp-avatar">⚡</div><div class="hp-skill">Electrician</div><div class="hp-name">Verified Worker <i class="bi bi-patch-check-fill"></i></div><div class="hp-loc"><i class="bi bi-geo-alt"></i> Loading...</div><div class="hp-stars">★★★★★</div><div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div></div>
+      <div class="hp-card hp2"><div class="hp-bignum" id="liveJobs">—</div><div class="hp-numlbl">Jobs Completed</div><div class="hp-bar"><div class="hp-barfill"></div></div><div class="hp-jobs" style="margin-top:10px"><b id="liveWorkers">—</b> verified workers</div></div>
+      <div class="hp-card hp3" id="heroCard2"><div class="hp-avatar">🎨</div><div class="hp-skill">Painter</div><div class="hp-name">Verified Worker <i class="bi bi-patch-check-fill"></i></div><div class="hp-loc"><i class="bi bi-geo-alt"></i> Loading...</div><div class="hp-stars">★★★★★</div><div class="hp-avail"><i class="bi bi-circle-fill" style="font-size:7px"></i> Available Now</div></div>
+      <div class="hp-card hp4"><div class="hp-bignum" id="liveRating">—</div><div class="hp-numlbl">Average Rating</div><div class="hp-stars" id="liveRatingStars" style="margin-top:10px;font-size:18px">★★★★★</div></div>
     </div>
   </div>
   <div class="hero-ribbon">
     <div class="ribbon-in">
-      <div class="rib-item"><div class="rib-num" id="statCustomers">2,847</div><div class="rib-lbl">Happy Customers</div></div>
+      <div class="rib-item"><div class="rib-num" id="statCustomers">—</div><div class="rib-lbl">Happy Customers</div></div>
       <div class="rib-sep"></div>
-      <div class="rib-item"><div class="rib-num" id="statWorkers">50</div><div class="rib-lbl">Verified Workers</div></div>
+      <div class="rib-item"><div class="rib-num" id="statWorkers">—</div><div class="rib-lbl">Verified Workers</div></div>
       <div class="rib-sep"></div>
-      <div class="rib-item"><div class="rib-num" id="statJobs">15,832</div><div class="rib-lbl">Jobs Completed</div></div>
+      <div class="rib-item"><div class="rib-num" id="statJobs">—</div><div class="rib-lbl">Jobs Completed</div></div>
       <div class="rib-sep"></div>
-      <div class="rib-item"><div class="rib-num">4.8★</div><div class="rib-lbl">Average Rating</div></div>
+      <div class="rib-item"><div class="rib-num" id="statRating">—</div><div class="rib-lbl">Average Rating</div></div>
     </div>
   </div>
 </section>
@@ -527,14 +600,14 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
     <button class="n-solid" onclick="location.href='register.html'" style="flex-shrink:0">Browse All →</button>
   </div>
   <div class="svc-grid">
-    <div class="svc-card" onclick="quickSearch('electrician')"><div style="position:relative;z-index:1"><span class="svc-ico">⚡</span><div class="svc-cnt">124 workers</div><div class="svc-name">Electrician</div><div class="svc-desc">Wiring, fuse fixes, appliance repair, panel work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('plumber')"><div style="position:relative;z-index:1"><span class="svc-ico">🔧</span><div class="svc-cnt">89 workers</div><div class="svc-name">Plumber</div><div class="svc-desc">Pipe fitting, leaks, bathroom renovation</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('painter')"><div style="position:relative;z-index:1"><span class="svc-ico">🎨</span><div class="svc-cnt">156 workers</div><div class="svc-name">Painter</div><div class="svc-desc">Interior, exterior, texture and wallpaper</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('carpenter')"><div style="position:relative;z-index:1"><span class="svc-ico">🪚</span><div class="svc-cnt">78 workers</div><div class="svc-name">Carpenter</div><div class="svc-desc">Furniture, doors, cabinets, custom woodwork</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('mason')"><div style="position:relative;z-index:1"><span class="svc-ico">🧱</span><div class="svc-cnt">63 workers</div><div class="svc-name">Mason</div><div class="svc-desc">Tiling, plastering, construction work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('ac technician')"><div style="position:relative;z-index:1"><span class="svc-ico">❄️</span><div class="svc-cnt">47 workers</div><div class="svc-name">AC Technician</div><div class="svc-desc">Installation, servicing, gas refill</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('labour')"><div style="position:relative;z-index:1"><span class="svc-ico">👷</span><div class="svc-cnt">210 workers</div><div class="svc-name">Labour</div><div class="svc-desc">Shifting, heavy lifting, site assistance</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
-    <div class="svc-card" onclick="quickSearch('driver')"><div style="position:relative;z-index:1"><span class="svc-ico">🚗</span><div class="svc-cnt">54 workers</div><div class="svc-name">Driver</div><div class="svc-desc">Daily hire, outstation, part-time driving</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('electrician')"><div style="position:relative;z-index:1"><span class="svc-ico">⚡</span><div class="svc-cnt" id="cnt-electrician">Find workers</div><div class="svc-name">Electrician</div><div class="svc-desc">Wiring, fuse fixes, appliance repair, panel work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('plumber')"><div style="position:relative;z-index:1"><span class="svc-ico">🔧</span><div class="svc-cnt" id="cnt-plumber">Find workers</div><div class="svc-name">Plumber</div><div class="svc-desc">Pipe fitting, leaks, bathroom renovation</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('painter')"><div style="position:relative;z-index:1"><span class="svc-ico">🎨</span><div class="svc-cnt" id="cnt-painter">Find workers</div><div class="svc-name">Painter</div><div class="svc-desc">Interior, exterior, texture and wallpaper</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('carpenter')"><div style="position:relative;z-index:1"><span class="svc-ico">🪚</span><div class="svc-cnt" id="cnt-carpenter">Find workers</div><div class="svc-name">Carpenter</div><div class="svc-desc">Furniture, doors, cabinets, custom woodwork</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('mason')"><div style="position:relative;z-index:1"><span class="svc-ico">🧱</span><div class="svc-cnt" id="cnt-mason">Find workers</div><div class="svc-name">Mason</div><div class="svc-desc">Tiling, plastering, construction work</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('ac technician')"><div style="position:relative;z-index:1"><span class="svc-ico">❄️</span><div class="svc-cnt" id="cnt-ac">Find workers</div><div class="svc-name">AC Technician</div><div class="svc-desc">Installation, servicing, gas refill</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('labour')"><div style="position:relative;z-index:1"><span class="svc-ico">👷</span><div class="svc-cnt" id="cnt-labour">Find workers</div><div class="svc-name">Labour</div><div class="svc-desc">Shifting, heavy lifting, site assistance</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
+    <div class="svc-card" onclick="quickSearch('driver')"><div style="position:relative;z-index:1"><span class="svc-ico">🚗</span><div class="svc-cnt" id="cnt-driver">Find workers</div><div class="svc-name">Driver</div><div class="svc-desc">Daily hire, outstation, part-time driving</div></div><i class="bi bi-arrow-up-right svc-arr"></i></div>
   </div>
 </div></section>
 
@@ -551,7 +624,7 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
     </div>
   </div>
   <div><div class="app-mock"><div class="am-bg"></div><div class="am-orb"></div><div class="am-content">
-    <div class="am-head"><div class="am-av">🔧</div><div><div class="am-name">Suresh Sharma</div><div class="am-role">⭐ 4.6 · Plumber · Chandigarh</div></div><div class="am-badge">Online</div></div>
+    <div class="am-head"><div class="am-av">🔧</div><div><div class="am-name">Verified Plumber</div><div class="am-role">⭐ Top Rated · Plumber · Chandigarh</div></div><div class="am-badge">Online</div></div>
     <div class="am-job"><div class="am-jt">🚿 Bathroom pipe repair</div><div class="am-jm"><span><i class="bi bi-calendar3"></i> Today, 3 PM</span><span><i class="bi bi-geo-alt"></i> Sector 17</span></div></div>
     <div class="am-job" style="background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.2)"><div class="am-jt" style="color:#4ADE80">✅ Job Accepted</div><div class="am-jm"><span>Worker is on the way</span></div></div>
     <button class="am-btn"><i class="bi bi-chat-dots"></i> Message Worker</button>
@@ -576,9 +649,9 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 
 <!-- NUMBERS BAND -->
 <div class="nums-band"><div class="wrap"><div class="nums-grid">
-  <div class="nm-item"><div class="nm-num" id="nb1">2,847</div><div class="nm-lbl">Happy Customers</div></div>
-  <div class="nm-item"><div class="nm-num" id="nb2">743+</div><div class="nm-lbl">Verified Workers</div></div>
-  <div class="nm-item"><div class="nm-num" id="nb3">15K+</div><div class="nm-lbl">Jobs Completed</div></div>
+  <div class="nm-item"><div class="nm-num" id="nb1">—</div><div class="nm-lbl">Happy Customers</div></div>
+  <div class="nm-item"><div class="nm-num" id="nb2">—</div><div class="nm-lbl">Verified Workers</div></div>
+  <div class="nm-item"><div class="nm-num" id="nb3">—</div><div class="nm-lbl">Jobs Completed</div></div>
   <div class="nm-item"><div class="nm-num">10%</div><div class="nm-lbl">Platform Fee Only</div></div>
 </div></div></div>
 
@@ -586,10 +659,12 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 <section class="section alt" id="about"><div class="wrap">
   <div class="eyebrow">Testimonials</div>
   <h2 class="section-h">What our users <em>say</em></h2>
-  <div class="tgrid">
-    <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">Found a certified electrician in under 5 minutes. He arrived on time, fixed the issue, and the whole payment was handled safely. Brilliant service.</p><div class="tcard-person"><div class="tcp-av">👩</div><div><div class="tcp-name">Priya Sharma</div><div class="tcp-role">Customer · Ludhiana</div></div><div class="tcp-stars">★★★★★</div></div></div>
-    <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">As a plumber, KaamConnect gives me consistent work. I've completed 98 jobs and my earnings have doubled since joining. Highly recommend to any skilled worker.</p><div class="tcard-person"><div class="tcp-av">👨</div><div><div class="tcp-name">Suresh Sharma</div><div class="tcp-role">Worker · Chandigarh</div></div><div class="tcp-stars">★★★★★</div></div></div>
-    <div class="tcard"><div class="tcard-quote">"</div><p class="tcard-text">The escrow payment system is a game changer. I only paid after I was satisfied with the painting work. Finally a platform that protects the customer.</p><div class="tcard-person"><div class="tcp-av">👨‍💼</div><div><div class="tcp-name">Arjun Mehta</div><div class="tcp-role">Customer · Delhi</div></div><div class="tcp-stars">★★★★★</div></div></div>
+  <div class="tgrid" id="testimonialsGrid">
+    <div class="workers-empty" style="grid-column:1/-1;padding:48px 24px">
+      <i class="bi bi-chat-quote" style="font-size:36px;opacity:.2;display:block;margin-bottom:12px;color:var(--forest)"></i>
+      <h3 style="font-family:'Syne',sans-serif;font-size:16px;color:var(--forest);margin-bottom:6px">Reviews coming soon</h3>
+      <p style="font-size:14px;color:var(--ink-40)">Real reviews from verified customers will appear here after jobs are completed.</p>
+    </div>
   </div>
 </div></section>
 
@@ -629,14 +704,14 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
     </div>
     <div class="footer-col"><h4>Platform</h4><ul><li><a href="#">Find Workers</a></li><li><a href="#">How It Works</a></li><li><a href="#">Pricing</a></li><li><a href="#">Safety</a></li></ul></div>
     <div class="footer-col"><h4>For Workers</h4><ul><li><a href="register.html">Join as Worker</a></li><li><a href="#">Worker Guidelines</a></li><li><a href="#">Earnings</a></li><li><a href="#">Verification</a></li></ul></div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="#about-section" onclick="openAbout()">About Us</a></li><li><a href="#about-section" onclick="openAbout()">Our Team</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="#about-section" onclick="openAbout()">About Us</a></li><li><a href="#about-section" onclick="openAbout()">Our Team</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
   </div>
   <div style="border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center">
     <p style="font-size:13px;color:rgba(255,255,255,.35)">Built &amp; Designed with <span style="color:#E8601C">&#9829;</span> by <strong style="color:rgba(255,255,255,.65);font-weight:700">Priyam Yadav</strong></p>
   </div>
   <div class="footer-bottom">
     <p>© 2026 KaamConnect. All rights reserved.</p>
-    <div style="display:flex;gap:24px"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+    <div style="display:flex;gap:24px"><a href="privacy-policy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div>
   </div>
 </div></footer>
 
@@ -696,8 +771,80 @@ function closeMobileMenu(){
 }
 document.addEventListener('click',e=>{if(mobileOpen&&!e.target.closest('#nav')&&!e.target.closest('#navMobile'))closeMobileMenu();});
 
-// ANALYTICS
-(async()=>{try{const r=await fetch('/api/analytics/platform');const d=await r.json();if(d.success){document.getElementById('statCustomers').textContent=d.customers.toLocaleString('en-IN');document.getElementById('statWorkers').textContent=d.workers.toLocaleString('en-IN');document.getElementById('statJobs').textContent=d.completedJobs.toLocaleString('en-IN');document.getElementById('nb1').textContent=d.customers.toLocaleString('en-IN');document.getElementById('nb2').textContent=d.workers.toLocaleString('en-IN')+'+';document.getElementById('nb3').textContent=d.completedJobs>999?Math.round(d.completedJobs/1000)+'K+':d.completedJobs;}}catch{}})();
+// ANALYTICS — load real data from API
+(async()=>{
+  try{
+    const r=await fetch('/api/analytics/platform');
+    const d=await r.json();
+    if(d.success){
+      const fmt=n=>n.toLocaleString('en-IN');
+      const fmtK=n=>n>999?Math.round(n/1000)+'K+':n;
+      // Ribbon
+      document.getElementById('statCustomers').textContent=fmt(d.customers);
+      document.getElementById('statWorkers').textContent=fmt(d.workers);
+      document.getElementById('statJobs').textContent=fmt(d.completedJobs);
+      if(d.avgRating) document.getElementById('statRating').textContent=d.avgRating.toFixed(1)+'★';
+      // Numbers band
+      document.getElementById('nb1').textContent=fmt(d.customers);
+      document.getElementById('nb2').textContent=fmt(d.workers)+'+';
+      document.getElementById('nb3').textContent=fmtK(d.completedJobs);
+      // Hero badge
+      document.getElementById('heroBadgeTxt').textContent=fmt(d.workers)+' verified workers • Live now';
+      // Hero cards
+      document.getElementById('liveJobs').textContent=fmt(d.completedJobs);
+      document.getElementById('liveWorkers').textContent=fmt(d.workers);
+      if(d.avgRating){
+        document.getElementById('liveRating').textContent=d.avgRating.toFixed(1);
+        document.getElementById('liveRatingStars').textContent='★'.repeat(Math.round(d.avgRating))+'☆'.repeat(5-Math.round(d.avgRating));
+      }
+      // About modal stats
+      document.getElementById('aboutStatWorkers').textContent=fmt(d.workers)+'+';
+      document.getElementById('aboutStatJobs').textContent=fmtK(d.completedJobs);
+      if(d.avgRating) document.getElementById('aboutStatRating').textContent=d.avgRating.toFixed(1)+'★';
+    }
+  }catch(e){}
+})();
+
+// SKILL COUNTS — load real worker counts per skill
+(async()=>{
+  const skills=['electrician','plumber','painter','carpenter','mason','ac technician','labour','driver'];
+  const ids={electrician:'cnt-electrician',plumber:'cnt-plumber',painter:'cnt-painter',carpenter:'cnt-carpenter',mason:'cnt-mason','ac technician':'cnt-ac',labour:'cnt-labour',driver:'cnt-driver'};
+  try{
+    const r=await fetch('/api/workers/find');
+    const d=await r.json();
+    if(d.workers&&d.workers.length){
+      const counts={};
+      d.workers.forEach(w=>{const s=(w.skill||'').toLowerCase();counts[s]=(counts[s]||0)+1;});
+      skills.forEach(s=>{
+        const el=document.getElementById(ids[s]);
+        if(el){const c=counts[s]||0;el.textContent=c>0?c+' worker'+(c===1?'':'s')+' available':'Coming soon';}
+      });
+    }
+  }catch(e){}
+})();
+
+// HERO CARDS — fill with real worker names from API
+(async()=>{
+  try{
+    const r=await fetch('/api/workers/find');
+    const d=await r.json();
+    const workers=d.workers||[];
+    const elec=workers.find(w=>(w.skill||'').toLowerCase()==='electrician');
+    const paint=workers.find(w=>(w.skill||'').toLowerCase()==='painter');
+    if(elec){
+      const c=document.getElementById('heroCard1');
+      if(c){c.querySelector('.hp-name').innerHTML=elec.name+' <i class="bi bi-patch-check-fill"></i>';
+             c.querySelector('.hp-loc').innerHTML='<i class="bi bi-geo-alt"></i> '+(elec.location||'India');
+             c.querySelector('.hp-stars').textContent='★'.repeat(Math.round(elec.rating||5))+'☆'.repeat(5-Math.round(elec.rating||5));}
+    }else{const c=document.getElementById('heroCard1');if(c)c.querySelector('.hp-loc').innerHTML='<i class="bi bi-geo-alt"></i> India';}
+    if(paint){
+      const c=document.getElementById('heroCard2');
+      if(c){c.querySelector('.hp-name').innerHTML=paint.name+' <i class="bi bi-patch-check-fill"></i>';
+             c.querySelector('.hp-loc').innerHTML='<i class="bi bi-geo-alt"></i> '+(paint.location||'India');
+             c.querySelector('.hp-stars').textContent='★'.repeat(Math.round(paint.rating||5))+'☆'.repeat(5-Math.round(paint.rating||5));}
+    }else{const c=document.getElementById('heroCard2');if(c)c.querySelector('.hp-loc').innerHTML='<i class="bi bi-geo-alt"></i> India';}
+  }catch(e){}
+})();
 
 // WORKER CARDS
 const skillEmoji={electrician:'⚡',plumber:'🔧',painter:'🎨',carpenter:'🪚',labour:'👷',mason:'🧱','ac technician':'❄️',driver:'🚗'};
@@ -806,9 +953,9 @@ function sendChip(el){document.getElementById('chatInput').value=el.textContent;
         <h3>What is KaamConnect?</h3>
         <p>KaamConnect is a full-stack worker marketplace platform built from scratch in 2026. We connect verified skilled workers — electricians, plumbers, painters, carpenters and more — with customers across Indian cities. Our mission is simple: make hiring local professionals as easy, safe and transparent as booking a cab.</p>
         <div class="am-stats-row" style="margin-top:24px">
-          <div class="am-stat"><div class="am-stat-n">50+</div><div class="am-stat-l">Verified Workers</div></div>
-          <div class="am-stat"><div class="am-stat-n">100+</div><div class="am-stat-l">Jobs Completed</div></div>
-          <div class="am-stat"><div class="am-stat-n">4.8★</div><div class="am-stat-l">Avg Rating</div></div>
+          <div class="am-stat"><div class="am-stat-n" id="aboutStatWorkers">—</div><div class="am-stat-l">Verified Workers</div></div>
+          <div class="am-stat"><div class="am-stat-n" id="aboutStatJobs">—</div><div class="am-stat-l">Jobs Completed</div></div>
+          <div class="am-stat"><div class="am-stat-n" id="aboutStatRating">—</div><div class="am-stat-l">Avg Rating</div></div>
         </div>
       </div>
 
@@ -909,7 +1056,7 @@ function sendChip(el){document.getElementById('chatInput').value=el.textContent;
         </div>
         <div class="am-contact-row">
           <a href="register.html" class="am-contact-btn am-contact-primary"><i class="bi bi-rocket-takeoff-fill"></i> Get Started Free</a>
-          <a href="mailto:priyamyadav2407@gmail.com" class="am-contact-btn am-contact-outline"><i class="bi bi-envelope-fill"></i> Contact Us</a>
+          <a href="contact.html" class="am-contact-btn am-contact-outline"><i class="bi bi-envelope-fill"></i> Contact Us</a>
         </div>
       </div>
 
