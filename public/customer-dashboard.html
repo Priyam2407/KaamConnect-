@@ -690,7 +690,10 @@ function jobCard(j) {
     const lastPrice = j.agreedPrice || j.price || 0;
     const alreadyReviewed = j.rating && j.rating > 0;
     const reviewBtn = alreadyReviewed
-      ? `<div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-star-fill"></i> Reviewed (${j.rating}★)</div>`
+      ? `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+           <div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-star-fill"></i> Reviewed (${j.rating}★)</div>
+           <button class="jc-btn" style="background:#FEE2E2;border:1.5px solid #FECACA;color:#B91C1C;font-size:12px;padding:5px 10px" onclick="deleteReview('${j._id}',this)"><i class="bi bi-trash3"></i> Delete</button>
+         </div>`
       : `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>`;
     actions = reviewBtn +
       `<button class="jc-btn" style="background:rgba(26,60,52,.08);border:1.5px solid rgba(26,60,52,.2);color:var(--forest)" onclick="openRebook('${j._id}','${wname}',${lastPrice})"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
@@ -902,6 +905,30 @@ async function submitReview() {
 }
 function showRA(t,m){const a=document.getElementById('reviewAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
 document.getElementById('reviewModal').addEventListener('click',e=>{if(e.target===document.getElementById('reviewModal'))closeReview();});
+
+async function deleteReview(jobId, btn) {
+  if (!confirm('Are you sure you want to delete your review? This cannot be undone.')) return;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
+  try {
+    const d = await fetch(`/api/jobs/review/${jobId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + TOKEN }
+    }).then(r => r.json());
+    if (d.success) {
+      showToast('Review deleted successfully', '🗑️');
+      loadAllJobs();
+    } else {
+      showToast(d.message || 'Failed to delete review', '❌');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="bi bi-trash3"></i> Delete';
+    }
+  } catch(e) {
+    showToast('Server error. Please try again.', '❌');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-trash3"></i> Delete';
+  }
+}
 
 /* ══ PROFILE ══ */
 async function loadProfile() {

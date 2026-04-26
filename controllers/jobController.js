@@ -298,6 +298,52 @@ exports.submitReview = async (req, res) => {
   }
 };
 
+// ─── DELETE /api/jobs/review/:job_id ────────────────────────
+exports.deleteReview = async (req, res) => {
+  try {
+    const { job_id } = req.params;
+
+    // Verify the job belongs to this customer
+    const job = await Job.findOne({ _id: job_id, customerId: req.user.id });
+    if (!job)
+      return res.status(404).json({ success: false, message: "Job not found" });
+
+    // Find the review
+    const review = await Review.findOne({ jobId: job_id, customerId: req.user.id });
+    if (!review)
+      return res.status(404).json({ success: false, message: "No review found for this job" });
+
+    const workerId = review.workerId;
+
+    // Delete the review
+    await Review.findByIdAndDelete(review._id);
+
+    // Clear rating from the job document
+    await Job.findByIdAndUpdate(job_id, { $unset: { rating: "", review: "" } });
+
+    // Recalculate worker's average rating from remaining reviews
+    const remaining = await Review.find({ workerId });
+    const newAvg = remaining.length
+      ? remaining.reduce((s, r) => s + r.rating, 0) / remaining.length
+      : 0;
+
+    const completedCount = await Job.countDocuments({
+      workerId,
+      status: { $in: ["completed", "paid"] },
+    });
+
+    await User.findByIdAndUpdate(workerId, {
+      rating:    parseFloat(newAvg.toFixed(2)),
+      totalJobs: completedCount,
+    });
+
+    res.json({ success: true, message: "Review deleted successfully" });
+  } catch (err) {
+    console.error("deleteReview:", err);
+    res.status(500).json({ success: false, message: "Failed to delete review" });
+  }
+};
+
 // ─── GET /api/jobs/stats ─────────────────────────────────────
 exports.getCustomerStats = async (req, res) => {
   try {
