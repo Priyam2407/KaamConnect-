@@ -234,18 +234,66 @@ exports.cancelJob = async (req, res) => {
 exports.submitReview = async (req, res) => {
   try {
     const { job_id, worker_id, rating, review } = req.body;
+
+    if (!job_id || !worker_id)
+      return res.status(400).json({ success: false, message: "Job ID and Worker ID are required" });
+
     if (!rating || rating < 1 || rating > 5)
-      return res.status(400).json({ success: false, message: "Rating must be 1-5" });
+      return res.status(400).json({ success: false, message: "Rating must be between 1 and 5" });
 
-    await Review.create({ jobId: job_id, workerId: worker_id, customerId: req.user.id, rating, review });
-    await Job.findByIdAndUpdate(job_id, { rating, review });
+    // ✅ FIX 1: Verify the job exists, belongs to this customer, and is completed/paid
+    const job = await Job.findOne({
+      _id: job_id,
+      customerId: req.user.id,
+      status: { $in: ["completed", "paid"] },
+    });
+    if (!job)
+      return res.status(400).json({ success: false, message: "Job not found or not eligible for review" });
 
-    const reviews = await Review.find({ workerId: worker_id });
-    const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
-    await User.findByIdAndUpdate(worker_id, { rating: parseFloat(avg.toFixed(2)) });
+    // ✅ FIX 2: Prevent duplicate reviews for the same job
+    const existing = await Review.findOne({ jobId: job_id, customerId: req.user.id });
+    if (existing)
+      return res.status(400).json({ success: false, message: "You have already reviewed this job" });
 
-    res.json({ success: true, message: "Review submitted" });
+    // Create review
+    await Review.create({
+      jobId:      job_id,
+      workerId:   worker_id,
+      customerId: req.user.id,
+      rating,
+      review:     review || "",
+    });
+
+    // Save rating on the job document
+    await Job.findByIdAndUpdate(job_id, { rating, review: review || "" });
+
+    // ✅ FIX 3: Recalculate worker's average rating from ALL their reviews
+    const allReviews = await Review.find({ workerId: worker_id });
+    const avg = allReviews.reduce((s, r) => s + r.rating, 0) / allReviews.length;
+
+    // ✅ FIX 4: Also ensure totalJobs is correct (in case it was missed on paid status)
+    const completedCount = await Job.countDocuments({
+      workerId: worker_id,
+      status: { $in: ["completed", "paid"] },
+    });
+
+    await User.findByIdAndUpdate(worker_id, {
+      rating:    parseFloat(avg.toFixed(2)),
+      totalJobs: completedCount,
+    });
+
+    // Notify worker about the new review
+    await notify(
+      worker_id,
+      "New Review Received ⭐",
+      `A customer rated you ${rating}/5 stars. Keep up the great work!`,
+      "review",
+      job_id
+    );
+
+    res.json({ success: true, message: "Review submitted successfully" });
   } catch (err) {
+    console.error("submitReview:", err);
     res.status(500).json({ success: false, message: "Failed to submit review" });
   }
 };

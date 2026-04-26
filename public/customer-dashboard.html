@@ -492,8 +492,8 @@ initUI();
 
 const API = url => fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
 const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
-const statusBadge = { pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
-const statusLabel = { pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
+const statusBadge = { pending:'badge-pending', pending_offer:'badge-pending', negotiating:'badge-pending', accepted:'badge-accepted', price_agreed:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
+const statusLabel = { pending:'Pending', pending_offer:'Pending Offer', negotiating:'Negotiating', accepted:'Accepted', price_agreed:'Price Agreed', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
 
 function showToast(msg, ico, dur) {
   ico = ico||'✅'; dur = dur||4000;
@@ -684,12 +684,16 @@ function jobCard(j) {
     }
   }
   if (st === 'price_agreed') actions = `<div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-hourglass-split"></i> Waiting for worker to start</div>`;
-  if (st === 'completed') {
+  if (st === 'completed' || st === 'paid') {
     const wid = j.workerId?._id || '';
     const wname = j.workerId?.name || 'Worker';
     const lastPrice = j.agreedPrice || j.price || 0;
-    actions = `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>
-    <button class="jc-btn" style="background:rgba(26,60,52,.08);border:1.5px solid rgba(26,60,52,.2);color:var(--forest)" onclick="openRebook('${j._id}','${wname}',${lastPrice})"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
+    const alreadyReviewed = j.rating && j.rating > 0;
+    const reviewBtn = alreadyReviewed
+      ? `<div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-star-fill"></i> Reviewed (${j.rating}★)</div>`
+      : `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>`;
+    actions = reviewBtn +
+      `<button class="jc-btn" style="background:rgba(26,60,52,.08);border:1.5px solid rgba(26,60,52,.2);color:var(--forest)" onclick="openRebook('${j._id}','${wname}',${lastPrice})"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
   }
 
   return `<div class="job-card" id="jcard-${j._id}">
