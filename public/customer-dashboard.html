@@ -98,6 +98,7 @@ a{text-decoration:none;color:inherit}
 .empty-state h3{font-family:'Syne',sans-serif;font-size:17px;color:var(--forest);margin-bottom:6px;opacity:.7}
 .spin-loader{display:flex;justify-content:center;padding:40px;color:var(--saffron);font-size:26px;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.spin-icon{display:inline-block;animation:spin .8s linear infinite}
 .workers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .wcard{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;overflow:hidden;transition:all .28s}
 .wcard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(15,25,35,.09);border-color:rgba(232,96,28,.15)}
@@ -690,10 +691,7 @@ function jobCard(j) {
     const lastPrice = j.agreedPrice || j.price || 0;
     const alreadyReviewed = j.rating && j.rating > 0;
     const reviewBtn = alreadyReviewed
-      ? `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-           <div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-star-fill"></i> Reviewed (${j.rating}★)</div>
-           <button class="jc-btn" style="background:#FEE2E2;border:1.5px solid #FECACA;color:#B91C1C;font-size:12px;padding:5px 10px" onclick="deleteReview('${j._id}',this)"><i class="bi bi-trash3"></i> Delete</button>
-         </div>`
+      ? `<div style="font-size:12.5px;color:var(--sage);font-weight:600;padding:4px 0"><i class="bi bi-star-fill"></i> Reviewed (${j.rating}★)</div>`
       : `<button class="jc-btn jc-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>`;
     actions = reviewBtn +
       `<button class="jc-btn" style="background:rgba(26,60,52,.08);border:1.5px solid rgba(26,60,52,.2);color:var(--forest)" onclick="openRebook('${j._id}','${wname}',${lastPrice})"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
@@ -905,30 +903,6 @@ async function submitReview() {
 }
 function showRA(t,m){const a=document.getElementById('reviewAlert');a.style.display='flex';a.className='alert '+(t==='error'?'ae':'as');a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;}
 document.getElementById('reviewModal').addEventListener('click',e=>{if(e.target===document.getElementById('reviewModal'))closeReview();});
-
-async function deleteReview(jobId, btn) {
-  if (!confirm('Are you sure you want to delete your review? This cannot be undone.')) return;
-  btn.disabled = true;
-  btn.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
-  try {
-    const d = await fetch(`/api/jobs/review/${jobId}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + TOKEN }
-    }).then(r => r.json());
-    if (d.success) {
-      showToast('Review deleted successfully', '🗑️');
-      loadAllJobs();
-    } else {
-      showToast(d.message || 'Failed to delete review', '❌');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="bi bi-trash3"></i> Delete';
-    }
-  } catch(e) {
-    showToast('Server error. Please try again.', '❌');
-    btn.disabled = false;
-    btn.innerHTML = '<i class="bi bi-trash3"></i> Delete';
-  }
-}
 
 /* ══ PROFILE ══ */
 async function loadProfile() {
@@ -1147,6 +1121,85 @@ function showNgAlert(t, m) {
 }
 document.getElementById('negotiateModal').addEventListener('click', e => {
   if (e.target === document.getElementById('negotiateModal')) closeNegotiate();
+});
+
+// ── Re-book Functions ─────────────────────────────────────────
+let _rbJobId = null;
+let _rbWorkerName = '';
+let _rbLastPrice = 0;
+
+function openRebook(jobId, workerName, lastPrice) {
+  _rbJobId       = jobId;
+  _rbWorkerName  = workerName;
+  _rbLastPrice   = lastPrice;
+
+  document.getElementById('rbWorkerName').textContent = workerName;
+  document.getElementById('rbPrice').value            = lastPrice || '';
+  document.getElementById('rbDate').value             = '';
+  document.getElementById('rbDesc').value             = '';
+  document.getElementById('rbAlert').style.display    = 'none';
+  document.getElementById('rbSubmitBtn').disabled     = false;
+  document.getElementById('rbSubmitBtn').innerHTML    = '<i class="bi bi-arrow-repeat"></i> Send Re-book Request';
+
+  document.getElementById('rebookModal').classList.add('open');
+}
+
+function closeRebook() {
+  document.getElementById('rebookModal').classList.remove('open');
+}
+
+async function confirmRebook() {
+  const price = parseFloat(document.getElementById('rbPrice').value);
+  if (!price || price < 1) {
+    const a = document.getElementById('rbAlert');
+    a.style.display = 'flex';
+    a.className = 'alert ae';
+    a.innerHTML = '<i class="bi bi-exclamation-circle"></i> Please enter a valid budget amount';
+    return;
+  }
+
+  const btn = document.getElementById('rbSubmitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-arrow-repeat spin-icon"></i> Sending...';
+
+  try {
+    const body = {
+      original_job_id: _rbJobId,
+      price,
+      scheduled_date:  document.getElementById('rbDate').value  || undefined,
+      description:     document.getElementById('rbDesc').value.trim() || undefined,
+    };
+
+    const d = await fetch('/api/jobs/rebook', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+      body:    JSON.stringify(body),
+    }).then(r => r.json());
+
+    if (d.success) {
+      closeRebook();
+      showToast('Re-book request sent to ' + _rbWorkerName + '! 🎉', '✅');
+      loadAllJobs();
+    } else {
+      const a = document.getElementById('rbAlert');
+      a.style.display = 'flex';
+      a.className = 'alert ae';
+      a.innerHTML = `<i class="bi bi-exclamation-circle"></i> ${d.message || 'Re-book failed. Please try again.'}`;
+      btn.disabled = false;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Send Re-book Request';
+    }
+  } catch(e) {
+    const a = document.getElementById('rbAlert');
+    a.style.display = 'flex';
+    a.className = 'alert ae';
+    a.innerHTML = '<i class="bi bi-exclamation-circle"></i> Server error. Please try again.';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Send Re-book Request';
+  }
+}
+
+document.getElementById('rebookModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('rebookModal')) closeRebook();
 });
 
 </script>
