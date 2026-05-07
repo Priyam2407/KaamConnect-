@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — KaamConnect</title>
+<meta name="description" content="Learn about KaamConnect — India's trusted worker marketplace built to connect skilled workers with customers across the country.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cabinet+Grotesk:wght@400;500;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+:root {
+  --saffron: #E8601C;
+  --saffron-2: #F07840;
+  --saffron-glow: rgba(232,96,28,.25);
+  --saffron-pale: #FEF0E8;
+  --forest: #1A3C34;
+  --forest-2: #24524A;
+  --forest-3: #0D2420;
+  --sage: #3D7A6E;
+  --gold: #D4A017;
+  --gold-2: #F0C040;
+  --cream: #FBF8F4;
+  --white: #FFFFFF;
+  --ink: #0C1714;
+  --ink-70: rgba(12,23,20,.7);
+  --ink-40: rgba(12,23,20,.4);
+  --ink-12: rgba(12,23,20,.12);
+  --ink-06: rgba(12,23,20,.06);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+a { text-decoration:none; color:inherit; }
+ul { list-style:none; }
+
+/* ══ NAV ══ */
+#nav { position:fixed; top:0; left:0; right:0; z-index:900; padding:14px 0; background:rgba(247,244,240,0); transition:all .5s cubic-bezier(.4,0,.2,1); }
+#nav.pinned { padding:0; background:rgba(251,248,244,.97); backdrop-filter:blur(24px); border-bottom:1px solid var(--ink-06); box-shadow:0 4px 40px rgba(12,23,20,.07); }
+.nav-in { max-width:1280px; margin:0 auto; padding:0 48px; height:70px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.logo-icon { width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg, var(--saffron), var(--saffron-2)); display:grid; place-items:center; font-size:17px; color:#fff; box-shadow:0 4px 14px var(--saffron-glow); transition:transform .3s; flex-shrink:0; }
+.logo:hover .logo-icon { transform:rotate(-10deg) scale(1.08); }
+.logo-txt { font-family:'Cabinet Grotesk',sans-serif; font-weight:900; font-size:20px; letter-spacing:-.5px; color:var(--forest); }
+.logo-txt span { color:var(--saffron); }
+.nav-links { display:flex; align-items:center; gap:2px; }
+.nav-links a { font-size:13.5px; font-weight:600; padding:9px 14px; border-radius:9px; transition:all .22s; color:var(--ink-70); }
+.nav-links a:hover, .nav-links a.active { color:var(--saffron); background:rgba(232,96,28,.08); }
+.nav-cta { display:flex; align-items:center; gap:10px; }
+.btn-nav-ghost { padding:9px 18px; border-radius:9px; font-size:13.5px; font-weight:700; cursor:pointer; transition:all .22s; display:flex; align-items:center; gap:6px; border:1.5px solid var(--ink-12); color:var(--ink-70); background:transparent; }
+.btn-nav-ghost:hover { border-color:var(--saffron); color:var(--saffron); background:var(--saffron-pale); }
+.btn-nav-solid { padding:10px 22px; background:var(--saffron); border:none; border-radius:9px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:700; color:#fff; cursor:pointer; transition:all .22s; box-shadow:0 6px 20px var(--saffron-glow); display:flex; align-items:center; gap:7px; }
+.btn-nav-solid:hover { background:var(--saffron-2); transform:translateY(-2px); }
+.nav-ham { display:none; background:none; border:none; cursor:pointer; padding:8px; flex-direction:column; gap:5px; }
+.nav-ham span { display:block; width:22px; height:2px; border-radius:2px; background:var(--ink); transition:all .3s; }
+.nav-ham.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.nav-ham.open span:nth-child(2) { opacity:0; }
+.nav-ham.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+.nav-mobile { display:none; position:fixed; top:70px; inset-x:0; background:rgba(251,248,244,.98); backdrop-filter:blur(24px); border-bottom:1px solid var(--ink-06); padding:16px 24px 24px; flex-direction:column; gap:4px; box-shadow:0 16px 50px rgba(12,23,20,.12); z-index:899; animation:slideDown .25s ease; }
+.nav-mobile.show { display:flex; }
+@keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+.nav-mobile a { font-size:15px; font-weight:700; color:var(--ink-70); padding:13px 16px; border-radius:10px; transition:all .2s; }
+.nav-mobile a:hover { background:var(--saffron-pale); color:var(--saffron); }
+.nav-mobile-btns { display:flex; gap:8px; margin-top:14px; }
+.nav-mobile-btns button { flex:1; padding:13px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; transition:all .2s; font-family:'DM Sans',sans-serif; }
+.nmb-ghost { border:1.5px solid var(--ink-12); background:transparent; color:var(--ink-70); }
+.nmb-solid { background:var(--saffron); border:none; color:#fff; }
+
+/* ══ HERO ══ */
+.about-hero {
+  padding:140px 0 100px;
+  background:#F7F3EE;
+  position:relative; overflow:hidden;
+}
+.about-hero::before { content:''; position:absolute; top:-100px; right:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.1), transparent 65%); }
+.about-hero::after { content:''; position:absolute; bottom:-80px; left:-80px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(61,122,110,.08), transparent 65%); }
+.hero-dot-grid { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(12,23,20,.05) 1px, transparent 1px); background-size:28px 28px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%); }
+.about-hero-in { max-width:1280px; margin:0 auto; padding:0 48px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; position:relative; z-index:1; }
+.about-eyebrow { display:inline-flex; align-items:center; gap:10px; background:rgba(232,96,28,.08); border:1px solid rgba(232,96,28,.2); border-radius:100px; padding:6px 16px; margin-bottom:24px; }
+.about-eyebrow-dot { width:8px; height:8px; border-radius:50%; background:var(--saffron); }
+.about-eyebrow-txt { font-size:11px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); }
+.about-hero-h { font-family:'Playfair Display',serif; font-size:clamp(44px, 5vw, 72px); line-height:1.04; letter-spacing:-2px; color:var(--forest); margin-bottom:22px; }
+.about-hero-h em { font-style:italic; color:var(--saffron); }
+.about-hero-p { font-size:17px; color:var(--ink-70); line-height:1.85; font-weight:300; margin-bottom:36px; }
+.about-hero-stats { display:flex; gap:32px; flex-wrap:wrap; }
+.ahs { }
+.ahs-n { font-family:'Cabinet Grotesk',sans-serif; font-size:32px; font-weight:900; color:var(--forest); letter-spacing:-1px; line-height:1; }
+.ahs-l { font-size:12px; color:var(--ink-40); font-weight:600; margin-top:4px; }
+
+/* Hero right visual */
+.about-hero-visual { position:relative; }
+.ahv-main { background:var(--forest); border-radius:28px; padding:32px; position:relative; overflow:hidden; box-shadow:0 30px 80px rgba(12,23,20,.18); }
+.ahv-ring { position:absolute; top:-50px; right:-50px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.2), transparent 65%); }
+.ahv-ring2 { position:absolute; bottom:-40px; left:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle, rgba(61,122,110,.2), transparent 65%); }
+.ahv-content { position:relative; z-index:1; }
+.ahv-icon { width:60px; height:60px; border-radius:16px; background:var(--saffron); display:grid; place-items:center; font-size:28px; margin-bottom:20px; box-shadow:0 8px 24px rgba(232,96,28,.4); }
+.ahv-title { font-family:'Playfair Display',serif; font-size:24px; color:#fff; margin-bottom:10px; }
+.ahv-desc { font-size:14px; color:rgba(255,255,255,.55); line-height:1.75; margin-bottom:24px; }
+.ahv-pill { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:100px; padding:8px 16px; font-size:12px; font-weight:700; color:rgba(255,255,255,.7); margin:4px; }
+.ahv-pill i { color:var(--saffron-2); }
+/* Floating accent card */
+.ahv-float { position:absolute; bottom:-24px; right:-24px; background:#fff; border-radius:18px; padding:18px 22px; box-shadow:0 16px 50px rgba(12,23,20,.14); border:1.5px solid var(--ink-06); display:flex; align-items:center; gap:14px; }
+.ahvf-icon { width:44px; height:44px; border-radius:12px; background:var(--saffron-pale); display:grid; place-items:center; font-size:20px; flex-shrink:0; }
+.ahvf-num { font-family:'Cabinet Grotesk',sans-serif; font-size:22px; font-weight:900; color:var(--forest); line-height:1; }
+.ahvf-lbl { font-size:11px; color:var(--ink-40); font-weight:600; }
+
+/* ══ SHARED SECTION STYLES ══ */
+.section { padding:100px 0; }
+.section.alt { background:var(--white); }
+.section.dark { background:var(--forest); }
+.wrap { max-width:1280px; margin:0 auto; padding:0 48px; }
+.eyebrow { display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; }
+.eyebrow-dot { width:8px; height:8px; border-radius:50%; background:var(--saffron); }
+.eyebrow-txt { font-size:11px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); }
+.section-h { font-family:'Playfair Display',serif; font-size:clamp(36px, 4vw, 56px); color:var(--forest); line-height:1.06; letter-spacing:-1.5px; font-weight:700; }
+.section-h.light { color:#fff; }
+.section-h em { font-style:italic; color:var(--saffron); }
+.section-p { font-size:16px; color:var(--ink-70); line-height:1.8; max-width:520px; margin-top:14px; font-weight:300; }
+.section-p.light { color:rgba(255,255,255,.6); }
+.section-center { text-align:center; }
+.section-center .section-p { margin:14px auto 0; }
+
+/* ══ MISSION ══ */
+.mission-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.mission-cards { display:flex; flex-direction:column; gap:16px; margin-top:40px; }
+.mcard { background:var(--cream); border:1.5px solid var(--ink-06); border-radius:18px; padding:24px; display:flex; gap:18px; align-items:flex-start; transition:all .3s; }
+.mcard:hover { border-color:rgba(232,96,28,.2); box-shadow:0 8px 30px rgba(12,23,20,.07); transform:translateX(6px); }
+.mcard-icon { width:48px; height:48px; border-radius:13px; background:var(--saffron-pale); display:grid; place-items:center; font-size:22px; flex-shrink:0; transition:all .3s; }
+.mcard:hover .mcard-icon { background:var(--saffron); }
+.mcard h3 { font-family:'Cabinet Grotesk',sans-serif; font-size:15px; font-weight:800; color:var(--forest); margin-bottom:6px; }
+.mcard p { font-size:13.5px; color:var(--ink-70); line-height:1.65; }
+.mission-img { background:var(--forest); border-radius:28px; padding:40px; position:relative; overflow:hidden; min-height:440px; display:flex; flex-direction:column; justify-content:flex-end; }
+.mi-bg { position:absolute; inset:0; background:linear-gradient(135deg, rgba(232,96,28,.15) 0%, transparent 50%, rgba(61,122,110,.15) 100%); }
+.mi-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:40px 40px; }
+.mi-quote { position:relative; z-index:1; }
+.mi-quote-mark { font-family:'Playfair Display',serif; font-size:80px; color:var(--saffron); line-height:.5; margin-bottom:20px; opacity:.6; }
+.mi-quote-text { font-family:'Playfair Display',serif; font-size:20px; color:#fff; line-height:1.65; font-style:italic; margin-bottom:24px; }
+.mi-quote-author { font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:800; color:rgba(255,255,255,.5); letter-spacing:1px; }
+
+/* ══ VALUES ══ */
+.values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:56px; }
+.vcard { background:var(--white); border:1.5px solid var(--ink-06); border-radius:20px; padding:32px; position:relative; overflow:hidden; transition:all .35s; }
+.vcard::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--saffron), var(--gold-2)); transform:scaleX(0); transform-origin:left; transition:transform .35s; }
+.vcard:hover { border-color:rgba(232,96,28,.2); box-shadow:0 20px 60px rgba(12,23,20,.09); transform:translateY(-6px); }
+.vcard:hover::before { transform:scaleX(1); }
+.vcard-num { font-family:'Playfair Display',serif; font-size:48px; color:var(--ink-06); font-weight:900; line-height:1; margin-bottom:20px; letter-spacing:-2px; }
+.vcard-icon { font-size:32px; margin-bottom:16px; display:block; }
+.vcard h3 { font-family:'Cabinet Grotesk',sans-serif; font-size:17px; font-weight:800; color:var(--forest); margin-bottom:10px; }
+.vcard p { font-size:14px; color:var(--ink-70); line-height:1.7; }
+
+/* ══ STORY TIMELINE ══ */
+.timeline { margin-top:60px; position:relative; }
+.timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, var(--saffron), var(--gold-2)); transform:translateX(-50%); }
+.tl-item { display:grid; grid-template-columns:1fr 60px 1fr; gap:0; align-items:start; margin-bottom:60px; }
+.tl-item:nth-child(odd) .tl-left { padding-right:40px; text-align:right; }
+.tl-item:nth-child(odd) .tl-right { padding-left:40px; }
+.tl-item:nth-child(even) .tl-left { padding-right:40px; }
+.tl-item:nth-child(even) .tl-right { padding-left:40px; text-align:left; }
+.tl-dot { width:48px; height:48px; border-radius:50%; background:var(--saffron); display:grid; place-items:center; color:#fff; font-size:16px; margin:0 auto; position:relative; z-index:1; box-shadow:0 4px 16px var(--saffron-glow); flex-shrink:0; }
+.tl-year { font-family:'Cabinet Grotesk',sans-serif; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--saffron); margin-bottom:8px; }
+.tl-h { font-family:'Cabinet Grotesk',sans-serif; font-size:16px; font-weight:800; color:var(--forest); margin-bottom:8px; }
+.tl-p { font-size:14px; color:var(--ink-70); line-height:1.7; }
+.tl-empty { }
+
+/* ══ TEAM ══ */
+.team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
+.tcard-m { background:var(--white); border:1.5px solid var(--ink-06); border-radius:20px; overflow:hidden; transition:all .35s; }
+.tcard-m:hover { transform:translateY(-7px); box-shadow:0 24px 70px rgba(12,23,20,.12); border-color:rgba(232,96,28,.2); }
+.tcard-m-head { background:linear-gradient(135deg, var(--forest), var(--forest-3)); padding:32px 24px 24px; position:relative; overflow:hidden; text-align:center; }
+.tcard-m-head::after { content:''; position:absolute; top:-40px; right:-40px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.2), transparent 65%); }
+.tm-avatar { width:72px; height:72px; border-radius:20px; background:rgba(255,255,255,.1); display:grid; place-items:center; font-size:34px; margin:0 auto 14px; border:2px solid rgba(255,255,255,.1); position:relative; z-index:1; }
+.tm-name { font-family:'Cabinet Grotesk',sans-serif; font-size:16px; font-weight:800; color:#fff; position:relative; z-index:1; }
+.tm-role { font-size:12px; color:rgba(255,255,255,.45); margin-top:4px; position:relative; z-index:1; }
+.tcard-m-body { padding:20px 24px; }
+.tm-bio { font-size:13.5px; color:var(--ink-70); line-height:1.7; margin-bottom:16px; }
+.tm-socials { display:flex; gap:8px; }
+.tm-soc { width:34px; height:34px; border-radius:9px; border:1.5px solid var(--ink-06); display:grid; place-items:center; font-size:14px; color:var(--ink-40); cursor:pointer; transition:all .2s; }
+.tm-soc:hover { border-color:var(--saffron); color:var(--saffron); background:var(--saffron-pale); }
+
+/* ══ WHY US ══ */
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.why-list { margin-top:36px; display:flex; flex-direction:column; gap:20px; }
+.why-item { display:flex; gap:16px; align-items:flex-start; padding:18px; border-radius:14px; transition:all .3s; border:1.5px solid transparent; }
+.why-item:hover { background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.1); }
+.wi-icon { width:44px; height:44px; border-radius:12px; background:rgba(232,96,28,.15); display:grid; place-items:center; font-size:20px; flex-shrink:0; }
+.wi-h { font-family:'Cabinet Grotesk',sans-serif; font-size:14px; font-weight:800; color:#fff; margin-bottom:5px; }
+.wi-p { font-size:13px; color:rgba(255,255,255,.5); line-height:1.65; }
+.why-visual { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:24px; padding:32px; }
+.wv-row { display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid rgba(255,255,255,.07); }
+.wv-row:last-child { border-bottom:none; }
+.wv-label { font-size:13px; color:rgba(255,255,255,.5); font-weight:500; }
+.wv-val { font-family:'Cabinet Grotesk',sans-serif; font-size:14px; font-weight:800; color:#fff; }
+.wv-bar-wrap { flex:1; margin:0 16px; height:6px; background:rgba(255,255,255,.1); border-radius:6px; overflow:hidden; }
+.wv-bar { height:100%; border-radius:6px; background:linear-gradient(90deg, var(--saffron), var(--gold-2)); transition:width 2s ease; }
+
+/* ══ CTA ══ */
+.cta-section { background:linear-gradient(135deg, var(--saffron) 0%, #C94A0A 60%, #8B2E00 100%); padding:100px 0; position:relative; overflow:hidden; }
+.cta-section::before { content:''; position:absolute; top:-100px; left:-100px; width:500px; height:500px; border-radius:50%; background:rgba(255,255,255,.06); }
+.cta-section::after { content:''; position:absolute; bottom:-120px; right:-80px; width:600px; height:600px; border-radius:50%; background:rgba(0,0,0,.08); }
+.cta-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size:56px 56px; }
+.cta-inner { text-align:center; position:relative; z-index:1; }
+.cta-inner h2 { font-family:'Playfair Display',serif; font-size:clamp(38px, 5vw, 60px); color:#fff; line-height:1.06; letter-spacing:-1.5px; margin-bottom:16px; }
+.cta-inner p { font-size:17px; color:rgba(255,255,255,.7); max-width:440px; margin:0 auto 44px; line-height:1.75; }
+.cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.cta-primary { padding:16px 36px; background:#fff; border:none; border-radius:12px; font-size:15.5px; font-weight:800; color:var(--saffron); cursor:pointer; transition:all .25s; box-shadow:0 8px 30px rgba(0,0,0,.18); font-family:'Cabinet Grotesk',sans-serif; }
+.cta-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(0,0,0,.25); }
+.cta-outline { padding:16px 36px; background:transparent; border:2px solid rgba(255,255,255,.4); border-radius:12px; font-size:15.5px; font-weight:800; color:#fff; cursor:pointer; transition:all .25s; font-family:'Cabinet Grotesk',sans-serif; }
+.cta-outline:hover { border-color:#fff; background:rgba(255,255,255,.1); transform:translateY(-3px); }
+
+/* ══ FOOTER ══ */
+footer { background:var(--ink); padding:80px 0 40px; }
+.footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; margin-bottom:60px; }
+.footer-brand .logo-txt { color:#fff; }
+.footer-brand p { font-size:14px; color:rgba(255,255,255,.4); line-height:1.75; margin-top:14px; max-width:230px; }
+.footer-social { display:flex; gap:10px; margin-top:22px; }
+.fs-icon { width:38px; height:38px; border-radius:10px; border:1px solid rgba(255,255,255,.1); display:grid; place-items:center; color:rgba(255,255,255,.45); font-size:15px; cursor:pointer; transition:all .25s; }
+.fs-icon:hover { border-color:var(--saffron); color:var(--saffron); background:rgba(232,96,28,.1); transform:translateY(-2px); }
+.footer-col h4 { font-family:'Cabinet Grotesk',sans-serif; font-size:11px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:20px; }
+.footer-col li { margin-bottom:12px; }
+.footer-col a { font-size:14px; color:rgba(255,255,255,.5); transition:color .2s; }
+.footer-col a:hover { color:rgba(255,255,255,.9); }
+.footer-bottom { border-top:1px solid rgba(255,255,255,.06); padding-top:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+.footer-bottom p { font-size:13px; color:rgba(255,255,255,.3); }
+.footer-links { display:flex; gap:24px; }
+.footer-links a { font-size:13px; color:rgba(255,255,255,.35); transition:color .2s; }
+.footer-links a:hover { color:rgba(255,255,255,.7); }
+
+/* ══ REVEAL ══ */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+.reveal-delay-4 { transition-delay:.4s; }
+.reveal-delay-5 { transition-delay:.5s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1000px) {
+  .nav-links, .nav-cta { display:none; }
+  .nav-ham { display:flex; }
+  .about-hero-in { grid-template-columns:1fr; gap:40px; padding:0 28px; }
+  .ahv-float { right:0; bottom:-16px; }
+  .mission-grid { grid-template-columns:1fr; gap:40px; }
+  .values-grid { grid-template-columns:1fr 1fr; }
+  .team-grid { grid-template-columns:1fr 1fr; }
+  .why-grid { grid-template-columns:1fr; gap:40px; }
+  .wrap { padding:0 28px; }
+  .nav-in { padding:0 28px; }
+  .footer-top { grid-template-columns:1fr 1fr; gap:36px; }
+  .timeline::before { left:24px; transform:none; }
+  .tl-item { grid-template-columns:48px 1fr; gap:0; }
+  .tl-item .tl-empty { display:none; }
+  .tl-item:nth-child(odd) .tl-left,
+  .tl-item:nth-child(even) .tl-left { display:none; }
+  .tl-item:nth-child(odd) .tl-right,
+  .tl-item:nth-child(even) .tl-right { padding-left:24px; text-align:left; }
+  .tl-dot { width:40px; height:40px; font-size:14px; }
+}
+@media(max-width:700px) {
+  .values-grid { grid-template-columns:1fr; }
+  .team-grid { grid-template-columns:1fr; }
+  .footer-top { grid-template-columns:1fr; }
+  .section { padding:70px 0; }
+  .about-hero { padding:110px 0 70px; }
+  .cta-btns { flex-direction:column; max-width:280px; margin:0 auto; }
+  .cta-primary, .cta-outline { text-align:center; }
+}
+@media(max-width:480px) {
+  .nav-in { padding:0 16px; }
+  .wrap { padding:0 16px; }
+  .about-hero-in { padding:0 16px; }
+  .about-hero-stats { gap:20px; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-in">
+    <a class="logo" href="index.html">
+      <div class="logo-icon"><i class="bi bi-tools"></i></div>
+      <div class="logo-txt">Kaam<span>Connect</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#services">Services</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#workers">Workers</a>
+      <a href="about.html" class="active">About Us</a>
+      <a href="index.html#about">Reviews</a>
+    </div>
+    <div class="nav-cta">
+      <button class="btn-nav-ghost" onclick="location.href='login.html'"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
+      <button class="btn-nav-solid" onclick="location.href='register.html'"><i class="bi bi-lightning-charge-fill"></i> Get Started</button>
+    </div>
+    <button class="nav-ham" id="navHam" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html#services" onclick="closeMob()">Services</a>
+  <a href="index.html#how" onclick="closeMob()">How It Works</a>
+  <a href="index.html#workers" onclick="closeMob()">Workers</a>
+  <a href="about.html" onclick="closeMob()">About Us</a>
+  <a href="index.html#about" onclick="closeMob()">Reviews</a>
+  <div class="nav-mobile-btns">
+    <button class="nmb-ghost" onclick="location.href='login.html'">Sign In</button>
+    <button class="nmb-solid" onclick="location.href='register.html'">Get Started Free →</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="hero-dot-grid"></div>
+  <div class="about-hero-in">
+    <div>
+      <div class="about-eyebrow" style="animation:fadeUp .7s ease both .1s">
+        <div class="about-eyebrow-dot"></div>
+        <span class="about-eyebrow-txt">About KaamConnect</span>
+      </div>
+      <h1 class="about-hero-h" style="animation:fadeUp .8s ease both .25s">
+        Built for <em>Bharat's</em><br>skilled workers
+      </h1>
+      <p class="about-hero-p" style="animation:fadeUp .8s ease both .4s">
+        We started KaamConnect with one simple belief — every skilled worker in India deserves fair pay, dignified work, and the chance to build a better life. Every customer deserves reliable help, transparent pricing, and peace of mind.
+      </p>
+      <div class="about-hero-stats" style="animation:fadeUp .8s ease both .55s">
+        <div class="ahs"><div class="ahs-n" id="ahs1">—</div><div class="ahs-l">Cities Active</div></div>
+        <div class="ahs"><div class="ahs-n" id="ahs2">—</div><div class="ahs-l">Workers Earning</div></div>
+        <div class="ahs"><div class="ahs-n">2026</div><div class="ahs-l">Founded</div></div>
+      </div>
+    </div>
+    <div class="about-hero-visual" style="animation:fadeUp .9s ease both .4s">
+      <div class="ahv-main">
+        <div class="ahv-ring"></div><div class="ahv-ring2"></div>
+        <div class="ahv-content">
+          <div class="ahv-icon">🛠️</div>
+          <div class="ahv-title">Empowering India's Workforce</div>
+          <div class="ahv-desc">KaamConnect bridges the gap between skilled blue-collar workers and the customers who need them — with trust, technology, and transparency at the core.</div>
+          <div>
+            <span class="ahv-pill"><i class="bi bi-shield-fill-check"></i> Verified Workers</span>
+            <span class="ahv-pill"><i class="bi bi-lock-fill"></i> Secure Payments</span>
+            <span class="ahv-pill"><i class="bi bi-star-fill"></i> Rated & Reviewed</span>
+            <span class="ahv-pill"><i class="bi bi-chat-dots-fill"></i> Price Negotiation</span>
+          </div>
+        </div>
+      </div>
+      <div class="ahv-float">
+        <div class="ahvf-icon">📍</div>
+        <div>
+          <div class="ahvf-num">Pan India</div>
+          <div class="ahvf-lbl">Coverage &amp; Growing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div>
+        <div class="eyebrow reveal"><div class="eyebrow-dot"></div><span class="eyebrow-txt">Our Mission</span></div>
+        <h2 class="section-h reveal">Why we built<br><em>KaamConnect</em></h2>
+        <p class="section-p reveal">India has over 400 million skilled blue-collar workers. Most of them struggle to find consistent work. Most customers struggle to find reliable help. We exist to fix that — with technology, verification, and fair economics.</p>
+        <div class="mission-cards">
+          <div class="mcard reveal reveal-delay-1">
+            <div class="mcard-icon">⚖️</div>
+            <div>
+              <h3>Fair Wages, Every Time</h3>
+              <p>Our InDrive-style negotiation ensures workers and customers agree on fair prices — no hidden charges, no middlemen eating margins.</p>
+            </div>
+          </div>
+          <div class="mcard reveal reveal-delay-2">
+            <div class="mcard-icon">🛡️</div>
+            <div>
+              <h3>Safety &amp; Trust First</h3>
+              <p>Every worker undergoes admin verification before joining. ID checks, background screening, and ongoing ratings keep our community safe.</p>
+            </div>
+          </div>
+          <div class="mcard reveal reveal-delay-3">
+            <div class="mcard-icon">🚀</div>
+            <div>
+              <h3>Technology for Everyone</h3>
+              <p>We build simple, accessible technology so workers without formal education can still thrive in the digital economy.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mission-img reveal">
+        <div class="mi-bg"></div>
+        <div class="mi-grid"></div>
+        <div class="mi-quote">
+          <div class="mi-quote-mark">"</div>
+          <div class="mi-quote-text">Ek electrician, ek plumber, ek painter — sab ka sapna hai ki unka kaam pehchana jaaye. KaamConnect woh platform hai jo unka haq deta hai.</div>
+          <div class="mi-quote-author">— Priyam Yadav, Founder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-center reveal">
+      <div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-txt">Our Values</span></div>
+      <h2 class="section-h">What we stand <em>for</em></h2>
+      <p class="section-p">These aren't just words on a wall. They're the principles we build every feature, every policy, and every partnership around.</p>
+    </div>
+    <div class="values-grid">
+      <div class="vcard reveal reveal-delay-1">
+        <div class="vcard-num">01</div>
+        <span class="vcard-icon">🤝</span>
+        <h3>Dignity of Labour</h3>
+        <p>We believe every skilled worker deserves respect, fair pay, and a platform that treats them as a professional — not a commodity.</p>
+      </div>
+      <div class="vcard reveal reveal-delay-2">
+        <div class="vcard-num">02</div>
+        <span class="vcard-icon">🔍</span>
+        <h3>Radical Transparency</h3>
+        <p>Prices are negotiated openly. Reviews are genuine. Worker profiles are verified. No hidden fees, no fake profiles, no surprises.</p>
+      </div>
+      <div class="vcard reveal reveal-delay-3">
+        <div class="vcard-num">03</div>
+        <span class="vcard-icon">🔒</span>
+        <h3>Security &amp; Trust</h3>
+        <p>Escrow payments protect customers. Verification protects workers. Our 2-way rating system builds accountability on both sides.</p>
+      </div>
+      <div class="vcard reveal reveal-delay-1">
+        <div class="vcard-num">04</div>
+        <span class="vcard-icon">📱</span>
+        <h3>Accessible Tech</h3>
+        <p>Our platform works on low-end phones, in Hindi and regional languages, so no worker is left behind due to technology barriers.</p>
+      </div>
+      <div class="vcard reveal reveal-delay-2">
+        <div class="vcard-num">05</div>
+        <span class="vcard-icon">🌱</span>
+        <h3>Sustainable Livelihoods</h3>
+        <p>We take only 10% — the industry's lowest — so workers keep more of what they earn and can build lasting careers on our platform.</p>
+      </div>
+      <div class="vcard reveal reveal-delay-3">
+        <div class="vcard-num">06</div>
+        <span class="vcard-icon">🇮🇳</span>
+        <h3>Made for India</h3>
+        <p>Built from the ground up for Indian cities, Indian workers, and Indian customers — not a foreign platform copy-pasted onto India.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY TIMELINE -->
+<section class="section alt">
+  <div class="wrap">
+    <div class="section-center reveal">
+      <div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-txt">Our Story</span></div>
+      <h2 class="section-h">The journey so <em>far</em></h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-left">
+          <div class="tl-year">Early 2026</div>
+          <div class="tl-h">The Idea Sparks</div>
+          <div class="tl-p">Founder Priyam Yadav notices a neighbour — a skilled electrician — sitting idle for days despite homes nearby needing repairs. The frustration of this disconnect becomes the seed of KaamConnect.</div>
+        </div>
+        <div class="tl-dot"><i class="bi bi-lightbulb-fill"></i></div>
+        <div class="tl-right tl-empty"></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-left tl-empty"></div>
+        <div class="tl-dot"><i class="bi bi-code-slash"></i></div>
+        <div class="tl-right">
+          <div class="tl-year">Mid 2026</div>
+          <div class="tl-h">Building in Public</div>
+          <div class="tl-p">The first version of KaamConnect is built — a full-stack platform with worker verification, escrow payments via Razorpay, and an InDrive-style negotiation system. Built solo, launched to the first 50 workers.</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-left">
+          <div class="tl-year">Late 2026</div>
+          <div class="tl-h">First 100 Jobs</div>
+          <div class="tl-p">KaamConnect completes its first 100 verified jobs. Workers earn fair wages, customers rave about the transparency. Word-of-mouth spreads across cities in Punjab and UP.</div>
+        </div>
+        <div class="tl-dot"><i class="bi bi-trophy-fill"></i></div>
+        <div class="tl-right tl-empty"></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-left tl-empty"></div>
+        <div class="tl-dot"><i class="bi bi-rocket-takeoff-fill"></i></div>
+        <div class="tl-right">
+          <div class="tl-year">2027 &amp; Beyond</div>
+          <div class="tl-h">Scaling Across India</div>
+          <div class="tl-p">Expanding to 50+ cities, adding regional language support, and launching worker upskilling programs. The mission: every skilled Indian worker should have a digital identity and steady income.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-center reveal">
+      <div class="eyebrow" style="justify-content:center"><div class="eyebrow-dot"></div><span class="eyebrow-txt">The Team</span></div>
+      <h2 class="section-h">People behind the <em>platform</em></h2>
+      <p class="section-p">A small, passionate team obsessed with empowering India's workforce.</p>
+    </div>
+    <div class="team-grid">
+      <div class="tcard-m reveal reveal-delay-1">
+        <div class="tcard-m-head">
+          <div class="tm-avatar">👨‍💻</div>
+          <div class="tm-name">Priyam Yadav</div>
+          <div class="tm-role">Founder &amp; Full-Stack Developer</div>
+        </div>
+        <div class="tcard-m-body">
+          <p class="tm-bio">Built KaamConnect from scratch — design, backend, frontend, and everything in between. Passionate about technology that creates real impact for real people.</p>
+          <div class="tm-socials">
+            <div class="tm-soc"><i class="bi bi-twitter-x"></i></div>
+            <div class="tm-soc"><i class="bi bi-linkedin"></i></div>
+            <div class="tm-soc"><i class="bi bi-github"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="tcard-m reveal reveal-delay-2">
+        <div class="tcard-m-head">
+          <div class="tm-avatar">👩‍💼</div>
+          <div class="tm-name">Community Team</div>
+          <div class="tm-role">Worker Verification &amp; Support</div>
+        </div>
+        <div class="tcard-m-body">
+          <p class="tm-bio">On-ground team that personally verifies every worker, handles disputes, and ensures every experience on KaamConnect is safe, fair, and professional.</p>
+          <div class="tm-socials">
+            <div class="tm-soc"><i class="bi bi-envelope-fill"></i></div>
+            <div class="tm-soc"><i class="bi bi-whatsapp"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="tcard-m reveal reveal-delay-3">
+        <div class="tcard-m-head">
+          <div class="tm-avatar">🤝</div>
+          <div class="tm-name">Join Our Team</div>
+          <div class="tm-role">We're Hiring Passionate People</div>
+        </div>
+        <div class="tcard-m-body">
+          <p class="tm-bio">Love the mission? We're looking for people who care deeply about India's workforce and want to build something meaningful. All roles welcome.</p>
+          <div class="tm-socials">
+            <button onclick="location.href='Contact.html'" style="padding:10px 20px;background:var(--saffron);border:none;border-radius:9px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">Apply Now →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section dark">
+  <div class="wrap">
+    <div class="why-grid">
+      <div>
+        <div class="eyebrow reveal"><div class="eyebrow-dot"></div><span class="eyebrow-txt">Why KaamConnect</span></div>
+        <h2 class="section-h light reveal">Why workers &amp; customers<br><em>choose us</em></h2>
+        <p class="section-p light reveal">We didn't just build another booking app. We rethought the entire relationship between skilled workers and customers from the ground up.</p>
+        <div class="why-list">
+          <div class="why-item reveal reveal-delay-1">
+            <div class="wi-icon">💰</div>
+            <div><div class="wi-h">Lowest Platform Fee — Just 10%</div><div class="wi-p">Competitors charge 25–40%. We charge 10% so workers take home more and prices stay fair for customers.</div></div>
+          </div>
+          <div class="why-item reveal reveal-delay-2">
+            <div class="wi-icon">🤝</div>
+            <div><div class="wi-h">InDrive-Style Negotiation</div><div class="wi-p">No fixed prices imposed. Customer proposes, worker counters, both agree. Fair every time.</div></div>
+          </div>
+          <div class="why-item reveal reveal-delay-3">
+            <div class="wi-icon">🔒</div>
+            <div><div class="wi-h">Pay After Job Done</div><div class="wi-p">Razorpay escrow holds the payment until the customer confirms the job is complete. Zero risk for both sides.</div></div>
+          </div>
+          <div class="why-item reveal reveal-delay-4">
+            <div class="wi-icon">✅</div>
+            <div><div class="wi-h">Every Worker Admin-Verified</div><div class="wi-p">No worker goes live without a personal verification check by our team. Safety is non-negotiable.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual reveal">
+        <div class="wv-row"><span class="wv-label">Worker Retention Rate</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:0" data-width="88%"></div></div><span class="wv-val">88%</span></div>
+        <div class="wv-row"><span class="wv-label">Customer Satisfaction</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:0" data-width="94%"></div></div><span class="wv-val">94%</span></div>
+        <div class="wv-row"><span class="wv-label">Jobs Completed on Time</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:0" data-width="91%"></div></div><span class="wv-val">91%</span></div>
+        <div class="wv-row"><span class="wv-label">Dispute Resolution Rate</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:0" data-width="97%"></div></div><span class="wv-val">97%</span></div>
+        <div class="wv-row"><span class="wv-label">Average Rating</span><div class="wv-bar-wrap"><div class="wv-bar" style="width:0" data-width="96%"></div></div><span class="wv-val">4.8★</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-grid"></div>
+  <div class="wrap">
+    <div class="cta-inner">
+      <h2>Be part of the<br>KaamConnect story</h2>
+      <p>Join thousands of workers and customers building a better, fairer India — one job at a time.</p>
+      <div class="cta-btns">
+        <button class="cta-primary" onclick="location.href='register.html'"><i class="bi bi-lightning-charge-fill"></i> Find a Worker Now</button>
+        <button class="cta-outline" onclick="location.href='register.html?role=worker'">Join as Worker →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:14px">
+          <div class="logo-icon"><i class="bi bi-tools"></i></div>
+          <div class="logo-txt">Kaam<span>Connect</span></div>
+        </div>
+        <p>India's trusted marketplace connecting skilled workers with customers — since 2026.</p>
+        <div class="footer-social">
+          <div class="fs-icon"><i class="bi bi-twitter-x"></i></div>
+          <div class="fs-icon"><i class="bi bi-instagram"></i></div>
+          <div class="fs-icon"><i class="bi bi-facebook"></i></div>
+          <div class="fs-icon"><i class="bi bi-linkedin"></i></div>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#services">Find Workers</a></li><li><a href="index.html#how">How It Works</a></li><li><a href="#">Pricing</a></li><li><a href="#">Safety</a></li></ul></div>
+      <div class="footer-col"><h4>For Workers</h4><ul><li><a href="register.html">Join as Worker</a></li><li><a href="#">Guidelines</a></li><li><a href="#">Earnings</a></li><li><a href="#">Verification</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="Privacy policy.html">Privacy Policy</a></li><li><a href="Terms.html">Terms of Service</a></li><li><a href="Contact.html">Contact Us</a></li></ul></div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center">
+      <p style="font-size:13px;color:rgba(255,255,255,.35)">Built &amp; Designed with <span style="color:var(--saffron)">♥</span> by <strong style="color:rgba(255,255,255,.65)">Priyam Yadav</strong></p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KaamConnect. All rights reserved.</p>
+      <div class="footer-links"><a href="Privacy policy.html">Privacy</a><a href="Terms.html">Terms</a><a href="Contact.html">Contact</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('pinned', scrollY > 30));
+let mobOpen=false;
+document.getElementById('navHam').addEventListener('click',()=>{mobOpen=!mobOpen;document.getElementById('navMobile').classList.toggle('show',mobOpen);document.getElementById('navHam').classList.toggle('open',mobOpen);});
+function closeMob(){mobOpen=false;document.getElementById('navMobile').classList.remove('show');document.getElementById('navHam').classList.remove('open');}
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Animate bars
+const barObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.wv-bar[data-width]').forEach(b=>{
+        setTimeout(()=>{ b.style.width=b.dataset.width; },200);
+      });
+    }
+  });
+},{threshold:.3});
+const wv=document.querySelector('.why-visual');
+if(wv) barObserver.observe(wv);
+
+// Load stats
+(async()=>{
+  try{
+    const d=await fetch('/api/analytics/platform').then(r=>r.json());
+    if(d.success){
+      if(d.workers) document.getElementById('ahs2').textContent=Number(d.workers).toLocaleString('en-IN')+'+';
+    }
+  }catch(e){}
+  document.getElementById('ahs1').textContent='20+';
+  if(!document.getElementById('ahs2').textContent||document.getElementById('ahs2').textContent==='—') document.getElementById('ahs2').textContent='500+';
+})();
+</script>
+</body>
+</html>
