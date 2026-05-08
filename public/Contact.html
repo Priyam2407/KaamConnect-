@@ -4,197 +4,682 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Us — KaamConnect</title>
-<meta name="description" content="Contact KaamConnect — India's trusted worker marketplace. Reach out to us for support, business inquiries, or worker verification help.">
+<meta name="description" content="Contact KaamConnect — India's trusted worker marketplace. Reach out for support, partnerships, or worker verification help.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.kaamconnect.in/contact.html">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://www.kaamconnect.in/Contact.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cabinet+Grotesk:wght@400;500;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Poppins',sans-serif;background:#FAF7F2;color:#0F1923;line-height:1.7}
-a{color:#E8601C;text-decoration:none}
-a:hover{text-decoration:underline}
-header{background:#1A3C34;padding:18px 40px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:20px;font-weight:700;color:#fff}
-.logo span{color:#E8601C}
-header nav a{color:rgba(255,255,255,0.75);font-size:14px;margin-left:24px;font-weight:500}
-header nav a:hover{color:#fff;text-decoration:none}
+:root {
+  --saffron: #E8601C;
+  --saffron-2: #F07840;
+  --saffron-glow: rgba(232,96,28,.25);
+  --saffron-pale: #FEF0E8;
+  --forest: #1A3C34;
+  --forest-2: #24524A;
+  --forest-3: #0D2420;
+  --gold: #D4A017;
+  --gold-2: #F0C040;
+  --cream: #FBF8F4;
+  --white: #FFFFFF;
+  --ink: #0C1714;
+  --ink-70: rgba(12,23,20,.7);
+  --ink-40: rgba(12,23,20,.4);
+  --ink-12: rgba(12,23,20,.12);
+  --ink-06: rgba(12,23,20,.06);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+a { text-decoration:none; color:inherit; }
+ul { list-style:none; }
 
-.hero-section{background:#1A3C34;padding:60px 40px;text-align:center}
-.hero-section h1{font-size:38px;font-weight:700;color:#fff;margin-bottom:12px}
-.hero-section p{font-size:16px;color:rgba(255,255,255,0.7);max-width:500px;margin:0 auto}
+/* ══ NAV ══ */
+#nav { position:fixed; top:0; left:0; right:0; z-index:900; padding:14px 0; transition:all .5s cubic-bezier(.4,0,.2,1); }
+#nav.pinned { padding:0; background:rgba(251,248,244,.97); backdrop-filter:blur(24px); border-bottom:1px solid var(--ink-06); box-shadow:0 4px 40px rgba(12,23,20,.07); }
+.nav-in { max-width:1280px; margin:0 auto; padding:0 48px; height:70px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.logo-icon { width:38px; height:38px; border-radius:11px; background:linear-gradient(135deg, var(--saffron), var(--saffron-2)); display:grid; place-items:center; font-size:17px; color:#fff; box-shadow:0 4px 14px var(--saffron-glow); transition:transform .3s; flex-shrink:0; }
+.logo:hover .logo-icon { transform:rotate(-10deg) scale(1.08); }
+.logo-txt { font-family:'Cabinet Grotesk',sans-serif; font-weight:900; font-size:20px; letter-spacing:-.5px; color:var(--forest); }
+.logo-txt span { color:var(--saffron); }
+.nav-links { display:flex; align-items:center; gap:2px; }
+.nav-links a { font-size:13.5px; font-weight:600; padding:9px 14px; border-radius:9px; transition:all .22s; color:var(--ink-70); }
+.nav-links a:hover, .nav-links a.active { color:var(--saffron); background:rgba(232,96,28,.08); }
+.nav-cta { display:flex; align-items:center; gap:10px; }
+.btn-nav-ghost { padding:9px 18px; border-radius:9px; font-size:13.5px; font-weight:700; cursor:pointer; transition:all .22s; display:flex; align-items:center; gap:6px; border:1.5px solid var(--ink-12); color:var(--ink-70); background:transparent; font-family:'DM Sans',sans-serif; }
+.btn-nav-ghost:hover { border-color:var(--saffron); color:var(--saffron); background:var(--saffron-pale); }
+.btn-nav-solid { padding:10px 22px; background:var(--saffron); border:none; border-radius:9px; font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:700; color:#fff; cursor:pointer; transition:all .22s; box-shadow:0 6px 20px var(--saffron-glow); display:flex; align-items:center; gap:7px; }
+.btn-nav-solid:hover { background:var(--saffron-2); transform:translateY(-2px); }
+.nav-ham { display:none; background:none; border:none; cursor:pointer; padding:8px; flex-direction:column; gap:5px; }
+.nav-ham span { display:block; width:22px; height:2px; border-radius:2px; background:var(--ink); transition:all .3s; }
+.nav-ham.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.nav-ham.open span:nth-child(2) { opacity:0; }
+.nav-ham.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+.nav-mobile { display:none; position:fixed; top:70px; inset-x:0; background:rgba(251,248,244,.98); backdrop-filter:blur(24px); border-bottom:1px solid var(--ink-06); padding:16px 24px 24px; flex-direction:column; gap:4px; box-shadow:0 16px 50px rgba(12,23,20,.12); z-index:899; animation:slideDown .25s ease; }
+.nav-mobile.show { display:flex; }
+@keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+.nav-mobile a { font-size:15px; font-weight:700; color:var(--ink-70); padding:13px 16px; border-radius:10px; transition:all .2s; }
+.nav-mobile a:hover { background:var(--saffron-pale); color:var(--saffron); }
+.nav-mobile-btns { display:flex; gap:8px; margin-top:14px; }
+.nav-mobile-btns button { flex:1; padding:13px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; transition:all .2s; font-family:'DM Sans',sans-serif; }
+.nmb-ghost { border:1.5px solid var(--ink-12); background:transparent; color:var(--ink-70); }
+.nmb-solid { background:var(--saffron); border:none; color:#fff; }
 
-.container{max-width:900px;margin:60px auto;padding:0 24px 80px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
-@media(max-width:680px){.container{grid-template-columns:1fr}}
+/* ══ PAGE HERO ══ */
+.page-hero {
+  padding:140px 0 90px;
+  background:#F7F3EE;
+  position:relative; overflow:hidden;
+}
+.page-hero::before { content:''; position:absolute; top:-80px; right:-80px; width:450px; height:450px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.1), transparent 65%); }
+.page-hero::after { content:''; position:absolute; bottom:-60px; left:-60px; width:350px; height:350px; border-radius:50%; background:radial-gradient(circle, rgba(61,122,110,.08), transparent 65%); }
+.dot-grid { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(12,23,20,.05) 1px, transparent 1px); background-size:28px 28px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%); }
+.page-hero-in { max-width:1280px; margin:0 auto; padding:0 48px; text-align:center; position:relative; z-index:1; }
+.eyebrow { display:inline-flex; align-items:center; gap:10px; background:rgba(232,96,28,.08); border:1px solid rgba(232,96,28,.2); border-radius:100px; padding:6px 16px; margin-bottom:24px; animation:fadeUp .7s ease both .1s; }
+.eyebrow-dot { width:8px; height:8px; border-radius:50%; background:var(--saffron); }
+.eyebrow-txt { font-size:11px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); }
+.page-hero h1 { font-family:'Playfair Display',serif; font-size:clamp(44px, 5.5vw, 76px); letter-spacing:-2px; line-height:1.04; color:var(--forest); margin-bottom:20px; animation:fadeUp .8s ease both .25s; }
+.page-hero h1 em { font-style:italic; color:var(--saffron); }
+.page-hero p { font-size:17px; color:var(--ink-70); line-height:1.8; max-width:480px; margin:0 auto; font-weight:300; animation:fadeUp .8s ease both .4s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
 
-.card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(15,25,35,0.07)}
-h2{font-size:20px;font-weight:600;color:#1A3C34;margin-bottom:20px}
-.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
-.contact-icon{width:44px;height:44px;background:#FEF0E8;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;color:#E8601C}
-.contact-label{font-size:12px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px}
-.contact-value{font-size:15px;color:#0F1923;font-weight:500}
-.contact-value a{color:#E8601C}
+/* ══ CONTACT CARDS ROW ══ */
+.contact-cards-row {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+  max-width:1280px; margin:-44px auto 0; padding:0 48px;
+  position:relative; z-index:2;
+}
+.cinfo-card {
+  background:#fff; border:1.5px solid var(--ink-06);
+  border-radius:20px; padding:24px 20px; text-align:center;
+  transition:all .35s; cursor:default;
+  box-shadow:0 4px 20px rgba(12,23,20,.06);
+}
+.cinfo-card:hover { border-color:rgba(232,96,28,.25); transform:translateY(-6px); box-shadow:0 20px 50px rgba(12,23,20,.1); }
+.cinfo-icon { width:52px; height:52px; border-radius:14px; background:var(--saffron-pale); display:grid; place-items:center; font-size:22px; color:var(--saffron); margin:0 auto 14px; transition:all .3s; }
+.cinfo-card:hover .cinfo-icon { background:var(--saffron); color:#fff; }
+.cinfo-label { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--ink-40); margin-bottom:6px; }
+.cinfo-value { font-family:'Cabinet Grotesk',sans-serif; font-size:14px; font-weight:800; color:var(--forest); line-height:1.4; }
+.cinfo-value a { color:var(--saffron); }
 
-.form-group{margin-bottom:18px}
-label{display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px}
-input,textarea,select{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-family:'Poppins',sans-serif;font-size:14px;color:#0F1923;background:#FAF7F2;transition:border-color 0.2s,box-shadow 0.2s;outline:none}
-input:focus,textarea:focus,select:focus{border-color:#E8601C;box-shadow:0 0 0 3px rgba(232,96,28,0.1);background:#fff}
-textarea{height:120px;resize:vertical}
-.submit-btn{width:100%;padding:14px;background:#E8601C;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s;font-family:'Poppins',sans-serif}
-.submit-btn:hover{background:#F0783A;transform:translateY(-1px)}
-.success-msg{display:none;background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:14px;border-radius:10px;font-size:14px;margin-top:14px;text-align:center}
+/* ══ MAIN CONTENT ══ */
+.main-wrap { max-width:1280px; margin:0 auto; padding:80px 48px; display:grid; grid-template-columns:1fr 1.1fr; gap:60px; align-items:start; }
 
-.faq-section{max-width:900px;margin:0 auto 60px;padding:0 24px}
-.faq-section h2{font-size:24px;font-weight:700;color:#1A3C34;margin-bottom:24px}
-.faq-item{background:#fff;border-radius:12px;padding:20px 24px;margin-bottom:12px;box-shadow:0 2px 12px rgba(15,25,35,0.05)}
-.faq-q{font-size:15px;font-weight:600;color:#1A3C34;margin-bottom:8px}
-.faq-a{font-size:14px;color:#4b5563;line-height:1.7}
+/* Left — info */
+.contact-left {}
+.cl-section { margin-bottom:48px; }
+.cl-head { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.cl-head-icon { width:40px; height:40px; border-radius:11px; background:var(--saffron-pale); display:grid; place-items:center; font-size:18px; color:var(--saffron); flex-shrink:0; }
+.cl-head h3 { font-family:'Cabinet Grotesk',sans-serif; font-size:16px; font-weight:800; color:var(--forest); }
+.hours-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.hours-item { background:var(--cream); border:1.5px solid var(--ink-06); border-radius:12px; padding:14px 16px; }
+.hours-day { font-size:12px; font-weight:700; color:var(--ink-40); margin-bottom:4px; }
+.hours-time { font-family:'Cabinet Grotesk',sans-serif; font-size:14px; font-weight:800; color:var(--forest); }
+.social-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+.soc-btn { display:flex; align-items:center; gap:8px; padding:10px 16px; border:1.5px solid var(--ink-12); border-radius:11px; font-size:13px; font-weight:700; color:var(--ink-70); transition:all .25s; cursor:pointer; background:transparent; font-family:'DM Sans',sans-serif; }
+.soc-btn:hover { border-color:var(--saffron); color:var(--saffron); background:var(--saffron-pale); }
 
-footer{background:#1A3C34;text-align:center;padding:24px;color:rgba(255,255,255,0.5);font-size:13px}
-footer a{color:rgba(255,255,255,0.7)}
+/* Map placeholder */
+.map-box { background:var(--forest); border-radius:20px; padding:28px; position:relative; overflow:hidden; }
+.map-box::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(232,96,28,.12), transparent 50%, rgba(61,122,110,.12)); }
+.map-box::after { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); background-size:36px 36px; }
+.map-content { position:relative; z-index:1; }
+.map-pin { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.map-pin-icon { width:44px; height:44px; border-radius:12px; background:var(--saffron); display:grid; place-items:center; font-size:20px; color:#fff; flex-shrink:0; box-shadow:0 4px 14px var(--saffron-glow); }
+.map-pin-city { font-family:'Cabinet Grotesk',sans-serif; font-size:18px; font-weight:800; color:#fff; }
+.map-pin-country { font-size:12px; color:rgba(255,255,255,.45); margin-top:2px; }
+.map-dots { display:flex; flex-wrap:wrap; gap:8px; }
+.map-dot-item { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:100px; padding:5px 12px; font-size:12px; font-weight:600; color:rgba(255,255,255,.65); }
+.map-dot-item i { color:var(--saffron-2); font-size:10px; }
+
+/* Right — form */
+.contact-form-card { background:#fff; border:1.5px solid var(--ink-06); border-radius:24px; padding:40px; box-shadow:0 8px 40px rgba(12,23,20,.07); }
+.form-title { font-family:'Playfair Display',serif; font-size:26px; color:var(--forest); margin-bottom:6px; letter-spacing:-.5px; }
+.form-subtitle { font-size:14px; color:var(--ink-40); margin-bottom:32px; }
+.fg { margin-bottom:18px; }
+.fl { display:block; font-size:12px; font-weight:800; color:var(--forest); margin-bottom:7px; letter-spacing:.3px; }
+.fw { position:relative; }
+.fi {
+  width:100%; padding:13px 14px 13px 42px;
+  border:1.5px solid var(--ink-12); border-radius:12px;
+  font-size:14px; color:var(--ink); background:var(--cream);
+  outline:none; transition:all .22s; font-family:'DM Sans',sans-serif;
+}
+.fi:focus { border-color:var(--saffron); background:#fff; box-shadow:0 0 0 3px rgba(232,96,28,.1); }
+.fi::placeholder { color:var(--ink-40); }
+.fi-ico { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--ink-40); font-size:15px; pointer-events:none; transition:color .2s; }
+.fw:focus-within .fi-ico { color:var(--saffron); }
+textarea.fi { min-height:120px; resize:vertical; padding:13px 14px; }
+.fi-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+select.fi { cursor:pointer; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+
+/* Character counter */
+.char-count { font-size:11px; color:var(--ink-40); text-align:right; margin-top:4px; }
+
+/* Submit button */
+.submit-btn {
+  width:100%; padding:15px; background:linear-gradient(135deg, var(--saffron), var(--saffron-2));
+  border:none; border-radius:12px; font-size:15px; font-weight:700; color:#fff;
+  cursor:pointer; transition:all .25s; box-shadow:0 8px 24px var(--saffron-glow);
+  font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; gap:10px;
+  position:relative; overflow:hidden; margin-top:8px;
+}
+.submit-btn::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(255,255,255,.15), transparent); opacity:0; transition:opacity .25s; }
+.submit-btn:hover { transform:translateY(-2px); box-shadow:0 14px 36px var(--saffron-glow); }
+.submit-btn:hover::after { opacity:1; }
+.submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+.spin { animation:spin .7s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* Alert boxes */
+.alert { padding:14px 16px; border-radius:12px; font-size:14px; font-weight:500; display:flex; align-items:flex-start; gap:10px; margin-top:14px; line-height:1.5; }
+.alert i { font-size:16px; flex-shrink:0; margin-top:1px; }
+.alert-err { background:#FEF2F2; color:#DC2626; border:1.5px solid #FECACA; }
+.alert-ok { background:#F0FDF4; color:#15803D; border:1.5px solid #BBF7D0; }
+
+/* ══ FAQ ══ */
+.faq-section { background:var(--white); padding:90px 0; }
+.faq-wrap { max-width:1280px; margin:0 auto; padding:0 48px; }
+.faq-grid { display:grid; grid-template-columns:1fr 1.8fr; gap:80px; align-items:start; }
+.faq-left {}
+.faq-left .s-eyebrow { display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; }
+.faq-left .s-eyebrow-dot { width:8px; height:8px; border-radius:50%; background:var(--saffron); }
+.faq-left .s-eyebrow-txt { font-size:11px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); }
+.faq-h { font-family:'Playfair Display',serif; font-size:clamp(34px, 3.5vw, 50px); color:var(--forest); line-height:1.08; letter-spacing:-1.5px; margin-bottom:16px; }
+.faq-h em { font-style:italic; color:var(--saffron); }
+.faq-desc { font-size:15px; color:var(--ink-70); line-height:1.8; font-weight:300; }
+.faq-list { display:flex; flex-direction:column; gap:12px; }
+.faq-item {
+  background:var(--cream); border:1.5px solid var(--ink-06);
+  border-radius:16px; overflow:hidden; transition:all .3s; cursor:pointer;
+}
+.faq-item.open { border-color:rgba(232,96,28,.2); box-shadow:0 4px 20px rgba(12,23,20,.07); }
+.faq-q {
+  padding:20px 22px; display:flex; justify-content:space-between; align-items:center; gap:16px;
+  font-family:'Cabinet Grotesk',sans-serif; font-size:15px; font-weight:800; color:var(--forest);
+  user-select:none;
+}
+.faq-icon { width:28px; height:28px; border-radius:8px; background:var(--saffron-pale); display:grid; place-items:center; font-size:13px; color:var(--saffron); flex-shrink:0; transition:all .3s; }
+.faq-item.open .faq-icon { background:var(--saffron); color:#fff; transform:rotate(45deg); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease, padding .3s; }
+.faq-item.open .faq-a { max-height:300px; }
+.faq-a-inner { padding:0 22px 20px; font-size:14px; color:var(--ink-70); line-height:1.75; }
+
+/* ══ CTA ══ */
+.cta-section { background:linear-gradient(135deg, var(--saffron) 0%, #C94A0A 60%, #8B2E00 100%); padding:90px 0; position:relative; overflow:hidden; }
+.cta-section::before { content:''; position:absolute; top:-100px; left:-100px; width:500px; height:500px; border-radius:50%; background:rgba(255,255,255,.06); }
+.cta-section::after { content:''; position:absolute; bottom:-120px; right:-80px; width:600px; height:600px; border-radius:50%; background:rgba(0,0,0,.08); }
+.cta-grid-bg { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size:56px 56px; }
+.cta-inner { text-align:center; position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 48px; }
+.cta-inner h2 { font-family:'Playfair Display',serif; font-size:clamp(36px, 4.5vw, 58px); color:#fff; line-height:1.06; letter-spacing:-1.5px; margin-bottom:14px; }
+.cta-inner p { font-size:16px; color:rgba(255,255,255,.7); max-width:400px; margin:0 auto 40px; line-height:1.75; }
+.cta-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.cta-primary { padding:15px 34px; background:#fff; border:none; border-radius:12px; font-size:15px; font-weight:800; color:var(--saffron); cursor:pointer; transition:all .25s; box-shadow:0 8px 30px rgba(0,0,0,.18); font-family:'Cabinet Grotesk',sans-serif; }
+.cta-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(0,0,0,.25); }
+.cta-outline { padding:15px 34px; background:transparent; border:2px solid rgba(255,255,255,.4); border-radius:12px; font-size:15px; font-weight:800; color:#fff; cursor:pointer; transition:all .25s; font-family:'Cabinet Grotesk',sans-serif; }
+.cta-outline:hover { border-color:#fff; background:rgba(255,255,255,.1); transform:translateY(-3px); }
+
+/* ══ FOOTER ══ */
+footer { background:var(--ink); padding:80px 0 40px; }
+.footer-top { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:48px; margin-bottom:60px; }
+.footer-brand .logo-txt { color:#fff; }
+.footer-brand p { font-size:14px; color:rgba(255,255,255,.4); line-height:1.75; margin-top:14px; max-width:230px; }
+.footer-social { display:flex; gap:10px; margin-top:22px; }
+.fs-icon { width:38px; height:38px; border-radius:10px; border:1px solid rgba(255,255,255,.1); display:grid; place-items:center; color:rgba(255,255,255,.45); font-size:15px; cursor:pointer; transition:all .25s; }
+.fs-icon:hover { border-color:var(--saffron); color:var(--saffron); background:rgba(232,96,28,.1); transform:translateY(-2px); }
+.footer-col h4 { font-family:'Cabinet Grotesk',sans-serif; font-size:11px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:20px; }
+.footer-col li { margin-bottom:12px; }
+.footer-col a { font-size:14px; color:rgba(255,255,255,.5); transition:color .2s; }
+.footer-col a:hover { color:rgba(255,255,255,.9); }
+.footer-bottom { border-top:1px solid rgba(255,255,255,.06); padding-top:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+.footer-bottom p { font-size:13px; color:rgba(255,255,255,.3); }
+.footer-links { display:flex; gap:24px; }
+.footer-links a { font-size:13px; color:rgba(255,255,255,.35); transition:color .2s; }
+.footer-links a:hover { color:rgba(255,255,255,.7); }
+
+/* ══ REVEAL ══ */
+.reveal { opacity:0; transform:translateY(36px); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1); }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+.reveal-delay-4 { transition-delay:.4s; }
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px) {
+  .contact-cards-row { grid-template-columns:1fr 1fr; }
+  .footer-top { grid-template-columns:1fr 1fr; gap:36px; }
+}
+@media(max-width:1000px) {
+  .nav-links, .nav-cta { display:none; }
+  .nav-ham { display:flex; }
+  .main-wrap { grid-template-columns:1fr; gap:40px; padding:60px 28px; }
+  .faq-grid { grid-template-columns:1fr; gap:40px; }
+  .contact-cards-row { padding:0 28px; }
+  .faq-wrap { padding:0 28px; }
+  .nav-in { padding:0 28px; }
+  .page-hero-in { padding:0 28px; }
+  .cta-inner { padding:0 28px; }
+}
+@media(max-width:700px) {
+  .contact-cards-row { grid-template-columns:1fr 1fr; gap:12px; }
+  .fi-row { grid-template-columns:1fr; }
+  .footer-top { grid-template-columns:1fr; }
+  .hours-grid { grid-template-columns:1fr; }
+  .cta-btns { flex-direction:column; max-width:280px; margin:0 auto; }
+  .cta-primary, .cta-outline { text-align:center; }
+  .contact-form-card { padding:24px 20px; }
+}
+@media(max-width:480px) {
+  .nav-in { padding:0 16px; }
+  .page-hero-in { padding:0 16px; }
+  .contact-cards-row { grid-template-columns:1fr; padding:0 16px; }
+  .main-wrap { padding:50px 16px; }
+  .faq-wrap { padding:0 16px; }
+  .cta-inner { padding:0 16px; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; }
+  .footer-links { gap:16px; }
+  .page-hero { padding:110px 0 120px; }
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Kaam<span>Connect</span></div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="Privacy policy.html">Privacy</a>
-    <a href="Terms.html">Terms</a>
-  </nav>
-</header>
-
-<div class="hero-section">
-  <h1>Contact Us</h1>
-  <p>Have a question or need support? We're here to help you every step of the way.</p>
-</div>
-
-<div class="container">
-  <!-- Contact Info -->
-  <div class="card">
-    <h2>Get in Touch</h2>
-
-    <div class="contact-item">
-      <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
-      <div>
-        <div class="contact-label">Email</div>
-        <div class="contact-value"><a href="mailto:kaamconnect24@gmail.com">kaamconnect24@gmail.com</a></div>
-      </div>
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="nav-in">
+    <a class="logo" href="index.html">
+      <div class="logo-icon"><i class="bi bi-tools"></i></div>
+      <div class="logo-txt">Kaam<span>Connect</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#services">Services</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="index.html#workers">Workers</a>
+      <a href="about.html">About Us</a>
+      <a href="Contact.html" class="active">Contact</a>
     </div>
-
-    <div class="contact-item">
-      <div class="contact-icon"><i class="bi bi-globe"></i></div>
-      <div>
-        <div class="contact-label">Website</div>
-        <div class="contact-value"><a href="https://kaamconnect-im6s.onrender.com/index.html">www.kaamconnect.in</a></div>
-      </div>
+    <div class="nav-cta">
+      <button class="btn-nav-ghost" onclick="location.href='login.html'"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
+      <button class="btn-nav-solid" onclick="location.href='register.html'"><i class="bi bi-lightning-charge-fill"></i> Get Started</button>
     </div>
-
-    <div class="contact-item">
-      <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
-      <div>
-        <div class="contact-label">Based In</div>
-        <div class="contact-value">Chandigarh, India</div>
-      </div>
-    </div>
-
-    <div class="contact-item">
-      <div class="contact-icon"><i class="bi bi-clock-fill"></i></div>
-      <div>
-        <div class="contact-label">Response Time</div>
-        <div class="contact-value">Within 24 hours on weekdays</div>
-      </div>
-    </div>
-
-    <div class="contact-item">
-      <div class="contact-icon"><i class="bi bi-headset"></i></div>
-      <div>
-        <div class="contact-label">Support Hours</div>
-        <div class="contact-value">Mon–Sat, 9:00 AM – 7:00 PM IST</div>
-      </div>
-    </div>
+    <button class="nav-ham" id="navHam" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
-
-  <!-- Contact Form -->
-  <div class="card">
-    <h2>Send Us a Message</h2>
-    <div class="form-group">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" placeholder="enter your name" required>
-    </div>
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input type="email" id="email" placeholder="enter your email" required>
-    </div>
-    <div class="form-group">
-      <label for="subject">Subject</label>
-      <select id="subject">
-        <option value="">Select a topic</option>
-        <option>General Inquiry</option>
-        <option>Worker Registration Help</option>
-        <option>Payment Issue</option>
-        <option>Report a Problem</option>
-        <option>Business / Partnership</option>
-        <option>Other</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="message">Message</label>
-      <textarea id="message" placeholder="Describe your query in detail..."></textarea>
-    </div>
-    <button class="submit-btn" onclick="submitForm()">Send Message &nbsp;→</button>
-    <div class="success-msg" id="successMsg">✅ Your message has been sent! We'll get back to you within 24 hours.</div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="index.html#services" onclick="closeMob()">Services</a>
+  <a href="index.html#how" onclick="closeMob()">How It Works</a>
+  <a href="index.html#workers" onclick="closeMob()">Workers</a>
+  <a href="about.html" onclick="closeMob()">About Us</a>
+  <a href="Contact.html" onclick="closeMob()">Contact</a>
+  <div class="nav-mobile-btns">
+    <button class="nmb-ghost" onclick="location.href='login.html'">Sign In</button>
+    <button class="nmb-solid" onclick="location.href='register.html'">Get Started Free →</button>
   </div>
 </div>
 
-<!-- FAQ Section -->
-<div class="faq-section">
-  <h2>Frequently Asked Questions</h2>
-
-  <div class="faq-item">
-    <div class="faq-q">How do I book a worker on KaamConnect?</div>
-    <div class="faq-a">Simply search for the service you need on our homepage, browse available workers in your city, view their profiles and ratings, and click "Book Now". Fill in your job details and confirm the booking through our secure Razorpay payment system.</div>
+<!-- ══ HERO ══ -->
+<section class="page-hero">
+  <div class="dot-grid"></div>
+  <div class="page-hero-in">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span class="eyebrow-txt">Get In Touch</span>
+    </div>
+    <h1>We're here to <em>help</em><br>you every step</h1>
+    <p>Questions, issues, partnerships — reach out and our team will get back to you within 24 hours.</p>
   </div>
+</section>
 
-  <div class="faq-item">
-    <div class="faq-q">How does the payment and escrow system work?</div>
-    <div class="faq-a">When you confirm a booking, your payment is held securely in escrow via Razorpay. The worker receives the payment only after you confirm that the job has been completed to your satisfaction. This protects both customers and workers.</div>
+<!-- ══ CONTACT INFO CARDS ══ -->
+<div class="contact-cards-row">
+  <div class="cinfo-card reveal">
+    <div class="cinfo-icon"><i class="bi bi-envelope-fill"></i></div>
+    <div class="cinfo-label">Email Us</div>
+    <div class="cinfo-value"><a href="mailto:kaamconnect24@gmail.com">kaamconnect24@gmail.com</a></div>
   </div>
-
-  <div class="faq-item">
-    <div class="faq-q">How can I register as a worker on KaamConnect?</div>
-    <div class="faq-a">Click "Register" on our homepage and select "Worker" as your role. Fill in your personal details, skills, and availability. Our admin team will verify your identity and approve your profile, after which you can start receiving job requests.</div>
+  <div class="cinfo-card reveal reveal-delay-1">
+    <div class="cinfo-icon"><i class="bi bi-clock-fill"></i></div>
+    <div class="cinfo-label">Response Time</div>
+    <div class="cinfo-value">Within 24 hrs on weekdays</div>
   </div>
-
-  <div class="faq-item">
-    <div class="faq-q">Is KaamConnect available across India?</div>
-    <div class="faq-a">KaamConnect is currently focused on cities in North India including Chandigarh, Ludhiana, Delhi, and surrounding areas. We are actively expanding to more cities across India.</div>
+  <div class="cinfo-card reveal reveal-delay-2">
+    <div class="cinfo-icon"><i class="bi bi-geo-alt-fill"></i></div>
+    <div class="cinfo-label">Based In</div>
+    <div class="cinfo-value">Prayagraj &amp; Chandigarh, India</div>
   </div>
-
-  <div class="faq-item">
-    <div class="faq-q">How do I report a problem or dispute?</div>
-    <div class="faq-a">Email us at priyamyadav2407@gmail.com with your booking details and a description of the issue. Our support team will investigate and respond within 24 hours on weekdays.</div>
+  <div class="cinfo-card reveal reveal-delay-3">
+    <div class="cinfo-icon"><i class="bi bi-headset"></i></div>
+    <div class="cinfo-label">Support Hours</div>
+    <div class="cinfo-value">Mon–Sat · 9 AM – 7 PM IST</div>
   </div>
 </div>
 
+<!-- ══ MAIN CONTENT ══ -->
+<div class="main-wrap">
+
+  <!-- LEFT -->
+  <div class="contact-left">
+    <div class="cl-section reveal">
+      <div class="cl-head">
+        <div class="cl-head-icon"><i class="bi bi-clock"></i></div>
+        <h3>Support Hours</h3>
+      </div>
+      <div class="hours-grid">
+        <div class="hours-item">
+          <div class="hours-day">Monday – Friday</div>
+          <div class="hours-time">9:00 AM – 7:00 PM</div>
+        </div>
+        <div class="hours-item">
+          <div class="hours-day">Saturday</div>
+          <div class="hours-time">10:00 AM – 5:00 PM</div>
+        </div>
+        <div class="hours-item">
+          <div class="hours-day">Sunday</div>
+          <div class="hours-time">Closed</div>
+        </div>
+        <div class="hours-item">
+          <div class="hours-day">Response Time</div>
+          <div class="hours-time">Within 24 Hours</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cl-section reveal">
+      <div class="cl-head">
+        <div class="cl-head-icon"><i class="bi bi-share"></i></div>
+        <h3>Follow Us</h3>
+      </div>
+      <div class="social-row">
+        <button class="soc-btn" onclick="window.open('#')"><i class="bi bi-twitter-x"></i> Twitter</button>
+        <button class="soc-btn" onclick="window.open('#')"><i class="bi bi-instagram"></i> Instagram</button>
+        <button class="soc-btn" onclick="window.open('#')"><i class="bi bi-linkedin"></i> LinkedIn</button>
+        <button class="soc-btn" onclick="window.open('#')"><i class="bi bi-facebook"></i> Facebook</button>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="cl-head">
+        <div class="cl-head-icon"><i class="bi bi-geo-alt"></i></div>
+        <h3>Where We Operate</h3>
+      </div>
+      <div class="map-box">
+        <div class="map-content">
+          <div class="map-pin">
+            <div class="map-pin-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <div class="map-pin-city">Pan India</div>
+              <div class="map-pin-country">India · Expanding Rapidly</div>
+            </div>
+          </div>
+          <div class="map-dots">
+            <div class="map-dot-item"><i class="bi bi-circle-fill"></i> Chandigarh</div>
+            <div class="map-dot-item"><i class="bi bi-circle-fill"></i> Prayagraj</div>
+            <div class="map-dot-item"><i class="bi bi-circle-fill"></i> Ludhiana</div>
+            <div class="map-dot-item"><i class="bi bi-circle-fill"></i> Delhi NCR</div>
+            <div class="map-dot-item"><i class="bi bi-circle-fill"></i> Lucknow</div>
+            <div class="map-dot-item"><i class="bi bi-plus-circle-fill"></i> &amp; 15 more</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — FORM -->
+  <div class="contact-form-card reveal">
+    <div class="form-title">Send us a message</div>
+    <div class="form-subtitle">Fill in the form below and we'll respond within 24 hours.</div>
+
+    <div id="formAlert" style="display:none"></div>
+
+    <div class="fi-row">
+      <div class="fg">
+        <label class="fl" for="fname">First Name *</label>
+        <div class="fw">
+          <input class="fi" type="text" id="fname" placeholder="Priyam" autocomplete="given-name">
+          <i class="bi bi-person fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl" for="lname">Last Name</label>
+        <div class="fw">
+          <input class="fi" type="text" id="lname" placeholder="Yadav" autocomplete="family-name">
+          <i class="bi bi-person fi-ico"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl" for="email">Email Address *</label>
+      <div class="fw">
+        <input class="fi" type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        <i class="bi bi-envelope fi-ico"></i>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl" for="phone">Phone Number</label>
+      <div class="fw">
+        <input class="fi" type="tel" id="phone" placeholder="+91 98765 43210" autocomplete="tel">
+        <i class="bi bi-telephone fi-ico"></i>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl" for="subject">Topic *</label>
+      <div class="fw">
+        <select class="fi" id="subject">
+          <option value="">Select a topic…</option>
+          <option value="General Inquiry">General Inquiry</option>
+          <option value="Worker Registration Help">Worker Registration Help</option>
+          <option value="Payment Issue">Payment / Escrow Issue</option>
+          <option value="Job Dispute">Job Dispute</option>
+          <option value="Report a Problem">Report a Problem</option>
+          <option value="Business Partnership">Business / Partnership</option>
+          <option value="Press / Media">Press / Media</option>
+          <option value="Other">Other</option>
+        </select>
+        <i class="bi bi-tag fi-ico"></i>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl" for="message">Message *</label>
+      <textarea class="fi" id="message" placeholder="Describe your query in detail — the more info you give, the faster we can help…" maxlength="1000" oninput="updateCount(this)"></textarea>
+      <div class="char-count"><span id="charCount">0</span> / 1000</div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+      <i class="bi bi-send-fill" id="submitIcon"></i>
+      <span id="submitText">Send Message</span>
+      <i class="bi bi-arrow-repeat spin" id="submitSpin" style="display:none"></i>
+    </button>
+  </div>
+</div>
+
+<!-- ══ FAQ ══ -->
+<section class="faq-section">
+  <div class="faq-wrap">
+    <div class="faq-grid">
+      <div class="reveal">
+        <div class="s-eyebrow"><div class="s-eyebrow-dot"></div><span class="s-eyebrow-txt">FAQs</span></div>
+        <h2 class="faq-h">Frequently asked <em>questions</em></h2>
+        <p class="faq-desc">Can't find what you're looking for? Email us at <a href="mailto:kaamconnect24@gmail.com" style="color:var(--saffron);font-weight:600">kaamconnect24@gmail.com</a> and we'll help you out.</p>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item open" onclick="toggleFaq(this)">
+          <div class="faq-q">How do I book a worker on KaamConnect? <div class="faq-icon"><i class="bi bi-plus"></i></div></div>
+          <div class="faq-a"><div class="faq-a-inner">Search for the service you need on our homepage, browse available workers in your city, view their profiles and ratings, and click "Book Now". Fill in your job details and confirm the booking through our secure Razorpay payment system.</div></div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">How does the escrow payment system work? <div class="faq-icon"><i class="bi bi-plus"></i></div></div>
+          <div class="faq-a"><div class="faq-a-inner">When you confirm a booking, your payment is held securely in escrow via Razorpay. The worker receives the payment only after you confirm the job is complete to your satisfaction. This protects both customers and workers — zero risk on either side.</div></div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">How can I register as a worker? <div class="faq-icon"><i class="bi bi-plus"></i></div></div>
+          <div class="faq-a"><div class="faq-a-inner">Click "Register" and select "Worker" as your role. Fill in your personal details, skills, and availability. Our admin team will verify your identity and approve your profile, after which you can start receiving job requests from customers.</div></div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">What cities is KaamConnect available in? <div class="faq-icon"><i class="bi bi-plus"></i></div></div>
+          <div class="faq-a"><div class="faq-a-inner">We're currently active in Chandigarh, Prayagraj, Ludhiana, Delhi NCR, Lucknow, and 15+ cities across North India. We're expanding fast — if your city isn't listed yet, register and we'll notify you when we launch there.</div></div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">How do I report a dispute or problem? <div class="faq-icon"><i class="bi bi-plus"></i></div></div>
+          <div class="faq-a"><div class="faq-a-inner">Use the contact form above with "Job Dispute" as the topic, or email kaamconnect24@gmail.com with your booking ID and a description. Our support team responds within 24 hours on weekdays and resolves 97% of disputes successfully.</div></div>
+        </div>
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">What is the platform fee? <div class="faq-icon"><i class="bi bi-plus"></i></div></div>
+          <div class="faq-a"><div class="faq-a-inner">KaamConnect charges just 10% — the lowest in the industry. Competitors charge 25–40%. We keep it low so workers take home more and customers get fair prices. No hidden charges, ever.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <div class="cta-grid-bg"></div>
+  <div class="cta-inner">
+    <h2>Ready to get started?</h2>
+    <p>Join thousands of workers and customers building a fairer India — one job at a time.</p>
+    <div class="cta-btns">
+      <button class="cta-primary" onclick="location.href='register.html'"><i class="bi bi-lightning-charge-fill"></i> Find a Worker Now</button>
+      <button class="cta-outline" onclick="location.href='register.html?role=worker'">Join as Worker →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
 <footer>
-  <p>© 2026 KaamConnect. All rights reserved. | <a href="Privacy policy.html">Privacy Policy</a> | <a href="Terms.html">Terms of Service</a> | <a href="Contact.html">Contact</a></p>
+  <div class="main-wrap" style="padding:0 48px;display:block;max-width:1280px;margin:0 auto;">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:14px">
+          <div class="logo-icon"><i class="bi bi-tools"></i></div>
+          <div class="logo-txt">Kaam<span>Connect</span></div>
+        </div>
+        <p>India's trusted marketplace connecting skilled workers with customers — since 2026.</p>
+        <div class="footer-social">
+          <div class="fs-icon"><i class="bi bi-twitter-x"></i></div>
+          <div class="fs-icon"><i class="bi bi-instagram"></i></div>
+          <div class="fs-icon"><i class="bi bi-facebook"></i></div>
+          <div class="fs-icon"><i class="bi bi-linkedin"></i></div>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#services">Find Workers</a></li><li><a href="index.html#how">How It Works</a></li><li><a href="#">Pricing</a></li><li><a href="#">Safety</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="Contact.html">Contact Us</a></li><li><a href="register.html">Join as Worker</a></li><li><a href="login.html">Sign In</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="Privacy policy.html">Privacy Policy</a></li><li><a href="Terms.html">Terms of Service</a></li></ul></div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center">
+      <p style="font-size:13px;color:rgba(255,255,255,.35)">Built &amp; Designed with <span style="color:var(--saffron)">♥</span> by <strong style="color:rgba(255,255,255,.65)">Priyam Yadav</strong></p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 KaamConnect. All rights reserved.</p>
+      <div class="footer-links"><a href="Privacy policy.html">Privacy</a><a href="Terms.html">Terms</a><a href="Contact.html">Contact</a></div>
+    </div>
+  </div>
 </footer>
 
 <script>
-function submitForm(){
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const message=document.getElementById('message').value.trim();
-  if(!name||!email||!message){alert('Please fill in your name, email, and message.');return;}
-  // Show success (in production, connect this to your backend or Formspree)
-  document.getElementById('successMsg').style.display='block';
-  document.getElementById('name').value='';
-  document.getElementById('email').value='';
-  document.getElementById('message').value='';
+// ══ NAV ══
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('pinned', scrollY > 30));
+let mobOpen = false;
+document.getElementById('navHam').addEventListener('click', () => {
+  mobOpen = !mobOpen;
+  document.getElementById('navMobile').classList.toggle('show', mobOpen);
+  document.getElementById('navHam').classList.toggle('open', mobOpen);
+});
+function closeMob() { mobOpen=false; document.getElementById('navMobile').classList.remove('show'); document.getElementById('navHam').classList.remove('open'); }
+
+// ══ SCROLL REVEAL ══
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60); });
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ══ CHAR COUNT ══
+function updateCount(el) {
+  document.getElementById('charCount').textContent = el.value.length;
+}
+
+// ══ FAQ TOGGLE ══
+function toggleFaq(item) {
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ══ FORM SUBMIT ══
+async function submitForm() {
+  const fname   = document.getElementById('fname').value.trim();
+  const lname   = document.getElementById('lname').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const phone   = document.getElementById('phone').value.trim();
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value.trim();
+
+  // Validate
+  if (!fname)    { showAlert('error', 'Please enter your first name.'); return; }
+  if (!email || !email.includes('@')) { showAlert('error', 'Please enter a valid email address.'); return; }
+  if (!subject)  { showAlert('error', 'Please select a topic.'); return; }
+  if (!message || message.length < 10) { showAlert('error', 'Please write a message (at least 10 characters).'); return; }
+
+  const btn  = document.getElementById('submitBtn');
+  const icon = document.getElementById('submitIcon');
+  const text = document.getElementById('submitText');
+  const spin = document.getElementById('submitSpin');
+  btn.disabled = true; icon.style.display='none'; spin.style.display='inline-block'; text.textContent = 'Sending…';
+
+  const fullName = lname ? `${fname} ${lname}` : fname;
+
+  try {
+    // ── Try your own backend first ──
+    const res = await fetch('/api/contact/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: fullName, email, phone, subject, message })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      showAlert('ok', `✅ Message sent! We'll get back to you at ${email} within 24 hours.`);
+      clearForm();
+    } else {
+      // ── Fallback: mailto link ──
+      fallbackMailto(fullName, email, phone, subject, message);
+    }
+  } catch (err) {
+    // ── Network error → fallback mailto ──
+    fallbackMailto(fullName, email, phone, subject, message);
+  }
+
+  btn.disabled = false; icon.style.display='inline-block'; spin.style.display='none'; text.textContent = 'Send Message';
+}
+
+function fallbackMailto(name, email, phone, subject, message) {
+  const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'Not provided'}\nTopic: ${subject}\n\nMessage:\n${message}`;
+  const mailtoLink = `mailto:kaamconnect24@gmail.com?subject=${encodeURIComponent('KaamConnect Contact: ' + subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailtoLink;
+  showAlert('ok', `📧 Your email app will open with the message pre-filled. Alternatively email us at kaamconnect24@gmail.com`);
+}
+
+function clearForm() {
+  ['fname','lname','email','phone','message'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('subject').value = '';
+  document.getElementById('charCount').textContent = '0';
+}
+
+function showAlert(type, msg) {
+  const el = document.getElementById('formAlert');
+  el.style.display = 'flex';
+  el.className = 'alert ' + (type === 'error' ? 'alert-err' : 'alert-ok');
+  el.innerHTML = `<i class="bi bi-${type==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> <span>${msg}</span>`;
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (type === 'ok') setTimeout(() => { el.style.display='none'; }, 8000);
 }
 </script>
-
 </body>
 </html>
