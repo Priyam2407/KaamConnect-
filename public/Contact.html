@@ -58,7 +58,7 @@ ul { list-style:none; }
 .nav-ham.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
 .nav-ham.open span:nth-child(2) { opacity:0; }
 .nav-ham.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-.nav-mobile { display:none; position:fixed; top:70px; inset-x:0; background:rgba(251,248,244,.98); backdrop-filter:blur(24px); border-bottom:1px solid var(--ink-06); padding:16px 24px 24px; flex-direction:column; gap:4px; box-shadow:0 16px 50px rgba(12,23,20,.12); z-index:899; animation:slideDown .25s ease; }
+.nav-mobile { display:none; position:fixed; top:70px; left:0; right:0; background:rgba(251,248,244,.98); backdrop-filter:blur(24px); border-bottom:1px solid var(--ink-06); padding:16px 24px 24px; flex-direction:column; gap:4px; box-shadow:0 16px 50px rgba(12,23,20,.12); z-index:899; animation:slideDown .25s ease; }
 .nav-mobile.show { display:flex; }
 @keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
 .nav-mobile a { font-size:15px; font-weight:700; color:var(--ink-70); padding:13px 16px; border-radius:10px; transition:all .2s; }
@@ -109,7 +109,6 @@ ul { list-style:none; }
 .main-wrap { max-width:1280px; margin:0 auto; padding:80px 48px; display:grid; grid-template-columns:1fr 1.1fr; gap:60px; align-items:start; }
 
 /* Left — info */
-.contact-left {}
 .cl-section { margin-bottom:48px; }
 .cl-head { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
 .cl-head-icon { width:40px; height:40px; border-radius:11px; background:var(--saffron-pale); display:grid; place-items:center; font-size:18px; color:var(--saffron); flex-shrink:0; }
@@ -184,7 +183,6 @@ select.fi { cursor:pointer; appearance:none; -webkit-appearance:none; background
 .faq-section { background:var(--white); padding:90px 0; }
 .faq-wrap { max-width:1280px; margin:0 auto; padding:0 48px; }
 .faq-grid { display:grid; grid-template-columns:1fr 1.8fr; gap:80px; align-items:start; }
-.faq-left {}
 .faq-left .s-eyebrow { display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; }
 .faq-left .s-eyebrow-dot { width:8px; height:8px; border-radius:50%; background:var(--saffron); }
 .faq-left .s-eyebrow-txt { font-size:11px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); }
