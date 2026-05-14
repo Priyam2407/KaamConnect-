@@ -3,264 +3,352 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Choose Your Role — KaamConnect</title>
+<title>Complete Your Profile — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<!-- Bootstrap Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cabinet+Grotesk:wght@400;500;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580415002485035" crossorigin="anonymous"></script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580415002485035"
-     crossorigin="anonymous"></script>
 <style>
-:root{--saffron:#E8601C;--saffron-2:#F0783A;--saffron-pale:#FEF0E8;--saffron-light:#FDE0CF;--forest:#1A3C34;--forest-2:#24524A;--sage:#3D7A6E;--sage-light:#E5F0EE;--cream:#FAF7F2;--white:#FFFFFF;--ink:#0F1923;--ink-70:rgba(15,25,35,.7);--ink-40:rgba(15,25,35,.4);--ink-12:rgba(15,25,35,.12);--ink-06:rgba(15,25,35,.06)}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
-a{text-decoration:none;color:inherit}
+:root {
+  --saffron: #E8601C;
+  --saffron-2: #F07840;
+  --saffron-glow: rgba(232,96,28,.25);
+  --saffron-pale: #FEF0E8;
+  --forest: #1A3C34;
+  --forest-2: #24524A;
+  --forest-3: #0D2420;
+  --sage: #3D7A6E;
+  --sage-light: #E5F0EE;
+  --gold: #D4A017;
+  --gold-2: #F0C040;
+  --cream: #FBF8F4;
+  --white: #FFFFFF;
+  --ink: #0C1714;
+  --ink-70: rgba(12,23,20,.7);
+  --ink-40: rgba(12,23,20,.4);
+  --ink-12: rgba(12,23,20,.12);
+  --ink-06: rgba(12,23,20,.06);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { text-decoration:none; color:inherit; }
 
-/* ── NAV ─────────────────────────────────────────────────── */
-nav{background:var(--forest);border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:50}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 40px;height:66px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:9px}
-.logo-flag{width:28px;height:19px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.25);border:1.5px solid rgba(255,255,255,.3);transition:transform .22s}
-.logo-flag svg{width:100%;height:100%;display:block}
-.logo:hover .logo-flag{transform:scale(1.08)}
-.logo-sep{width:1px;height:22px;background:rgba(255,255,255,.2)}
-.logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:10px;display:grid;place-items:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(232,96,28,.35);transition:transform .22s;flex-shrink:0}
-.logo:hover .logo-mark{transform:rotate(-8deg) scale(1.1)}
-.logo-txt{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.4px;color:#fff}
-.logo-txt span{color:var(--saffron-2)}
-.nav-back{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);transition:all .22s}
-.nav-back:hover{border-color:rgba(255,255,255,.3);color:#fff;background:rgba(255,255,255,.07)}
+/* ══ NAV ══ */
+#nav {
+  position:sticky; top:0; z-index:900;
+  background:rgba(251,248,244,.97);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--ink-06);
+  box-shadow:0 4px 24px rgba(12,23,20,.06);
+}
+.nav-in {
+  max-width:1280px; margin:0 auto; padding:0 48px;
+  height:66px; display:flex; align-items:center;
+  justify-content:space-between; gap:16px;
+}
+.logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.logo-icon { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--saffron),var(--saffron-2)); display:grid; place-items:center; font-size:16px; color:#fff; box-shadow:0 4px 14px var(--saffron-glow); transition:transform .3s; flex-shrink:0; }
+.logo:hover .logo-icon { transform:rotate(-10deg) scale(1.08); }
+.logo-txt { font-family:'Cabinet Grotesk',sans-serif; font-weight:900; font-size:19px; letter-spacing:-.5px; color:var(--forest); }
+.logo-txt span { color:var(--saffron); }
+.nav-step-info { display:flex; align-items:center; gap:10px; font-size:13px; font-weight:600; color:var(--ink-40); }
+.nav-step-badge { background:var(--saffron-pale); border:1px solid rgba(232,96,28,.2); border-radius:100px; padding:4px 12px; font-size:12px; font-weight:700; color:var(--saffron); }
+.nav-back-btn { display:flex; align-items:center; gap:7px; padding:8px 16px; border:1.5px solid var(--ink-12); border-radius:9px; font-size:13px; font-weight:700; color:var(--ink-70); cursor:pointer; background:transparent; font-family:'DM Sans',sans-serif; transition:all .22s; }
+.nav-back-btn:hover { border-color:var(--saffron); color:var(--saffron); background:var(--saffron-pale); }
 
-/* ── TICKER ──────────────────────────────────────────────── */
-.ticker{background:var(--saffron);padding:10px 0;overflow:hidden}
-.ticker-track{display:flex;width:max-content;animation:ticker 25s linear infinite}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.t-item{display:inline-flex;align-items:center;gap:10px;padding:0 24px;font-size:11.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.8);white-space:nowrap}
-.t-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4)}
+/* ══ TICKER ══ */
+.ticker { background:linear-gradient(90deg,var(--saffron),var(--saffron-2)); padding:10px 0; overflow:hidden; position:relative; }
+.ticker::before, .ticker::after { content:''; position:absolute; top:0; bottom:0; width:60px; z-index:1; }
+.ticker::before { left:0; background:linear-gradient(90deg,var(--saffron),transparent); }
+.ticker::after { right:0; background:linear-gradient(-90deg,var(--saffron-2),transparent); }
+.ticker-track { display:flex; width:max-content; animation:ticker 28s linear infinite; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.t-item { display:inline-flex; align-items:center; gap:10px; padding:0 22px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.85); white-space:nowrap; }
+.t-dot { width:3px; height:3px; border-radius:50%; background:rgba(255,255,255,.4); }
 
-/* ── HERO ────────────────────────────────────────────────── */
-.hero{background:var(--forest);padding:52px 40px 56px;position:relative;overflow:hidden;text-align:center}
-.hero::before{content:'';position:absolute;top:-120px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%);pointer-events:none}
-.hero::after{content:'';position:absolute;bottom:-80px;left:-60px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(61,122,110,.2),transparent 65%);pointer-events:none}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:52px 52px}
-.hero-inner{position:relative;z-index:1;max-width:600px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:6px 16px;margin-bottom:20px}
-.hb-pulse{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 10px rgba(74,222,128,.6);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 10px rgba(74,222,128,.6)}50%{box-shadow:0 0 20px rgba(74,222,128,.9)}}
-.hero-badge span{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.3px}
-.hero-h{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,50px);color:#fff;line-height:1.07;letter-spacing:-1.5px;margin-bottom:12px}
-.hero-h em{font-style:italic;color:var(--saffron-2)}
-.hero-p{font-size:15.5px;color:rgba(255,255,255,.55);line-height:1.7;font-weight:300}
+/* ══ HERO ══ */
+.hero {
+  background:var(--forest); padding:52px 24px 56px;
+  position:relative; overflow:hidden; text-align:center;
+}
+.hero::before { content:''; position:absolute; top:-100px; right:-80px; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle,rgba(232,96,28,.15),transparent 65%); }
+.hero::after { content:''; position:absolute; bottom:-60px; left:-50px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle,rgba(61,122,110,.2),transparent 65%); }
+.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:48px 48px; }
+.hero-inner { position:relative; z-index:1; max-width:560px; margin:0 auto; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:100px; padding:6px 16px; margin-bottom:18px; }
+.hb-pulse { width:7px; height:7px; border-radius:50%; background:#4ADE80; animation:glow 2s ease-in-out infinite; }
+@keyframes glow { 0%,100%{box-shadow:0 0 8px rgba(74,222,128,.5)} 50%{box-shadow:0 0 18px rgba(74,222,128,.9)} }
+.hero-badge span { font-size:12.5px; font-weight:600; color:rgba(255,255,255,.75); }
+.hero-h { font-family:'Playfair Display',serif; font-size:clamp(28px,4.5vw,46px); color:#fff; line-height:1.07; letter-spacing:-1.5px; margin-bottom:12px; }
+.hero-h em { font-style:italic; color:var(--saffron-2); }
+.hero-p { font-size:15px; color:rgba(255,255,255,.5); line-height:1.7; font-weight:300; }
 
-/* ── MAIN ────────────────────────────────────────────────── */
-.main{max-width:680px;margin:0 auto;padding:48px 24px 100px}
+/* ══ MAIN ══ */
+.main { max-width:700px; margin:0 auto; padding:52px 24px 100px; }
 
-/* User card */
-.user-card{display:flex;align-items:center;gap:16px;background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:18px 22px;margin-bottom:36px;box-shadow:0 8px 32px rgba(15,25,35,.07)}
-.user-av{width:52px;height:52px;border-radius:14px;background:var(--saffron);display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700;flex-shrink:0;overflow:hidden;font-family:'Syne',sans-serif}
-.user-av img{width:100%;height:100%;object-fit:cover;border-radius:14px}
-.user-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--forest);margin-bottom:3px}
-.user-email{font-size:13px;color:var(--ink-40)}
-.user-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:600;color:#166534;flex-shrink:0;white-space:nowrap}
+/* Google user card */
+.user-card {
+  display:flex; align-items:center; gap:16px;
+  background:var(--white); border:1.5px solid var(--ink-06);
+  border-radius:18px; padding:18px 22px; margin-bottom:40px;
+  box-shadow:0 8px 32px rgba(12,23,20,.07);
+}
+.user-av {
+  width:52px; height:52px; border-radius:14px;
+  background:var(--saffron); display:grid; place-items:center;
+  color:#fff; font-size:22px; font-weight:700; flex-shrink:0;
+  font-family:'Cabinet Grotesk',sans-serif; overflow:hidden;
+}
+.user-av img { width:100%; height:100%; object-fit:cover; }
+.user-name { font-family:'Cabinet Grotesk',sans-serif; font-size:16px; font-weight:800; color:var(--forest); margin-bottom:3px; }
+.user-email { font-size:13px; color:var(--ink-40); }
+.user-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.25); border-radius:100px; padding:5px 12px; font-size:12px; font-weight:700; color:#166534; flex-shrink:0; margin-left:auto; }
 
-/* Eyebrow + headings */
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--saffron);display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.eyebrow::before{content:'';width:18px;height:2px;background:var(--saffron);border-radius:2px}
-.section-h{font-family:'Instrument Serif',serif;font-size:clamp(24px,4vw,32px);color:var(--forest);line-height:1.1;letter-spacing:-1px;margin-bottom:6px}
-.section-h em{font-style:italic;color:var(--saffron)}
-.section-p{font-size:14.5px;color:var(--ink-70);line-height:1.7;font-weight:300;margin-bottom:26px}
+/* Progress indicator */
+.progress-bar-wrap { margin-bottom:36px; }
+.progress-label { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.progress-label-l { font-size:12px; font-weight:700; color:var(--ink-40); }
+.progress-label-r { font-size:12px; font-weight:700; color:var(--saffron); }
+.progress-track { height:5px; background:var(--ink-06); border-radius:5px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--saffron),var(--gold-2)); border-radius:5px; transition:width .5s ease; }
+
+/* Section headings */
+.sec-eyebrow { font-size:10px; font-weight:800; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.sec-eyebrow::before { content:''; width:16px; height:2px; background:var(--saffron); border-radius:2px; }
+.sec-h { font-family:'Playfair Display',serif; font-size:clamp(22px,3vw,30px); color:var(--forest); line-height:1.1; letter-spacing:-1px; margin-bottom:6px; }
+.sec-h em { font-style:italic; color:var(--saffron); }
+.sec-p { font-size:14px; color:var(--ink-70); line-height:1.7; font-weight:300; margin-bottom:24px; }
 
 /* Role grid */
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px}
-.rbtn{padding:28px 22px;border:2px solid var(--ink-12);border-radius:16px;text-align:center;cursor:pointer;background:var(--white);transition:all .25s;position:relative;overflow:hidden}
-.rbtn::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--saffron),var(--saffron-2));transform:scaleX(0);transform-origin:left;transition:transform .25s}
-.rbtn:hover{border-color:rgba(232,96,28,.25);transform:translateY(-5px);box-shadow:0 20px 64px rgba(15,25,35,.1)}
-.rbtn:hover::before,.rbtn.on::before{transform:scaleX(1)}
-.rbtn.on{border-color:var(--saffron);background:var(--saffron-pale);box-shadow:0 8px 32px rgba(232,96,28,.18);transform:translateY(-5px)}
-.rbtn-check{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;background:var(--saffron);display:none;align-items:center;justify-content:center;color:#fff;font-size:12px;box-shadow:0 4px 12px rgba(232,96,28,.4)}
-.rbtn.on .rbtn-check{display:flex}
-.rbtn-ico{font-size:40px;display:block;margin-bottom:14px}
-.rbtn-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--saffron);background:rgba(232,96,28,.1);border-radius:100px;padding:3px 10px;margin-bottom:8px}
-.rbtn-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--forest);margin-bottom:5px}
-.rbtn-desc{font-size:13px;color:var(--ink-40);line-height:1.55}
+.role-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:36px; }
+.rbtn {
+  padding:24px 18px; border:2px solid var(--ink-12); border-radius:16px;
+  text-align:center; cursor:pointer; background:var(--white);
+  transition:all .28s cubic-bezier(.34,1.56,.64,1); position:relative; overflow:hidden;
+}
+.rbtn::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--saffron),var(--gold-2)); transform:scaleX(0); transform-origin:left; transition:transform .28s; }
+.rbtn:hover { border-color:rgba(232,96,28,.3); transform:translateY(-5px); box-shadow:0 16px 48px rgba(12,23,20,.1); }
+.rbtn:hover::after, .rbtn.on::after { transform:scaleX(1); }
+.rbtn.on { border-color:var(--saffron); background:var(--saffron-pale); box-shadow:0 8px 30px rgba(232,96,28,.18); transform:translateY(-5px); }
+.rbtn-check { position:absolute; top:12px; right:12px; width:22px; height:22px; border-radius:50%; background:var(--saffron); display:none; align-items:center; justify-content:center; color:#fff; font-size:11px; }
+.rbtn.on .rbtn-check { display:flex; }
+.rbtn-ico { font-size:38px; display:block; margin-bottom:12px; }
+.rbtn-tag { display:inline-block; font-size:9.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--saffron); background:rgba(232,96,28,.1); border-radius:100px; padding:3px 10px; margin-bottom:7px; }
+.rbtn-name { font-family:'Cabinet Grotesk',sans-serif; font-size:15px; font-weight:800; color:var(--forest); margin-bottom:4px; }
+.rbtn-desc { font-size:12.5px; color:var(--ink-40); line-height:1.5; }
 
 /* Divider */
-.divider-line{height:1px;background:var(--ink-06);margin-bottom:32px}
+.divider-section { height:1px; background:var(--ink-06); margin:32px 0; }
 
-/* Sec label */
-.sec-lbl{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-40);margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.sec-lbl::after{content:'';flex:1;height:1px;background:var(--ink-06)}
-
-/* Form */
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:12px;font-weight:700;color:var(--forest);margin-bottom:7px;letter-spacing:.3px}
-.fw{position:relative}
-.fi{width:100%;padding:12px 14px 12px 42px;border:1.5px solid var(--ink-12);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);outline:none;transition:all .2s;appearance:none}
-.fi::placeholder{color:var(--ink-40);font-weight:300}
-.fi:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,96,28,.1)}
-.fi-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--ink-40);font-size:14px;pointer-events:none;transition:color .2s}
-.fw:focus-within .fi-ico{color:var(--saffron)}
-.fi-nopad{padding-left:14px}
-textarea.fi{min-height:80px;resize:vertical;padding-top:11px}
-.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:4px;transition:color .2s}
-.eye-btn:hover{color:var(--ink)}
+/* Field styles */
+.sec-lbl { font-size:10px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:var(--ink-40); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.sec-lbl::after { content:''; flex:1; height:1px; background:var(--ink-06); }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.fg { margin-bottom:14px; }
+.fl { display:block; font-size:12px; font-weight:800; color:var(--forest); margin-bottom:6px; letter-spacing:.3px; }
+.req { color:var(--saffron); margin-left:2px; }
+.fw { position:relative; }
+.fi { width:100%; padding:12px 14px 12px 42px; border:1.5px solid var(--ink-12); border-radius:11px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--ink); background:var(--white); outline:none; transition:all .2s; appearance:none; -webkit-appearance:none; }
+.fi::placeholder { color:var(--ink-40); font-weight:300; }
+.fi:focus { border-color:var(--saffron); box-shadow:0 0 0 3px rgba(232,96,28,.1); }
+.fi.err { border-color:#DC2626; box-shadow:0 0 0 3px rgba(220,38,38,.1); }
+.fi-ico { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--ink-40); font-size:14px; pointer-events:none; transition:color .2s; }
+.fw:focus-within .fi-ico { color:var(--saffron); }
+.fi-nopad { padding-left:14px; }
+textarea.fi { min-height:88px; resize:vertical; padding-top:12px; }
+.eye-btn { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:var(--ink-40); font-size:14px; padding:4px; transition:color .2s; }
+.eye-btn:hover { color:var(--ink); }
+select.fi { cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+.field-hint { font-size:11px; color:var(--ink-40); margin-top:5px; display:flex; align-items:center; gap:4px; }
+.field-hint.err { color:#DC2626; }
 
 /* Password bars */
-.pw-bars{display:flex;gap:4px;margin-top:8px}
-.pw-bar{height:3px;flex:1;background:var(--ink-06);border-radius:3px;transition:all .3s}
+.pw-bars { display:flex; gap:4px; margin-top:7px; }
+.pw-bar { height:3px; flex:1; background:var(--ink-06); border-radius:3px; transition:all .3s; }
+.pw-strength { font-size:11px; font-weight:700; margin-top:4px; }
 
 /* Password card */
-.pw-card{background:var(--white);border:1.5px solid var(--ink-06);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 8px 32px rgba(15,25,35,.07)}
-.pw-card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.pw-card-ico{width:40px;height:40px;border-radius:11px;background:var(--saffron-pale);display:grid;place-items:center;font-size:18px;color:var(--saffron);flex-shrink:0}
-.pw-card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
-.pw-card-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
-.pw-note{font-size:12px;color:var(--ink-40);display:flex;align-items:flex-start;gap:7px;margin-top:10px;line-height:1.6}
-.pw-note i{color:var(--saffron);flex-shrink:0;margin-top:2px}
+.pw-card { background:var(--white); border:1.5px solid var(--ink-06); border-radius:16px; padding:22px; margin-bottom:18px; }
+.pw-card-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.pw-card-ico { width:38px; height:38px; border-radius:10px; background:var(--saffron-pale); display:grid; place-items:center; font-size:18px; color:var(--saffron); flex-shrink:0; }
+.pw-card-title { font-family:'Cabinet Grotesk',sans-serif; font-size:14px; font-weight:800; color:var(--forest); }
+.pw-card-sub { font-size:12px; color:var(--ink-40); margin-top:2px; }
+.optional-tag { font-size:10px; font-weight:700; background:var(--saffron-pale); color:var(--saffron); border:1px solid rgba(232,96,28,.2); padding:2px 8px; border-radius:100px; margin-left:6px; vertical-align:middle; }
+.pw-note { font-size:12px; color:var(--ink-40); display:flex; gap:7px; line-height:1.6; margin-top:12px; }
+.pw-note i { color:var(--sage); flex-shrink:0; margin-top:1px; }
 
-/* ── REFERRAL SECTION ────────────────────────────────────── */
-.ref-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.05));border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:20px}
-.ref-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.ref-ico{width:40px;height:40px;border-radius:11px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;color:var(--sage);flex-shrink:0}
-.ref-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
-.ref-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
-
-/* Applied state */
-.ref-applied{display:none;align-items:center;gap:12px;background:rgba(61,122,110,.08);border:1.5px solid rgba(61,122,110,.25);border-radius:12px;padding:14px 16px;margin-bottom:12px}
-.ref-applied-ico{width:36px;height:36px;border-radius:10px;background:var(--sage);display:grid;place-items:center;font-size:16px;color:#fff;flex-shrink:0}
-.ref-applied-lbl{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sage);margin-bottom:3px}
-.ref-applied-code{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--forest);letter-spacing:2px}
-.ref-applied-bonus{font-size:12px;color:var(--sage);margin-top:2px}
-.ref-remove-btn{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px;padding:6px 8px;border-radius:8px;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:4px}
-.ref-remove-btn:hover{background:#FEF2F2;color:#DC2626}
-
-/* Input row */
-.ref-input-row{display:flex;gap:10px;align-items:flex-start}
-.ref-input-row .fg{flex:1;margin-bottom:0}
-.ref-apply-btn{padding:12px 18px;background:var(--sage);border:none;border-radius:10px;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:7px;flex-shrink:0;margin-top:0}
-.ref-apply-btn:hover{background:var(--forest);transform:translateY(-1px)}
-.ref-apply-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.ref-status{font-size:12.5px;margin-top:8px;display:none;align-items:center;gap:7px;padding:8px 12px;border-radius:9px}
-.ref-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
-.ref-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
-.ref-hint{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;gap:7px;line-height:1.55}
-.ref-hint i{color:var(--sage);flex-shrink:0;margin-top:2px}
+/* Worker notice box */
+.worker-notice { background:linear-gradient(135deg,rgba(26,60,52,.05),rgba(61,122,110,.06)); border:1.5px solid var(--sage-light); border-radius:14px; padding:16px 18px; margin-bottom:22px; display:flex; align-items:flex-start; gap:14px; }
+.wn-icon { width:38px; height:38px; border-radius:10px; background:var(--forest); display:grid; place-items:center; font-size:16px; color:var(--saffron-2); flex-shrink:0; }
+.wn-title { font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:800; color:var(--forest); margin-bottom:4px; }
+.wn-desc { font-size:12px; color:var(--ink-70); line-height:1.55; }
 
 /* ID upload */
-.id-section{background:linear-gradient(135deg,rgba(26,60,52,.03),rgba(61,122,110,.05));border:1.5px solid var(--sage-light);border-radius:16px;padding:22px;margin-bottom:20px}
-.id-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.id-head-ico{width:40px;height:40px;border-radius:11px;background:var(--sage-light);display:grid;place-items:center;font-size:18px;color:var(--sage);flex-shrink:0}
-.id-head-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--forest)}
-.id-head-sub{font-size:12px;color:var(--ink-40);margin-top:2px}
-.id-types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.id-btn{padding:10px 12px;border:1.5px solid var(--ink-12);border-radius:10px;background:var(--white);cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-70);font-family:'DM Sans',sans-serif;transition:all .2s}
-.id-btn:hover{border-color:var(--sage);color:var(--sage);background:var(--sage-light)}
-.id-btn.on{border-color:var(--saffron);background:var(--saffron-pale);color:var(--saffron);font-weight:700}
-.id-btn i{font-size:16px}
-.dropzone{border:2px dashed var(--ink-12);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .25s;background:var(--white);position:relative}
-.dropzone:hover,.dropzone.drag{border-color:var(--saffron);background:var(--saffron-pale)}
-.dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.dz-ico{font-size:32px;color:var(--ink-12);margin-bottom:10px;transition:color .2s}
-.dropzone:hover .dz-ico,.dropzone.drag .dz-ico{color:var(--saffron)}
-.dz-txt{font-size:13.5px;font-weight:600;color:var(--ink-40);margin-bottom:4px}
-.dz-hint{font-size:12px;color:var(--ink-40)}
-.preview{display:none;align-items:center;gap:12px;background:var(--sage-light);border:1.5px solid rgba(61,122,110,.2);border-radius:10px;padding:12px 14px;margin-top:10px}
-.prev-ico{font-size:22px}
-.prev-name{font-size:13px;font-weight:600;color:var(--forest);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.prev-size{font-size:11px;color:var(--ink-40)}
-.prev-rm{background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:16px;transition:color .2s}
-.prev-rm:hover{color:#DC2626}
-.id-note{font-size:12px;color:var(--ink-40);margin-top:10px;display:flex;gap:7px;line-height:1.55}
-.id-note i{color:var(--sage);flex-shrink:0;margin-top:2px}
+.id-section { background:var(--cream); border:1.5px solid var(--ink-06); border-radius:14px; padding:20px; margin-bottom:18px; }
+.id-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.id-head-ico { width:38px; height:38px; border-radius:10px; background:var(--sage-light); display:grid; place-items:center; font-size:17px; color:var(--sage); flex-shrink:0; }
+.id-head-title { font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:800; color:var(--forest); }
+.id-head-sub { font-size:12px; color:var(--ink-40); margin-top:2px; }
+.id-types { display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px; margin-bottom:14px; }
+.id-btn { padding:9px 10px; border:1.5px solid var(--ink-12); border-radius:9px; background:var(--white); cursor:pointer; display:flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--ink-70); font-family:'DM Sans',sans-serif; transition:all .2s; }
+.id-btn:hover { border-color:var(--saffron); color:var(--saffron); }
+.id-btn.on { border-color:var(--saffron); background:var(--saffron-pale); color:var(--saffron); font-weight:700; }
+.dropzone { border:2px dashed var(--ink-12); border-radius:11px; padding:28px 16px; text-align:center; cursor:pointer; background:var(--white); position:relative; transition:all .25s; }
+.dropzone:hover, .dropzone.drag { border-color:var(--saffron); background:var(--saffron-pale); }
+.dropzone.done { border-color:var(--sage); border-style:solid; }
+.dropzone input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+.dz-ico { font-size:30px; color:var(--ink-12); margin-bottom:10px; display:block; transition:color .2s; }
+.dropzone:hover .dz-ico { color:var(--saffron); }
+.dz-txt { font-size:13px; font-weight:700; color:var(--ink-40); margin-bottom:3px; }
+.dz-hint { font-size:11.5px; color:var(--ink-40); }
+.preview { display:none; align-items:center; gap:10px; background:var(--sage-light); border:1.5px solid rgba(61,122,110,.2); border-radius:9px; padding:11px 14px; margin-top:10px; }
+.prev-ico { font-size:22px; }
+.prev-name { font-size:12.5px; font-weight:700; color:var(--forest); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.prev-size { font-size:11px; color:var(--ink-40); }
+.prev-rm { background:none; border:none; cursor:pointer; color:var(--ink-40); font-size:16px; transition:color .2s; }
+.prev-rm:hover { color:#DC2626; }
+.id-note { font-size:12px; color:var(--ink-40); margin-top:12px; display:flex; gap:6px; line-height:1.55; }
+.id-note i { color:var(--sage); flex-shrink:0; margin-top:1px; }
 
-/* Alert */
-.alert{padding:12px 16px;border-radius:10px;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;margin-bottom:20px;animation:fadeIn .2s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.alert-err{background:#FEF2F2;color:#DC2626;border:1.5px solid #FECACA}
-.alert-ok{background:#F0FDF4;color:#15803D;border:1.5px solid #BBF7D0}
+/* Referral — collapsible accordion */
+.ref-accordion { border:1.5px solid var(--ink-06); border-radius:14px; overflow:hidden; margin-bottom:22px; background:var(--white); }
+.ref-acc-header { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; cursor:pointer; user-select:none; transition:background .2s; }
+.ref-acc-header:hover { background:var(--cream); }
+.ref-acc-left { display:flex; align-items:center; gap:12px; }
+.ref-acc-icon { width:36px; height:36px; border-radius:10px; background:var(--saffron-pale); display:grid; place-items:center; font-size:16px; color:var(--saffron); flex-shrink:0; }
+.ref-acc-title { font-family:'Cabinet Grotesk',sans-serif; font-size:13px; font-weight:800; color:var(--forest); }
+.ref-acc-sub { font-size:11.5px; color:var(--ink-40); margin-top:2px; }
+.ref-acc-badge { font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase; background:var(--cream); border:1px solid var(--ink-06); color:var(--ink-40); padding:3px 10px; border-radius:100px; }
+.ref-acc-arrow { font-size:14px; color:var(--ink-40); transition:transform .3s; }
+.ref-accordion.open .ref-acc-arrow { transform:rotate(180deg); }
+.ref-acc-body { display:none; padding:0 18px 18px; border-top:1px solid var(--ink-06); padding-top:16px; }
+.ref-accordion.open .ref-acc-body { display:block; }
+.ref-applied-box { display:flex; align-items:center; gap:12px; background:var(--sage-light); border:1.5px solid rgba(61,122,110,.2); border-radius:11px; padding:13px 16px; }
+.ref-app-ico { width:36px; height:36px; border-radius:10px; background:var(--sage); display:grid; place-items:center; color:#fff; font-size:16px; flex-shrink:0; }
+.ref-app-label { font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--sage); margin-bottom:3px; }
+.ref-app-code { font-family:'Cabinet Grotesk',sans-serif; font-size:17px; font-weight:900; color:var(--forest); letter-spacing:2px; }
+.ref-remove-btn { background:none; border:none; cursor:pointer; color:var(--ink-40); font-size:13px; padding:6px 10px; border-radius:7px; font-family:'DM Sans',sans-serif; font-weight:700; transition:all .2s; margin-left:auto; display:flex; align-items:center; gap:4px; }
+.ref-remove-btn:hover { color:#DC2626; background:rgba(220,38,38,.06); }
+.ref-input-row { display:flex; gap:8px; align-items:center; }
+.ref-input-row .fw { flex:1; }
+.ref-apply-btn { padding:12px 16px; background:var(--sage); border:none; border-radius:10px; color:#fff; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; font-family:'DM Sans',sans-serif; transition:all .2s; flex-shrink:0; display:flex; align-items:center; gap:6px; }
+.ref-apply-btn:hover { background:var(--forest); }
+.ref-apply-btn:disabled { opacity:.6; cursor:not-allowed; }
+.ref-status { font-size:12.5px; font-weight:600; margin-top:8px; display:none; padding:9px 12px; border-radius:9px; display:none; align-items:center; gap:8px; }
+.ref-ok { background:#F0FDF4; color:#15803D; border:1.5px solid #BBF7D0; }
+.ref-err { background:#FEF2F2; color:#DC2626; border:1.5px solid #FECACA; }
+
+/* Terms */
+.terms-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:18px; }
+.terms-cb { width:18px; height:18px; border:1.5px solid var(--ink-12); border-radius:5px; cursor:pointer; flex-shrink:0; margin-top:2px; accent-color:var(--saffron); }
+.terms-txt { font-size:13px; color:var(--ink-70); line-height:1.6; }
+.terms-txt a { color:var(--saffron); font-weight:700; }
 
 /* Submit */
-.submit-btn{width:100%;padding:15px 28px;background:var(--saffron);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .25s;box-shadow:0 4px 16px rgba(232,96,28,.35);position:relative;overflow:hidden}
-.submit-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .22s}
-.submit-btn:hover{background:var(--saffron-2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,96,28,.45)}
-.submit-btn:hover::before{opacity:1}
-.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
-.spin{display:none;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.slide-in{animation:slideIn .3s ease}
-@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-
-/* Responsive */
-@media(max-width:600px){
-  .role-grid{grid-template-columns:1fr}
-  .frow{grid-template-columns:1fr}
-  .id-types{grid-template-columns:1fr 1fr}
-  .nav-in{padding:0 16px}
-  .main{padding:28px 16px 80px}
-  .hero{padding:36px 20px 40px}
-  .ref-input-row{flex-direction:column}
-  .ref-apply-btn{width:100%;justify-content:center}
+.submit-btn {
+  width:100%; padding:15px; background:linear-gradient(135deg,var(--saffron),var(--saffron-2));
+  border:none; border-radius:12px; color:#fff; font-family:'DM Sans',sans-serif;
+  font-size:15px; font-weight:700; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  transition:all .25s; box-shadow:0 6px 24px rgba(232,96,28,.35);
+  position:relative; overflow:hidden;
 }
-@media(max-width:400px){
-  .logo-sep{display:none}
-  .id-types{grid-template-columns:1fr}
-  .user-badge{display:none}
+.submit-btn::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.15),transparent); opacity:0; transition:opacity .25s; }
+.submit-btn:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(232,96,28,.45); }
+.submit-btn:hover::after { opacity:1; }
+.submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
+.spin { display:none; animation:spin .8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* Alerts */
+.alert { padding:12px 14px; border-radius:11px; font-size:13.5px; font-weight:500; display:flex; align-items:flex-start; gap:9px; margin-bottom:18px; line-height:1.5; animation:fadeIn .2s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:none} }
+.alert i { flex-shrink:0; margin-top:1px; }
+.ae { background:#FEF2F2; color:#DC2626; border:1.5px solid #FECACA; }
+.as { background:#F0FDF4; color:#15803D; border:1.5px solid #BBF7D0; }
+
+/* Success screen */
+.success-screen { display:none; text-align:center; padding:20px 0; animation:fadeIn .4s ease; }
+.ss-icon { font-size:64px; display:block; margin-bottom:16px; animation:bounceIn .6s ease; }
+@keyframes bounceIn { 0%{transform:scale(.5);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+.ss-title { font-family:'Playfair Display',serif; font-size:28px; color:var(--forest); margin-bottom:8px; letter-spacing:-.5px; }
+.ss-sub { font-size:15px; color:var(--ink-70); line-height:1.7; margin-bottom:6px; }
+.ss-note { font-size:13px; color:var(--ink-40); margin-bottom:24px; }
+.ss-btn { display:inline-flex; align-items:center; gap:8px; padding:13px 28px; background:var(--saffron); border:none; border-radius:11px; color:#fff; font-size:14px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .25s; box-shadow:0 6px 20px var(--saffron-glow); }
+.ss-btn:hover { background:var(--saffron-2); transform:translateY(-2px); }
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:700px) {
+  .nav-in { padding:0 16px; }
+  .main { padding:36px 16px 80px; }
+  .frow { grid-template-columns:1fr; }
+  .role-grid { grid-template-columns:1fr 1fr; }
+  .id-types { grid-template-columns:1fr 1fr; }
+  .nav-step-info { display:none; }
+  .user-badge { display:none; }
+}
+@media(max-width:480px) {
+  .role-grid { grid-template-columns:1fr; }
+  .ref-input-row { flex-direction:column; }
+  .ref-apply-btn { width:100%; justify-content:center; }
+  .id-types { grid-template-columns:1fr 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
+<!-- ══ NAV ══ -->
+<nav id="nav">
   <div class="nav-in">
     <a class="logo" href="index.html">
-      <div class="logo-flag">
-        <svg viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
-          <rect width="32" height="7.33" fill="#FF9933"/>
-          <rect y="7.33" width="32" height="7.34" fill="#FFFFFF"/>
-          <rect y="14.67" width="32" height="7.33" fill="#138808"/>
-          <circle cx="16" cy="11" r="3.2" fill="none" stroke="#000080" stroke-width="0.7"/>
-          <circle cx="16" cy="11" r="0.75" fill="#000080"/>
-          <g stroke="#000080" stroke-width="0.4" transform="translate(16,11)">
-            <line x1="0" y1="-3.2" x2="0" y2="3.2"/><line x1="-3.2" y1="0" x2="3.2" y2="0"/>
-            <line x1="-2.26" y1="-2.26" x2="2.26" y2="2.26"/><line x1="2.26" y1="-2.26" x2="-2.26" y2="2.26"/>
-            <line x1="-1.22" y1="-2.97" x2="1.22" y2="2.97"/><line x1="1.22" y1="-2.97" x2="-1.22" y2="2.97"/>
-            <line x1="-2.97" y1="-1.22" x2="2.97" y2="1.22"/><line x1="2.97" y1="-1.22" x2="-2.97" y2="1.22"/>
-          </g>
-        </svg>
-      </div>
-      <div class="logo-sep"></div>
-      <div class="logo-mark"><i class="bi bi-tools"></i></div>
+      <div class="logo-icon"><i class="bi bi-tools"></i></div>
       <div class="logo-txt">Kaam<span>Connect</span></div>
     </a>
-    <a class="nav-back" href="login.html"><i class="bi bi-arrow-left"></i> Back to Login</a>
+    <div class="nav-step-info">
+      <span class="nav-step-badge">Final Step</span>
+      <span>Complete your profile</span>
+    </div>
+    <button class="nav-back-btn" onclick="location.href='login.html'"><i class="bi bi-arrow-left"></i> Back to Login</button>
   </div>
 </nav>
 
-<!-- TICKER -->
-<div class="ticker"><div class="ticker-track">
-  <span class="t-item">⚡ Electricians<div class="t-dot"></div></span><span class="t-item">🔧 Plumbers<div class="t-dot"></div></span><span class="t-item">🎨 Painters<div class="t-dot"></div></span><span class="t-item">🪚 Carpenters<div class="t-dot"></div></span><span class="t-item">🧱 Masons<div class="t-dot"></div></span><span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span><span class="t-item">👷 Labour<div class="t-dot"></div></span><span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
-  <span class="t-item">⚡ Electricians<div class="t-dot"></div></span><span class="t-item">🔧 Plumbers<div class="t-dot"></div></span><span class="t-item">🎨 Painters<div class="t-dot"></div></span><span class="t-item">🪚 Carpenters<div class="t-dot"></div></span><span class="t-item">🧱 Masons<div class="t-dot"></div></span><span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span><span class="t-item">👷 Labour<div class="t-dot"></div></span><span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
-</div></div>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-inner">
-    <div class="hero-badge"><div class="hb-pulse"></div><span>One last step to get started</span></div>
-    <h1 class="hero-h">You're almost in.<br><em>Choose your role.</em></h1>
-    <p class="hero-p">Tell us how you'll use KaamConnect — this decides what you can do on the platform.</p>
+<!-- ══ TICKER ══ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="t-item">⚡ Electricians<div class="t-dot"></div></span>
+    <span class="t-item">🔧 Plumbers<div class="t-dot"></div></span>
+    <span class="t-item">🎨 Painters<div class="t-dot"></div></span>
+    <span class="t-item">🪚 Carpenters<div class="t-dot"></div></span>
+    <span class="t-item">🧱 Masons<div class="t-dot"></div></span>
+    <span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span>
+    <span class="t-item">👷 Labour<div class="t-dot"></div></span>
+    <span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
+    <span class="t-item">⚡ Electricians<div class="t-dot"></div></span>
+    <span class="t-item">🔧 Plumbers<div class="t-dot"></div></span>
+    <span class="t-item">🎨 Painters<div class="t-dot"></div></span>
+    <span class="t-item">🪚 Carpenters<div class="t-dot"></div></span>
+    <span class="t-item">🧱 Masons<div class="t-dot"></div></span>
+    <span class="t-item">❄️ AC Technicians<div class="t-dot"></div></span>
+    <span class="t-item">👷 Labour<div class="t-dot"></div></span>
+    <span class="t-item">🚗 Drivers<div class="t-dot"></div></span>
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><div class="hb-pulse"></div><span>One last step — you're almost in!</span></div>
+    <h1 class="hero-h">Almost there.<br><em>Choose your role.</em></h1>
+    <p class="hero-p">Tell us how you'll use KaamConnect so we can set up your account perfectly.</p>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
 <div class="main">
 
   <!-- Google user card -->
@@ -270,86 +358,65 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px}
       <div class="user-name" id="avName">Loading…</div>
       <div class="user-email" id="avEmail"></div>
     </div>
-    <div class="user-badge"><i class="bi bi-google" style="font-size:13px"></i> Google Account</div>
+    <div class="user-badge"><i class="bi bi-google" style="font-size:12px"></i>&nbsp; Google Account</div>
   </div>
 
+  <!-- Alert -->
   <div id="alertBox" style="display:none"></div>
 
-  <!-- Step 1: Role -->
-  <div class="eyebrow">Step 1</div>
-  <h2 class="section-h">How will you use <em>KaamConnect?</em></h2>
-  <p class="section-p">Pick your role — you can always update this later from your profile.</p>
+  <!-- Progress -->
+  <div class="progress-bar-wrap" id="progressWrap">
+    <div class="progress-label">
+      <span class="progress-label-l" id="progressLabel">Step 1 of 2 — Choose your role</span>
+      <span class="progress-label-r" id="progressPct">50%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:50%"></div></div>
+  </div>
+
+  <!-- STEP 1: ROLE -->
+  <div class="sec-eyebrow">Step 1</div>
+  <h2 class="sec-h">How will you use <em>KaamConnect?</em></h2>
+  <p class="sec-p">Pick your role — this determines what you can do on the platform.</p>
 
   <div class="role-grid">
-    <div class="rbtn on" id="rb-c" onclick="pick('customer')">
+    <div class="rbtn on" id="rb-c" onclick="pickRole('customer')">
       <div class="rbtn-check"><i class="bi bi-check"></i></div>
       <span class="rbtn-ico">👤</span>
       <div class="rbtn-tag">Customer</div>
       <div class="rbtn-name">Hire a Worker</div>
       <div class="rbtn-desc">Find verified skilled workers in your city — fast &amp; safe</div>
     </div>
-    <div class="rbtn" id="rb-w" onclick="pick('worker')">
+    <div class="rbtn" id="rb-w" onclick="pickRole('worker')">
       <div class="rbtn-check"><i class="bi bi-check"></i></div>
       <span class="rbtn-ico">👷</span>
       <div class="rbtn-tag">Worker</div>
       <div class="rbtn-name">Find Work</div>
-      <div class="rbtn-desc">Get jobs from customers &amp; earn money daily</div>
+      <div class="rbtn-desc">Get jobs from customers &amp; earn daily</div>
     </div>
   </div>
 
-  <!-- Step 2: Customer extra -->
-  <div id="customerExtra" class="slide-in">
-    <div class="divider-line"></div>
-    <div class="eyebrow">Step 2</div>
-    <h2 class="section-h">Set up your <em>account</em></h2>
-    <p class="section-p">Add your phone and location so workers can find you.</p>
+  <!-- STEP 2: CUSTOMER DETAILS -->
+  <div id="customerExtra">
+    <div class="divider-section"></div>
+    <div class="sec-eyebrow">Step 2</div>
+    <h2 class="sec-h">Complete your <em>profile</em></h2>
+    <p class="sec-p">All fields marked with <span style="color:var(--saffron)">*</span> are required to create your account.</p>
 
+    <div class="sec-lbl">Your Details</div>
     <div class="frow">
       <div class="fg">
-        <label class="fl">Phone Number <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
-        <div class="fw"><input class="fi" type="tel" id="c-phone" placeholder="9876543210" maxlength="10"><i class="bi bi-phone fi-ico"></i></div>
+        <label class="fl">Phone Number <span class="req">*</span></label>
+        <div class="fw">
+          <input class="fi" type="tel" id="c-phone" placeholder="10-digit mobile" maxlength="10">
+          <i class="bi bi-phone fi-ico"></i>
+        </div>
       </div>
       <div class="fg">
-        <label class="fl">City / Location <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
-        <div class="fw"><input class="fi" type="text" id="c-location" placeholder="e.g. Ludhiana, Punjab"><i class="bi bi-geo-alt fi-ico"></i></div>
-      </div>
-    </div>
-
-    <!-- Referral — Customer -->
-    <div class="ref-section" id="c-ref-section">
-      <div class="ref-head">
-        <div class="ref-ico"><i class="bi bi-gift-fill"></i></div>
-        <div>
-          <div class="ref-title">Have a Referral Code? 🎁</div>
-          <div class="ref-sub">Your friend earns ₹50 when you join using their code</div>
+        <label class="fl">City / Location <span class="req">*</span></label>
+        <div class="fw">
+          <input class="fi" type="text" id="c-location" placeholder="e.g. Ludhiana, Punjab">
+          <i class="bi bi-geo-alt fi-ico"></i>
         </div>
-      </div>
-      <!-- Applied display -->
-      <div class="ref-applied" id="c-ref-applied">
-        <div class="ref-applied-ico"><i class="bi bi-check-circle-fill"></i></div>
-        <div style="flex:1">
-          <div class="ref-applied-lbl">Code applied</div>
-          <div class="ref-applied-code" id="c-ref-code-display">—</div>
-          <div class="ref-applied-bonus">Your friend will earn ₹50 when you complete setup ✅</div>
-        </div>
-        <button class="ref-remove-btn" onclick="removeRef('c')"><i class="bi bi-x"></i> Remove</button>
-      </div>
-      <!-- Input row -->
-      <div id="c-ref-input-wrap">
-        <div class="ref-input-row">
-          <div class="fg">
-            <label class="fl">Referral Code</label>
-            <div class="fw">
-              <input class="fi" type="text" id="c-ref-input" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase();clearRefStatus('c')">
-              <i class="bi bi-ticket-perforated fi-ico"></i>
-            </div>
-          </div>
-          <button class="ref-apply-btn" id="c-ref-btn" onclick="applyRef('c')">
-            <i class="bi bi-check2-circle"></i> Apply Code
-          </button>
-        </div>
-        <div class="ref-status" id="c-ref-status"></div>
-        <div class="ref-hint"><i class="bi bi-info-circle-fill"></i> The code is validated live — only valid, existing codes are accepted. Your friend gets credited ₹50 instantly after you complete signup.</div>
       </div>
     </div>
 
@@ -358,103 +425,171 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px}
       <div class="pw-card-head">
         <div class="pw-card-ico"><i class="bi bi-lock-fill"></i></div>
         <div>
-          <div class="pw-card-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
-          <div class="pw-card-sub">Lets you also sign in with email &amp; password</div>
+          <div class="pw-card-title">Set a Password <span class="optional-tag">Optional</span></div>
+          <div class="pw-card-sub">Lets you also sign in with email &amp; password later</div>
         </div>
       </div>
-      <div class="fg">
+      <div class="fg" style="margin-bottom:0">
         <label class="fl">Password</label>
         <div class="fw">
-          <input class="fi" type="password" id="c-password" placeholder="Min 6 characters" oninput="checkStrength('c-password','c-pw');showConfirm('c-confirm-wrap',this.value)">
+          <input class="fi" type="password" id="c-password" placeholder="Min 6 characters" oninput="checkPw('c-password','cpw');showConfirm('c-confirm-wrap',this.value)">
           <i class="bi bi-lock fi-ico"></i>
           <button type="button" class="eye-btn" onclick="toggleEye('c-password','c-eye')"><i class="bi bi-eye" id="c-eye"></i></button>
         </div>
-        <div class="pw-bars"><div class="pw-bar" id="c-pw-1"></div><div class="pw-bar" id="c-pw-2"></div><div class="pw-bar" id="c-pw-3"></div><div class="pw-bar" id="c-pw-4"></div></div>
+        <div class="pw-bars"><div class="pw-bar" id="cpw1"></div><div class="pw-bar" id="cpw2"></div><div class="pw-bar" id="cpw3"></div><div class="pw-bar" id="cpw4"></div></div>
+        <div class="pw-strength" id="cpw-txt" style="color:var(--ink-40)"></div>
       </div>
-      <div class="fg" id="c-confirm-wrap" style="display:none;margin-bottom:0">
+      <div class="fg" id="c-confirm-wrap" style="display:none;margin-bottom:0;margin-top:14px">
         <label class="fl">Confirm Password</label>
-        <div class="fw"><input class="fi" type="password" id="c-confirm" placeholder="Repeat password"><i class="bi bi-shield-lock fi-ico"></i></div>
+        <div class="fw">
+          <input class="fi" type="password" id="c-confirm" placeholder="Repeat password">
+          <i class="bi bi-shield-lock fi-ico"></i>
+        </div>
       </div>
       <div class="pw-note"><i class="bi bi-info-circle-fill"></i> You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too.</div>
     </div>
+
+    <!-- Referral — Customer — Optional accordion -->
+    <div class="ref-accordion" id="c-ref-accordion">
+      <div class="ref-acc-header" onclick="toggleRef('c')">
+        <div class="ref-acc-left">
+          <div class="ref-acc-icon">🎁</div>
+          <div>
+            <div class="ref-acc-title">Have a Referral Code?</div>
+            <div class="ref-acc-sub">Optional — your friend earns ₹50 when you join</div>
+          </div>
+        </div>
+        <span class="ref-acc-badge">OPTIONAL</span>
+        <i class="bi bi-chevron-down ref-acc-arrow"></i>
+      </div>
+      <div class="ref-acc-body">
+        <div id="c-ref-applied" style="display:none">
+          <div class="ref-applied-box">
+            <div class="ref-app-ico"><i class="bi bi-gift-fill"></i></div>
+            <div style="flex:1">
+              <div class="ref-app-label">Code Applied ✓</div>
+              <div class="ref-app-code" id="c-ref-code-display">—</div>
+            </div>
+            <button class="ref-remove-btn" onclick="removeRef('c')"><i class="bi bi-x-circle"></i> Remove</button>
+          </div>
+        </div>
+        <div id="c-ref-input-wrap">
+          <div class="ref-input-row">
+            <div class="fw">
+              <input class="fi fi-nopad" type="text" id="c-ref-input" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase()">
+              <i class="bi bi-ticket-perforated fi-ico"></i>
+            </div>
+            <button class="ref-apply-btn" id="c-ref-btn" onclick="applyRef('c')"><i class="bi bi-check2-circle"></i> Apply</button>
+          </div>
+          <div class="ref-status" id="c-ref-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="terms-row">
+      <input type="checkbox" class="terms-cb" id="c-terms">
+      <label class="terms-txt" for="c-terms">I agree to KaamConnect's <a href="Terms.html" target="_blank">Terms of Service</a> and <a href="Privacy policy.html" target="_blank">Privacy Policy</a>. I confirm all information is accurate.</label>
+    </div>
   </div>
 
-  <!-- Step 2: Worker extra -->
-  <div id="workerExtra" style="display:none" class="slide-in">
-    <div class="divider-line"></div>
-    <div class="eyebrow">Step 2</div>
-    <h2 class="section-h">Tell us about <em>yourself</em></h2>
-    <p class="section-p">This helps customers find and trust you on the platform.</p>
+  <!-- STEP 2: WORKER DETAILS -->
+  <div id="workerExtra" style="display:none">
+    <div class="divider-section"></div>
+    <div class="sec-eyebrow">Step 2</div>
+    <h2 class="sec-h">Tell us about <em>yourself</em></h2>
+    <p class="sec-p">All fields marked with <span style="color:var(--saffron)">*</span> are required. This helps customers find and trust you.</p>
+
+    <!-- Worker notice -->
+    <div class="worker-notice">
+      <div class="wn-icon"><i class="bi bi-shield-check"></i></div>
+      <div>
+        <div class="wn-title">All details required for workers</div>
+        <div class="wn-desc">Skill, location, experience, bio, and government ID are all mandatory. Your profile goes live after admin verification within 24 hours.</div>
+      </div>
+    </div>
 
     <div class="sec-lbl">Your Details</div>
     <div class="frow">
       <div class="fg">
-        <label class="fl">City / Location <span style="color:#DC2626">*</span></label>
-        <div class="fw"><input class="fi" type="text" id="w-location" placeholder="e.g. Ludhiana"><i class="bi bi-geo-alt fi-ico"></i></div>
+        <label class="fl">City / Location <span class="req">*</span></label>
+        <div class="fw">
+          <input class="fi" type="text" id="w-location" placeholder="e.g. Ludhiana, Delhi">
+          <i class="bi bi-geo-alt fi-ico"></i>
+        </div>
       </div>
       <div class="fg">
-        <label class="fl">Phone Number <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
-        <div class="fw"><input class="fi" type="tel" id="w-phone" placeholder="9876543210" maxlength="10"><i class="bi bi-phone fi-ico"></i></div>
+        <label class="fl">Phone Number <span class="req">*</span></label>
+        <div class="fw">
+          <input class="fi" type="tel" id="w-phone" placeholder="10-digit mobile" maxlength="10">
+          <i class="bi bi-phone fi-ico"></i>
+        </div>
       </div>
     </div>
 
     <div class="sec-lbl">Worker Details</div>
+
     <div class="fg">
-      <label class="fl">Primary Skill <span style="color:#DC2626">*</span></label>
+      <label class="fl">Primary Skill <span class="req">*</span></label>
       <div class="fw">
         <select class="fi" id="skill">
-          <option value="">Select your main skill</option>
+          <option value="">Select your main skill…</option>
           <option value="electrician">⚡ Electrician</option>
           <option value="plumber">🔧 Plumber</option>
           <option value="painter">🎨 Painter</option>
           <option value="carpenter">🪚 Carpenter</option>
-          <option value="labour">👷 Labour</option>
-          <option value="mason">🧱 Mason</option>
+          <option value="labour">👷 Labour / Helper</option>
+          <option value="mason">🧱 Mason / Mistri</option>
           <option value="ac technician">❄️ AC Technician</option>
           <option value="driver">🚗 Driver</option>
         </select>
         <i class="bi bi-tools fi-ico"></i>
       </div>
     </div>
-    <div class="fg">
-      <label class="fl">About You <small style="font-weight:400;color:var(--ink-40)">(optional)</small></label>
-      <textarea class="fi fi-nopad" id="bio" placeholder="Describe your experience, years of work, and specialties…"></textarea>
+
+    <div class="frow">
+      <div class="fg">
+        <label class="fl">Years of Experience <span class="req">*</span></label>
+        <div class="fw">
+          <select class="fi" id="experience">
+            <option value="">Select experience…</option>
+            <option value="0-1">Less than 1 year</option>
+            <option value="1-3">1–3 years</option>
+            <option value="3-5">3–5 years</option>
+            <option value="5-10">5–10 years</option>
+            <option value="10+">10+ years</option>
+          </select>
+          <i class="bi bi-briefcase fi-ico"></i>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Starting Price (₹/job) <span class="req">*</span></label>
+        <div class="fw">
+          <input class="fi" type="number" id="basePrice" placeholder="e.g. 500" min="50">
+          <i class="bi bi-currency-rupee fi-ico"></i>
+        </div>
+        <div class="field-hint"><i class="bi bi-info-circle"></i> Minimum you charge per job</div>
+      </div>
     </div>
 
-    <!-- Referral — Worker -->
-    <div class="ref-section" id="w-ref-section">
-      <div class="ref-head">
-        <div class="ref-ico"><i class="bi bi-gift-fill"></i></div>
-        <div>
-          <div class="ref-title">Have a Referral Code? 🎁</div>
-          <div class="ref-sub">Your friend earns ₹50 when you join using their code</div>
-        </div>
+    <div class="fg">
+      <label class="fl">Availability <span class="req">*</span></label>
+      <div class="fw">
+        <select class="fi" id="availability">
+          <option value="">Select availability…</option>
+          <option value="fulltime">Full-time (Mon–Sat)</option>
+          <option value="parttime">Part-time (select days)</option>
+          <option value="weekends">Weekends only</option>
+          <option value="flexible">Flexible / On-call</option>
+        </select>
+        <i class="bi bi-calendar3 fi-ico"></i>
       </div>
-      <div class="ref-applied" id="w-ref-applied">
-        <div class="ref-applied-ico"><i class="bi bi-check-circle-fill"></i></div>
-        <div style="flex:1">
-          <div class="ref-applied-lbl">Code applied</div>
-          <div class="ref-applied-code" id="w-ref-code-display">—</div>
-          <div class="ref-applied-bonus">Your friend will earn ₹50 when you complete setup ✅</div>
-        </div>
-        <button class="ref-remove-btn" onclick="removeRef('w')"><i class="bi bi-x"></i> Remove</button>
-      </div>
-      <div id="w-ref-input-wrap">
-        <div class="ref-input-row">
-          <div class="fg">
-            <label class="fl">Referral Code</label>
-            <div class="fw">
-              <input class="fi" type="text" id="w-ref-input" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase();clearRefStatus('w')">
-              <i class="bi bi-ticket-perforated fi-ico"></i>
-            </div>
-          </div>
-          <button class="ref-apply-btn" id="w-ref-btn" onclick="applyRef('w')">
-            <i class="bi bi-check2-circle"></i> Apply Code
-          </button>
-        </div>
-        <div class="ref-status" id="w-ref-status"></div>
-        <div class="ref-hint"><i class="bi bi-info-circle-fill"></i> Only valid codes are accepted. Your friend gets ₹50 in wallet credits instantly after you complete signup.</div>
-      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fl">About You <span class="req">*</span></label>
+      <textarea class="fi fi-nopad" id="bio" placeholder="Describe your experience, what makes you reliable, and the kind of work you specialize in… (minimum 30 characters)" maxlength="500" oninput="updateBioCount(this)"></textarea>
+      <div class="field-hint"><i class="bi bi-pencil"></i> <span id="bioCount">0</span>/500 characters · minimum 30</div>
     </div>
 
     <!-- Password card — worker -->
@@ -462,217 +597,275 @@ textarea.fi{min-height:80px;resize:vertical;padding-top:11px}
       <div class="pw-card-head">
         <div class="pw-card-ico"><i class="bi bi-lock-fill"></i></div>
         <div>
-          <div class="pw-card-title">Set a Password &nbsp;<span style="font-size:11px;font-weight:400;background:var(--saffron-pale);color:var(--saffron);padding:2px 8px;border-radius:100px">Optional</span></div>
-          <div class="pw-card-sub">Lets you also sign in with email &amp; password</div>
+          <div class="pw-card-title">Set a Password <span class="optional-tag">Optional</span></div>
+          <div class="pw-card-sub">Lets you also sign in with email &amp; password later</div>
         </div>
       </div>
-      <div class="fg">
+      <div class="fg" style="margin-bottom:0">
         <label class="fl">Password</label>
         <div class="fw">
-          <input class="fi" type="password" id="w-password" placeholder="Min 6 characters" oninput="checkStrength('w-password','w-pw');showConfirm('w-confirm-wrap',this.value)">
+          <input class="fi" type="password" id="w-password" placeholder="Min 6 characters" oninput="checkPw('w-password','wpw');showConfirm('w-confirm-wrap',this.value)">
           <i class="bi bi-lock fi-ico"></i>
           <button type="button" class="eye-btn" onclick="toggleEye('w-password','w-eye')"><i class="bi bi-eye" id="w-eye"></i></button>
         </div>
-        <div class="pw-bars"><div class="pw-bar" id="w-pw-1"></div><div class="pw-bar" id="w-pw-2"></div><div class="pw-bar" id="w-pw-3"></div><div class="pw-bar" id="w-pw-4"></div></div>
+        <div class="pw-bars"><div class="pw-bar" id="wpw1"></div><div class="pw-bar" id="wpw2"></div><div class="pw-bar" id="wpw3"></div><div class="pw-bar" id="wpw4"></div></div>
+        <div class="pw-strength" id="wpw-txt" style="color:var(--ink-40)"></div>
       </div>
-      <div class="fg" id="w-confirm-wrap" style="display:none;margin-bottom:0">
+      <div class="fg" id="w-confirm-wrap" style="display:none;margin-bottom:0;margin-top:14px">
         <label class="fl">Confirm Password</label>
-        <div class="fw"><input class="fi" type="password" id="w-confirm" placeholder="Repeat password"><i class="bi bi-shield-lock fi-ico"></i></div>
+        <div class="fw">
+          <input class="fi" type="password" id="w-confirm" placeholder="Repeat password">
+          <i class="bi bi-shield-lock fi-ico"></i>
+        </div>
       </div>
       <div class="pw-note"><i class="bi bi-info-circle-fill"></i> You signed in with Google — no password needed. But setting one lets you log in with email &amp; password too.</div>
     </div>
 
+    <!-- Government ID -->
     <div class="sec-lbl">Government ID Verification</div>
     <div class="id-section">
       <div class="id-head">
         <div class="id-head-ico"><i class="bi bi-shield-check"></i></div>
         <div>
-          <div class="id-head-title">Upload a valid Government ID <span style="color:#DC2626">*</span></div>
-          <div class="id-head-sub">Required for worker verification — reviewed within 24h</div>
+          <div class="id-head-title">Upload a valid Government ID <span style="color:var(--saffron)">*</span></div>
+          <div class="id-head-sub">Required — reviewed by admin within 24h, kept confidential</div>
         </div>
       </div>
-      <label class="fl" style="margin-bottom:10px">Select ID Type</label>
+      <label class="fl" style="margin-bottom:10px">Select ID Type <span class="req">*</span></label>
       <div class="id-types">
-        <button type="button" class="id-btn" data-type="aadhaar"  onclick="pickId(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar Card</button>
+        <button type="button" class="id-btn" data-type="aadhaar"  onclick="pickId(this)"><i class="bi bi-credit-card-2-front"></i> Aadhaar</button>
         <button type="button" class="id-btn" data-type="pan"      onclick="pickId(this)"><i class="bi bi-credit-card"></i> PAN Card</button>
         <button type="button" class="id-btn" data-type="voter"    onclick="pickId(this)"><i class="bi bi-person-badge"></i> Voter ID</button>
-        <button type="button" class="id-btn" data-type="driving"  onclick="pickId(this)"><i class="bi bi-car-front"></i> Driving Licence</button>
+        <button type="button" class="id-btn" data-type="driving"  onclick="pickId(this)"><i class="bi bi-car-front"></i> Driving Lic.</button>
         <button type="button" class="id-btn" data-type="passport" onclick="pickId(this)"><i class="bi bi-book"></i> Passport</button>
-        <button type="button" class="id-btn" data-type="other"    onclick="pickId(this)"><i class="bi bi-file-earmark-person"></i> Other Govt ID</button>
+        <button type="button" class="id-btn" data-type="other"    onclick="pickId(this)"><i class="bi bi-file-earmark-person"></i> Other</button>
       </div>
       <input type="hidden" id="idType" value="">
       <div class="dropzone" id="dropzone">
         <input type="file" id="fileInput" accept="image/*,.pdf" onchange="onFile(this)">
-        <div class="dz-ico"><i class="bi bi-cloud-upload"></i></div>
+        <i class="bi bi-cloud-upload dz-ico"></i>
         <div class="dz-txt">Click to upload or drag &amp; drop</div>
         <div class="dz-hint">JPG, PNG or PDF · Max 5MB</div>
       </div>
       <div class="preview" id="preview">
         <span class="prev-ico" id="prevIco">📄</span>
-        <div style="flex:1;min-width:0"><div class="prev-name" id="prevName">—</div><div class="prev-size" id="prevSize">—</div></div>
+        <div style="flex:1;min-width:0">
+          <div class="prev-name" id="prevName">—</div>
+          <div class="prev-size" id="prevSize">—</div>
+        </div>
         <button type="button" class="prev-rm" onclick="rmFile()"><i class="bi bi-x-circle-fill"></i></button>
       </div>
-      <div class="id-note"><i class="bi bi-info-circle-fill"></i> Kept confidential — used only for identity verification. You can start working after admin approves (within 24h).</div>
+      <div class="id-note"><i class="bi bi-info-circle-fill"></i> Kept strictly confidential. Used only for identity verification. You'll be notified once approved.</div>
+    </div>
+
+    <!-- Referral — Worker — Optional accordion -->
+    <div class="ref-accordion" id="w-ref-accordion">
+      <div class="ref-acc-header" onclick="toggleRef('w')">
+        <div class="ref-acc-left">
+          <div class="ref-acc-icon">🎁</div>
+          <div>
+            <div class="ref-acc-title">Have a Referral Code?</div>
+            <div class="ref-acc-sub">Optional — your friend earns ₹50 when you join</div>
+          </div>
+        </div>
+        <span class="ref-acc-badge">OPTIONAL</span>
+        <i class="bi bi-chevron-down ref-acc-arrow"></i>
+      </div>
+      <div class="ref-acc-body">
+        <div id="w-ref-applied" style="display:none">
+          <div class="ref-applied-box">
+            <div class="ref-app-ico"><i class="bi bi-gift-fill"></i></div>
+            <div style="flex:1">
+              <div class="ref-app-label">Code Applied ✓</div>
+              <div class="ref-app-code" id="w-ref-code-display">—</div>
+            </div>
+            <button class="ref-remove-btn" onclick="removeRef('w')"><i class="bi bi-x-circle"></i> Remove</button>
+          </div>
+        </div>
+        <div id="w-ref-input-wrap">
+          <div class="ref-input-row">
+            <div class="fw">
+              <input class="fi fi-nopad" type="text" id="w-ref-input" placeholder="e.g. PRIYA4F2A" style="text-transform:uppercase;letter-spacing:1.5px;font-weight:600" oninput="this.value=this.value.toUpperCase()">
+              <i class="bi bi-ticket-perforated fi-ico"></i>
+            </div>
+            <button class="ref-apply-btn" id="w-ref-btn" onclick="applyRef('w')"><i class="bi bi-check2-circle"></i> Apply</button>
+          </div>
+          <div class="ref-status" id="w-ref-status"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="terms-row">
+      <input type="checkbox" class="terms-cb" id="w-terms">
+      <label class="terms-txt" for="w-terms">I agree to KaamConnect's <a href="Terms.html" target="_blank">Terms of Service</a> and <a href="Privacy policy.html" target="_blank">Privacy Policy</a>. I confirm all information provided is accurate.</label>
     </div>
   </div>
 
-  <!-- Submit -->
-  <button class="submit-btn" id="submitBtn" onclick="submit()">
+  <!-- SUBMIT BUTTON -->
+  <button class="submit-btn" id="submitBtn" onclick="submitForm()">
     <i class="bi bi-arrow-right-circle-fill"></i>
-    Create Account as <span id="roleLabel">Customer</span>
+    <span id="submitLabel">Create Account as Customer</span>
     <i class="bi bi-arrow-repeat spin" id="sp"></i>
   </button>
 
-</div>
+  <!-- SUCCESS SCREEN (hidden) -->
+  <div class="success-screen" id="successScreen">
+    <span class="ss-icon">🎉</span>
+    <h2 class="ss-title">Account Created!</h2>
+    <p class="ss-sub" id="ss-sub-text">Welcome to KaamConnect. Redirecting to your dashboard…</p>
+    <p class="ss-note" id="ss-note-text"></p>
+    <button class="ss-btn" id="ss-dashboard-btn" onclick="goToDashboard()"><i class="bi bi-speedometer2"></i> Go to Dashboard</button>
+  </div>
+
+</div><!-- /main -->
 
 <script>
-// ── Load token + user from URL ─────────────────────────────
+// ══ LOAD TOKEN + USER FROM URL ══
 const params  = new URLSearchParams(window.location.search);
 const token   = params.get('token');
 const userStr = params.get('user');
-if (!token || !userStr) location.replace('/login.html');
+if(!token || !userStr) location.replace('login.html');
 
 let user;
 try { user = JSON.parse(decodeURIComponent(userStr)); }
-catch(e) { location.replace('/login.html'); }
+catch(e) { location.replace('login.html'); }
 
-// Show user info
+// Populate user card
 document.getElementById('avName').textContent  = user.name  || 'User';
 document.getElementById('avEmail').textContent = user.email || '';
-if (user.avatar) {
+if(user.avatar) {
   document.getElementById('avImg').innerHTML = `<img src="${user.avatar}" alt="avatar">`;
 } else {
   document.getElementById('avImg').textContent = (user.name || 'U')[0].toUpperCase();
 }
 
-// ── Auto-apply referral code from URL / sessionStorage ─────
-let appliedRefCode = { c: null, w: null };
+// ══ AUTO-APPLY REF FROM URL ══
+let appliedRef = { c: null, w: null };
 (function(){
   const ref = params.get('ref') || sessionStorage.getItem('kc_referral');
-  if (ref) applyCodeToUI(ref.toUpperCase(), 'c'), applyCodeToUI(ref.toUpperCase(), 'w');
+  if(ref) {
+    applyCodeToUI(ref.toUpperCase(), 'c');
+    applyCodeToUI(ref.toUpperCase(), 'w');
+    document.getElementById('c-ref-accordion').classList.add('open');
+    document.getElementById('w-ref-accordion').classList.add('open');
+  }
 })();
 
-// ── Role picker ────────────────────────────────────────────
+// ══ ROLE ══
 let role = 'customer';
-function pick(r) {
+function pickRole(r) {
   role = r;
-  document.getElementById('rb-c').classList.toggle('on', r === 'customer');
-  document.getElementById('rb-w').classList.toggle('on', r === 'worker');
-  document.getElementById('roleLabel').textContent = r === 'worker' ? 'Worker' : 'Customer';
-  document.getElementById('customerExtra').style.display = r === 'customer' ? 'block' : 'none';
-  document.getElementById('workerExtra').style.display   = r === 'worker'   ? 'block' : 'none';
+  document.getElementById('rb-c').classList.toggle('on', r==='customer');
+  document.getElementById('rb-w').classList.toggle('on', r==='worker');
+  document.getElementById('customerExtra').style.display = r==='customer' ? 'block' : 'none';
+  document.getElementById('workerExtra').style.display   = r==='worker'   ? 'block' : 'none';
+  document.getElementById('submitLabel').textContent = `Create Account as ${r==='worker'?'Worker':'Customer'}`;
+  // Update progress
+  document.getElementById('progressLabel').textContent = `Step 2 of 2 — Fill in your ${r} details`;
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressPct').textContent = '100%';
 }
 
-// ── Referral validation ────────────────────────────────────
-// Validates against the API — only real, existing codes pass
-async function applyRef(prefix) {
-  const input = document.getElementById(prefix + '-ref-input').value.trim().toUpperCase();
-  const statusEl = document.getElementById(prefix + '-ref-status');
-  const btn = document.getElementById(prefix + '-ref-btn');
-
-  if (!input || input.length < 6) {
-    showRefStatus(statusEl, 'error', 'Enter a valid referral code (min 6 characters)'); return;
-  }
-
-  btn.disabled = true;
-  btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Validating…';
-
-  try {
-    // Call the validate endpoint
-    const r = await fetch('/api/referral/validate', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ code: input }),
-    });
-    const d = await r.json();
-
-    if (d.success) {
-      // Code is valid — show applied state
-      applyCodeToUI(input, prefix);
-      showRefStatus(statusEl, 'ok', `✅ Code valid! <strong>${d.referrerName || 'Your friend'}</strong> will earn ₹50 when you join.`);
-    } else {
-      showRefStatus(statusEl, 'error', d.message || 'Invalid referral code. Please check and try again.');
-    }
-  } catch (e) {
-    // Network error — accept code optimistically (server will validate on submit)
-    applyCodeToUI(input, prefix);
-    showRefStatus(statusEl, 'ok', '✅ Code saved! Will be applied when you complete signup.');
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = '<i class="bi bi-check2-circle"></i> Apply Code';
-}
-
-function applyCodeToUI(code, prefix) {
-  appliedRefCode[prefix] = code;
-  sessionStorage.setItem('kc_referral', code);
-  document.getElementById(prefix + '-ref-code-display').textContent = code;
-  document.getElementById(prefix + '-ref-applied').style.display = 'flex';
-  document.getElementById(prefix + '-ref-input-wrap').style.display = 'none';
-}
-
-function removeRef(prefix) {
-  appliedRefCode[prefix] = null;
-  // Only clear sessionStorage if neither has a code
-  if (!appliedRefCode.c && !appliedRefCode.w) sessionStorage.removeItem('kc_referral');
-  document.getElementById(prefix + '-ref-applied').style.display = 'none';
-  document.getElementById(prefix + '-ref-input-wrap').style.display = 'block';
-  document.getElementById(prefix + '-ref-input').value = '';
-  clearRefStatus(prefix);
-}
-
-function clearRefStatus(prefix) {
-  const el = document.getElementById(prefix + '-ref-status');
-  if (el) { el.style.display = 'none'; el.className = 'ref-status'; el.innerHTML = ''; }
-}
-
-function showRefStatus(el, type, msg) {
-  el.style.display = 'flex';
-  el.className = 'ref-status ' + (type === 'ok' ? 'ref-ok' : 'ref-err');
-  el.innerHTML = msg;
-}
-
-// ── Password ───────────────────────────────────────────────
-function checkStrength(inputId, prefix) {
+// ══ PASSWORD ══
+function checkPw(inputId, prefix) {
   const v = document.getElementById(inputId).value;
   const checks = [v.length>=6, v.length>=8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
   const n = checks.filter(Boolean).length;
-  const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
-  for (let i=1;i<=4;i++) {
-    const b = document.getElementById(`${prefix}-${i}`);
-    if (b) b.style.background = i<=n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
-  }
+  const cols  = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
+  const labels = ['','Weak','Fair','Good','Strong'];
+  for(let i=1;i<=4;i++) document.getElementById(prefix+i).style.background = i<=n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
+  const txt = document.getElementById(prefix+'-txt');
+  if(txt) { txt.textContent = n>0?labels[n]:''; txt.style.color = n>0?cols[Math.min(n-1,3)]:'var(--ink-40)'; }
 }
+
 function showConfirm(wrapId, val) {
-  document.getElementById(wrapId).style.display = val.length > 0 ? 'block' : 'none';
+  document.getElementById(wrapId).style.display = val.length>0 ? 'block' : 'none';
 }
+
 function toggleEye(inputId, eyeId) {
   const p = document.getElementById(inputId), i = document.getElementById(eyeId);
   p.type = p.type==='password' ? 'text' : 'password';
   i.className = p.type==='password' ? 'bi bi-eye' : 'bi bi-eye-slash';
 }
 
-// ── ID upload ──────────────────────────────────────────────
+// ══ BIO COUNT ══
+function updateBioCount(el) {
+  document.getElementById('bioCount').textContent = el.value.length;
+}
+
+// ══ REFERRAL ACCORDION ══
+function toggleRef(prefix) {
+  document.getElementById(prefix+'-ref-accordion').classList.toggle('open');
+}
+
+function applyCodeToUI(code, prefix) {
+  appliedRef[prefix] = code;
+  sessionStorage.setItem('kc_referral', code);
+  document.getElementById(prefix+'-ref-code-display').textContent = code;
+  document.getElementById(prefix+'-ref-applied').style.display = 'block';
+  document.getElementById(prefix+'-ref-input-wrap').style.display = 'none';
+}
+
+function removeRef(prefix) {
+  appliedRef[prefix] = null;
+  if(!appliedRef.c && !appliedRef.w) sessionStorage.removeItem('kc_referral');
+  document.getElementById(prefix+'-ref-applied').style.display = 'none';
+  document.getElementById(prefix+'-ref-input-wrap').style.display = 'block';
+  document.getElementById(prefix+'-ref-input').value = '';
+  const s = document.getElementById(prefix+'-ref-status'); if(s) { s.style.display='none'; s.innerHTML=''; }
+}
+
+async function applyRef(prefix) {
+  const code = document.getElementById(prefix+'-ref-input').value.trim().toUpperCase();
+  const statusEl = document.getElementById(prefix+'-ref-status');
+  const btn = document.getElementById(prefix+'-ref-btn');
+  if(!code || code.length<6) {
+    showRefStatus(statusEl,'err','Enter a valid referral code (min 6 characters)'); return;
+  }
+  btn.disabled=true; btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i> Validating…';
+  try {
+    const r = await fetch('/api/referral/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
+    const d = await r.json();
+    if(d.success) {
+      applyCodeToUI(code, prefix);
+      showRefStatus(statusEl,'ok',`✅ Code valid! ${d.referrerName?'<strong>'+d.referrerName+'</strong> will earn':'Your friend earns'} ₹50 when you join.`);
+    } else {
+      showRefStatus(statusEl,'err', d.message||'Invalid referral code. Please check and try again.');
+    }
+  } catch {
+    // Accept optimistically if network error
+    applyCodeToUI(code, prefix);
+    showRefStatus(statusEl,'ok','✅ Code saved — will be verified on signup.');
+  }
+  btn.disabled=false; btn.innerHTML='<i class="bi bi-check2-circle"></i> Apply';
+}
+
+function showRefStatus(el, type, msg) {
+  el.style.display='flex'; el.className='ref-status '+(type==='ok'?'ref-ok':'ref-err'); el.innerHTML=msg;
+}
+
+// ══ ID UPLOAD ══
 function pickId(btn) {
   document.querySelectorAll('.id-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('idType').value = btn.dataset.type;
 }
-let file = null;
+let idFile = null;
 function onFile(input) {
-  const f = input.files[0]; if (!f) return;
-  if (f.size > 5*1024*1024) { showAlert('File too large. Max 5MB.'); input.value=''; return; }
-  file = f;
+  const f = input.files[0]; if(!f) return;
+  if(f.size>5*1024*1024) { showAlert('error','File too large. Max size is 5MB.'); input.value=''; return; }
+  idFile = f;
   document.getElementById('prevIco').textContent  = f.type.startsWith('image/') ? '🖼️' : '📄';
   document.getElementById('prevName').textContent = f.name;
   document.getElementById('prevSize').textContent = (f.size/1024).toFixed(1)+' KB';
   document.getElementById('preview').style.display = 'flex';
-  document.getElementById('dropzone').style.borderColor = 'var(--sage)';
+  document.getElementById('dropzone').classList.add('done');
 }
 function rmFile() {
-  file=null; document.getElementById('fileInput').value='';
+  idFile=null; document.getElementById('fileInput').value='';
   document.getElementById('preview').style.display='none';
-  document.getElementById('dropzone').style.borderColor='';
+  document.getElementById('dropzone').classList.remove('done');
 }
 const dz=document.getElementById('dropzone');
 dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag');});
@@ -683,83 +876,128 @@ dz.addEventListener('drop',e=>{
   if(f){const inp=document.getElementById('fileInput');const dt=new DataTransfer();dt.items.add(f);inp.files=dt.files;onFile(inp);}
 });
 
-// ── Submit ─────────────────────────────────────────────────
-async function submit() {
-  const currentRef = appliedRefCode[role === 'customer' ? 'c' : 'w'];
+// ══ ALERT ══
+function showAlert(type, msg) {
+  const b = document.getElementById('alertBox');
+  b.style.display='flex'; b.className='alert '+(type==='error'?'ae':'as');
+  b.innerHTML=`<i class="bi bi-${type==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> <span>${msg}</span>`;
+  b.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 
-  if (role === 'customer') {
-    const pw=document.getElementById('c-password').value;
-    const cpw=document.getElementById('c-confirm').value;
-    if (pw && pw.length<6)  { showAlert('Password must be at least 6 characters.'); return; }
-    if (pw && pw!==cpw)     { showAlert('Passwords do not match.'); return; }
+// ══ VALIDATION ══
+function validate() {
+  const currentRef = appliedRef[role==='customer'?'c':'w'];
+
+  if(role === 'customer') {
+    const phone    = document.getElementById('c-phone').value.trim();
+    const location = document.getElementById('c-location').value.trim();
+    const pw       = document.getElementById('c-password').value;
+    const cpw      = document.getElementById('c-confirm').value;
+
+    if(!phone || !/^\d{10}$/.test(phone)) { showAlert('error','Please enter a valid 10-digit phone number.'); return null; }
+    if(!location)                          { showAlert('error','Please enter your city / location.'); return null; }
+    if(pw && pw.length<6)                  { showAlert('error','Password must be at least 6 characters.'); return null; }
+    if(pw && pw!==cpw)                     { showAlert('error','Passwords do not match.'); return null; }
+    if(!document.getElementById('c-terms').checked) { showAlert('error','Please accept the Terms of Service to continue.'); return null; }
+
+    return { role, phone, location, ...(pw?{password:pw}:{}), referralCode: currentRef||null };
   }
-  if (role === 'worker') {
-    if (!document.getElementById('w-location').value.trim()) { showAlert('Please enter your city / location.'); return; }
-    if (!document.getElementById('skill').value)             { showAlert('Please select your primary skill.'); return; }
-    if (!document.getElementById('idType').value)            { showAlert('Please select your ID type.'); return; }
-    if (!file)                                               { showAlert('Please upload your government ID document.'); return; }
-    const pw=document.getElementById('w-password').value;
-    const cpw=document.getElementById('w-confirm').value;
-    if (pw && pw.length<6) { showAlert('Password must be at least 6 characters.'); return; }
-    if (pw && pw!==cpw)    { showAlert('Passwords do not match.'); return; }
-  }
 
-  const btn=document.getElementById('submitBtn'), sp=document.getElementById('sp');
-  btn.disabled=true; sp.style.display='inline-block';
+  if(role === 'worker') {
+    const location   = document.getElementById('w-location').value.trim();
+    const phone      = document.getElementById('w-phone').value.trim();
+    const skill      = document.getElementById('skill').value;
+    const experience = document.getElementById('experience').value;
+    const basePrice  = document.getElementById('basePrice').value;
+    const avail      = document.getElementById('availability').value;
+    const bio        = document.getElementById('bio').value.trim();
+    const idType     = document.getElementById('idType').value;
+    const pw         = document.getElementById('w-password').value;
+    const cpw        = document.getElementById('w-confirm').value;
 
-  try {
-    let idDoc = null;
-    if (role==='worker' && file) {
-      idDoc = await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file);});
-    }
+    if(!location)                              { showAlert('error','Please enter your city / location.'); return null; }
+    if(!phone || !/^\d{10}$/.test(phone))      { showAlert('error','Please enter a valid 10-digit phone number.'); return null; }
+    if(!skill)                                  { showAlert('error','Please select your primary skill.'); return null; }
+    if(!experience)                             { showAlert('error','Please select your years of experience.'); return null; }
+    if(!basePrice || Number(basePrice)<50)      { showAlert('error','Please enter a valid starting price (minimum ₹50).'); return null; }
+    if(!avail)                                  { showAlert('error','Please select your availability.'); return null; }
+    if(!bio || bio.length<30)                   { showAlert('error','Please write about yourself (minimum 30 characters).'); return null; }
+    if(!idType)                                 { showAlert('error','Please select your ID type for verification.'); return null; }
+    if(!idFile)                                 { showAlert('error','Please upload your government ID document.'); return null; }
+    if(pw && pw.length<6)                       { showAlert('error','Password must be at least 6 characters.'); return null; }
+    if(pw && pw!==cpw)                          { showAlert('error','Passwords do not match.'); return null; }
+    if(!document.getElementById('w-terms').checked) { showAlert('error','Please accept the Terms of Service to continue.'); return null; }
 
-    const payload = { role };
-    if (currentRef) payload.referralCode = currentRef;
-
-    if (role === 'customer') {
-      const pw=document.getElementById('c-password').value;
-      payload.phone    = document.getElementById('c-phone').value.trim()    || null;
-      payload.location = document.getElementById('c-location').value.trim() || null;
-      if (pw) payload.password = pw;
-    }
-    if (role === 'worker') {
-      const pw=document.getElementById('w-password').value;
-      payload.location   = document.getElementById('w-location').value.trim();
-      payload.phone      = document.getElementById('w-phone').value.trim()    || null;
-      payload.skill      = document.getElementById('skill').value;
-      payload.bio        = document.getElementById('bio').value.trim()         || null;
-      payload.idType     = document.getElementById('idType').value;
-      payload.idDocument = idDoc;
-      if (pw) payload.password = pw;
-    }
-
-    const r = await fetch('/api/auth/google/role', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token },
-      body: JSON.stringify(payload),
-    });
-    const d = await r.json();
-
-    if (d.success) {
-      localStorage.setItem('kc_token', d.token);
-      localStorage.setItem('kc_user', JSON.stringify(d.user));
-      sessionStorage.removeItem('kc_referral');
-      showOk('Account created! Taking you to your dashboard… 🎉');
-      setTimeout(()=>{
-        location.replace(d.user.role==='worker'?'worker-dashboard.html':'customer-dashboard.html');
-      }, 900);
-    } else {
-      showAlert(d.message || 'Something went wrong. Please try again.');
-      btn.disabled=false; sp.style.display='none';
-    }
-  } catch(e) {
-    showAlert('Cannot connect to server. Is it running?');
-    btn.disabled=false; sp.style.display='none';
+    return { role, location, phone, skill, experience, basePrice:Number(basePrice), availability:avail, bio, idType, ...(pw?{password:pw}:{}), referralCode: currentRef||null };
   }
 }
 
-function showAlert(m){const b=document.getElementById('alertBox');b.style.display='flex';b.className='alert alert-err';b.innerHTML=`<i class="bi bi-exclamation-circle-fill"></i> ${m}`;b.scrollIntoView({behavior:'smooth',block:'nearest'});}
-function showOk(m){const b=document.getElementById('alertBox');b.style.display='flex';b.className='alert alert-ok';b.innerHTML=`<i class="bi bi-check-circle-fill"></i> ${m}`;}
+let dashboardUrl = 'customer-dashboard.html';
+function goToDashboard() { location.replace(dashboardUrl); }
+
+// ══ SUBMIT ══
+async function submitForm() {
+  const payload = validate();
+  if(!payload) return;
+
+  const btn = document.getElementById('submitBtn');
+  const sp  = document.getElementById('sp');
+  btn.disabled=true; sp.style.display='inline-block';
+  document.getElementById('submitLabel').textContent='Creating account…';
+
+  const timer = setTimeout(()=>{
+    btn.disabled=false; sp.style.display='none';
+    document.getElementById('submitLabel').textContent=`Create Account as ${role==='worker'?'Worker':'Customer'}`;
+    showAlert('error','Request timed out. Please try again.');
+  }, 30000);
+
+  try {
+    // Convert ID file to base64 if worker
+    if(payload.role==='worker' && idFile) {
+      payload.idDocument = await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(idFile);});
+    }
+
+    const res  = await fetch('/api/auth/google/role',{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify(payload)
+    });
+    const data = await res.json();
+    clearTimeout(timer);
+
+    if(data.success) {
+      localStorage.setItem('kc_token', data.token);
+      localStorage.setItem('kc_user', JSON.stringify(data.user));
+      sessionStorage.removeItem('kc_referral');
+
+      dashboardUrl = data.user.role==='worker' ? 'worker-dashboard.html' : 'customer-dashboard.html';
+
+      // Show success screen
+      document.getElementById('alertBox').style.display='none';
+      Array.from(document.querySelector('.main').children).forEach(el=>{
+        if(el.id!=='successScreen') el.style.display='none';
+      });
+      const ss = document.getElementById('successScreen');
+      ss.style.display='block';
+      document.getElementById('ss-sub-text').textContent = data.user.role==='worker'
+        ? 'Your account is created! Admin will verify your ID within 24h. Redirecting…'
+        : 'Welcome to KaamConnect! Redirecting to your dashboard…';
+      if(data.user.role==='worker') {
+        document.getElementById('ss-note-text').textContent = 'You will receive a notification once your profile is approved.';
+      }
+      setTimeout(goToDashboard, 2000);
+    } else {
+      showAlert('error', data.message||'Something went wrong. Please try again.');
+      btn.disabled=false; sp.style.display='none';
+      document.getElementById('submitLabel').textContent=`Create Account as ${role==='worker'?'Worker':'Customer'}`;
+    }
+  } catch {
+    clearTimeout(timer);
+    showAlert('error','Cannot connect to server. Please check your connection.');
+    btn.disabled=false; sp.style.display='none';
+    document.getElementById('submitLabel').textContent=`Create Account as ${role==='worker'?'Worker':'Customer'}`;
+  }
+}
 </script>
 </body>
 </html>
