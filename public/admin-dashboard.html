@@ -10,48 +10,48 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
 <style>
 /* ═══════════════════════════════════════
-   KaamConnect Admin — Dark Luxury
+   KaamConnect Admin — Light Theme
    Forest green + saffron + gold
    Playfair Display + DM Sans
    ═══════════════════════════════════════ */
 :root {
   --saffron: #E8601C;
   --saffron-2: #F07840;
-  --saffron-glow: rgba(232,96,28,.3);
-  --saffron-pale: rgba(232,96,28,.12);
+  --saffron-glow: rgba(232,96,28,.2);
+  --saffron-pale: #FEF0E8;
   --forest: #1A3C34;
   --forest-2: #24524A;
   --forest-3: #0D2420;
   --sage: #3D7A6E;
   --gold: #D4A017;
-  --gold-2: #F0C040;
-  --gold-pale: rgba(212,160,23,.15);
-  /* Dark bg */
-  --bg: #0A0F0D;
-  --bg-2: #111815;
-  --bg-3: #161E1B;
-  --bg-4: #1C2620;
-  --card: #131A17;
-  --card-2: #182019;
-  --border: rgba(255,255,255,.07);
-  --border-2: rgba(255,255,255,.04);
+  --gold-2: #B87900;
+  --gold-pale: rgba(212,160,23,.1);
+  /* Light bg */
+  --bg: #F2F5F3;
+  --bg-2: #FFFFFF;
+  --bg-3: #F9FAF9;
+  --bg-4: #F3F5F4;
+  --card: #FFFFFF;
+  --card-2: #F7F9F8;
+  --border: rgba(12,23,20,.1);
+  --border-2: rgba(12,23,20,.05);
   --white: #FFFFFF;
-  --ink: #F0EDE8;
-  --ink-70: rgba(240,237,232,.7);
-  --ink-40: rgba(240,237,232,.4);
-  --ink-20: rgba(240,237,232,.2);
-  --ink-08: rgba(240,237,232,.08);
+  --ink: #0C1714;
+  --ink-70: rgba(12,23,20,.7);
+  --ink-40: rgba(12,23,20,.4);
+  --ink-20: rgba(12,23,20,.2);
+  --ink-08: rgba(12,23,20,.06);
   /* Status colors */
-  --green-s: #22C55E;
-  --green-pale: rgba(34,197,94,.12);
-  --red-s: #EF4444;
-  --red-pale: rgba(239,68,68,.12);
-  --blue-s: #60A5FA;
-  --blue-pale: rgba(96,165,250,.12);
-  --amber-s: #FBBF24;
-  --amber-pale: rgba(251,191,36,.12);
-  --purple-s: #A78BFA;
-  --purple-pale: rgba(167,139,250,.12);
+  --green-s: #15803D;
+  --green-pale: rgba(21,128,61,.09);
+  --red-s: #DC2626;
+  --red-pale: rgba(220,38,38,.08);
+  --blue-s: #2563EB;
+  --blue-pale: rgba(37,99,235,.08);
+  --amber-s: #B45309;
+  --amber-pale: rgba(180,83,9,.09);
+  --purple-s: #7C3AED;
+  --purple-pale: rgba(124,58,237,.08);
   --sidebar-w: 260px;
   --topbar-h: 64px;
 }
@@ -62,8 +62,8 @@ a{text-decoration:none;color:inherit}
 ul{list-style:none}
 button{font-family:'DM Sans',sans-serif;cursor:pointer;border:none;background:none}
 
-/* Grain texture */
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+/* Grain texture - light mode subtle */
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle, rgba(12,23,20,.035) 1px, transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)}
 
 /* ══ SIDEBAR ══ */
 .sidebar{
@@ -123,12 +123,13 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 /* ══ TOPBAR ══ */
 .topbar{
   height:var(--topbar-h);
-  background:rgba(10,15,13,.9);
+  background:rgba(255,255,255,.95);
   backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
   padding:0 32px;
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 12px rgba(12,23,20,.05);
 }
 .topbar-left{display:flex;align-items:center;gap:14px}
 .mob-toggle{display:none;flex-direction:column;gap:5px;padding:6px;cursor:pointer}
@@ -138,12 +139,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .mob-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .topbar-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.5px}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.topbar-search{display:flex;align-items:center;gap:8px;background:var(--ink-08);border:1px solid var(--border);border-radius:9px;padding:7px 14px;cursor:text;transition:all .2s}
-.topbar-search:hover{border-color:var(--ink-20)}
+.topbar-search{display:flex;align-items:center;gap:8px;background:var(--bg-4);border:1px solid var(--border);border-radius:9px;padding:7px 14px;cursor:text;transition:all .2s}
+.topbar-search:hover{border-color:var(--ink-20);background:#fff}
 .topbar-search i{color:var(--ink-40);font-size:14px}
 .topbar-search span{font-size:13px;color:var(--ink-40)}
-.topbar-badge-btn{width:36px;height:36px;border-radius:9px;background:var(--ink-08);border:1px solid var(--border);display:grid;place-items:center;cursor:pointer;font-size:15px;color:var(--ink-70);transition:all .2s;position:relative}
-.topbar-badge-btn:hover{background:var(--ink-20);border-color:var(--ink-20);color:var(--ink)}
+.topbar-badge-btn{width:36px;height:36px;border-radius:9px;background:var(--bg-4);border:1px solid var(--border);display:grid;place-items:center;cursor:pointer;font-size:15px;color:var(--ink-70);transition:all .2s;position:relative}
+.topbar-badge-btn:hover{background:var(--ink-08);border-color:var(--ink-20);color:var(--ink)}
 .tb-notif-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;background:var(--red-s);border:2px solid var(--bg);animation:pulse-dot 2s infinite}
 .topbar-av{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--forest),var(--sage));display:grid;place-items:center;font-size:15px;cursor:pointer;border:1px solid rgba(255,255,255,.1)}
 .topbar-chip{display:flex;align-items:center;gap:6px;background:var(--gold-pale);border:1px solid rgba(212,160,23,.25);border-radius:100px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--gold-2)}
@@ -248,11 +249,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   width:100%;padding:10px 14px;
   border:1px solid var(--border);border-radius:9px;
   font-family:'DM Sans',sans-serif;font-size:13.5px;
-  color:var(--ink);background:var(--bg-3);
+  color:var(--ink);background:var(--white);
   outline:none;transition:all .2s;appearance:none;-webkit-appearance:none;
 }
 .fi::placeholder{color:var(--ink-40)}
-.fi:focus{border-color:var(--saffron);background:var(--bg-4);box-shadow:0 0 0 3px rgba(232,96,28,.08)}
+.fi:focus{border-color:var(--saffron);background:#fff;box-shadow:0 0 0 3px rgba(232,96,28,.08)}
 select.fi{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
 textarea.fi{min-height:80px;resize:vertical}
 .fg{margin-bottom:14px}
@@ -280,14 +281,14 @@ textarea.fi{min-height:80px;resize:vertical}
 .vc-actions{display:flex;gap:7px;flex-wrap:wrap}
 
 /* ══ MODAL ══ */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.modal-bg{position:fixed;inset:0;background:rgba(12,23,20,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
 .modal-bg.open{display:flex;animation:mfade .2s ease}
 @keyframes mfade{from{opacity:0}to{opacity:1}}
-.modal{background:var(--bg-3);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:540px;box-shadow:0 24px 80px rgba(0,0,0,.5);animation:mslide .3s cubic-bezier(.34,1.56,.64,1);position:relative;max-height:90vh;overflow-y:auto}
+.modal{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:28px;width:100%;max-width:540px;box-shadow:0 24px 80px rgba(12,23,20,.18);animation:mslide .3s cubic-bezier(.34,1.56,.64,1);position:relative;max-height:90vh;overflow-y:auto}
 @keyframes mslide{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
 .modal::-webkit-scrollbar{width:4px}
 .modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-.modal-x{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:8px;background:var(--ink-08);cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--ink-70);transition:all .2s;border:none}
+.modal-x{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:8px;background:var(--bg-4);cursor:pointer;display:grid;place-items:center;font-size:14px;color:var(--ink-70);transition:all .2s;border:none}
 .modal-x:hover{background:var(--red-pale);color:var(--red-s)}
 .modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ink);letter-spacing:-.5px;margin-bottom:4px}
 .modal-sub{font-size:13.5px;color:var(--ink-40);margin-bottom:20px;font-weight:300}
@@ -311,10 +312,10 @@ textarea.fi{min-height:80px;resize:vertical}
 /* ══ TOAST ══ */
 .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column-reverse;gap:8px;pointer-events:none}
 .toast{
-  background:var(--bg-4);border:1px solid var(--border);
+  background:var(--white);border:1px solid var(--border);
   color:var(--ink);padding:13px 18px;border-radius:12px;
   font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:10px;
-  box-shadow:0 16px 48px rgba(0,0,0,.4);
+  box-shadow:0 8px 32px rgba(12,23,20,.12);
   animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);
   max-width:320px;pointer-events:all;
 }
@@ -900,7 +901,7 @@ textarea.fi{min-height:80px;resize:vertical}
     <div id="idDocViewer" style="margin-bottom:16px"></div>
     <div class="reject-area" id="rejectWrap" style="display:none">
       <div class="reject-label"><i class="bi bi-exclamation-triangle-fill"></i> Rejection Reason <span style="font-weight:400;opacity:.7;text-transform:none;letter-spacing:0">(required)</span></div>
-      <input type="text" class="fi" id="rejectReason" placeholder="e.g. ID unclear, expired, wrong document type…" style="background:var(--bg-4)">
+      <input type="text" class="fi" id="rejectReason" placeholder="e.g. ID unclear, expired, wrong document type…">
     </div>
     <input type="hidden" id="idModalWid">
     <div class="modal-actions" id="idModalActions"></div>
