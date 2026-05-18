@@ -835,162 +835,36 @@ textarea.fi{min-height:80px;resize:vertical}
         <div class="ph-left">
           <div class="ph-eyebrow">Platform</div>
           <div class="ph-title">Admin Settings</div>
-          <div class="ph-sub">Manage platform configuration and your admin profile</div>
         </div>
       </div>
-
-      <div id="settingsAlert" style="display:none;margin-bottom:16px"></div>
-
-      <!-- Row 1 -->
-      <div class="grid-2" style="margin-bottom:20px">
-
-        <!-- Platform Config -->
+      <div class="grid-2">
         <div class="panel">
-          <div class="panel-head">
-            <span class="panel-title">⚙️ Platform Configuration</span>
-          </div>
+          <div class="panel-head"><span class="panel-title">⚙️ Platform Config</span></div>
           <div class="panel-body">
-            <div class="fg">
-              <label class="fl">Platform Commission Fee (%)</label>
-              <input class="fi" type="number" id="cfg-fee" value="10" min="1" max="50" placeholder="10">
-              <div style="font-size:11.5px;color:var(--ink-40);margin-top:5px"><i class="bi bi-info-circle"></i> Currently 10% is deducted from each completed job payment.</div>
-            </div>
-            <div class="fg">
-              <label class="fl">Max Workers Per City</label>
-              <input class="fi" type="number" id="cfg-maxworkers" value="500" placeholder="500">
-            </div>
-            <div class="fg">
-              <label class="fl">ID Verification Timeout (hours)</label>
-              <input class="fi" type="number" id="cfg-timeout" value="24" placeholder="24">
-            </div>
-            <div class="fg">
-              <label class="fl">Platform Status</label>
-              <select class="fi" id="cfg-status">
+            <div class="fg"><label class="fl">Platform Fee (%)</label><input class="fi" type="number" value="10" min="1" max="50" placeholder="10"></div>
+            <div class="fg"><label class="fl">Max Workers Per City</label><input class="fi" type="number" value="500" placeholder="500"></div>
+            <div class="fg"><label class="fl">Verification Timeout (hours)</label><input class="fi" type="number" value="24" placeholder="24"></div>
+            <div class="fg"><label class="fl">Platform Status</label>
+              <select class="fi">
                 <option value="active">✅ Active — Accepting jobs</option>
                 <option value="maintenance">🔧 Maintenance Mode</option>
-                <option value="paused">⏸️ Paused — No new bookings</option>
+                <option value="paused">⏸️ Paused</option>
               </select>
             </div>
-            <div style="display:flex;gap:8px;margin-top:4px">
-              <button class="btn btn-primary" onclick="savePlatformConfig()"><i class="bi bi-check-circle-fill"></i> Save Configuration</button>
-              <button class="btn btn-outline" onclick="resetPlatformConfig()"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
-            </div>
+            <button class="btn btn-primary" style="margin-top:8px"><i class="bi bi-check-circle-fill"></i> Save Changes</button>
           </div>
         </div>
-
-        <!-- Admin Profile -->
         <div class="panel">
-          <div class="panel-head">
-            <span class="panel-title">🔐 Admin Profile</span>
-          </div>
+          <div class="panel-head"><span class="panel-title">🔐 Admin Info</span></div>
           <div class="panel-body">
-            <div class="fg">
-              <label class="fl">Admin Name</label>
-              <input class="fi" type="text" id="settingsName" placeholder="Admin">
+            <div class="fg"><label class="fl">Admin Name</label><input class="fi" type="text" id="settingsName" placeholder="Admin"></div>
+            <div class="fg"><label class="fl">Admin Email</label><input class="fi" type="email" id="settingsEmail" placeholder="admin@kaamconnect.in"></div>
+            <div class="fg"><label class="fl">New Password</label><input class="fi" type="password" placeholder="Leave blank to keep current"></div>
+            <div style="margin-bottom:20px;padding:14px;background:var(--amber-pale);border:1px solid rgba(251,191,36,.2);border-radius:10px;font-size:12.5px;color:var(--amber-s);display:flex;gap:8px">
+              <i class="bi bi-info-circle-fill" style="flex-shrink:0;margin-top:1px"></i>
+              <span>Keep your admin credentials secure. Do not share access with unverified people.</span>
             </div>
-            <div class="fg">
-              <label class="fl">Admin Email</label>
-              <input class="fi" type="email" id="settingsEmail" placeholder="admin@kaamconnect.in">
-            </div>
-            <div class="fg">
-              <label class="fl">Current Password (required to change password)</label>
-              <div style="position:relative">
-                <input class="fi" type="password" id="settingsCurrPw" placeholder="Enter current password" style="padding-right:42px">
-                <button type="button" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px" onclick="toggleSettingsPw('settingsCurrPw','eyeCurr')"><i class="bi bi-eye" id="eyeCurr"></i></button>
-              </div>
-            </div>
-            <div class="fg">
-              <label class="fl">New Password <span style="font-weight:400;color:var(--ink-40);text-transform:none;letter-spacing:0">(leave blank to keep current)</span></label>
-              <div style="position:relative">
-                <input class="fi" type="password" id="settingsNewPw" placeholder="Min 6 characters" style="padding-right:42px" oninput="checkSettingsPw(this.value)">
-                <button type="button" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-40);font-size:14px" onclick="toggleSettingsPw('settingsNewPw','eyeNew')"><i class="bi bi-eye" id="eyeNew"></i></button>
-              </div>
-              <div style="display:flex;gap:4px;margin-top:6px">
-                <div style="height:3px;flex:1;border-radius:3px;background:var(--border);transition:background .3s" id="spb1"></div>
-                <div style="height:3px;flex:1;border-radius:3px;background:var(--border);transition:background .3s" id="spb2"></div>
-                <div style="height:3px;flex:1;border-radius:3px;background:var(--border);transition:background .3s" id="spb3"></div>
-                <div style="height:3px;flex:1;border-radius:3px;background:var(--border);transition:background .3s" id="spb4"></div>
-              </div>
-            </div>
-            <div class="fg">
-              <label class="fl">Confirm New Password</label>
-              <input class="fi" type="password" id="settingsConfirmPw" placeholder="Repeat new password">
-            </div>
-            <div style="padding:12px 14px;background:var(--amber-pale);border:1px solid rgba(180,83,9,.2);border-radius:10px;font-size:12.5px;color:var(--amber-s);display:flex;gap:8px;margin-bottom:16px">
-              <i class="bi bi-shield-lock-fill" style="flex-shrink:0;margin-top:1px"></i>
-              <span>Keep admin credentials secure. Never share your password with anyone.</span>
-            </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn btn-primary" onclick="saveAdminProfile()"><i class="bi bi-save-fill"></i> Update Profile</button>
-              <button class="btn btn-outline" onclick="loadSettingsData()"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 2 — Danger zone + Quick actions -->
-      <div class="grid-2">
-
-        <!-- Quick Actions -->
-        <div class="panel">
-          <div class="panel-head"><span class="panel-title">⚡ Quick Admin Actions</span></div>
-          <div class="panel-body">
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg-4);border:1px solid var(--border);border-radius:11px">
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--ink)">Verify All Pending IDs</div>
-                  <div style="font-size:12px;color:var(--ink-40);margin-top:2px">Batch approve all pending worker ID verifications</div>
-                </div>
-                <button class="btn btn-success btn-sm" onclick="batchVerifyAll()"><i class="bi bi-patch-check-fill"></i> Approve All</button>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg-4);border:1px solid var(--border);border-radius:11px">
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--ink)">Refresh Platform Stats</div>
-                  <div style="font-size:12px;color:var(--ink-40);margin-top:2px">Recalculate all platform analytics and counters</div>
-                </div>
-                <button class="btn btn-ghost btn-sm" onclick="refreshAll();toast('Stats refreshed','ok')"><i class="bi bi-arrow-repeat"></i> Refresh</button>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg-4);border:1px solid var(--border);border-radius:11px">
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--ink)">Export Users CSV</div>
-                  <div style="font-size:12px;color:var(--ink-40);margin-top:2px">Download all user data as a CSV file</div>
-                </div>
-                <button class="btn btn-ghost btn-sm" onclick="exportUsers()"><i class="bi bi-download"></i> Export</button>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg-4);border:1px solid var(--border);border-radius:11px">
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--ink)">View Live Site</div>
-                  <div style="font-size:12px;color:var(--ink-40);margin-top:2px">Open KaamConnect homepage in a new tab</div>
-                </div>
-                <button class="btn btn-outline btn-sm" onclick="window.open('index.html','_blank')"><i class="bi bi-box-arrow-up-right"></i> Open</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Danger Zone -->
-        <div class="panel" style="border-color:rgba(220,38,38,.2)">
-          <div class="panel-head" style="background:var(--red-pale);border-color:rgba(220,38,38,.15)">
-            <span class="panel-title" style="color:var(--red-s)">⚠️ Danger Zone</span>
-          </div>
-          <div class="panel-body">
-            <div style="display:flex;flex-direction:column;gap:10px">
-              <div style="padding:16px;background:var(--red-pale);border:1px solid rgba(220,38,38,.15);border-radius:11px">
-                <div style="font-size:14px;font-weight:700;color:var(--red-s);margin-bottom:4px">Delete All Inactive Users</div>
-                <div style="font-size:12px;color:var(--ink-70);margin-bottom:12px;line-height:1.6">Permanently remove all users who have been inactive for 90+ days. This cannot be undone.</div>
-                <button class="btn btn-danger btn-sm" onclick="confirmDangerAction('deleteInactive')"><i class="bi bi-person-dash-fill"></i> Delete Inactive Users</button>
-              </div>
-              <div style="padding:16px;background:var(--red-pale);border:1px solid rgba(220,38,38,.15);border-radius:11px">
-                <div style="font-size:14px;font-weight:700;color:var(--red-s);margin-bottom:4px">Cancel All Pending Jobs</div>
-                <div style="font-size:12px;color:var(--ink-70);margin-bottom:12px;line-height:1.6">Mark all currently pending jobs as cancelled. Workers and customers will be notified.</div>
-                <button class="btn btn-danger btn-sm" onclick="confirmDangerAction('cancelPending')"><i class="bi bi-x-circle-fill"></i> Cancel Pending Jobs</button>
-              </div>
-              <div style="padding:16px;background:var(--red-pale);border:1px solid rgba(220,38,38,.15);border-radius:11px">
-                <div style="font-size:14px;font-weight:700;color:var(--red-s);margin-bottom:4px">Sign Out of All Devices</div>
-                <div style="font-size:12px;color:var(--ink-70);margin-bottom:12px;line-height:1.6">Invalidate all admin sessions across all devices immediately.</div>
-                <button class="btn btn-danger btn-sm" onclick="logout()"><i class="bi bi-box-arrow-left"></i> Sign Out Everywhere</button>
-              </div>
-            </div>
+            <button class="btn btn-gold"><i class="bi bi-save"></i> Update Profile</button>
           </div>
         </div>
       </div>
@@ -1556,213 +1430,6 @@ function showIdAlert(t,m){
   a.style.display='flex';
   a.className='alert '+(t==='error'?'ae':'as');
   a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> <span>${m}</span>`;
-}
-
-// ══ SETTINGS ══
-
-// Load admin data into settings fields
-function loadSettingsData() {
-  const me = JSON.parse(localStorage.getItem('kc_user') || '{}');
-  const nameEl = document.getElementById('settingsName');
-  const emailEl = document.getElementById('settingsEmail');
-  if (nameEl) nameEl.value = me.name || '';
-  if (emailEl) emailEl.value = me.email || '';
-  // Clear password fields
-  ['settingsCurrPw','settingsNewPw','settingsConfirmPw'].forEach(id => {
-    const el = document.getElementById(id); if(el) el.value = '';
-  });
-  // Reset pw bars
-  for(let i=1;i<=4;i++){const b=document.getElementById('spb'+i);if(b)b.style.background='var(--border)';}
-}
-
-// Password strength for settings
-function checkSettingsPw(v) {
-  const checks = [v.length>=6, v.length>=8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
-  const n = checks.filter(Boolean).length;
-  const cols = ['#DC2626','#D97706','#15803D','#15803D'];
-  for(let i=1;i<=4;i++){
-    const b=document.getElementById('spb'+i);
-    if(b) b.style.background = i<=n ? cols[Math.min(n-1,3)] : 'var(--border)';
-  }
-}
-
-function toggleSettingsPw(inputId, eyeId) {
-  const p = document.getElementById(inputId);
-  const i = document.getElementById(eyeId);
-  if(!p||!i) return;
-  p.type = p.type==='password' ? 'text' : 'password';
-  i.className = p.type==='password' ? 'bi bi-eye' : 'bi bi-eye-slash';
-}
-
-function showSettingsAlert(type, msg) {
-  const el = document.getElementById('settingsAlert');
-  if(!el) return;
-  el.style.display = 'flex';
-  el.className = 'alert ' + (type==='error' ? 'ae' : type==='warn' ? 'aw' : 'as');
-  el.innerHTML = `<i class="bi bi-${type==='error'?'exclamation-circle-fill':type==='warn'?'exclamation-triangle-fill':'check-circle-fill'}"></i> <span>${msg}</span>`;
-  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
-  if(type !== 'error') setTimeout(() => { el.style.display='none'; }, 5000);
-}
-
-// Save Platform Config
-async function savePlatformConfig() {
-  const fee    = document.getElementById('cfg-fee')?.value;
-  const max    = document.getElementById('cfg-maxworkers')?.value;
-  const tout   = document.getElementById('cfg-timeout')?.value;
-  const status = document.getElementById('cfg-status')?.value;
-
-  if(!fee || Number(fee) < 1 || Number(fee) > 50) {
-    showSettingsAlert('error', 'Platform fee must be between 1% and 50%.');
-    return;
-  }
-
-  try {
-    const r = await fetch('/api/admin/settings/platform', {
-      method: 'PUT', headers: H,
-      body: JSON.stringify({ commissionFee: Number(fee), maxWorkersPerCity: Number(max), verificationTimeout: Number(tout), platformStatus: status })
-    });
-    const d = await r.json();
-    if(d.success) {
-      showSettingsAlert('ok', '✅ Platform configuration saved successfully!');
-      toast('Platform settings saved','ok');
-    } else {
-      // API may not exist yet — show success anyway for UI demo
-      showSettingsAlert('ok', '✅ Settings saved locally. Connect backend to persist.');
-      toast('Settings saved','ok');
-    }
-  } catch {
-    // Offline/no-backend graceful fallback
-    showSettingsAlert('ok', '✅ Configuration saved locally (server offline).');
-    toast('Settings saved locally','info');
-  }
-}
-
-function resetPlatformConfig() {
-  const el = document.getElementById('cfg-fee'); if(el) el.value = '10';
-  const el2 = document.getElementById('cfg-maxworkers'); if(el2) el2.value = '500';
-  const el3 = document.getElementById('cfg-timeout'); if(el3) el3.value = '24';
-  const el4 = document.getElementById('cfg-status'); if(el4) el4.value = 'active';
-  showSettingsAlert('ok', 'Configuration reset to defaults.');
-}
-
-// Save Admin Profile
-async function saveAdminProfile() {
-  const name    = document.getElementById('settingsName')?.value.trim();
-  const email   = document.getElementById('settingsEmail')?.value.trim();
-  const currPw  = document.getElementById('settingsCurrPw')?.value;
-  const newPw   = document.getElementById('settingsNewPw')?.value;
-  const confPw  = document.getElementById('settingsConfirmPw')?.value;
-
-  if(!name)  { showSettingsAlert('error', 'Please enter your name.'); return; }
-  if(!email || !email.includes('@')) { showSettingsAlert('error', 'Please enter a valid email address.'); return; }
-
-  // If trying to change password
-  if(newPw) {
-    if(!currPw) { showSettingsAlert('error', 'Please enter your current password to set a new one.'); return; }
-    if(newPw.length < 6) { showSettingsAlert('error', 'New password must be at least 6 characters.'); return; }
-    if(newPw !== confPw) { showSettingsAlert('error', 'Passwords do not match.'); return; }
-  }
-
-  const payload = { name, email };
-  if(newPw && currPw) { payload.currentPassword = currPw; payload.newPassword = newPw; }
-
-  try {
-    const r = await fetch('/api/admin/profile', { method:'PUT', headers:H, body:JSON.stringify(payload) });
-    const d = await r.json();
-    if(d.success || r.ok) {
-      // Update localStorage
-      const me = JSON.parse(localStorage.getItem('kc_user')||'{}');
-      me.name = name; me.email = email;
-      localStorage.setItem('kc_user', JSON.stringify(me));
-      document.getElementById('sbAdminName').textContent = name;
-      // Clear password fields
-      ['settingsCurrPw','settingsNewPw','settingsConfirmPw'].forEach(id=>{ const el=document.getElementById(id);if(el)el.value=''; });
-      showSettingsAlert('ok', '✅ Profile updated successfully!');
-      toast('Profile updated','ok');
-    } else {
-      showSettingsAlert('error', d.message || 'Update failed. Please try again.');
-    }
-  } catch {
-    // Offline fallback — still update localStorage
-    const me = JSON.parse(localStorage.getItem('kc_user')||'{}');
-    me.name = name; me.email = email;
-    localStorage.setItem('kc_user', JSON.stringify(me));
-    document.getElementById('sbAdminName').textContent = name;
-    ['settingsCurrPw','settingsNewPw','settingsConfirmPw'].forEach(id=>{ const el=document.getElementById(id);if(el)el.value=''; });
-    showSettingsAlert('ok', '✅ Profile saved locally (server offline).');
-    toast('Profile updated locally','info');
-  }
-}
-
-// Batch verify all pending workers
-async function batchVerifyAll() {
-  const pending = allVerfWorkers.filter(w => (w.idStatus||'none')==='pending');
-  if(!pending.length) { toast('No pending verifications to approve','info'); return; }
-  if(!confirm(`Approve all ${pending.length} pending ID verifications?`)) return;
-  let done=0, failed=0;
-  for(const w of pending) {
-    try {
-      const r = await fetch('/api/admin/verify-worker',{method:'POST',headers:H,body:JSON.stringify({worker_id:w._id||w.id})});
-      const d = await r.json();
-      if(d.success) done++; else failed++;
-    } catch { failed++; }
-  }
-  toast(`✅ ${done} verified${failed?' · '+failed+' failed':''}`, done>0?'ok':'err');
-  showSettingsAlert('ok', `Batch verification complete: ${done} approved${failed?' · '+failed+' failed':''}.`);
-  loadStats(); loadPendingVer();
-}
-
-// Export users as CSV
-async function exportUsers() {
-  try {
-    const d = await fetch('/api/admin/users?', {headers:H}).then(r=>r.json());
-    const users = d.users || [];
-    if(!users.length) { toast('No users to export','info'); return; }
-    const headers = ['Name','Email','Role','Location','Email Verified','Status','Joined'];
-    const rows = users.map(u => [
-      u.name||'', u.email||'', u.role||'',
-      u.location||'', u.emailVerified?'Yes':'No',
-      u.isActive!==false?'Active':'Inactive',
-      fmtDate(u.createdAt)
-    ]);
-    const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-    const blob = new Blob([csv], {type:'text/csv'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `kaamconnect_users_${new Date().toISOString().slice(0,10)}.csv`;
-    a.click();
-    toast('📥 Users exported as CSV','ok');
-  } catch { toast('Export failed — server error','err'); }
-}
-
-// Danger zone confirmation
-async function confirmDangerAction(action) {
-  const msgs = {
-    deleteInactive: 'Are you sure you want to permanently delete all inactive users? This CANNOT be undone.',
-    cancelPending:  'Are you sure you want to cancel ALL pending jobs? Workers and customers will be affected.'
-  };
-  if(!confirm(msgs[action] || 'Are you sure?')) return;
-  try {
-    if(action === 'deleteInactive') {
-      const r = await fetch('/api/admin/users/inactive',{method:'DELETE',headers:H});
-      const d = await r.json();
-      toast(d.success ? '🗑️ Inactive users deleted' : 'Action failed: '+(d.message||''), d.success?'ok':'err');
-      if(d.success) loadUsers();
-    } else if(action === 'cancelPending') {
-      const r = await fetch('/api/admin/jobs/cancel-pending',{method:'POST',headers:H});
-      const d = await r.json();
-      toast(d.success ? '❌ Pending jobs cancelled' : 'Action failed: '+(d.message||''), d.success?'ok':'err');
-    }
-  } catch { toast('Server error — action could not complete','err'); }
-}
-
-// Load settings data when navigating to settings
-const _origShow = show;
-// Override show to also load settings
-const origShow = show;
-function show(page, el) {
-  origShow(page, el);
-  if(page === 'settings') loadSettingsData();
 }
 
 function logout(){localStorage.clear();location.href='login.html';}
