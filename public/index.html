@@ -1164,6 +1164,7 @@ function setChips(arr){const c=document.getElementById('chatChips');c.innerHTML=
 async function sendChat(){const inp=document.getElementById('chatInput');const msg=inp.value.trim();if(!msg)return;inp.value='';addMsg(msg,'user');try{const r=await fetch('/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();if(d.success){addMsg(d.response,'bot');if(d.suggestions)setChips(d.suggestions);}else addMsg('Sorry, I could not understand. Please try again.','bot');}catch{addMsg('Server is offline. Please check if the app is running.','bot');}}
 function sendChip(el){document.getElementById('chatInput').value=el.textContent;sendChat();}
 
+<script>
 // ══ WORD ANIMATION ══
 (function() {
   const words = [
@@ -1174,11 +1175,15 @@ function sendChip(el){document.getElementById('chatInput').value=el.textContent;
     'home services platform',
     'verified professionals'
   ];
+
   const slot = document.getElementById('wordSlot');
   const track = document.getElementById('wordTrack');
+
   if (!slot || !track) return;
 
+  // FIXED ERROR HERE
   const extended = [...words, words[0]];
+
   extended.forEach(w => {
     const span = document.createElement('span');
     span.className = 'word-item';
@@ -1194,21 +1199,31 @@ function sendChip(el){document.getElementById('chatInput').value=el.textContent;
     slot.style.height = itemH + 'px';
     updateWidth();
   }
+
   function updateWidth() {
     let maxW = 0;
+
     track.querySelectorAll('.word-item').forEach(i => {
       const w = i.getBoundingClientRect().width;
       if (w > maxW) maxW = w;
     });
+
     slot.style.width = maxW + 'px';
   }
+
   function step() {
     current++;
+
     itemH = track.firstChild.getBoundingClientRect().height || itemH;
+
     slot.style.height = itemH + 'px';
+
     track.classList.add('animating');
+
     track.style.transform = `translateY(-${current * itemH}px)`;
+
     updateWidth();
+
     if (current >= words.length) {
       setTimeout(() => {
         track.classList.remove('animating');
@@ -1217,9 +1232,15 @@ function sendChip(el){document.getElementById('chatInput').value=el.textContent;
       }, 560);
     }
   }
+
   setTimeout(init, 300);
-  setTimeout(() => setInterval(step, 2400), 1600);
+
+  setTimeout(() => {
+    setInterval(step, 2400);
+  }, 1600);
+
 })();
+</script>
 </script>
 </body>
 </html>
