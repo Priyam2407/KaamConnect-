@@ -605,6 +605,27 @@ textarea.fi { min-height:80px; resize:vertical; padding:12px 14px; }
   .tgrid { gap:12px; }
   .hero-body { padding:90px 16px 40px; }
 }
+.word-slot {
+  display: inline-block;
+  position: relative;
+  height: 1.1em;
+  overflow: hidden;
+  vertical-align: top;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.word-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0s;
+}
+.word-track.animating {
+  transition: transform 0.52s cubic-bezier(0.77,0,0.18,1);
+}
+.word-item {
+  white-space: nowrap;
+  line-height: 1.1;
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -658,10 +679,14 @@ textarea.fi { min-height:80px; resize:vertical; padding:12px 14px; }
         <span class="tag-txt" id="heroBadge">Verified workers • Live now</span>
       </div>
       <h1 class="hero-h">
-        India's most<br>trusted
-        <em>worker marketplace</em>
-        <span class="hero-h-sub">Book. Negotiate. Done.</span>
-      </h1>
+  India's most<br>trusted
+  <em class="word-slot-wrap">
+    <span class="word-slot" id="wordSlot">
+      <span class="word-track" id="wordTrack"></span>
+    </span>
+  </em>
+  <span class="hero-h-sub">Book. Negotiate. Done.</span>
+</h1>
       <p class="hero-p">Find verified electricians, plumbers, painters and more in your city — instantly. Negotiate fair prices. Pay only after the job is done.</p>
 
       <div class="hero-search">
@@ -1138,6 +1163,63 @@ function addMsg(txt,who){const b=document.getElementById('chatMsgs');const d=doc
 function setChips(arr){const c=document.getElementById('chatChips');c.innerHTML=arr.map(s=>`<span class="cw-chip" onclick="sendChip(this)">${s}</span>`).join('');}
 async function sendChat(){const inp=document.getElementById('chatInput');const msg=inp.value.trim();if(!msg)return;inp.value='';addMsg(msg,'user');try{const r=await fetch('/api/chat/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();if(d.success){addMsg(d.response,'bot');if(d.suggestions)setChips(d.suggestions);}else addMsg('Sorry, I could not understand. Please try again.','bot');}catch{addMsg('Server is offline. Please check if the app is running.','bot');}}
 function sendChip(el){document.getElementById('chatInput').value=el.textContent;sendChat();}
+
+// ══ WORD ANIMATION ══
+(function() {
+  const words = [
+    'worker marketplace',
+    'electricians hub',
+    'plumbers network',
+    'skilled talent pool',
+    'home services platform',
+    'verified professionals'
+  ];
+  const slot = document.getElementById('wordSlot');
+  const track = document.getElementById('wordTrack');
+  if (!slot || !track) return;
+
+  const extended = [...words, words[0]];
+  extended.forEach(w => {
+    const span = document.createElement('span');
+    span.className = 'word-item';
+    span.textContent = w;
+    track.appendChild(span);
+  });
+
+  let current = 0;
+  let itemH = 0;
+
+  function init() {
+    itemH = track.firstChild.getBoundingClientRect().height || 82;
+    slot.style.height = itemH + 'px';
+    updateWidth();
+  }
+  function updateWidth() {
+    let maxW = 0;
+    track.querySelectorAll('.word-item').forEach(i => {
+      const w = i.getBoundingClientRect().width;
+      if (w > maxW) maxW = w;
+    });
+    slot.style.width = maxW + 'px';
+  }
+  function step() {
+    current++;
+    itemH = track.firstChild.getBoundingClientRect().height || itemH;
+    slot.style.height = itemH + 'px';
+    track.classList.add('animating');
+    track.style.transform = `translateY(-${current * itemH}px)`;
+    updateWidth();
+    if (current >= words.length) {
+      setTimeout(() => {
+        track.classList.remove('animating');
+        track.style.transform = 'translateY(0)';
+        current = 0;
+      }, 560);
+    }
+  }
+  setTimeout(init, 300);
+  setTimeout(() => setInterval(step, 2400), 1600);
+})();
 </script>
 </body>
 </html>
