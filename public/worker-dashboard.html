@@ -1422,8 +1422,8 @@ async function loadOverview(){
   const [statsRes, profileRes, jobsRes] = await Promise.all([
     API('/api/workers/stats').catch(()=>({})),
     API('/api/auth/profile').catch(()=>({})),
-    API('/api/workers/jobs?limit=50').catch(()=>({})],
-  );
+    API('/api/workers/jobs?limit=50').catch(()=>({})),
+  ]);
 
   if(statsRes.success){
     const s = statsRes.stats;
