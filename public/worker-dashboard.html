@@ -1189,11 +1189,16 @@ function showJobAlert(job){
   document.getElementById('jobAlertOverlay').classList.add('open');
 
   // Play sound immediately and again after 3s for urgency
+  //playNotifSound('new_job');
+  //setTimeout(() => playNotifSound('new_job'), 3000);
+
+  // Continuous notification sound
+  window.notifLoop = setInterval(() => {
   playNotifSound('new_job');
-  setTimeout(() => playNotifSound('new_job'), 3000);
+}, 3000);
 
   // Countdown timer
-  let secs = 30;
+  let secs = 2000;
   document.getElementById('jaCountdown').textContent = secs;
   document.getElementById('jaTimerFill').style.width = '100%';
 
@@ -1201,7 +1206,7 @@ function showJobAlert(job){
   jaTimerInterval = setInterval(() => {
     secs--;
     document.getElementById('jaCountdown').textContent = secs;
-    document.getElementById('jaTimerFill').style.width = (secs/30*100) + '%';
+    document.getElementById('jaTimerFill').style.width = (secs/2000*100) + '%';
     if(secs <= 0){
       clearInterval(jaTimerInterval);
       closeJobAlert();
