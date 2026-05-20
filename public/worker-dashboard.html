@@ -1005,7 +1005,6 @@ function getAudioCtx(){
   return audioCtx;
 }
 
-// Generates a pleasant multi-tone notification chime
 function playNotifSound(type='new_job'){
   if(!soundEnabled) return;
   try {
@@ -1014,11 +1013,11 @@ function playNotifSound(type='new_job'){
 
     const sequences = {
       new_job: [
-        {freq:523.25, start:0,    dur:.18, gain:.5},  // C5
-        {freq:659.25, start:.08,  dur:.18, gain:.5},  // E5
-        {freq:783.99, start:.16,  dur:.18, gain:.5},  // G5
-        {freq:1046.5, start:.24,  dur:.35, gain:.45}, // C6
-        {freq:783.99, start:.32,  dur:.28, gain:.35}, // G5
+        {freq:523.25, start:0,    dur:.18, gain:.5},
+        {freq:659.25, start:.08,  dur:.18, gain:.5},
+        {freq:783.99, start:.16,  dur:.18, gain:.5},
+        {freq:1046.5, start:.24,  dur:.35, gain:.45},
+        {freq:783.99, start:.32,  dur:.28, gain:.35},
       ],
       success: [
         {freq:523.25, start:0,    dur:.15, gain:.4},
@@ -1039,21 +1038,17 @@ function playNotifSound(type='new_job'){
       const gainNode = ctx.createGain();
       osc.connect(gainNode);
       gainNode.connect(ctx.destination);
-
       osc.type = 'sine';
       osc.frequency.setValueAtTime(note.freq, now + note.start);
-
       gainNode.gain.setValueAtTime(0, now + note.start);
       gainNode.gain.linearRampToValueAtTime(note.gain, now + note.start + 0.02);
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + note.start + note.dur);
-
       osc.start(now + note.start);
       osc.stop(now + note.start + note.dur + 0.05);
     });
   } catch(e) {}
 }
 
-// Show sound permission banner on first load
 function initSoundBanner(){
   if(localStorage.getItem('kc_sound_asked')) return;
   setTimeout(() => document.getElementById('soundBanner').classList.add('show'), 2000);
@@ -1167,6 +1162,15 @@ document.addEventListener('click', e => {
 });
 renderNotifDot(); renderNotifList();
 
+// ══ NOTIFICATION SOUND LOOP MANAGEMENT ══
+// ✅ FIX: Central function to stop the notification loop
+function stopNotifLoop(){
+  if(window.notifLoop){
+    clearInterval(window.notifLoop);
+    window.notifLoop = null;
+  }
+}
+
 // ══ INCOMING JOB ALERT POPUP ══
 let jaTimerInterval = null;
 let jaCurrentJob = null;
@@ -1188,14 +1192,14 @@ function showJobAlert(job){
 
   document.getElementById('jobAlertOverlay').classList.add('open');
 
-  // Play sound immediately and again after 3s for urgency
-  //playNotifSound('new_job');
-  //setTimeout(() => playNotifSound('new_job'), 3000);
+  // ✅ FIX: Stop any existing loop before starting new one
+  stopNotifLoop();
 
-  // Continuous notification sound
-  window.notifLoop = setInterval(() => {
+  // Start continuous notification sound loop
   playNotifSound('new_job');
-}, 3000);
+  window.notifLoop = setInterval(() => {
+    playNotifSound('new_job');
+  }, 3000);
 
   // Countdown timer
   let secs = 2000;
@@ -1209,40 +1213,59 @@ function showJobAlert(job){
     document.getElementById('jaTimerFill').style.width = (secs/2000*100) + '%';
     if(secs <= 0){
       clearInterval(jaTimerInterval);
+      // ✅ FIX: Stop sound loop when timer expires
+      stopNotifLoop();
       closeJobAlert();
       showToast('Job offer expired', '⏰', 'You didn\'t respond in time');
     }
   }, 1000);
 }
 
+// ✅ FIX: closeJobAlert stops the notification sound loop
 function closeJobAlert(){
   clearInterval(jaTimerInterval);
+  // ✅ Stop the continuous notification sound loop
+  stopNotifLoop();
   document.getElementById('jobAlertOverlay').classList.remove('open');
   jaCurrentJob = null;
+  isShowingAlert = false;
+  setTimeout(processAlertQueue, 800);
 }
 
 async function jaAction(action){
   if(!jaCurrentJob) return;
   const job = jaCurrentJob;
   const budget = job.customerBudget || job.price || 0;
+
+  // ✅ FIX: Stop sound loop immediately when worker takes ANY action
+  stopNotifLoop();
   clearInterval(jaTimerInterval);
 
   if(action === 'counter'){
-    closeJobAlert();
+    // Close alert first, then open counter modal
+    document.getElementById('jobAlertOverlay').classList.remove('open');
+    jaCurrentJob = null;
+    isShowingAlert = false;
     openWorkerOffer(job._id, job.customerId?.name||'Customer', budget);
+    setTimeout(processAlertQueue, 800);
     return;
   }
 
-  closeJobAlert();
+  // Close the overlay immediately
+  document.getElementById('jobAlertOverlay').classList.remove('open');
+  jaCurrentJob = null;
+  isShowingAlert = false;
 
   try {
     const d = await respondOffer(job._id, action, null, null);
     if(d.success){
       if(action === 'accept'){
+        // ✅ Play success sound (not the repeating loop)
         playNotifSound('success');
         showToast('Job Accepted! 🎉', '✅', '₹'+budget+' agreed. Check My Jobs to start.');
         addNotif('Job accepted!', 'You accepted ₹'+budget+' for '+job.skill, '✅', false);
       } else {
+        // ✅ Play reject sound
         playNotifSound('reject');
         showToast('Job declined', '🗑️', 'Offer removed');
       }
@@ -1254,7 +1277,14 @@ async function jaAction(action){
   } catch(e) {
     showToast('Server error', '❌', 'Check your connection');
   }
+
+  setTimeout(processAlertQueue, 800);
 }
+
+// Close alert overlay when clicking background
+document.getElementById('jobAlertOverlay').addEventListener('click', e => {
+  if(e.target === document.getElementById('jobAlertOverlay')) closeJobAlert();
+});
 
 // ══ POLLING FOR NEW JOBS ══
 let knownJobIds = new Set(JSON.parse(localStorage.getItem('kc_known_jobs_'+(USER._id||'x')) || '[]'));
@@ -1269,7 +1299,6 @@ async function pollForNewJobs(){
     const d = await API('/api/workers/jobs?limit=50');
     const activeJobs = (d.jobs||[]).filter(j => ['pending_offer','negotiating','price_agreed'].includes(j.status));
 
-    // Find genuinely new jobs
     const newJobs = activeJobs.filter(j => !knownJobIds.has(j._id));
 
     newJobs.forEach(job => {
@@ -1278,21 +1307,18 @@ async function pollForNewJobs(){
       const budget = job.customerBudget || job.price || 0;
       const skill = (job.skill||'work').charAt(0).toUpperCase()+(job.skill||'').slice(1);
 
-      // Add to notification log
       addNotif(
         `New ${skill} offer! 🎉`,
         `${cname} offered ₹${budget} for ${skill.toLowerCase()} work`,
         skillEmoji[job.skill] || '📋'
       );
 
-      // Queue for popup alert
       alertQueue.push(job);
     });
 
     if(newJobs.length > 0) saveKnownJobs();
     processAlertQueue();
 
-    // Update sidebar badge
     const pending = activeJobs.length;
     const badge = document.getElementById('sb-pending-count');
     if(pending > 0){ badge.textContent = pending; badge.style.display='inline-flex'; }
@@ -1307,25 +1333,7 @@ function processAlertQueue(){
   isShowingAlert = true;
   const job = alertQueue.shift();
   showJobAlert(job);
-
-  // After alert closes, show next after a short delay
-  const origClose = closeJobAlert;
 }
-
-// Override closeJobAlert to process queue
-const _origClose = closeJobAlert;
-window.closeJobAlert = function(){
-  clearInterval(jaTimerInterval);
-  document.getElementById('jobAlertOverlay').classList.remove('open');
-  jaCurrentJob = null;
-  isShowingAlert = false;
-  setTimeout(processAlertQueue, 800);
-};
-
-// Close alert overlay when clicking background
-document.getElementById('jobAlertOverlay').addEventListener('click', e => {
-  if(e.target === document.getElementById('jobAlertOverlay')) closeJobAlert();
-});
 
 pollForNewJobs();
 setInterval(pollForNewJobs, 12000);
@@ -1684,3 +1692,9 @@ loadAvailability();
 </script>
 </body>
 </html>
+HTMLEOF
+Output
+
+Input validation errors occurred:
+description: Field required
+Done
