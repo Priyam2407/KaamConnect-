@@ -3,12 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Dashboard — KaamConnect</title>
+<title>Customer Dashboard — KaamConnect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3580415002485035" crossorigin="anonymous"></script>
 
 <style>
 :root {
@@ -29,237 +32,208 @@
   --ink-06: rgba(15,25,35,.06);
   --gold: #F5B700;
   --ruby: #DC2626;
-  --sidebar-w: 260px;
+  --sidebar-w: 264px;
   --radius: 18px;
   --radius-sm: 12px;
+  --topbar-h: 66px;
 }
-
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--cream);
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-}
-a { text-decoration: none; color: inherit; }
+html { scroll-behavior:smooth; }
+body { font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased; min-height:100vh; overflow-x:hidden; }
+a { text-decoration:none; color:inherit; }
 
 /* ══ SIDEBAR ══ */
 .sidebar {
-  position: fixed; left:0; top:0; bottom:0;
-  width: var(--sidebar-w);
-  background: var(--forest);
-  display: flex; flex-direction: column;
-  z-index: 100;
-  overflow: hidden;
+  position:fixed; left:0; top:0; bottom:0; width:var(--sidebar-w);
+  background:linear-gradient(180deg, var(--forest) 0%, #0D2820 100%);
+  display:flex; flex-direction:column; z-index:100;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  box-shadow:4px 0 32px rgba(15,25,35,.15);
 }
-.sb-art {
-  position: absolute; bottom: -100px; right: -100px;
-  width: 320px; height: 320px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,96,28,.14) 0%, transparent 65%);
-  pointer-events: none;
-}
-.sb-art2 {
-  position: absolute; top: -60px; left: -60px;
-  width: 200px; height: 200px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,.04) 0%, transparent 65%);
-  pointer-events: none;
-}
+.sb-art { position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(232,96,28,.12),transparent 65%); pointer-events:none; }
+.sb-art2 { position:absolute; bottom:-80px; left:-40px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(61,122,110,.08),transparent 65%); pointer-events:none; }
+
 .sb-logo {
-  padding: 26px 22px;
-  display: flex; align-items: center; gap: 10px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  position: relative; z-index: 1;
+  padding:24px 22px; display:flex; align-items:center; gap:11px;
+  border-bottom:1px solid rgba(255,255,255,.07); position:relative; z-index:1;
 }
-.sb-logo-flag { width: 26px; height: 18px; border-radius: 3px; overflow: hidden; flex-shrink:0; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
-.sb-logo-flag svg { width: 100%; height: 100%; display: block; }
-.sb-logo-sep { width:1px; height:20px; background: rgba(255,255,255,.2); }
-.sb-logo-icon { width:34px; height:34px; background:var(--saffron); border-radius:9px; display:grid; place-items:center; font-size:16px; color:#fff; flex-shrink:0; }
+.sb-logo-flag { width:26px; height:18px; border-radius:3px; overflow:hidden; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,.25); }
+.sb-logo-flag svg { width:100%; height:100%; display:block; }
+.sb-logo-sep { width:1px; height:18px; background:rgba(255,255,255,.15); }
+.sb-logo-icon { width:36px; height:36px; background:var(--saffron); border-radius:10px; display:grid; place-items:center; font-size:17px; color:#fff; flex-shrink:0; box-shadow:0 4px 14px rgba(232,96,28,.4); }
 .sb-logo-txt { font-family:'Syne',sans-serif; font-weight:800; font-size:17px; color:#fff; }
-.sb-logo-txt span { color: var(--saffron-2); }
+.sb-logo-txt span { color:var(--saffron-2); }
 
-.sb-nav { flex:1; padding:16px 12px; display:flex; flex-direction:column; gap:3px; overflow-y:auto; position:relative; z-index:1; }
-.sb-group-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.25); padding:14px 12px 6px; }
-.sb-item {
-  display: flex; align-items: center; gap:12px;
-  padding: 11px 14px; border-radius: 12px;
-  font-size:13.5px; font-weight:600;
-  color: rgba(255,255,255,.5);
-  cursor: pointer; transition: all .22s;
-  border: 1px solid transparent; position: relative;
+.sb-profile-mini {
+  margin:16px 16px 8px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:11px; position:relative; z-index:1;
 }
-.sb-item:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85); }
-.sb-item.active {
-  background: linear-gradient(135deg, var(--saffron), var(--saffron-2));
-  color: #fff;
-  box-shadow: 0 6px 20px rgba(232,96,28,.35);
-  border-color: rgba(255,255,255,.1);
-}
-.sb-item i { font-size:17px; flex-shrink:0; }
-.sb-item .sb-badge { margin-left:auto; background: var(--gold); color: #000; font-size:10px; font-weight:800; padding:2px 7px; border-radius:20px; }
-.sb-divider { height:1px; background:rgba(255,255,255,.07); margin:10px 2px; }
-
-.sb-cta {
-  margin: 10px 12px;
-  background: linear-gradient(135deg, rgba(232,96,28,.2), rgba(240,120,64,.1));
-  border: 1px solid rgba(232,96,28,.3);
-  border-radius: 14px; padding:16px;
-  position: relative; z-index:1;
-}
-.sb-cta-title { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#fff; margin-bottom:4px; }
-.sb-cta-sub { font-size:11.5px; color:rgba(255,255,255,.45); margin-bottom:12px; }
-.sb-cta-btn { display:block; text-align:center; background:var(--saffron); color:#fff; font-size:12px; font-weight:700; padding:8px; border-radius:8px; cursor:pointer; transition:all .2s; border:none; width:100%; }
-.sb-cta-btn:hover { background:var(--saffron-2); }
-
-.sb-user {
-  padding: 16px 20px;
-  border-top: 1px solid rgba(255,255,255,.07);
-  display: flex; align-items: center; gap:12px;
-  position: relative; z-index:1;
-}
-.sb-av { width:38px; height:38px; border-radius:11px; background:var(--saffron); display:grid; place-items:center; font-size:16px; font-weight:700; color:#fff; flex-shrink:0; overflow:hidden; }
+.sb-av-wrap { position:relative; flex-shrink:0; }
+.sb-av { width:40px; height:40px; border-radius:11px; background:var(--saffron); display:grid; place-items:center; font-size:17px; font-weight:700; color:#fff; overflow:hidden; }
 .sb-av img { width:100%; height:100%; object-fit:cover; }
-.sb-uname { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.sb-urole { font-size:10.5px; color:rgba(255,255,255,.4); }
-.sb-logout { margin-left:auto; background:rgba(255,255,255,.08); border:none; width:30px; height:30px; border-radius:8px; color:rgba(255,255,255,.5); font-size:13px; cursor:pointer; display:grid; place-items:center; transition:all .2s; flex-shrink:0; }
-.sb-logout:hover { background:rgba(220,38,38,.3); color:#FCA5A5; }
+.sb-online-dot { position:absolute; bottom:-2px; right:-2px; width:10px; height:10px; border-radius:50%; background:#4ADE80; border:2px solid var(--forest); }
+.sb-uname { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sb-urole { font-size:11px; color:rgba(255,255,255,.4); margin-top:1px; }
+.sb-logout-mini { margin-left:auto; background:rgba(255,255,255,.07); border:none; width:28px; height:28px; border-radius:8px; color:rgba(255,255,255,.4); font-size:13px; cursor:pointer; display:grid; place-items:center; transition:all .2s; flex-shrink:0; }
+.sb-logout-mini:hover { background:rgba(220,38,38,.3); color:#FCA5A5; }
+
+.sb-search-wrap { padding:0 16px 10px; position:relative; z-index:1; }
+.sb-search { width:100%; padding:9px 14px 9px 36px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.08); border-radius:10px; font-family:'Nunito',sans-serif; font-size:12.5px; color:rgba(255,255,255,.7); outline:none; transition:all .2s; }
+.sb-search::placeholder { color:rgba(255,255,255,.3); }
+.sb-search:focus { background:rgba(255,255,255,.11); border-color:rgba(232,96,28,.4); }
+.sb-search-ico { position:absolute; left:28px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,.3); font-size:13px; pointer-events:none; }
+
+.sb-nav { flex:1; padding:4px 12px; display:flex; flex-direction:column; gap:2px; overflow-y:auto; position:relative; z-index:1; }
+.sb-group-label { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.22); padding:12px 10px 5px; }
+.sb-item {
+  display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px;
+  font-size:13px; font-weight:700; color:rgba(255,255,255,.45);
+  cursor:pointer; transition:all .2s; border:1px solid transparent; position:relative;
+}
+.sb-item:hover { background:rgba(255,255,255,.07); color:rgba(255,255,255,.8); }
+.sb-item.active { background:linear-gradient(135deg,var(--saffron),var(--saffron-2)); color:#fff; box-shadow:0 5px 18px rgba(232,96,28,.35); }
+.sb-item i { font-size:16px; flex-shrink:0; }
+.sb-badge { margin-left:auto; background:rgba(255,255,255,.2); color:#fff; font-size:10px; font-weight:800; padding:2px 7px; border-radius:20px; min-width:20px; text-align:center; }
+.sb-item:not(.active) .sb-badge { background:rgba(232,96,28,.3); color:var(--saffron-2); }
+.sb-divider { height:1px; background:rgba(255,255,255,.06); margin:6px 0; }
+
+.sb-upgrade {
+  margin:10px 12px; background:linear-gradient(135deg,rgba(232,96,28,.2),rgba(240,120,64,.1));
+  border:1px solid rgba(232,96,28,.3); border-radius:13px; padding:14px 16px; position:relative; z-index:1;
+}
+.sb-upgrade-title { font-family:'Syne',sans-serif; font-size:12.5px; font-weight:700; color:#fff; margin-bottom:3px; }
+.sb-upgrade-sub { font-size:11px; color:rgba(255,255,255,.4); margin-bottom:11px; line-height:1.5; }
+.sb-upgrade-btn { display:block; text-align:center; background:var(--saffron); color:#fff; font-size:12px; font-weight:800; padding:8px; border-radius:8px; cursor:pointer; transition:all .2s; border:none; width:100%; font-family:'Nunito',sans-serif; }
+.sb-upgrade-btn:hover { background:var(--saffron-2); }
 
 /* ══ MAIN ══ */
-.main { margin-left: var(--sidebar-w); min-height:100vh; display:flex; flex-direction:column; }
+.main { margin-left:var(--sidebar-w); min-height:100vh; display:flex; flex-direction:column; }
 
 /* ══ TOPBAR ══ */
 .topbar {
-  background: rgba(250,248,244,.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--ink-06);
-  padding: 0 32px; height:64px;
-  display: flex; align-items:center; justify-content:space-between; gap:16px;
-  position: sticky; top:0; z-index:50;
+  background:rgba(250,248,244,.97); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--ink-06); padding:0 28px; height:var(--topbar-h);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  position:sticky; top:0; z-index:50;
 }
-.tb-left { display:flex; align-items:center; gap:14px; }
+.tb-left { display:flex; align-items:center; gap:12px; }
 .mob-menu-btn { display:none; background:none; border:none; cursor:pointer; padding:6px; flex-direction:column; gap:5px; }
-.mob-menu-btn span { display:block; width:22px; height:2px; border-radius:2px; background:var(--ink); transition:all .3s; }
+.mob-menu-btn span { display:block; width:20px; height:2px; border-radius:2px; background:var(--ink); transition:all .3s; }
 .mob-menu-btn.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-.mob-menu-btn.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.mob-menu-btn.open span:nth-child(2) { opacity:0; }
 .mob-menu-btn.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-.topbar-title { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--forest); }
-.topbar-right { display:flex; align-items:center; gap:10px; }
+.topbar-title { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--forest); }
+.topbar-right { display:flex; align-items:center; gap:8px; }
 .tb-icon-btn {
-  width:38px; height:38px; border-radius:10px;
-  background:var(--white); border:1.5px solid var(--ink-06);
-  display:grid; place-items:center; font-size:16px;
-  color:var(--ink-40); cursor:pointer; position:relative; transition:all .2s;
+  width:38px; height:38px; border-radius:10px; background:var(--white); border:1.5px solid var(--ink-06);
+  display:grid; place-items:center; font-size:15px; color:var(--ink-40); cursor:pointer; position:relative; transition:all .2s;
 }
-.tb-icon-btn:hover { border-color:var(--saffron); color:var(--saffron); }
-.notif-badge { position:absolute; top:-4px; right:-4px; width:16px; height:16px; background:var(--saffron); border-radius:50%; font-size:9px; font-weight:700; color:#fff; display:grid; place-items:center; border:2px solid var(--cream); }
+.tb-icon-btn:hover { border-color:var(--saffron); color:var(--saffron); background:var(--saffron-pale); }
+.notif-badge { position:absolute; top:-4px; right:-4px; width:16px; height:16px; background:var(--saffron); border-radius:50%; font-size:9px; font-weight:800; color:#fff; display:grid; place-items:center; border:2px solid var(--cream); }
 .tb-avatar { width:38px; height:38px; border-radius:10px; background:var(--saffron); display:grid; place-items:center; font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#fff; cursor:pointer; overflow:hidden; }
 .tb-avatar img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+.tb-find-btn { padding:0 18px; height:38px; background:var(--saffron); border:none; border-radius:10px; font-size:13px; font-weight:800; color:#fff; cursor:pointer; display:flex; align-items:center; gap:6px; transition:all .2s; box-shadow:0 4px 14px rgba(232,96,28,.3); font-family:'Nunito',sans-serif; }
+.tb-find-btn:hover { background:var(--saffron-2); transform:translateY(-1px); }
 
 /* ══ CONTENT ══ */
-.content { flex:1; padding:28px 32px; }
+.content { flex:1; padding:26px 28px; }
 
 /* ══ TOASTS ══ */
-.toast-wrap { position:fixed; top:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
-.toast { background:var(--forest); color:#fff; padding:14px 18px; border-radius:14px; display:flex; align-items:center; gap:12px; font-size:13.5px; font-weight:500; box-shadow:0 12px 40px rgba(15,25,35,.25); pointer-events:all; animation:toastIn .3s ease; max-width:340px; }
+.toast-wrap { position:fixed; top:18px; right:18px; z-index:9999; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
+.toast { background:var(--forest); color:#fff; padding:13px 17px; border-radius:13px; display:flex; align-items:center; gap:11px; font-size:13px; font-weight:600; box-shadow:0 12px 40px rgba(15,25,35,.22); pointer-events:all; animation:toastIn .3s ease; max-width:340px; }
 .toast.removing { animation:toastOut .3s ease forwards; }
 @keyframes toastIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
 @keyframes toastOut { to{opacity:0;transform:translateX(40px)} }
-.toast-icon { font-size:18px; flex-shrink:0; }
-.toast-close { background:none; border:none; color:rgba(255,255,255,.5); cursor:pointer; font-size:14px; margin-left:auto; }
+.toast-ico { font-size:18px; flex-shrink:0; }
+.toast-close { background:none; border:none; color:rgba(255,255,255,.45); cursor:pointer; font-size:13px; margin-left:auto; }
 
-/* ══ WELCOME HERO ══ */
+/* ══ HERO BANNER ══ */
 .hero {
-  background: linear-gradient(135deg, var(--forest) 0%, #0F2620 100%);
-  border-radius: 24px; padding:32px 36px;
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:24px; position:relative; overflow:hidden;
+  background:linear-gradient(135deg,var(--forest) 0%,#0D2218 100%);
+  border-radius:22px; padding:30px 34px; display:flex; align-items:center;
+  justify-content:space-between; margin-bottom:22px; position:relative; overflow:hidden;
 }
-.hero-orb1 { position:absolute; top:-80px; right:-80px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.22), transparent 65%); }
-.hero-orb2 { position:absolute; bottom:-60px; left:160px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(61,122,110,.2), transparent 65%); }
-.hero-dots { position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px); background-size:28px 28px; }
+.hero-dots { position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px); background-size:26px 26px; }
+.hero-orb1 { position:absolute; top:-70px; right:-70px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%); }
+.hero-orb2 { position:absolute; bottom:-60px; left:200px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle,rgba(61,122,110,.18),transparent 65%); }
 .hero-left { position:relative; z-index:1; }
-.hero-tag { display:inline-flex; align-items:center; gap:6px; background:rgba(232,96,28,.2); border:1px solid rgba(232,96,28,.3); color:var(--saffron-2); font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:5px 12px; border-radius:100px; margin-bottom:12px; }
-.hero-h { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:#fff; margin-bottom:8px; line-height:1.2; }
-.hero-sub { font-size:14px; color:rgba(255,255,255,.5); max-width:340px; margin-bottom:22px; }
+.hero-tag { display:inline-flex; align-items:center; gap:6px; background:rgba(232,96,28,.2); border:1px solid rgba(232,96,28,.3); color:var(--saffron-2); font-size:10.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:5px 12px; border-radius:100px; margin-bottom:11px; }
+.hero-h { font-family:'Syne',sans-serif; font-size:25px; font-weight:800; color:#fff; margin-bottom:7px; line-height:1.2; }
+.hero-sub { font-size:13.5px; color:rgba(255,255,255,.48); max-width:340px; margin-bottom:20px; line-height:1.6; }
 .hero-actions { display:flex; gap:10px; flex-wrap:wrap; }
-.hero-btn-primary {
-  padding:12px 24px; background:var(--saffron); border:none; border-radius:10px;
-  font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; font-weight:700; color:#fff;
-  cursor:pointer; transition:all .22s; display:flex; align-items:center; gap:7px;
-  box-shadow:0 8px 24px rgba(232,96,28,.4);
-}
-.hero-btn-primary:hover { background:var(--saffron-2); transform:translateY(-2px); box-shadow:0 12px 32px rgba(232,96,28,.5); }
-.hero-btn-secondary {
-  padding:12px 20px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
-  border-radius:10px; font-size:13.5px; font-weight:600; color:rgba(255,255,255,.8);
-  cursor:pointer; transition:all .22s; display:flex; align-items:center; gap:7px;
-  backdrop-filter: blur(6px);
-}
+.hero-btn-primary { padding:11px 22px; background:var(--saffron); border:none; border-radius:10px; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; color:#fff; cursor:pointer; transition:all .22s; display:flex; align-items:center; gap:7px; box-shadow:0 7px 22px rgba(232,96,28,.4); }
+.hero-btn-primary:hover { background:var(--saffron-2); transform:translateY(-2px); box-shadow:0 12px 30px rgba(232,96,28,.5); }
+.hero-btn-secondary { padding:11px 18px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.14); border-radius:10px; font-size:13px; font-weight:700; color:rgba(255,255,255,.75); cursor:pointer; transition:all .22s; display:flex; align-items:center; gap:7px; }
 .hero-btn-secondary:hover { background:rgba(255,255,255,.18); }
-.hero-right { position:relative; z-index:1; }
-.hero-card {
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12);
-  border-radius:18px; padding:18px 22px; backdrop-filter:blur(12px); min-width:200px;
-}
-.hc-row { display:flex; align-items:center; gap:10px; padding:8px 0; }
-.hc-row:not(:last-child) { border-bottom:1px solid rgba(255,255,255,.07); }
-.hc-ico { width:32px; height:32px; border-radius:9px; background:rgba(255,255,255,.1); display:grid; place-items:center; font-size:15px; flex-shrink:0; }
-.hc-label { font-size:11px; color:rgba(255,255,255,.45); }
-.hc-val { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#fff; }
+.hero-right { position:relative; z-index:1; flex-shrink:0; }
+.hero-card { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:16px 20px; min-width:188px; backdrop-filter:blur(10px); }
+.hc-row { display:flex; align-items:center; gap:10px; padding:7px 0; }
+.hc-row:not(:last-child) { border-bottom:1px solid rgba(255,255,255,.06); }
+.hc-ico { width:30px; height:30px; border-radius:8px; background:rgba(255,255,255,.1); display:grid; place-items:center; font-size:14px; flex-shrink:0; }
+.hc-label { font-size:10.5px; color:rgba(255,255,255,.4); }
+.hc-val { font-family:'Syne',sans-serif; font-size:14.5px; font-weight:700; color:#fff; }
 
 /* ══ STATS ══ */
-.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
 .stat-card {
-  background:var(--white); border:1.5px solid var(--ink-06);
-  border-radius: var(--radius); padding:20px 22px;
+  background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); padding:18px 20px;
   cursor:pointer; transition:all .28s; position:relative; overflow:hidden;
 }
-.stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:3px 3px 0 0; opacity:0; transition:opacity .3s; }
-.stat-card:hover { border-color:rgba(232,96,28,.2); transform:translateY(-4px); box-shadow:0 12px 40px rgba(15,25,35,.09); }
-.stat-card:hover::before { opacity:1; }
-.stat-card.orange::before { background:var(--saffron); }
-.stat-card.green::before { background:#22C55E; }
-.stat-card.blue::before { background:#3B82F6; }
-.stat-card.gold::before { background:var(--gold); }
-.stat-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.stat-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; border-radius:0 0 3px 3px; opacity:0; transition:opacity .3s; }
+.stat-card:hover { border-color:rgba(232,96,28,.18); transform:translateY(-3px); box-shadow:0 10px 36px rgba(15,25,35,.08); }
+.stat-card:hover::after { opacity:1; }
+.stat-card.orange::after { background:var(--saffron); }
+.stat-card.green::after { background:#22C55E; }
+.stat-card.blue::after { background:#3B82F6; }
+.stat-card.gold::after { background:var(--gold); }
+.stat-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .stat-ico { width:42px; height:42px; border-radius:11px; display:grid; place-items:center; font-size:19px; }
 .stat-ico.orange { background:#FFF1E8; }
 .stat-ico.green { background:#F0FDF4; }
 .stat-ico.blue { background:#EFF6FF; }
 .stat-ico.gold { background:#FFFBEB; }
-.stat-trend { font-size:11px; font-weight:700; padding:3px 8px; border-radius:20px; }
+.stat-trend { font-size:10.5px; font-weight:800; padding:3px 8px; border-radius:20px; }
 .stat-trend.up { background:#F0FDF4; color:#15803D; }
 .stat-trend.neu { background:var(--ink-06); color:var(--ink-40); }
-.stat-n { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--forest); line-height:1; letter-spacing:-1px; }
-.stat-l { font-size:12.5px; color:var(--ink-40); margin-top:5px; }
+.stat-n { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:var(--forest); line-height:1; letter-spacing:-0.5px; }
+.stat-l { font-size:12px; color:var(--ink-40); margin-top:4px; }
+
+/* ══ QUICK ACTIONS ══ */
+.quick-actions { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.qa-btn {
+  background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius-sm);
+  padding:16px 14px; text-align:center; cursor:pointer; transition:all .22s;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.qa-btn:hover { border-color:rgba(232,96,28,.2); background:var(--saffron-pale); transform:translateY(-2px); box-shadow:0 6px 20px rgba(232,96,28,.1); }
+.qa-ico { width:44px; height:44px; border-radius:12px; display:grid; place-items:center; font-size:20px; margin:0 auto; }
+.qa-lbl { font-size:12px; font-weight:700; color:var(--forest); }
 
 /* ══ SECTION HEADER ══ */
-.sec-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-.sec-head h2 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--forest); }
-.sec-link { font-size:13px; font-weight:700; color:var(--saffron); cursor:pointer; display:flex; align-items:center; gap:4px; transition:gap .2s; }
+.sec-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.sec-head h2 { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--forest); }
+.sec-link { font-size:12.5px; font-weight:700; color:var(--saffron); cursor:pointer; display:flex; align-items:center; gap:4px; transition:gap .2s; }
 .sec-link:hover { gap:8px; }
 
 /* ══ JOB CARDS ══ */
-.jobs-list { display:flex; flex-direction:column; gap:12px; }
+.jobs-list { display:flex; flex-direction:column; gap:11px; }
 .job-card {
-  background:var(--white); border:1.5px solid var(--ink-06);
-  border-radius: var(--radius); padding:18px 20px;
-  display:flex; align-items:flex-start; gap:16px;
-  transition:all .25s; cursor:default;
+  background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); padding:17px 20px;
+  display:flex; align-items:flex-start; gap:15px; transition:all .25s;
 }
-.job-card:hover { border-color:rgba(232,96,28,.15); box-shadow:0 8px 28px rgba(15,25,35,.07); }
-.jc-ico { width:48px; height:48px; border-radius:13px; background:var(--cream); display:grid; place-items:center; font-size:22px; flex-shrink:0; border:1.5px solid var(--ink-06); }
+.job-card:hover { border-color:rgba(232,96,28,.14); box-shadow:0 7px 26px rgba(15,25,35,.06); }
+.jc-ico { width:46px; height:46px; border-radius:12px; background:var(--cream); display:grid; place-items:center; font-size:21px; flex-shrink:0; border:1.5px solid var(--ink-06); }
 .jc-info { flex:1; min-width:0; }
-.jc-title { font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--forest); margin-bottom:4px; }
-.jc-meta { font-size:12px; color:var(--ink-40); display:flex; flex-wrap:wrap; gap:12px; }
+.jc-title { font-family:'Syne',sans-serif; font-weight:700; font-size:14.5px; color:var(--forest); margin-bottom:4px; }
+.jc-meta { font-size:11.5px; color:var(--ink-40); display:flex; flex-wrap:wrap; gap:10px; }
 .jc-meta span { display:flex; align-items:center; gap:4px; }
-.jc-right { display:flex; flex-direction:column; align-items:flex-end; gap:10px; flex-shrink:0; }
-.jc-price { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--forest); }
+.jc-right { display:flex; flex-direction:column; align-items:flex-end; gap:9px; flex-shrink:0; }
+.jc-price { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--forest); }
 .jc-price.agreed { color:var(--sage); }
 .jc-actions { display:flex; gap:7px; flex-wrap:wrap; justify-content:flex-end; }
 
 /* Badges */
-.badge { display:inline-flex; align-items:center; gap:5px; padding:4px 11px; border-radius:100px; font-size:11px; font-weight:700; }
+.badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:100px; font-size:10.5px; font-weight:800; }
 .badge-pending { background:#FEF9C3; color:#A16207; }
 .badge-accepted { background:#DBEAFE; color:#1D4ED8; }
 .badge-inprogress { background:#EDE9FE; color:#7C3AED; }
@@ -268,280 +242,240 @@ a { text-decoration: none; color: inherit; }
 .badge-paid { background:#F0FDF4; color:#15803D; }
 .badge-negotiating { background:#FEF3C7; color:#92400E; }
 
-/* Action buttons */
-.jc-btn { padding:7px 14px; border-radius:9px; font-size:12.5px; font-weight:700; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:5px; border:1.5px solid transparent; font-family:'Plus Jakarta Sans',sans-serif; }
+/* Buttons */
+.jc-btn { padding:7px 13px; border-radius:8px; font-size:12px; font-weight:800; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:5px; border:1.5px solid transparent; font-family:'Nunito',sans-serif; }
 .jc-btn:disabled { opacity:.5; cursor:not-allowed; }
 .btn-cancel { border-color:var(--ink-12); background:transparent; color:var(--ink-40); }
 .btn-cancel:hover:not(:disabled) { border-color:var(--ruby); color:var(--ruby); background:#FEF2F2; }
 .btn-review { border-color:rgba(61,122,110,.3); background:var(--sage-light); color:var(--sage); }
 .btn-review:hover { background:var(--sage); color:#fff; }
-.btn-rebook {
-  background:linear-gradient(135deg, var(--saffron), var(--saffron-2));
-  color:#fff; border:none;
-  box-shadow: 0 4px 14px rgba(232,96,28,.3);
-  animation: pulse-rebook 2s infinite;
-}
-.btn-rebook:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(232,96,28,.45); animation:none; }
-@keyframes pulse-rebook { 0%,100%{box-shadow:0 4px 14px rgba(232,96,28,.3)} 50%{box-shadow:0 4px 24px rgba(232,96,28,.55)} }
+.btn-rebook { background:linear-gradient(135deg,var(--saffron),var(--saffron-2)); color:#fff; border:none; box-shadow:0 4px 14px rgba(232,96,28,.3); }
+.btn-rebook:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(232,96,28,.45); }
 .btn-negotiate { background:rgba(61,122,110,.1); border-color:rgba(61,122,110,.3); color:var(--sage); }
 .btn-negotiate:hover { background:var(--sage); color:#fff; }
 .btn-accept-price { background:rgba(21,128,61,.1); border-color:rgba(21,128,61,.3); color:#15803D; font-weight:800; }
 .btn-accept-price:hover { background:#15803D; color:#fff; }
 
 /* Offer thread */
-.offer-thread { margin-top:10px; border-top:1px solid var(--ink-06); padding-top:10px; display:flex; flex-direction:column; gap:4px; }
-.ot-row { display:flex; align-items:center; gap:8px; font-size:12px; padding:5px 10px; border-radius:8px; }
+.offer-thread { margin-top:9px; border-top:1px solid var(--ink-06); padding-top:9px; display:flex; flex-direction:column; gap:4px; }
+.ot-row { display:flex; align-items:center; gap:8px; font-size:11.5px; padding:4px 9px; border-radius:7px; }
 .ot-row.customer { background:rgba(232,96,28,.06); }
 .ot-row.worker { background:rgba(26,60,52,.05); justify-content:flex-end; }
-.ot-who { font-weight:700; color:var(--ink-70); min-width:36px; }
-.ot-amt { font-family:'Syne',sans-serif; font-weight:800; color:var(--forest); font-size:13px; }
-.ot-status { font-size:10px; padding:2px 7px; border-radius:20px; font-weight:700; text-transform:uppercase; }
+.ot-who { font-weight:800; color:var(--ink-70); min-width:34px; }
+.ot-amt { font-family:'Syne',sans-serif; font-weight:800; color:var(--forest); font-size:12.5px; }
+.ot-status { font-size:9.5px; padding:2px 6px; border-radius:20px; font-weight:800; text-transform:uppercase; }
 .ot-pending { background:#FEF9C3; color:#854D0E; }
 .ot-accepted { background:#DCFCE7; color:#166534; }
 .ot-countered { background:#F3F4F6; color:#6B7280; }
 .ot-rejected { background:#FEE2E2; color:#991B1B; }
-.ot-note { font-size:11px; color:var(--ink-40); font-style:italic; }
+.ot-note { font-size:10.5px; color:var(--ink-40); font-style:italic; }
 
 /* Empty state */
-.empty-state { text-align:center; padding:48px 24px; color:var(--ink-40); }
-.empty-state .es-icon { font-size:44px; opacity:.2; display:block; margin-bottom:14px; }
-.empty-state h3 { font-family:'Syne',sans-serif; font-size:16px; color:var(--forest); margin-bottom:6px; opacity:.7; }
-.empty-state p { font-size:13px; }
-.empty-state .es-cta { margin-top:18px; padding:11px 24px; background:var(--saffron); border:none; border-radius:10px; color:#fff; font-size:13.5px; font-weight:700; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:7px; }
+.empty-state { text-align:center; padding:44px 24px; color:var(--ink-40); }
+.empty-state .es-icon { font-size:42px; opacity:.18; display:block; margin-bottom:13px; }
+.empty-state h3 { font-family:'Syne',sans-serif; font-size:15px; color:var(--forest); margin-bottom:5px; opacity:.7; }
+.empty-state p { font-size:12.5px; }
+.empty-state .es-cta { margin-top:16px; padding:10px 22px; background:var(--saffron); border:none; border-radius:10px; color:#fff; font-size:13px; font-weight:800; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:7px; font-family:'Nunito',sans-serif; }
 .empty-state .es-cta:hover { background:var(--saffron-2); transform:translateY(-2px); }
 
 /* Spinner */
-.spin-loader { display:flex; justify-content:center; padding:40px; color:var(--saffron); font-size:26px; animation:spin .8s linear infinite; }
+.spin-loader { display:flex; justify-content:center; padding:38px; color:var(--saffron); font-size:24px; animation:spin .8s linear infinite; }
 @keyframes spin { to{transform:rotate(360deg)} }
 
 /* ══ FIND WORKERS ══ */
-.search-bar {
-  display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap;
-  background:var(--white); border:1.5px solid var(--ink-06);
-  border-radius: var(--radius); padding:16px 20px;
-  box-shadow: 0 4px 20px rgba(15,25,35,.05);
-}
-.search-field { position:relative; flex:1; min-width:140px; }
-.search-field i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--ink-40); font-size:14px; }
-.sf-input {
-  width:100%; padding:10px 14px 10px 36px;
-  border:1.5px solid var(--ink-12); border-radius:10px;
-  font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; color:var(--ink);
-  background:var(--cream); outline:none; transition:all .2s;
-}
+.search-bar { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); padding:15px 18px; box-shadow:0 4px 18px rgba(15,25,35,.04); }
+.search-field { position:relative; flex:1; min-width:130px; }
+.search-field i { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--ink-40); font-size:13.5px; }
+.sf-input { width:100%; padding:10px 13px 10px 35px; border:1.5px solid var(--ink-12); border-radius:9px; font-family:'Nunito',sans-serif; font-size:13px; color:var(--ink); background:var(--cream); outline:none; transition:all .2s; }
 .sf-input:focus { border-color:var(--saffron); background:#fff; box-shadow:0 0 0 3px rgba(232,96,28,.08); }
-.search-btn {
-  padding:10px 22px; background:var(--saffron); border:none; border-radius:10px;
-  font-size:13.5px; font-weight:700; color:#fff; cursor:pointer; transition:all .2s;
-  display:flex; align-items:center; gap:7px; flex-shrink:0;
-  box-shadow: 0 4px 14px rgba(232,96,28,.3);
-}
+.search-btn { padding:10px 20px; background:var(--saffron); border:none; border-radius:9px; font-size:13px; font-weight:800; color:#fff; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:6px; flex-shrink:0; box-shadow:0 4px 14px rgba(232,96,28,.3); font-family:'Nunito',sans-serif; }
 .search-btn:hover { background:var(--saffron-2); transform:translateY(-1px); }
 
-.workers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-.wcard {
-  background:var(--white); border:1.5px solid var(--ink-06);
-  border-radius: var(--radius); overflow:hidden; transition:all .28s;
-}
-.wcard:hover { transform:translateY(-5px); box-shadow:0 16px 50px rgba(15,25,35,.1); border-color:rgba(232,96,28,.2); }
-.wcard-head {
-  background:linear-gradient(135deg, var(--forest) 0%, #0F2620 100%);
-  padding:22px 18px; display:flex; gap:12px; align-items:flex-start;
-  position:relative; overflow:hidden;
-}
-.wcard-head::after { content:''; position:absolute; top:-40px; right:-40px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.2), transparent 65%); }
-.wc-av { width:46px; height:46px; border-radius:13px; background:var(--saffron-pale); display:grid; place-items:center; font-size:22px; flex-shrink:0; z-index:1; border:2px solid rgba(255,255,255,.1); }
+/* Filter pills */
+.filter-pills { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+.pill { padding:7px 14px; border-radius:100px; border:1.5px solid var(--ink-12); background:var(--white); font-size:12px; font-weight:700; cursor:pointer; transition:all .2s; color:var(--ink-70); }
+.pill:hover { border-color:var(--saffron); color:var(--saffron); }
+.pill.active { background:var(--saffron); border-color:var(--saffron); color:#fff; }
+
+.workers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; }
+.wcard { background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); overflow:hidden; transition:all .28s; }
+.wcard:hover { transform:translateY(-5px); box-shadow:0 16px 48px rgba(15,25,35,.1); border-color:rgba(232,96,28,.18); }
+.wcard-head { background:linear-gradient(135deg,var(--forest) 0%,#0D2218 100%); padding:20px 17px; display:flex; gap:12px; align-items:flex-start; position:relative; overflow:hidden; }
+.wcard-head::after { content:''; position:absolute; top:-40px; right:-40px; width:110px; height:110px; border-radius:50%; background:radial-gradient(circle,rgba(232,96,28,.18),transparent 65%); }
+.wc-av { width:44px; height:44px; border-radius:12px; background:var(--saffron-pale); display:grid; place-items:center; font-size:21px; flex-shrink:0; z-index:1; border:2px solid rgba(255,255,255,.09); }
 .wc-details { z-index:1; }
-.wc-skill-tag { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.45); margin-bottom:3px; }
-.wc-name { font-family:'Syne',sans-serif; font-size:14.5px; font-weight:800; color:#fff; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
-.wc-avail { display:flex; align-items:center; gap:5px; font-size:11px; margin-top:3px; }
+.wc-skill-tag { font-size:9.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:2px; }
+.wc-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:800; color:#fff; display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+.wc-avail { display:flex; align-items:center; gap:5px; font-size:10.5px; margin-top:3px; }
 .wc-avail.on { color:rgba(74,222,128,.8); }
-.wc-avail.off { color:rgba(255,255,255,.35); }
+.wc-avail.off { color:rgba(255,255,255,.3); }
 .wc-avail i { font-size:7px; }
-.wcard-body { padding:14px 16px; }
-.wc-rating { display:flex; align-items:center; gap:7px; margin-bottom:8px; }
-.wc-stars { color:#FBBF24; font-size:12px; letter-spacing:1px; }
-.wc-rating-val { font-size:12.5px; font-weight:700; color:var(--forest); }
-.wc-rating-count { font-size:11.5px; color:var(--ink-40); }
-.wc-bio { font-size:12.5px; color:var(--ink-70); line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:10px; }
-.wcard-price { background:var(--cream); border-radius:10px; padding:10px 13px; display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-.wcard-price-label { font-size:11px; color:var(--ink-40); }
-.wcard-price-val { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:var(--forest); }
-.btn-hire {
-  width:100%; padding:11px; border-radius:10px;
-  background:linear-gradient(135deg, var(--saffron), var(--saffron-2));
-  border:none; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;
-  font-size:13.5px; font-weight:700; cursor:pointer; transition:all .22s;
-  box-shadow: 0 4px 16px rgba(232,96,28,.3);
-  display:flex; align-items:center; justify-content:center; gap:8px;
-}
-.btn-hire:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(232,96,28,.5); }
-.verified-badge { background:#4ADE80; color:#064E3B; font-size:9px; font-weight:700; padding:2px 6px; border-radius:20px; }
-.gold-badge { background:var(--gold); color:#78350F; font-size:9px; font-weight:700; padding:2px 7px; border-radius:20px; }
-.pro-badge { background:#DBEAFE; color:#1D4ED8; font-size:9px; font-weight:700; padding:2px 7px; border-radius:20px; }
+.wcard-body { padding:14px 15px; }
+.wc-rating { display:flex; align-items:center; gap:7px; margin-bottom:7px; }
+.wc-stars { color:#FBBF24; font-size:11.5px; letter-spacing:1px; }
+.wc-rating-val { font-size:12px; font-weight:700; color:var(--forest); }
+.wc-rating-count { font-size:11px; color:var(--ink-40); }
+.wc-bio { font-size:12px; color:var(--ink-70); line-height:1.55; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:10px; }
+.wcard-price { background:var(--cream); border-radius:9px; padding:9px 12px; display:flex; align-items:center; justify-content:space-between; margin-bottom:11px; }
+.wcard-price-label { font-size:10.5px; color:var(--ink-40); }
+.wcard-price-val { font-family:'Syne',sans-serif; font-size:14.5px; font-weight:800; color:var(--forest); }
+.btn-hire { width:100%; padding:10px; border-radius:9px; background:linear-gradient(135deg,var(--saffron),var(--saffron-2)); border:none; color:#fff; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; cursor:pointer; transition:all .22s; box-shadow:0 4px 14px rgba(232,96,28,.28); display:flex; align-items:center; justify-content:center; gap:7px; }
+.btn-hire:hover { transform:translateY(-2px); box-shadow:0 8px 26px rgba(232,96,28,.45); }
+.verified-badge { background:#4ADE80; color:#064E3B; font-size:9px; font-weight:800; padding:2px 6px; border-radius:20px; }
+.gold-badge { background:var(--gold); color:#78350F; font-size:9px; font-weight:800; padding:2px 7px; border-radius:20px; }
+.pro-badge { background:#DBEAFE; color:#1D4ED8; font-size:9px; font-weight:800; padding:2px 7px; border-radius:20px; }
 
 /* ══ PROFILE ══ */
-.profile-layout { display:grid; grid-template-columns:290px 1fr; gap:22px; align-items:start; }
+.profile-layout { display:grid; grid-template-columns:280px 1fr; gap:20px; align-items:start; }
 .profile-card { background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); overflow:hidden; }
-.profile-card-top {
-  background:linear-gradient(135deg, var(--forest) 0%, #0F2620 100%);
-  padding:30px 22px; text-align:center; position:relative; overflow:hidden;
-}
-.pct-bg { position:absolute; top:-50px; right:-50px; width:180px; height:180px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.18), transparent 65%); }
-.profile-avatar-wrap { position:relative; width:80px; height:80px; margin:0 auto 14px; cursor:pointer; z-index:1; }
-.profile-avatar { width:80px; height:80px; border-radius:50%; background:var(--saffron); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:30px; font-weight:800; color:#fff; border:3px solid rgba(255,255,255,.2); overflow:hidden; transition:opacity .2s; }
+.profile-card-top { background:linear-gradient(135deg,var(--forest) 0%,#0D2218 100%); padding:28px 20px; text-align:center; position:relative; overflow:hidden; }
+.pct-bg { position:absolute; top:-40px; right:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(232,96,28,.18),transparent 65%); }
+.profile-avatar-wrap { position:relative; width:76px; height:76px; margin:0 auto 12px; cursor:pointer; z-index:1; }
+.profile-avatar { width:76px; height:76px; border-radius:50%; background:var(--saffron); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:#fff; border:3px solid rgba(255,255,255,.18); overflow:hidden; transition:opacity .2s; }
 .profile-avatar img { width:100%; height:100%; object-fit:cover; }
 .profile-avatar-wrap:hover .profile-avatar { opacity:.7; }
 .profile-avatar-overlay { position:absolute; inset:0; border-radius:50%; background:rgba(0,0,0,.5); display:none; align-items:center; justify-content:center; flex-direction:column; gap:2px; }
 .profile-avatar-wrap:hover .profile-avatar-overlay { display:flex; }
-.profile-avatar-overlay i { font-size:18px; color:#fff; }
-.profile-avatar-overlay span { font-size:9px; color:rgba(255,255,255,.8); font-weight:700; letter-spacing:.5px; }
-.photo-actions { display:flex; gap:8px; justify-content:center; margin-bottom:14px; position:relative; z-index:1; }
-.photo-btn { padding:5px 12px; border-radius:7px; font-size:11px; font-weight:700; cursor:pointer; transition:all .2s; border:none; font-family:'Plus Jakarta Sans',sans-serif; display:flex; align-items:center; gap:4px; }
-.photo-btn-upload { background:rgba(255,255,255,.15); color:#fff; }
-.photo-btn-upload:hover { background:rgba(255,255,255,.25); }
+.profile-avatar-overlay i { font-size:16px; color:#fff; }
+.profile-avatar-overlay span { font-size:9px; color:rgba(255,255,255,.8); font-weight:800; }
+.photo-actions { display:flex; gap:7px; justify-content:center; margin-bottom:12px; position:relative; z-index:1; }
+.photo-btn { padding:5px 11px; border-radius:7px; font-size:10.5px; font-weight:800; cursor:pointer; transition:all .2s; border:none; font-family:'Nunito',sans-serif; display:flex; align-items:center; gap:4px; }
+.photo-btn-upload { background:rgba(255,255,255,.14); color:#fff; }
+.photo-btn-upload:hover { background:rgba(255,255,255,.22); }
 .photo-btn-delete { background:rgba(220,38,38,.2); color:#FCA5A5; }
 .photo-btn-delete:hover { background:rgba(220,38,38,.5); color:#fff; }
 #photoFileInput { display:none; }
-.profile-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:#fff; margin-bottom:4px; position:relative; z-index:1; }
-.profile-email { font-size:12.5px; color:rgba(255,255,255,.5); position:relative; z-index:1; }
-.profile-card-info { padding:16px 20px; }
-.pci-row { display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--ink-06); }
+.profile-name { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:#fff; margin-bottom:3px; position:relative; z-index:1; }
+.profile-email { font-size:12px; color:rgba(255,255,255,.45); position:relative; z-index:1; }
+.profile-card-info { padding:14px 18px; }
+.pci-row { display:flex; align-items:center; gap:11px; padding:10px 0; border-bottom:1px solid var(--ink-06); }
 .pci-row:last-child { border-bottom:none; }
-.pci-icon { width:32px; height:32px; border-radius:9px; background:var(--cream); display:grid; place-items:center; font-size:13px; color:var(--saffron); flex-shrink:0; }
-.pci-label { font-size:10.5px; font-weight:700; color:var(--ink-40); letter-spacing:.5px; text-transform:uppercase; }
-.pci-value { font-size:13.5px; font-weight:600; color:var(--forest); }
+.pci-icon { width:30px; height:30px; border-radius:8px; background:var(--cream); display:grid; place-items:center; font-size:12.5px; color:var(--saffron); flex-shrink:0; }
+.pci-label { font-size:10px; font-weight:800; color:var(--ink-40); letter-spacing:.5px; text-transform:uppercase; }
+.pci-value { font-size:13px; font-weight:600; color:var(--forest); }
 .profile-form-card { background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); overflow:hidden; }
-.pfc-head { padding:20px 24px; border-bottom:1px solid var(--ink-06); display:flex; align-items:center; justify-content:space-between; }
-.pfc-head h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--forest); }
-.tab-switcher { display:flex; gap:4px; background:var(--cream); border-radius:10px; padding:4px; }
-.ts-btn { padding:7px 18px; border-radius:8px; font-size:12.5px; font-weight:700; border:none; cursor:pointer; transition:all .2s; color:var(--ink-40); background:transparent; font-family:'Plus Jakarta Sans',sans-serif; }
-.ts-btn.active { background:#fff; color:var(--forest); box-shadow:0 2px 8px rgba(15,25,35,.08); }
-.pfc-body { padding:26px; }
+.pfc-head { padding:18px 22px; border-bottom:1px solid var(--ink-06); display:flex; align-items:center; justify-content:space-between; }
+.pfc-head h3 { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:var(--forest); }
+.tab-switcher { display:flex; gap:3px; background:var(--cream); border-radius:9px; padding:4px; }
+.ts-btn { padding:6px 16px; border-radius:7px; font-size:12px; font-weight:800; border:none; cursor:pointer; transition:all .2s; color:var(--ink-40); background:transparent; font-family:'Nunito',sans-serif; }
+.ts-btn.active { background:#fff; color:var(--forest); box-shadow:0 2px 8px rgba(15,25,35,.07); }
+.pfc-body { padding:24px; }
 .form-section { display:none; }
 .form-section.active { display:block; }
-.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.fg { margin-bottom:17px; }
-.fl { display:block; font-size:12px; font-weight:700; color:var(--forest); margin-bottom:7px; letter-spacing:.3px; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.fg { margin-bottom:15px; }
+.fl { display:block; font-size:11.5px; font-weight:800; color:var(--forest); margin-bottom:6px; letter-spacing:.3px; }
 .fw { position:relative; }
-.fi { width:100%; padding:11px 13px 11px 40px; border:1.5px solid var(--ink-12); border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--cream); outline:none; transition:all .2s; }
+.fi { width:100%; padding:10px 12px 10px 38px; border:1.5px solid var(--ink-12); border-radius:9px; font-family:'Nunito',sans-serif; font-size:13px; color:var(--ink); background:var(--cream); outline:none; transition:all .2s; }
 .fi:focus { border-color:var(--saffron); background:#fff; box-shadow:0 0 0 3px rgba(232,96,28,.08); }
 .fi::placeholder { color:var(--ink-40); }
-.fi-ico { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--ink-40); font-size:13px; pointer-events:none; transition:color .2s; }
+.fi-ico { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--ink-40); font-size:12.5px; pointer-events:none; transition:color .2s; }
 .fw:focus-within .fi-ico { color:var(--saffron); }
-textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1.6; }
-.fi-no-icon { padding-left:13px; }
-.save-btn { padding:12px 26px; background:linear-gradient(135deg, var(--saffron), var(--saffron-2)); border:none; border-radius:10px; font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; font-weight:700; color:#fff; cursor:pointer; transition:all .2s; box-shadow:0 4px 16px rgba(232,96,28,.3); display:inline-flex; align-items:center; gap:8px; }
-.save-btn:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(232,96,28,.4); }
+textarea.fi { min-height:80px; resize:vertical; padding:10px 12px; line-height:1.6; }
+.fi-no-icon { padding-left:12px; }
+.save-btn { padding:11px 24px; background:linear-gradient(135deg,var(--saffron),var(--saffron-2)); border:none; border-radius:9px; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800; color:#fff; cursor:pointer; transition:all .2s; box-shadow:0 4px 14px rgba(232,96,28,.3); display:inline-flex; align-items:center; gap:7px; }
+.save-btn:hover { transform:translateY(-1px); box-shadow:0 8px 22px rgba(232,96,28,.4); }
 .save-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
-.pw-bars { display:flex; gap:4px; margin-top:7px; }
+.pw-bars { display:flex; gap:3px; margin-top:6px; }
 .pw-bar { height:3px; flex:1; background:var(--ink-06); border-radius:3px; transition:all .3s; }
-.danger-zone { border:1.5px solid #FEE2E2; border-radius:12px; padding:18px 20px; background:#FFF5F5; }
-.danger-zone h4 { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:#B91C1C; margin-bottom:5px; }
-.danger-zone p { font-size:12.5px; color:#991B1B; opacity:.7; margin-bottom:14px; }
-.danger-btn { padding:9px 18px; background:#FEE2E2; border:1.5px solid #FECACA; border-radius:9px; font-size:13px; font-weight:700; color:#B91C1C; cursor:pointer; transition:all .2s; }
+.danger-zone { border:1.5px solid #FEE2E2; border-radius:11px; padding:16px 18px; background:#FFF5F5; }
+.danger-zone h4 { font-family:'Syne',sans-serif; font-size:13.5px; font-weight:700; color:#B91C1C; margin-bottom:4px; }
+.danger-zone p { font-size:12px; color:#991B1B; opacity:.7; margin-bottom:12px; }
+.danger-btn { padding:8px 16px; background:#FEE2E2; border:1.5px solid #FECACA; border-radius:8px; font-size:12.5px; font-weight:800; color:#B91C1C; cursor:pointer; transition:all .2s; font-family:'Nunito',sans-serif; }
 .danger-btn:hover { background:#DC2626; color:#fff; border-color:#DC2626; }
 
+/* ══ ACTIVITY FEED ══ */
+.activity-feed { background:var(--white); border:1.5px solid var(--ink-06); border-radius:var(--radius); padding:18px 20px; }
+.af-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--ink-06); }
+.af-item:last-child { border-bottom:none; }
+.af-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+.af-dot.orange { background:var(--saffron); }
+.af-dot.green { background:#22C55E; }
+.af-dot.blue { background:#3B82F6; }
+.af-text { font-size:12.5px; color:var(--ink-70); line-height:1.5; }
+.af-time { font-size:11px; color:var(--ink-40); margin-top:2px; }
+
 /* Alerts */
-.alert { padding:10px 14px; border-radius:9px; font-size:13px; font-weight:500; display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+.alert { padding:9px 13px; border-radius:9px; font-size:12.5px; font-weight:600; display:flex; align-items:center; gap:8px; margin-bottom:13px; }
 .ae { background:#FEF2F2; color:#DC2626; border:1.5px solid #FECACA; }
 .as { background:#F0FDF4; color:#15803D; border:1.5px solid #BBF7D0; }
 .spin-sm { display:none; animation:spin .8s linear infinite; }
 
 /* ══ MODALS ══ */
-.modal-backdrop {
-  display:none; position:fixed; inset:0;
-  background:rgba(15,25,35,.65); z-index:1000;
-  backdrop-filter:blur(8px); align-items:center;
-  justify-content:center; padding:20px;
-}
+.modal-backdrop { display:none; position:fixed; inset:0; background:rgba(15,25,35,.62); z-index:1000; backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:20px; }
 .modal-backdrop.open { display:flex; }
-.modal {
-  background:var(--white); border-radius:22px;
-  max-width:480px; width:100%; overflow:hidden;
-  animation:mIn .3s cubic-bezier(.34,1.56,.64,1);
-  box-shadow: 0 30px 80px rgba(15,25,35,.25);
-}
-@keyframes mIn { from{transform:scale(.92) translateY(20px);opacity:0} to{transform:none;opacity:1} }
-.modal-head {
-  background:linear-gradient(135deg, var(--forest) 0%, #0F2620 100%);
-  padding:22px 26px; position:relative; overflow:hidden;
-}
-.modal-head::after { content:''; position:absolute; top:-40px; right:-40px; width:130px; height:130px; border-radius:50%; background:radial-gradient(circle, rgba(232,96,28,.2), transparent 65%); }
-.modal-head h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:#fff; z-index:1; position:relative; }
-.modal-close { position:absolute; top:18px; right:22px; background:rgba(255,255,255,.1); border:none; width:30px; height:30px; border-radius:50%; color:#fff; cursor:pointer; display:grid; place-items:center; font-size:14px; z-index:2; transition:all .2s; }
+.modal { background:var(--white); border-radius:22px; max-width:480px; width:100%; overflow:hidden; animation:mIn .3s cubic-bezier(.34,1.56,.64,1); box-shadow:0 28px 80px rgba(15,25,35,.22); }
+@keyframes mIn { from{transform:scale(.92) translateY(18px);opacity:0} to{transform:none;opacity:1} }
+.modal-head { background:linear-gradient(135deg,var(--forest) 0%,#0D2218 100%); padding:20px 24px; position:relative; overflow:hidden; }
+.modal-head::after { content:''; position:absolute; top:-40px; right:-40px; width:130px; height:130px; border-radius:50%; background:radial-gradient(circle,rgba(232,96,28,.2),transparent 65%); }
+.modal-head h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:#fff; z-index:1; position:relative; }
+.modal-close { position:absolute; top:16px; right:20px; background:rgba(255,255,255,.1); border:none; width:28px; height:28px; border-radius:50%; color:#fff; cursor:pointer; display:grid; place-items:center; font-size:13px; z-index:2; transition:all .2s; }
 .modal-close:hover { background:rgba(255,255,255,.2); }
-.modal-body { padding:26px; }
-.star-row { display:flex; gap:8px; margin:16px 0 20px; justify-content:center; }
-.star-btn { font-size:38px; background:none; border:none; cursor:pointer; color:var(--ink-12); transition:all .22s; line-height:1; }
+.modal-body { padding:24px; }
+.star-row { display:flex; gap:7px; margin:14px 0 18px; justify-content:center; }
+.star-btn { font-size:36px; background:none; border:none; cursor:pointer; color:var(--ink-12); transition:all .22s; line-height:1; }
 .star-btn.on, .star-btn:hover { color:#FBBF24; transform:scale(1.15); }
-.m-submit { width:100%; padding:13px; background:linear-gradient(135deg, var(--saffron), var(--saffron-2)); border:none; border-radius:11px; font-size:14px; font-weight:700; color:#fff; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 16px rgba(232,96,28,.3); font-family:'Plus Jakarta Sans',sans-serif; }
-.m-submit:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(232,96,28,.45); }
+.m-submit { width:100%; padding:12px; background:linear-gradient(135deg,var(--saffron),var(--saffron-2)); border:none; border-radius:10px; font-size:13.5px; font-weight:800; color:#fff; cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 14px rgba(232,96,28,.3); font-family:'Nunito',sans-serif; }
+.m-submit:hover { transform:translateY(-2px); box-shadow:0 8px 26px rgba(232,96,28,.45); }
 .m-submit:disabled { opacity:.6; cursor:not-allowed; transform:none; }
 
-/* Rebook highlight box */
-.rb-highlight {
-  background: linear-gradient(135deg, rgba(232,96,28,.08), rgba(240,120,64,.05));
-  border: 1.5px solid rgba(232,96,28,.2);
-  border-radius:14px; padding:16px; margin-bottom:20px;
-  display:flex; align-items:center; gap:14px;
-}
-.rb-highlight-icon { width:44px; height:44px; border-radius:12px; background:var(--saffron); display:grid; place-items:center; font-size:20px; flex-shrink:0; }
-.rb-highlight-text strong { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--forest); display:block; margin-bottom:2px; }
-.rb-highlight-text span { font-size:12px; color:var(--ink-40); }
+.rb-highlight { background:linear-gradient(135deg,rgba(232,96,28,.08),rgba(240,120,64,.04)); border:1.5px solid rgba(232,96,28,.2); border-radius:13px; padding:14px; margin-bottom:18px; display:flex; align-items:center; gap:12px; }
+.rb-highlight-icon { width:42px; height:42px; border-radius:11px; background:var(--saffron); display:grid; place-items:center; font-size:19px; flex-shrink:0; }
+.rb-highlight-text strong { font-family:'Syne',sans-serif; font-size:13.5px; font-weight:700; color:var(--forest); display:block; margin-bottom:2px; }
+.rb-highlight-text span { font-size:11.5px; color:var(--ink-40); }
 
-/* Worker info in hire modal */
-.hire-worker-box { background:var(--cream); border-radius:13px; padding:14px 16px; display:flex; align-items:center; gap:13px; margin-bottom:20px; border:1.5px solid var(--ink-06); }
-.hire-worker-emo { width:46px; height:46px; border-radius:12px; background:var(--sage-light); display:grid; place-items:center; font-size:22px; flex-shrink:0; }
+.hire-worker-box { background:var(--cream); border-radius:12px; padding:13px 15px; display:flex; align-items:center; gap:12px; margin-bottom:18px; border:1.5px solid var(--ink-06); }
+.hire-worker-emo { width:44px; height:44px; border-radius:11px; background:var(--sage-light); display:grid; place-items:center; font-size:21px; flex-shrink:0; }
 
-/* Price grid in negotiate modal */
-.price-compare { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-.price-box { border-radius:13px; padding:16px; text-align:center; }
+.price-compare { display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-bottom:18px; }
+.price-box { border-radius:12px; padding:14px; text-align:center; }
 .price-box.worker { background:rgba(232,96,28,.07); border:1.5px solid rgba(232,96,28,.2); }
 .price-box.mine { background:rgba(61,122,110,.07); border:1.5px solid rgba(61,122,110,.2); }
-.price-box-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-40); margin-bottom:7px; }
-.price-box-val { font-family:'Syne',sans-serif; font-size:24px; font-weight:800; }
+.price-box-label { font-size:9.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-40); margin-bottom:6px; }
+.price-box-val { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; }
 .price-box.worker .price-box-val { color:var(--forest); }
 .price-box.mine .price-box-val { color:var(--sage); }
 
-/* Mobile overlay */
-.sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:99; backdrop-filter:blur(3px); }
+.sb-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.52); z-index:99; backdrop-filter:blur(3px); }
 .sb-overlay.open { display:block; }
 
 /* ══ RESPONSIVE ══ */
 @media(max-width:1100px) { .workers-grid { grid-template-columns:1fr 1fr; } }
 @media(max-width:960px) {
-  .sidebar { transform:translateX(-100%); transition:transform .3s ease; }
+  .sidebar { transform:translateX(-100%); }
   .sidebar.mobile-open { transform:translateX(0); }
   .main { margin-left:0; }
   .mob-menu-btn { display:flex; }
   .topbar { padding:0 16px; }
-  .content { padding:20px 16px; }
-  .stats-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+  .content { padding:18px 16px; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); gap:11px; }
+  .quick-actions { grid-template-columns:repeat(2,1fr); }
   .workers-grid { grid-template-columns:1fr 1fr; }
   .profile-layout { grid-template-columns:1fr; }
-  .hero { flex-direction:column; align-items:flex-start; gap:20px; padding:24px; }
+  .hero { flex-direction:column; align-items:flex-start; gap:18px; padding:22px; }
   .hero-right { width:100%; }
   .hero-card { min-width:0; }
-  .hero-btn-primary, .hero-btn-secondary { flex:1; justify-content:center; }
   .form-row { grid-template-columns:1fr; }
-  .pfc-head { flex-direction:column; align-items:flex-start; gap:12px; }
+  .pfc-head { flex-direction:column; align-items:flex-start; gap:10px; }
   .tab-switcher { width:100%; }
   .ts-btn { flex:1; text-align:center; }
+  .tb-find-btn span { display:none; }
 }
 @media(max-width:640px) {
-  .stats-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .stats-grid { grid-template-columns:repeat(2,1fr); }
   .workers-grid { grid-template-columns:1fr; }
   .job-card { flex-wrap:wrap; }
   .jc-right { width:100%; flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; }
   .jc-actions { width:100%; }
   .jc-btn { flex:1; justify-content:center; }
-  .price-compare { grid-template-columns:1fr 1fr; }
+  .quick-actions { grid-template-columns:repeat(4,1fr); }
+  .qa-lbl { font-size:10px; }
 }
 @media(max-width:420px) {
   .hero-h { font-size:20px; }
   .stat-n { font-size:22px; }
-  .modal-body { padding:18px; }
+  .modal-body { padding:16px; }
+  .quick-actions { grid-template-columns:repeat(2,1fr); }
 }
 </style>
 </head>
@@ -558,26 +492,43 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
     <div class="sb-logo-icon"><i class="bi bi-tools"></i></div>
     <div class="sb-logo-txt">Kaam<span>Connect</span></div>
   </div>
+
+  <div class="sb-profile-mini">
+    <div class="sb-av-wrap">
+      <div class="sb-av" id="sbAv">C</div>
+      <div class="sb-online-dot"></div>
+    </div>
+    <div style="min-width:0">
+      <div class="sb-uname" id="sbName">Loading…</div>
+      <div class="sb-urole">Customer Account</div>
+    </div>
+    <button class="sb-logout-mini" onclick="logout()" title="Sign out"><i class="bi bi-box-arrow-right"></i></button>
+  </div>
+
+  <div class="sb-search-wrap">
+    <div style="position:relative">
+      <i class="bi bi-search sb-search-ico"></i>
+      <input class="sb-search" type="text" placeholder="Search workers, jobs…" oninput="handleSidebarSearch(this.value)">
+    </div>
+  </div>
+
   <nav class="sb-nav">
-    <div class="sb-group-label">Main</div>
+    <div class="sb-group-label">Menu</div>
     <div class="sb-item active" onclick="showTab('overview')"><i class="bi bi-grid-fill"></i> Overview</div>
     <div class="sb-item" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</div>
     <div class="sb-item" onclick="showTab('jobs')"><i class="bi bi-briefcase-fill"></i> My Jobs <span class="sb-badge" id="sbPendBadge" style="display:none">0</span></div>
+    <div class="sb-item" onclick="showTab('activity')"><i class="bi bi-clock-history"></i> Activity</div>
     <div class="sb-item" onclick="showTab('profile')"><i class="bi bi-person-circle"></i> My Profile</div>
     <div class="sb-divider"></div>
     <div class="sb-group-label">More</div>
     <div class="sb-item" onclick="location.href='referral.html'"><i class="bi bi-gift-fill"></i> Referral & Wallet</div>
     <div class="sb-item" onclick="location.href='index.html'"><i class="bi bi-house-fill"></i> Back to Home</div>
   </nav>
-  <div class="sb-cta">
-    <div class="sb-cta-title">🎯 Need help fast?</div>
-    <div class="sb-cta-sub">Find verified workers near you in under 2 minutes</div>
-    <button class="sb-cta-btn" onclick="showTab('find')"><i class="bi bi-lightning-charge-fill"></i> Find Now</button>
-  </div>
-  <div class="sb-user">
-    <div class="sb-av" id="sbAv">C</div>
-    <div><div class="sb-uname" id="sbName">Loading…</div><div class="sb-urole">Customer</div></div>
-    <button class="sb-logout" onclick="logout()" title="Sign out"><i class="bi bi-box-arrow-right"></i></button>
+
+  <div class="sb-upgrade">
+    <div class="sb-upgrade-title">🎯 Need help fast?</div>
+    <div class="sb-upgrade-sub">Find verified workers near you in under 2 minutes</div>
+    <button class="sb-upgrade-btn" onclick="showTab('find')"><i class="bi bi-lightning-charge-fill"></i> Find Now</button>
   </div>
 </aside>
 
@@ -589,10 +540,11 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
       <div class="topbar-title" id="topbarTitle">Overview</div>
     </div>
     <div class="topbar-right">
-      <button class="tb-icon-btn" onclick="showTab('jobs')" title="My Jobs">
+      <button class="tb-icon-btn" onclick="showTab('jobs')" title="Notifications">
         <i class="bi bi-bell"></i>
         <div class="notif-badge" id="notifBadge" style="display:none">0</div>
       </button>
+      <button class="tb-find-btn" onclick="showTab('find')"><i class="bi bi-search"></i> <span>Find Worker</span></button>
       <div class="tb-avatar" onclick="showTab('profile')" id="topbarAv">C</div>
     </div>
   </div>
@@ -616,9 +568,9 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
         </div>
         <div class="hero-right">
           <div class="hero-card">
-            <div class="hc-row"><div class="hc-ico">⚡</div><div><div class="hc-label">Electricians Available</div><div class="hc-val">120+</div></div></div>
-            <div class="hc-row"><div class="hc-ico">🔧</div><div><div class="hc-label">Plumbers Available</div><div class="hc-val">80+</div></div></div>
-            <div class="hc-row"><div class="hc-ico">🎨</div><div><div class="hc-label">Painters Available</div><div class="hc-val">60+</div></div></div>
+            <div class="hc-row"><div class="hc-ico">⚡</div><div><div class="hc-label">Electricians</div><div class="hc-val">120+</div></div></div>
+            <div class="hc-row"><div class="hc-ico">🔧</div><div><div class="hc-label">Plumbers</div><div class="hc-val">80+</div></div></div>
+            <div class="hc-row"><div class="hc-ico">🎨</div><div><div class="hc-label">Painters</div><div class="hc-val">60+</div></div></div>
           </div>
         </div>
       </div>
@@ -642,6 +594,26 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
         </div>
       </div>
 
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="qa-btn" onclick="showTabWithFilter('find','electrician')">
+          <div class="qa-ico" style="background:#FFF1E8">⚡</div>
+          <span class="qa-lbl">Electrician</span>
+        </div>
+        <div class="qa-btn" onclick="showTabWithFilter('find','plumber')">
+          <div class="qa-ico" style="background:#EFF6FF">🔧</div>
+          <span class="qa-lbl">Plumber</span>
+        </div>
+        <div class="qa-btn" onclick="showTabWithFilter('find','painter')">
+          <div class="qa-ico" style="background:#FDF4FF">🎨</div>
+          <span class="qa-lbl">Painter</span>
+        </div>
+        <div class="qa-btn" onclick="showTabWithFilter('find','carpenter')">
+          <div class="qa-ico" style="background:#FFFBEB">🪚</div>
+          <span class="qa-lbl">Carpenter</span>
+        </div>
+      </div>
+
       <div class="sec-head">
         <h2>Recent Jobs</h2>
         <span class="sec-link" onclick="showTab('jobs')">View All <i class="bi bi-arrow-right"></i></span>
@@ -654,7 +626,7 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
       <div class="search-bar">
         <div class="search-field">
           <i class="bi bi-tools"></i>
-          <select id="fskill" class="sf-input" style="padding-left:36px">
+          <select id="fskill" class="sf-input" style="padding-left:35px">
             <option value="">All Skills</option>
             <option value="electrician">⚡ Electrician</option>
             <option value="plumber">🔧 Plumber</option>
@@ -670,14 +642,51 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
           <i class="bi bi-geo-alt"></i>
           <input id="floc" type="text" class="sf-input" placeholder="City / Location">
         </div>
+        <div class="search-field" style="max-width:130px">
+          <i class="bi bi-star"></i>
+          <select id="fsort" class="sf-input" style="padding-left:35px">
+            <option value="">Sort By</option>
+            <option value="rating">Top Rated</option>
+            <option value="price">Lowest Price</option>
+            <option value="jobs">Most Jobs</option>
+          </select>
+        </div>
         <button class="search-btn" onclick="loadWorkers()"><i class="bi bi-search"></i> Search</button>
       </div>
+
+      <div class="filter-pills" id="filterPills">
+        <div class="pill active" onclick="filterPill(this,'')">All</div>
+        <div class="pill" onclick="filterPill(this,'electrician')">⚡ Electrician</div>
+        <div class="pill" onclick="filterPill(this,'plumber')">🔧 Plumber</div>
+        <div class="pill" onclick="filterPill(this,'painter')">🎨 Painter</div>
+        <div class="pill" onclick="filterPill(this,'carpenter')">🪚 Carpenter</div>
+        <div class="pill" onclick="filterPill(this,'ac technician')">❄️ AC Tech</div>
+        <div class="pill" onclick="filterPill(this,'driver')">🚗 Driver</div>
+      </div>
+
       <div class="workers-grid" id="workersGrid"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
     </div>
 
     <!-- ═══ MY JOBS ═══ -->
     <div id="tab-jobs" style="display:none">
+      <!-- Job status filter tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+        <button class="pill active" id="jf-all" onclick="filterJobs('all',this)">All Jobs</button>
+        <button class="pill" id="jf-active" onclick="filterJobs('active',this)">Active</button>
+        <button class="pill" id="jf-completed" onclick="filterJobs('completed',this)">Completed</button>
+        <button class="pill" id="jf-cancelled" onclick="filterJobs('cancelled',this)">Cancelled</button>
+      </div>
       <div id="allJobs"><div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div></div>
+    </div>
+
+    <!-- ═══ ACTIVITY ═══ -->
+    <div id="tab-activity" style="display:none">
+      <div class="sec-head" style="margin-bottom:16px">
+        <h2>Recent Activity</h2>
+      </div>
+      <div class="activity-feed" id="activityFeed">
+        <div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>
+      </div>
     </div>
 
     <!-- ═══ PROFILE ═══ -->
@@ -720,9 +729,9 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
                 <div class="fg"><label class="fl">Full Name</label><div class="fw"><input class="fi" type="text" id="editName" placeholder="Your full name"><i class="bi bi-person fi-ico"></i></div></div>
                 <div class="fg"><label class="fl">Phone Number</label><div class="fw"><input class="fi" type="text" id="editPhone" placeholder="10-digit number"><i class="bi bi-phone fi-ico"></i></div></div>
               </div>
-              <div class="fg"><label class="fl">Email Address</label><div class="fw"><input class="fi" type="email" id="editEmail" disabled style="opacity:.6;cursor:not-allowed"><i class="bi bi-envelope fi-ico"></i></div><div style="font-size:11.5px;color:var(--ink-40);margin-top:5px"><i class="bi bi-info-circle"></i> Email cannot be changed</div></div>
+              <div class="fg"><label class="fl">Email Address</label><div class="fw"><input class="fi" type="email" id="editEmail" disabled style="opacity:.6;cursor:not-allowed"><i class="bi bi-envelope fi-ico"></i></div><div style="font-size:11px;color:var(--ink-40);margin-top:4px"><i class="bi bi-info-circle"></i> Email cannot be changed</div></div>
               <div class="fg"><label class="fl">City / Location</label><div class="fw"><input class="fi" type="text" id="editLocation" placeholder="e.g. Ludhiana, Punjab"><i class="bi bi-geo-alt fi-ico"></i></div></div>
-              <div class="fg"><label class="fl">Bio <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><textarea class="fi fi-no-icon" id="editBio" placeholder="Tell workers about yourself…" style="padding:11px 13px"></textarea></div>
+              <div class="fg"><label class="fl">Bio <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label><textarea class="fi fi-no-icon" id="editBio" placeholder="Tell workers about yourself…" style="padding:10px 12px"></textarea></div>
               <div style="display:flex;justify-content:flex-end">
                 <button class="save-btn" onclick="saveProfile()" id="saveInfoBtn"><i class="bi bi-check-circle-fill"></i> Save Changes <i class="bi bi-arrow-repeat spin-sm" id="saveInfoSpin"></i></button>
               </div>
@@ -735,7 +744,7 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
               <div style="display:flex;justify-content:flex-end">
                 <button class="save-btn" onclick="changePassword()" id="savePwBtn"><i class="bi bi-shield-fill-check"></i> Update Password <i class="bi bi-arrow-repeat spin-sm" id="savePwSpin"></i></button>
               </div>
-              <div style="margin-top:26px">
+              <div style="margin-top:24px">
                 <div class="danger-zone">
                   <h4><i class="bi bi-exclamation-triangle-fill"></i> Danger Zone</h4>
                   <p>Logging out will remove your session from this device.</p>
@@ -757,7 +766,7 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
     <div class="modal-head"><h3><i class="bi bi-star-fill" style="color:var(--gold)"></i> Leave a Review</h3><button class="modal-close" onclick="closeReview()"><i class="bi bi-x"></i></button></div>
     <div class="modal-body">
       <div id="reviewAlert" style="display:none"></div>
-      <p style="font-size:14px;color:var(--ink-40);text-align:center;margin-bottom:4px">How would you rate this service?</p>
+      <p style="font-size:13.5px;color:var(--ink-40);text-align:center;margin-bottom:2px">How would you rate this service?</p>
       <div class="star-row">
         <button class="star-btn" data-v="1" onclick="setRating(1)">★</button>
         <button class="star-btn" data-v="2" onclick="setRating(2)">★</button>
@@ -765,7 +774,7 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
         <button class="star-btn" data-v="4" onclick="setRating(4)">★</button>
         <button class="star-btn" data-v="5" onclick="setRating(5)">★</button>
       </div>
-      <div class="fg"><label class="fl">Your Review</label><textarea class="fi fi-no-icon" id="reviewText" placeholder="Share your experience…" style="padding:11px 13px"></textarea></div>
+      <div class="fg"><label class="fl">Your Review</label><textarea class="fi fi-no-icon" id="reviewText" placeholder="Share your experience…" style="padding:10px 12px"></textarea></div>
       <input type="hidden" id="reviewJobId">
       <input type="hidden" id="reviewWorkerId">
       <input type="hidden" id="reviewRating" value="0">
@@ -783,15 +792,15 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
       <div class="hire-worker-box" id="hireWorkerInfo"></div>
       <input type="hidden" id="hireWorkerId">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="fg"><label class="fl">Service</label><input class="fi fi-no-icon" type="text" id="hireSkill" placeholder="e.g. Plumbing" style="padding:11px 13px"></div>
-        <div class="fg"><label class="fl">Your Budget ₹ <small style="font-weight:400;color:var(--ink-40)">(negotiate)</small></label><input class="fi fi-no-icon" type="number" id="hirePrice" placeholder="500" min="100" style="padding:11px 13px"></div>
+        <div class="fg"><label class="fl">Service</label><input class="fi fi-no-icon" type="text" id="hireSkill" placeholder="e.g. Plumbing" style="padding:10px 12px"></div>
+        <div class="fg"><label class="fl">Your Budget ₹ <small style="font-weight:400;color:var(--ink-40)">(negotiate)</small></label><input class="fi fi-no-icon" type="number" id="hirePrice" placeholder="500" min="100" style="padding:10px 12px"></div>
       </div>
-      <div class="fg"><label class="fl">Location</label><input class="fi fi-no-icon" type="text" id="hireLocation" placeholder="Your address" style="padding:11px 13px"></div>
+      <div class="fg"><label class="fl">Location</label><input class="fi fi-no-icon" type="text" id="hireLocation" placeholder="Your address" style="padding:10px 12px"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="fg"><label class="fl">Date</label><input class="fi fi-no-icon" type="date" id="hireDate" style="padding:11px 13px"></div>
-        <div class="fg"><label class="fl">Time</label><input class="fi fi-no-icon" type="time" id="hireTime" style="padding:11px 13px"></div>
+        <div class="fg"><label class="fl">Date</label><input class="fi fi-no-icon" type="date" id="hireDate" style="padding:10px 12px"></div>
+        <div class="fg"><label class="fl">Time</label><input class="fi fi-no-icon" type="time" id="hireTime" style="padding:10px 12px"></div>
       </div>
-      <div class="fg"><label class="fl">Details</label><textarea class="fi fi-no-icon" id="hireDesc" placeholder="Describe the work…" style="padding:11px 13px"></textarea></div>
+      <div class="fg"><label class="fl">Details</label><textarea class="fi fi-no-icon" id="hireDesc" placeholder="Describe the work…" style="padding:10px 12px"></textarea></div>
       <button class="m-submit" id="hireSubmitBtn" onclick="confirmHire()">
         <i class="bi bi-send-fill"></i> Send Request with Budget
         <i class="bi bi-arrow-repeat spin-sm" id="hireSpin"></i>
@@ -804,27 +813,24 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
 <div class="modal-backdrop" id="negotiateModal">
   <div class="modal" style="max-width:460px">
     <div class="modal-head"><h3><i class="bi bi-chat-dots" style="color:var(--saffron)"></i> Negotiate Price</h3><button class="modal-close" onclick="closeNegotiate()"><i class="bi bi-x"></i></button></div>
-    <div style="padding:24px">
+    <div style="padding:22px">
       <div class="price-compare">
         <div class="price-box worker"><div class="price-box-label">Worker Asks</div><div id="ngWorkerPrice" class="price-box-val">₹0</div></div>
         <div class="price-box mine"><div class="price-box-label">Your Budget</div><div id="ngMyBudget" class="price-box-val">₹0</div></div>
       </div>
-      <div style="text-align:center;font-size:13px;color:var(--ink-40);margin-bottom:18px">Negotiating with <strong id="ngWorkerName">Worker</strong></div>
-      <div id="ngAlert" style="display:none;margin-bottom:14px"></div>
-      <div class="fg"><label class="fl">Your Counter Offer ₹</label><div class="fw"><input class="fi" type="number" id="ngCounterAmt" placeholder="e.g. 450" min="1" style="padding:12px 14px"><i class="bi bi-currency-rupee fi-ico"></i></div></div>
-      <div class="fg"><label class="fl">Message (optional)</label><div class="fw"><input class="fi" type="text" id="ngNote" placeholder="e.g. I can pay this for 2 rooms" style="padding:12px 14px"><i class="bi bi-chat fi-ico"></i></div></div>
+      <div style="text-align:center;font-size:12.5px;color:var(--ink-40);margin-bottom:16px">Negotiating with <strong id="ngWorkerName">Worker</strong></div>
+      <div id="ngAlert" style="display:none;margin-bottom:13px"></div>
+      <div class="fg"><label class="fl">Your Counter Offer ₹</label><div class="fw"><input class="fi" type="number" id="ngCounterAmt" placeholder="e.g. 450" min="1" style="padding:11px 13px"><i class="bi bi-currency-rupee fi-ico"></i></div></div>
+      <div class="fg"><label class="fl">Message (optional)</label><div class="fw"><input class="fi" type="text" id="ngNote" placeholder="e.g. I can pay this for 2 rooms" style="padding:11px 13px"><i class="bi bi-chat fi-ico"></i></div></div>
       <button id="ngSubmitBtn" onclick="sendCounterOffer()" class="m-submit"><i class="bi bi-send-fill"></i> Send Counter Offer</button>
     </div>
   </div>
 </div>
 
-<!-- ═══ REBOOK MODAL ═══ (FIXED) -->
+<!-- ═══ REBOOK MODAL ═══ -->
 <div class="modal-backdrop" id="rebookModal">
   <div class="modal">
-    <div class="modal-head">
-      <h3><i class="bi bi-arrow-repeat" style="color:var(--saffron)"></i> Re-book Worker</h3>
-      <button class="modal-close" onclick="closeRebook()"><i class="bi bi-x"></i></button>
-    </div>
+    <div class="modal-head"><h3><i class="bi bi-arrow-repeat" style="color:var(--saffron)"></i> Re-book Worker</h3><button class="modal-close" onclick="closeRebook()"><i class="bi bi-x"></i></button></div>
     <div class="modal-body">
       <div id="rbAlert" style="display:none"></div>
       <div class="rb-highlight">
@@ -836,22 +842,16 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
       </div>
       <div class="fg">
         <label class="fl">Your Budget ₹</label>
-        <div class="fw">
-          <input class="fi" type="number" id="rbPrice" placeholder="Enter your budget" min="1" style="padding:12px 13px 12px 40px">
-          <i class="bi bi-currency-rupee fi-ico"></i>
-        </div>
-        <div style="font-size:11.5px;color:var(--ink-40);margin-top:5px"><i class="bi bi-info-circle"></i> Last paid: <strong id="rbLastPriceHint">—</strong></div>
+        <div class="fw"><input class="fi" type="number" id="rbPrice" placeholder="Enter your budget" min="1" style="padding:11px 12px 11px 38px"><i class="bi bi-currency-rupee fi-ico"></i></div>
+        <div style="font-size:11px;color:var(--ink-40);margin-top:4px"><i class="bi bi-info-circle"></i> Last paid: <strong id="rbLastPriceHint">—</strong></div>
       </div>
       <div class="fg">
         <label class="fl">Preferred Date <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-        <div class="fw">
-          <input class="fi" type="date" id="rbDate" style="padding:12px 13px 12px 40px">
-          <i class="bi bi-calendar3 fi-ico"></i>
-        </div>
+        <div class="fw"><input class="fi" type="date" id="rbDate" style="padding:11px 12px 11px 38px"><i class="bi bi-calendar3 fi-ico"></i></div>
       </div>
       <div class="fg">
         <label class="fl">Any changes? <span style="font-weight:400;color:var(--ink-40)">(optional)</span></label>
-        <textarea class="fi fi-no-icon" id="rbDesc" placeholder="Anything different from last time?" style="padding:11px 13px;min-height:70px"></textarea>
+        <textarea class="fi fi-no-icon" id="rbDesc" placeholder="Anything different from last time?" style="padding:10px 12px;min-height:68px"></textarea>
       </div>
       <button id="rbSubmitBtn" onclick="confirmRebook()" class="m-submit">
         <i class="bi bi-arrow-repeat"></i> Send Re-book Request
@@ -863,689 +863,356 @@ textarea.fi { min-height:85px; resize:vertical; padding:11px 13px; line-height:1
 
 <script>
 // ── Token / Auth ──────────────────────────────────────────
-(function () {
+(function(){
   const p = new URLSearchParams(window.location.search);
   const t = p.get('token'), u = p.get('user');
-  if (t && u) {
-    try {
-      localStorage.setItem('kc_token', t);
-      localStorage.setItem('kc_user', decodeURIComponent(u));
-      window.history.replaceState({}, '', window.location.pathname);
-    } catch(e) {}
+  if(t && u){
+    try{ localStorage.setItem('kc_token',t); localStorage.setItem('kc_user',decodeURIComponent(u)); window.history.replaceState({},'',window.location.pathname); }catch(e){}
   }
 })();
 
 const TOKEN = localStorage.getItem('kc_token');
 let USER = JSON.parse(localStorage.getItem('kc_user') || '{}');
-if (!TOKEN || USER.role !== 'customer') { location.href = 'login.html'; }
+if(!TOKEN || USER.role !== 'customer'){ location.href = 'login.html'; }
 
 // ── Helpers ───────────────────────────────────────────────
-const API = url => fetch(url, { headers: { 'Authorization': 'Bearer ' + TOKEN } }).then(r => r.json());
-const skillEmoji  = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
+const API = url => fetch(url,{headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+const skillEmoji = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
 const statusBadge = { pending:'badge-pending', pending_offer:'badge-pending', negotiating:'badge-negotiating', accepted:'badge-accepted', price_agreed:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
 const statusLabel = { pending:'Pending', pending_offer:'Pending Offer', negotiating:'Negotiating', accepted:'Accepted', price_agreed:'Price Agreed', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
 
-function showToast(msg, ico, dur) {
-  ico = ico || '✅'; dur = dur || 4000;
-  const wrap = document.getElementById('toastWrap');
-  const t = document.createElement('div'); t.className = 'toast';
-  t.innerHTML = `<span class="toast-icon">${ico}</span><span style="flex:1">${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
-  wrap.appendChild(t);
-  setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, dur);
-}
+let allJobsCache = [];
+
+function showToast(msg,ico,dur){ ico=ico||'✅'; dur=dur||4000; const wrap=document.getElementById('toastWrap'); const t=document.createElement('div'); t.className='toast'; t.innerHTML=`<span class="toast-ico">${ico}</span><span style="flex:1">${msg}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`; wrap.appendChild(t); setTimeout(()=>{ t.classList.add('removing'); setTimeout(()=>t.remove(),300); },dur); }
 
 // ── UI init ───────────────────────────────────────────────
-function initUI() {
+function initUI(){
   document.getElementById('sbName').textContent = USER.name || 'Customer';
-  document.getElementById('wbName').textContent = (USER.name || '').split(' ')[0] || 'there';
-
-  function setAv(el, src, name) {
-    if (src) {
-      el.innerHTML = `<img src="${src}" alt="">`;
-      el.style.background = 'transparent';
-    } else {
-      el.textContent = (name || 'C')[0].toUpperCase();
-      el.style.background = 'var(--saffron)';
-    }
-  }
-  setAv(document.getElementById('sbAv'), USER.avatar, USER.name);
-  setAv(document.getElementById('topbarAv'), USER.avatar, USER.name);
+  document.getElementById('wbName').textContent = (USER.name||'').split(' ')[0] || 'there';
+  function setAv(el,src,name){ if(src){ el.innerHTML=`<img src="${src}" alt="">`; el.style.background='transparent'; }else{ el.textContent=(name||'C')[0].toUpperCase(); el.style.background='var(--saffron)'; } }
+  setAv(document.getElementById('sbAv'),USER.avatar,USER.name);
+  setAv(document.getElementById('topbarAv'),USER.avatar,USER.name);
 }
 initUI();
 
 // ── Tab navigation ────────────────────────────────────────
-function showTab(t) {
-  document.querySelectorAll('[id^=tab-]').forEach(el => el.style.display = 'none');
-  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + t).style.display = 'block';
-  const order = ['overview', 'find', 'jobs', 'profile'];
+function showTab(t){
+  document.querySelectorAll('[id^=tab-]').forEach(el=>el.style.display='none');
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+t).style.display='block';
+  const order=['overview','find','jobs','activity','profile'];
   document.querySelectorAll('.sb-item')[order.indexOf(t)]?.classList.add('active');
-  const titles = { overview:'Overview', find:'Find Workers', jobs:'My Jobs', profile:'My Profile' };
-  document.getElementById('topbarTitle').textContent = titles[t] || t;
+  const titles={overview:'Overview',find:'Find Workers',jobs:'My Jobs',activity:'Activity',profile:'My Profile'};
+  document.getElementById('topbarTitle').textContent=titles[t]||t;
   closeMobileMenu();
-  if (t === 'overview') loadOverview();
-  if (t === 'jobs')     loadAllJobs();
-  if (t === 'find')     loadWorkers();
-  if (t === 'profile')  loadProfile();
+  if(t==='overview') loadOverview();
+  if(t==='jobs')     loadAllJobs();
+  if(t==='find')     loadWorkers();
+  if(t==='profile')  loadProfile();
+  if(t==='activity') loadActivity();
+}
+
+function showTabWithFilter(tab, skill){
+  document.getElementById('fskill').value = skill;
+  showTab(tab);
+}
+
+function filterPill(el,skill){
+  document.querySelectorAll('#filterPills .pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('fskill').value = skill;
+  loadWorkers();
+}
+
+function handleSidebarSearch(val){
+  if(!val.trim()) return;
+  document.getElementById('floc').value = val;
+  showTab('find');
 }
 
 // ── Profile Photo ─────────────────────────────────────────
-function setProfilePhoto(src) {
-  const el = document.getElementById('profileAvatar');
-  const del = document.getElementById('deletePhotoBtn');
-  if (src) {
-    el.innerHTML = `<img src="${src}" alt="Profile">`;
-    el.style.background = 'transparent';
-    del.style.display = 'flex';
-  } else {
-    el.innerHTML = (USER.name || 'C')[0].toUpperCase();
-    el.style.background = 'var(--saffron)';
-    del.style.display = 'none';
-  }
+function setProfilePhoto(src){
+  const el=document.getElementById('profileAvatar');
+  const del=document.getElementById('deletePhotoBtn');
+  if(src){ el.innerHTML=`<img src="${src}" alt="Profile">`; el.style.background='transparent'; del.style.display='flex'; }
+  else{ el.innerHTML=(USER.name||'C')[0].toUpperCase(); el.style.background='var(--saffron)'; del.style.display='none'; }
 }
 
-document.getElementById('photoFileInput').addEventListener('change', async function () {
-  const file = this.files[0];
-  if (!file) return;
-  if (file.size > 3 * 1024 * 1024) { showToast('Photo too large. Max 3MB.', '❌'); return; }
-  const reader = new FileReader();
-  reader.onload = async (e) => {
-    const base64 = e.target.result;
-    setProfilePhoto(base64);
-    showToast('Uploading…', '📷', 2000);
-    try {
-      const d = await fetch('/api/auth/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-        body: JSON.stringify({ name: USER.name||'', phone: USER.phone||'', location: USER.location||'', bio: USER.bio||'', avatar: base64 })
-      }).then(r => r.json());
-      if (d.success) {
-        USER.avatar = base64;
-        localStorage.setItem('kc_user', JSON.stringify(USER));
-        initUI();
-        showToast('Photo updated!', '📷');
-      } else showToast(d.message || 'Upload failed', '❌');
-    } catch { showToast('Server error.', '❌'); }
+document.getElementById('photoFileInput').addEventListener('change',async function(){
+  const file=this.files[0]; if(!file) return;
+  if(file.size>3*1024*1024){ showToast('Photo too large. Max 3MB.','❌'); return; }
+  const reader=new FileReader();
+  reader.onload=async(e)=>{
+    const base64=e.target.result; setProfilePhoto(base64); showToast('Uploading…','📷',2000);
+    try{
+      const d=await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name:USER.name||'',phone:USER.phone||'',location:USER.location||'',bio:USER.bio||'',avatar:base64})}).then(r=>r.json());
+      if(d.success){ USER.avatar=base64; localStorage.setItem('kc_user',JSON.stringify(USER)); initUI(); showToast('Photo updated!','📷'); }
+      else showToast(d.message||'Upload failed','❌');
+    }catch{ showToast('Server error.','❌'); }
   };
-  reader.readAsDataURL(file);
-  this.value = '';
+  reader.readAsDataURL(file); this.value='';
 });
 
-async function deletePhoto() {
-  if (!confirm('Remove your profile photo?')) return;
-  setProfilePhoto(null);
-  try {
-    const d = await fetch('/api/auth/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify({ name: USER.name||'', phone: USER.phone||'', location: USER.location||'', bio: USER.bio||'', avatar: null })
-    }).then(r => r.json());
-    if (d.success) {
-      USER.avatar = null;
-      localStorage.setItem('kc_user', JSON.stringify(USER));
-      initUI();
-      showToast('Photo removed.', '🗑️');
-    } else showToast(d.message || 'Failed', '❌');
-  } catch { showToast('Server error.', '❌'); }
+async function deletePhoto(){
+  if(!confirm('Remove your profile photo?')) return; setProfilePhoto(null);
+  try{
+    const d=await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name:USER.name||'',phone:USER.phone||'',location:USER.location||'',bio:USER.bio||'',avatar:null})}).then(r=>r.json());
+    if(d.success){ USER.avatar=null; localStorage.setItem('kc_user',JSON.stringify(USER)); initUI(); showToast('Photo removed.','🗑️'); }
+    else showToast(d.message||'Failed','❌');
+  }catch{ showToast('Server error.','❌'); }
 }
 
 // ── Overview ──────────────────────────────────────────────
 loadOverview();
 
-async function loadOverview() {
-  try {
-    const d = await API('/api/jobs/stats');
-    if (d.success) {
-      document.getElementById('st-total').textContent = d.stats.total     || 0;
-      document.getElementById('st-done').textContent  = d.stats.completed || 0;
-      document.getElementById('st-pend').textContent  = d.stats.pending   || 0;
-      document.getElementById('st-spent').textContent = d.stats.totalSpent ? '₹' + Math.round(d.stats.totalSpent) : '₹0';
-      const p = d.stats.pending || 0;
-      const nb = document.getElementById('notifBadge');
-      nb.style.display = p > 0 ? 'grid' : 'none';
-      nb.textContent = p;
-      const sb = document.getElementById('sbPendBadge');
-      if (p > 0) { sb.style.display = 'inline'; sb.textContent = p; }
-      else { sb.style.display = 'none'; }
+async function loadOverview(){
+  try{
+    const d=await API('/api/jobs/stats');
+    if(d.success){
+      document.getElementById('st-total').textContent=d.stats.total||0;
+      document.getElementById('st-done').textContent=d.stats.completed||0;
+      document.getElementById('st-pend').textContent=d.stats.pending||0;
+      document.getElementById('st-spent').textContent=d.stats.totalSpent?'₹'+Math.round(d.stats.totalSpent):'₹0';
+      const p=d.stats.pending||0;
+      const nb=document.getElementById('notifBadge'); nb.style.display=p>0?'grid':'none'; nb.textContent=p;
+      const sb=document.getElementById('sbPendBadge');
+      if(p>0){ sb.style.display='inline'; sb.textContent=p; }else sb.style.display='none';
     }
-  } catch(e) {}
-  const jobs = await API('/api/jobs/customer?limit=3');
-  const el = document.getElementById('recentJobs');
-  el.innerHTML = (jobs.success && jobs.jobs?.length)
-    ? `<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`
-    : `<div class="empty-state"><i class="bi bi-briefcase es-icon"></i><h3>No jobs yet</h3><p>Book your first worker to get started!</p><button class="es-cta" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</button></div>`;
+  }catch(e){}
+  const jobs=await API('/api/jobs/customer?limit=3');
+  const el=document.getElementById('recentJobs');
+  el.innerHTML=(jobs.success&&jobs.jobs?.length)?`<div class="jobs-list">${jobs.jobs.map(jobCard).join('')}</div>`:`<div class="empty-state"><i class="bi bi-briefcase es-icon"></i><h3>No jobs yet</h3><p>Book your first worker to get started!</p><button class="es-cta" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</button></div>`;
+}
+
+// ── Activity Feed ─────────────────────────────────────────
+async function loadActivity(){
+  const el=document.getElementById('activityFeed');
+  el.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  try{
+    const d=await API('/api/jobs/customer?limit=20');
+    if(d.success && d.jobs?.length){
+      const items=d.jobs.map(j=>{
+        const dotColor=j.status==='completed'?'green':j.status==='cancelled'?'':(j.status==='pending'||j.status==='negotiating')?'orange':'blue';
+        return `<div class="af-item">
+          <div class="af-dot ${dotColor}" style="${dotColor===''?'background:#DC2626':''}"></div>
+          <div>
+            <div class="af-text"><strong>${j.title||j.skill||'Job'}</strong> with <strong>${j.workerId?.name||'Worker'}</strong> — <span class="badge ${statusBadge[j.status]||''}">${statusLabel[j.status]||j.status}</span></div>
+            <div class="af-time">${new Date(j.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})} · ₹${j.agreedPrice||j.price||0}</div>
+          </div>
+        </div>`;
+      });
+      el.innerHTML=items.join('');
+    }else{
+      el.innerHTML='<div class="empty-state"><i class="bi bi-clock-history es-icon"></i><h3>No activity yet</h3><p>Your job history will appear here.</p></div>';
+    }
+  }catch{ el.innerHTML='<div class="empty-state"><i class="bi bi-wifi-off es-icon"></i><h3>Connection error</h3></div>'; }
 }
 
 // ── Job card renderer ─────────────────────────────────────
-function jobCard(j) {
-  const em = skillEmoji[j.skill] || '🛠️';
-  const wName = j.workerId?.name || 'Worker';
-  const st = j.status;
-  const offers = j.offers || [];
-  const latestWorkerOffer = [...offers].reverse().find(o => o.fromRole === 'worker' && o.status === 'pending');
-  const myBudget = j.customerBudget || j.price || 0;
-  const displayPrice = j.agreedPrice || (latestWorkerOffer ? latestWorkerOffer.amount : myBudget);
-
-  let priceHtml = `<div class="jc-price">₹${displayPrice}</div>`;
-  if (latestWorkerOffer && st === 'negotiating') {
-    priceHtml = `<div><div class="jc-price">₹${latestWorkerOffer.amount}</div><div style="font-size:11px;color:var(--ink-40);text-decoration:line-through">Your budget: ₹${myBudget}</div></div>`;
+function jobCard(j){
+  const em=skillEmoji[j.skill]||'🛠️';
+  const wName=j.workerId?.name||'Worker';
+  const st=j.status;
+  const offers=j.offers||[];
+  const latestWorkerOffer=[...offers].reverse().find(o=>o.fromRole==='worker'&&o.status==='pending');
+  const myBudget=j.customerBudget||j.price||0;
+  const displayPrice=j.agreedPrice||(latestWorkerOffer?latestWorkerOffer.amount:myBudget);
+  let priceHtml=`<div class="jc-price">₹${displayPrice}</div>`;
+  if(latestWorkerOffer&&st==='negotiating') priceHtml=`<div><div class="jc-price">₹${latestWorkerOffer.amount}</div><div style="font-size:10.5px;color:var(--ink-40);text-decoration:line-through">Budget: ₹${myBudget}</div></div>`;
+  if(st==='price_agreed') priceHtml=`<div class="jc-price agreed">₹${j.agreedPrice||j.price} ✅</div>`;
+  let offerThread='';
+  if(offers.length&&['pending_offer','negotiating','price_agreed'].includes(st)){
+    offerThread=`<div class="offer-thread">${offers.slice(-4).map(o=>`<div class="ot-row ${o.fromRole}"><span class="ot-who">${o.fromRole==='customer'?'You':wName}</span><span class="ot-amt">₹${o.amount}</span><span class="ot-status ot-${o.status}">${o.status}</span>${o.note?`<span class="ot-note">${o.note}</span>`:''}</div>`).join('')}</div>`;
   }
-  if (st === 'price_agreed') {
-    priceHtml = `<div class="jc-price agreed">₹${j.agreedPrice || j.price} ✅</div>`;
-  }
-
-  let offerThread = '';
-  if (offers.length && ['pending_offer','negotiating','price_agreed'].includes(st)) {
-    offerThread = `<div class="offer-thread">${
-      offers.slice(-4).map(o => `<div class="ot-row ${o.fromRole}">
-        <span class="ot-who">${o.fromRole === 'customer' ? 'You' : wName}</span>
-        <span class="ot-amt">₹${o.amount}</span>
-        <span class="ot-status ot-${o.status}">${o.status}</span>
-        ${o.note ? `<span class="ot-note">${o.note}</span>` : ''}
-      </div>`).join('')
-    }</div>`;
-  }
-
-  let actions = '';
-  if (['pending_offer','negotiating'].includes(st)) {
-    if (latestWorkerOffer && st === 'negotiating') {
-      actions = `
-        <button class="jc-btn btn-accept-price" onclick="acceptWorkerPrice('${j._id}',${latestWorkerOffer.amount},this)"><i class="bi bi-check-circle-fill"></i> Accept ₹${latestWorkerOffer.amount}</button>
-        <button class="jc-btn btn-negotiate" onclick="openNegotiate('${j._id}','${j.workerId?._id||''}','${wName}',${latestWorkerOffer.amount},${myBudget},'${st}')"><i class="bi bi-chat-dots"></i> Counter</button>
-        <button class="jc-btn btn-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i></button>`;
-    } else {
-      actions = `
-        <button class="jc-btn btn-negotiate" onclick="openNegotiate('${j._id}','${j.workerId?._id||''}','${wName}',${displayPrice},${myBudget},'${st}')"><i class="bi bi-chat-dots"></i> Negotiate</button>
-        <button class="jc-btn btn-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
+  let actions='';
+  if(['pending_offer','negotiating'].includes(st)){
+    if(latestWorkerOffer&&st==='negotiating'){
+      actions=`<button class="jc-btn btn-accept-price" onclick="acceptWorkerPrice('${j._id}',${latestWorkerOffer.amount},this)"><i class="bi bi-check-circle-fill"></i> Accept ₹${latestWorkerOffer.amount}</button><button class="jc-btn btn-negotiate" onclick="openNegotiate('${j._id}','${j.workerId?._id||''}','${wName}',${latestWorkerOffer.amount},${myBudget},'${st}')"><i class="bi bi-chat-dots"></i> Counter</button><button class="jc-btn btn-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i></button>`;
+    }else{
+      actions=`<button class="jc-btn btn-negotiate" onclick="openNegotiate('${j._id}','${j.workerId?._id||''}','${wName}',${displayPrice},${myBudget},'${st}')"><i class="bi bi-chat-dots"></i> Negotiate</button><button class="jc-btn btn-cancel" onclick="cancelJob('${j._id}',this)"><i class="bi bi-x-circle"></i> Cancel</button>`;
     }
   }
-  if (st === 'price_agreed') actions = `<div style="font-size:12px;color:var(--sage);font-weight:700;padding:4px 0"><i class="bi bi-hourglass-split"></i> Awaiting worker start</div>`;
-  if (st === 'completed' || st === 'paid') {
-    const wid = j.workerId?._id || '';
-    const lastPrice = j.agreedPrice || j.price || 0;
-    const alreadyReviewed = j.rating && j.rating > 0;
-    const reviewBtn = alreadyReviewed
-      ? `<div style="display:flex;align-items:center;gap:7px">
-           <div style="font-size:12px;color:var(--sage);font-weight:700"><i class="bi bi-star-fill"></i> ${j.rating}★</div>
-           <button class="jc-btn btn-cancel" style="font-size:11px;padding:5px 10px" onclick="deleteReview('${j._id}',this)"><i class="bi bi-trash3"></i></button>
-         </div>`
-      : `<button class="jc-btn btn-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>`;
-    actions = reviewBtn + `<button class="jc-btn btn-rebook" onclick="openRebook('${j._id}','${wName}',${lastPrice},'${j.workerId?._id||''}','${j.skill||''}')"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
+  if(st==='price_agreed') actions=`<div style="font-size:11.5px;color:var(--sage);font-weight:800;padding:3px 0"><i class="bi bi-hourglass-split"></i> Awaiting worker start</div>`;
+  if(st==='completed'||st==='paid'){
+    const wid=j.workerId?._id||'';
+    const lastPrice=j.agreedPrice||j.price||0;
+    const alreadyReviewed=j.rating&&j.rating>0;
+    const reviewBtn=alreadyReviewed?`<div style="display:flex;align-items:center;gap:6px"><div style="font-size:11.5px;color:var(--sage);font-weight:800"><i class="bi bi-star-fill"></i> ${j.rating}★</div><button class="jc-btn btn-cancel" style="font-size:10.5px;padding:4px 9px" onclick="deleteReview('${j._id}',this)"><i class="bi bi-trash3"></i></button></div>`:`<button class="jc-btn btn-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>`;
+    actions=reviewBtn+`<button class="jc-btn btn-rebook" onclick="openRebook('${j._id}','${wName}',${lastPrice},'${j.workerId?._id||''}','${j.skill||''}')"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
   }
-
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
-      <div class="jc-title">${j.title || j.skill || 'Job'}</div>
+      <div class="jc-title">${j.title||j.skill||'Job'}</div>
       <div class="jc-meta">
         <span><i class="bi bi-person"></i> ${wName}</span>
-        <span><i class="bi bi-geo-alt"></i> ${j.location || '—'}</span>
+        <span><i class="bi bi-geo-alt"></i> ${j.location||'—'}</span>
         <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
       </div>
       ${offerThread}
     </div>
     <div class="jc-right">
       ${priceHtml}
-      <span class="badge ${statusBadge[st] || ''}" id="badge-${j._id}">${statusLabel[st] || st}</span>
-      ${actions ? `<div class="jc-actions">${actions}</div>` : ''}
+      <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
+      ${actions?`<div class="jc-actions">${actions}</div>`:''}
     </div>
   </div>`;
 }
 
 // ── Jobs tab ──────────────────────────────────────────────
-async function loadAllJobs() {
-  const el = document.getElementById('allJobs');
-  el.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
-  const d = await API('/api/jobs/customer?limit=50');
-  el.innerHTML = (d.success && d.jobs?.length)
-    ? `<div class="jobs-list">${d.jobs.map(jobCard).join('')}</div>`
-    : `<div class="empty-state"><i class="bi bi-briefcase es-icon"></i><h3>No jobs yet</h3><p>Your job history will appear here.</p><button class="es-cta" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</button></div>`;
+async function loadAllJobs(){
+  const el=document.getElementById('allJobs');
+  el.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  const d=await API('/api/jobs/customer?limit=50');
+  allJobsCache=d.jobs||[];
+  renderFilteredJobs('all');
 }
 
-async function cancelJob(id, btn) {
-  if (!confirm('Cancel this job?')) return;
-  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i>'; }
-  const d = await fetch('/api/jobs/cancel/' + id, { method:'PUT', headers:{'Authorization':'Bearer '+TOKEN} }).then(r => r.json());
-  if (d.success) {
-    const badge = document.getElementById('badge-' + id);
-    if (badge) { badge.className = 'badge badge-cancelled'; badge.textContent = 'Cancelled'; }
-    if (btn) btn.closest('.jc-actions').innerHTML = '';
-    showToast('Job cancelled.', '🗑️');
-    loadOverview();
-  } else {
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-x-circle"></i> Cancel'; }
-    showToast(d.message || 'Cancel failed', '❌');
-  }
+function filterJobs(filter,btn){
+  document.querySelectorAll('[id^=jf-]').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderFilteredJobs(filter);
+}
+
+function renderFilteredJobs(filter){
+  const el=document.getElementById('allJobs');
+  let jobs=allJobsCache;
+  if(filter==='active') jobs=jobs.filter(j=>['pending','pending_offer','negotiating','accepted','price_agreed','in_progress'].includes(j.status));
+  else if(filter==='completed') jobs=jobs.filter(j=>['completed','paid'].includes(j.status));
+  else if(filter==='cancelled') jobs=jobs.filter(j=>j.status==='cancelled');
+  el.innerHTML=jobs.length?`<div class="jobs-list">${jobs.map(jobCard).join('')}</div>`:`<div class="empty-state"><i class="bi bi-briefcase es-icon"></i><h3>No jobs here</h3><p>Jobs matching this filter will appear here.</p><button class="es-cta" onclick="showTab('find')"><i class="bi bi-search"></i> Find Workers</button></div>`;
+}
+
+async function cancelJob(id,btn){
+  if(!confirm('Cancel this job?')) return;
+  if(btn){ btn.disabled=true; btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i>'; }
+  const d=await fetch('/api/jobs/cancel/'+id,{method:'PUT',headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json());
+  if(d.success){ const badge=document.getElementById('badge-'+id); if(badge){ badge.className='badge badge-cancelled'; badge.textContent='Cancelled'; } if(btn) btn.closest('.jc-actions').innerHTML=''; showToast('Job cancelled.','🗑️'); loadOverview(); }
+  else{ if(btn){ btn.disabled=false; btn.innerHTML='<i class="bi bi-x-circle"></i> Cancel'; } showToast(d.message||'Cancel failed','❌'); }
 }
 
 // ── Find Workers ──────────────────────────────────────────
-async function loadWorkers() {
-  const skill = document.getElementById('fskill').value;
-  const loc   = document.getElementById('floc').value.trim();
-  const grid  = document.getElementById('workersGrid');
-  grid.innerHTML = '<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
-  let url = '/api/workers/find?';
-  if (skill) url += `skill=${encodeURIComponent(skill)}&`;
-  if (loc)   url += `location=${encodeURIComponent(loc)}`;
-  try {
-    const d = await fetch(url).then(r => r.json());
-    grid.innerHTML = d.workers?.length
-      ? d.workers.map(w => `<div class="wcard">
-          <div class="wcard-head">
-            <div class="wc-av">${skillEmoji[w.skill] || '🛠️'}</div>
-            <div class="wc-details">
-              <div class="wc-skill-tag">${w.skill || 'Worker'}</div>
-              <div class="wc-name">
-                ${w.name}
-                ${w.verified ? '<span class="verified-badge">✓ Verified</span>' : ''}
-                ${w.subscriptionStatus === 'premium' ? '<span class="gold-badge">GOLD</span>' : ''}
-                ${w.subscriptionStatus === 'basic'   ? '<span class="pro-badge">PRO</span>'  : ''}
-              </div>
-              <div class="wc-avail ${w.isAvailable !== false ? 'on' : 'off'}">
-                <i class="bi bi-circle-fill"></i> ${w.isAvailable !== false ? 'Available now' : 'Unavailable'}
-              </div>
-              <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:2px"><i class="bi bi-geo-alt"></i> ${w.location || 'India'}</div>
-            </div>
-          </div>
-          <div class="wcard-body">
-            <div class="wc-rating">
-              <span class="wc-stars">${'★'.repeat(Math.round(w.rating || 0))}${'☆'.repeat(5 - Math.round(w.rating || 0))}</span>
-              <span class="wc-rating-val">${(w.rating || 0).toFixed(1)}</span>
-              <span class="wc-rating-count">(${w.totalJobs || 0} jobs)</span>
-            </div>
-            <div class="wc-bio">${w.bio || 'Experienced professional ready to help.'}</div>
-            <div class="wcard-price">
-              <span class="wcard-price-label"><i class="bi bi-tag"></i> Starting from</span>
-              <span class="wcard-price-val">${w.basePrice ? `₹${w.basePrice}/${w.priceUnit || 'job'}` : 'Negotiable'}</span>
-            </div>
-            <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill || 'Work'}','${skillEmoji[w.skill] || '🛠️'}',${w.basePrice || null})"><i class="bi bi-handshake"></i> Request &amp; Negotiate</button>
-          </div>
-        </div>`).join('')
-      : '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-people es-icon"></i><h3>No workers found</h3><p>Try different skill or location filters</p></div>';
-  } catch(e) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-wifi-off es-icon"></i><h3>Connection error</h3><p>Is the server running?</p></div>';
-  }
+async function loadWorkers(){
+  const skill=document.getElementById('fskill').value;
+  const loc=document.getElementById('floc').value.trim();
+  const sort=document.getElementById('fsort')?.value||'';
+  const grid=document.getElementById('workersGrid');
+  grid.innerHTML='<div class="spin-loader"><i class="bi bi-arrow-repeat"></i></div>';
+  let url='/api/workers/find?';
+  if(skill) url+=`skill=${encodeURIComponent(skill)}&`;
+  if(loc)   url+=`location=${encodeURIComponent(loc)}&`;
+  if(sort)  url+=`sort=${encodeURIComponent(sort)}`;
+  try{
+    const d=await fetch(url).then(r=>r.json());
+    let workers=d.workers||[];
+    if(sort==='rating') workers.sort((a,b)=>(b.rating||0)-(a.rating||0));
+    else if(sort==='price') workers.sort((a,b)=>(a.basePrice||99999)-(b.basePrice||99999));
+    else if(sort==='jobs') workers.sort((a,b)=>(b.totalJobs||0)-(a.totalJobs||0));
+    grid.innerHTML=workers.length?workers.map(w=>`<div class="wcard">
+      <div class="wcard-head">
+        <div class="wc-av">${skillEmoji[w.skill]||'🛠️'}</div>
+        <div class="wc-details">
+          <div class="wc-skill-tag">${w.skill||'Worker'}</div>
+          <div class="wc-name">${w.name}${w.verified?'<span class="verified-badge">✓</span>':''}${w.subscriptionStatus==='premium'?'<span class="gold-badge">GOLD</span>':w.subscriptionStatus==='basic'?'<span class="pro-badge">PRO</span>':''}</div>
+          <div class="wc-avail ${w.isAvailable!==false?'on':'off'}"><i class="bi bi-circle-fill"></i> ${w.isAvailable!==false?'Available now':'Unavailable'}</div>
+          <div style="font-size:10.5px;color:rgba(255,255,255,.4);margin-top:2px"><i class="bi bi-geo-alt"></i> ${w.location||'India'}</div>
+        </div>
+      </div>
+      <div class="wcard-body">
+        <div class="wc-rating"><span class="wc-stars">${'★'.repeat(Math.round(w.rating||0))}${'☆'.repeat(5-Math.round(w.rating||0))}</span><span class="wc-rating-val">${(w.rating||0).toFixed(1)}</span><span class="wc-rating-count">(${w.totalJobs||0} jobs)</span></div>
+        <div class="wc-bio">${w.bio||'Experienced professional ready to help.'}</div>
+        <div class="wcard-price"><span class="wcard-price-label"><i class="bi bi-tag"></i> Starting from</span><span class="wcard-price-val">${w.basePrice?`₹${w.basePrice}/${w.priceUnit||'job'}`:'Negotiable'}</span></div>
+        <button class="btn-hire" onclick="openHire('${w._id}','${w.name}','${w.skill||'Work'}','${skillEmoji[w.skill]||'🛠️'}',${w.basePrice||null})"><i class="bi bi-handshake"></i> Request &amp; Negotiate</button>
+      </div>
+    </div>`).join(''):'<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-people es-icon"></i><h3>No workers found</h3><p>Try different skill or location filters</p></div>';
+  }catch(e){ grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="bi bi-wifi-off es-icon"></i><h3>Connection error</h3><p>Is the server running?</p></div>'; }
 }
 
 // ── Hire modal ────────────────────────────────────────────
-function openHire(id, name, skill, em, basePrice) {
-  document.getElementById('hireWorkerId').value = id;
-  document.getElementById('hireWorkerInfo').innerHTML = `
-    <div class="hire-worker-emo">${em}</div>
-    <div style="flex:1">
-      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--forest)">${name}</div>
-      <div style="font-size:12.5px;color:var(--ink-40)">${skill}</div>
-      <div style="font-size:12px;color:var(--sage);margin-top:2px"><i class="bi bi-tag"></i> ${basePrice ? `From ₹${basePrice}` : 'Open to offers'}</div>
-    </div>`;
-  document.getElementById('hireSkill').value    = skill;
-  document.getElementById('hirePrice').value    = basePrice || '';
-  document.getElementById('hireLocation').value = USER.location || '';
-  document.getElementById('hireDate').value     = '';
-  document.getElementById('hireTime').value     = '';
-  document.getElementById('hireDesc').value     = '';
-  document.getElementById('hireAlert').style.display = 'none';
-  document.getElementById('hireSubmitBtn').disabled  = false;
-  document.getElementById('hireSpin').style.display  = 'none';
+function openHire(id,name,skill,em,basePrice){
+  document.getElementById('hireWorkerId').value=id;
+  document.getElementById('hireWorkerInfo').innerHTML=`<div class="hire-worker-emo">${em}</div><div style="flex:1"><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:14.5px;color:var(--forest)">${name}</div><div style="font-size:12px;color:var(--ink-40)">${skill}</div><div style="font-size:11.5px;color:var(--sage);margin-top:2px"><i class="bi bi-tag"></i> ${basePrice?`From ₹${basePrice}`:'Open to offers'}</div></div>`;
+  document.getElementById('hireSkill').value=skill;
+  document.getElementById('hirePrice').value=basePrice||'';
+  document.getElementById('hireLocation').value=USER.location||'';
+  document.getElementById('hireDate').value=''; document.getElementById('hireTime').value=''; document.getElementById('hireDesc').value='';
+  document.getElementById('hireAlert').style.display='none'; document.getElementById('hireSubmitBtn').disabled=false; document.getElementById('hireSpin').style.display='none';
   document.getElementById('hireModal').classList.add('open');
 }
-function closeHire() { document.getElementById('hireModal').classList.remove('open'); }
+function closeHire(){ document.getElementById('hireModal').classList.remove('open'); }
 
-async function confirmHire() {
-  const skill = document.getElementById('hireSkill').value.trim();
-  const priceVal = document.getElementById('hirePrice').value;
-  const loc = document.getElementById('hireLocation').value.trim();
-  if (!skill || !priceVal || !loc) { showHA('error','Please fill in Service, Budget and Location'); return; }
-  const price = parseFloat(priceVal);
-  if (isNaN(price) || price < 1) { showHA('error','Enter a valid budget amount'); return; }
-
-  const btn = document.getElementById('hireSubmitBtn');
-  const spin = document.getElementById('hireSpin');
-  btn.disabled = true; spin.style.display = 'inline-block';
-
-  try {
-    const res = await fetch('/api/jobs/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify({
-        worker_id:      document.getElementById('hireWorkerId').value,
-        skill, price, location: loc,
-        description:    document.getElementById('hireDesc').value.trim() || undefined,
-        scheduled_date: document.getElementById('hireDate').value || undefined,
-        scheduled_time: document.getElementById('hireTime').value || undefined,
-      })
-    });
-    const data = await res.json();
-    if (res.ok && data.success) {
-      showHA('ok', 'Request sent! Worker will reply with their price. Negotiate from Jobs tab 💬');
-      showToast('Job booked!', '🎉');
-      setTimeout(() => { closeHire(); showTab('jobs'); }, 1600);
-    } else {
-      showHA('error', data.message || 'Booking failed. Please try again.');
-      btn.disabled = false; spin.style.display = 'none';
-    }
-  } catch {
-    showHA('error', 'Cannot connect to server.');
-    btn.disabled = false; spin.style.display = 'none';
-  }
+async function confirmHire(){
+  const skill=document.getElementById('hireSkill').value.trim();
+  const priceVal=document.getElementById('hirePrice').value;
+  const loc=document.getElementById('hireLocation').value.trim();
+  if(!skill||!priceVal||!loc){ showHA('error','Please fill in Service, Budget and Location'); return; }
+  const price=parseFloat(priceVal);
+  if(isNaN(price)||price<1){ showHA('error','Enter a valid budget amount'); return; }
+  const btn=document.getElementById('hireSubmitBtn'); const spin=document.getElementById('hireSpin');
+  btn.disabled=true; spin.style.display='inline-block';
+  try{
+    const res=await fetch('/api/jobs/create',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({worker_id:document.getElementById('hireWorkerId').value,skill,price,location:loc,description:document.getElementById('hireDesc').value.trim()||undefined,scheduled_date:document.getElementById('hireDate').value||undefined,scheduled_time:document.getElementById('hireTime').value||undefined})});
+    const data=await res.json();
+    if(res.ok&&data.success){ showHA('ok','Request sent! Worker will reply with their price. Negotiate from Jobs tab 💬'); showToast('Job booked!','🎉'); setTimeout(()=>{ closeHire(); showTab('jobs'); },1600); }
+    else{ showHA('error',data.message||'Booking failed. Please try again.'); btn.disabled=false; spin.style.display='none'; }
+  }catch{ showHA('error','Cannot connect to server.'); btn.disabled=false; spin.style.display='none'; }
 }
-function showHA(t, m) {
-  const a = document.getElementById('hireAlert');
-  a.style.display = 'flex'; a.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
-  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`;
-}
-document.getElementById('hireModal').addEventListener('click', e => { if (e.target === document.getElementById('hireModal')) closeHire(); });
+function showHA(t,m){ const a=document.getElementById('hireAlert'); a.style.display='flex'; a.className='alert '+(t==='error'?'ae':'as'); a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`; }
+document.getElementById('hireModal').addEventListener('click',e=>{ if(e.target===document.getElementById('hireModal')) closeHire(); });
 
 // ── Review modal ──────────────────────────────────────────
-function openReview(jobId, workerId) {
-  document.getElementById('reviewJobId').value    = jobId;
-  document.getElementById('reviewWorkerId').value = workerId;
-  document.getElementById('reviewRating').value   = 0;
-  document.getElementById('reviewText').value     = '';
-  document.getElementById('reviewAlert').style.display = 'none';
-  setRating(0);
-  document.getElementById('reviewModal').classList.add('open');
-}
-function closeReview() { document.getElementById('reviewModal').classList.remove('open'); }
-function setRating(v) {
-  document.getElementById('reviewRating').value = v;
-  document.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('on', parseInt(b.dataset.v) <= v));
-}
-async function submitReview() {
-  const rating = parseInt(document.getElementById('reviewRating').value);
-  if (!rating) { showRA('error', 'Please select a rating'); return; }
-  const d = await fetch('/api/jobs/review', {
-    method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
-    body: JSON.stringify({ job_id:document.getElementById('reviewJobId').value, worker_id:document.getElementById('reviewWorkerId').value, rating, review:document.getElementById('reviewText').value.trim() })
-  }).then(r => r.json());
-  if (d.success) { showRA('ok', 'Review submitted! Thank you.'); setTimeout(() => { closeReview(); loadAllJobs(); }, 1500); }
-  else showRA('error', d.message || 'Submission failed');
-}
-function showRA(t, m) { const a = document.getElementById('reviewAlert'); a.style.display = 'flex'; a.className = 'alert ' + (t === 'error' ? 'ae' : 'as'); a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`; }
-document.getElementById('reviewModal').addEventListener('click', e => { if (e.target === document.getElementById('reviewModal')) closeReview(); });
-
-async function deleteReview(jobId, btn) {
-  if (!confirm('Delete your review?')) return;
-  btn.disabled = true;
-  try {
-    const d = await fetch('/api/jobs/review/' + jobId, { method:'DELETE', headers:{'Authorization':'Bearer '+TOKEN} }).then(r => r.json());
-    if (d.success) { showToast('Review deleted', '🗑️'); loadAllJobs(); }
-    else { showToast(d.message || 'Failed', '❌'); btn.disabled = false; }
-  } catch { showToast('Server error.', '❌'); btn.disabled = false; }
-}
+function openReview(jobId,workerId){ document.getElementById('reviewJobId').value=jobId; document.getElementById('reviewWorkerId').value=workerId; document.getElementById('reviewRating').value=0; document.getElementById('reviewText').value=''; document.getElementById('reviewAlert').style.display='none'; setRating(0); document.getElementById('reviewModal').classList.add('open'); }
+function closeReview(){ document.getElementById('reviewModal').classList.remove('open'); }
+function setRating(v){ document.getElementById('reviewRating').value=v; document.querySelectorAll('.star-btn').forEach(b=>b.classList.toggle('on',parseInt(b.dataset.v)<=v)); }
+async function submitReview(){ const rating=parseInt(document.getElementById('reviewRating').value); if(!rating){ showRA('error','Please select a rating'); return; } const d=await fetch('/api/jobs/review',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:document.getElementById('reviewJobId').value,worker_id:document.getElementById('reviewWorkerId').value,rating,review:document.getElementById('reviewText').value.trim()})}).then(r=>r.json()); if(d.success){ showRA('ok','Review submitted! Thank you.'); setTimeout(()=>{ closeReview(); loadAllJobs(); },1500); }else showRA('error',d.message||'Submission failed'); }
+function showRA(t,m){ const a=document.getElementById('reviewAlert'); a.style.display='flex'; a.className='alert '+(t==='error'?'ae':'as'); a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle':'check-circle-fill'}"></i> ${m}`; }
+document.getElementById('reviewModal').addEventListener('click',e=>{ if(e.target===document.getElementById('reviewModal')) closeReview(); });
+async function deleteReview(jobId,btn){ if(!confirm('Delete your review?')) return; btn.disabled=true; try{ const d=await fetch('/api/jobs/review/'+jobId,{method:'DELETE',headers:{'Authorization':'Bearer '+TOKEN}}).then(r=>r.json()); if(d.success){ showToast('Review deleted','🗑️'); loadAllJobs(); }else{ showToast(d.message||'Failed','❌'); btn.disabled=false; } }catch{ showToast('Server error.','❌'); btn.disabled=false; } }
 
 // ── Profile ───────────────────────────────────────────────
-async function loadProfile() {
-  try {
-    const d = await API('/api/auth/profile');
-    if (d.success) {
-      const u = d.user;
-      USER = { ...USER, ...u };
-      localStorage.setItem('kc_user', JSON.stringify(USER));
-      setProfilePhoto(u.avatar || null);
-      document.getElementById('profileName').textContent     = u.name     || '—';
-      document.getElementById('profileEmail').textContent    = u.email    || '—';
-      document.getElementById('profilePhone').textContent    = u.phone    || 'Not set';
-      document.getElementById('profileLocation').textContent = u.location || 'Not set';
-      document.getElementById('profileJoined').textContent   = u.createdAt ? new Date(u.createdAt).toLocaleDateString('en-IN', {year:'numeric',month:'long'}) : '—';
-      document.getElementById('editName').value     = u.name     || '';
-      document.getElementById('editPhone').value    = u.phone    || '';
-      document.getElementById('editEmail').value    = u.email    || '';
-      document.getElementById('editLocation').value = u.location || '';
-      document.getElementById('editBio').value      = u.bio      || '';
+async function loadProfile(){
+  try{
+    const d=await API('/api/auth/profile');
+    if(d.success){
+      const u=d.user; USER={...USER,...u}; localStorage.setItem('kc_user',JSON.stringify(USER));
+      setProfilePhoto(u.avatar||null);
+      document.getElementById('profileName').textContent=u.name||'—'; document.getElementById('profileEmail').textContent=u.email||'—';
+      document.getElementById('profilePhone').textContent=u.phone||'Not set'; document.getElementById('profileLocation').textContent=u.location||'Not set';
+      document.getElementById('profileJoined').textContent=u.createdAt?new Date(u.createdAt).toLocaleDateString('en-IN',{year:'numeric',month:'long'}):'—';
+      document.getElementById('editName').value=u.name||''; document.getElementById('editPhone').value=u.phone||''; document.getElementById('editEmail').value=u.email||''; document.getElementById('editLocation').value=u.location||''; document.getElementById('editBio').value=u.bio||'';
       initUI();
-      const stats = await API('/api/jobs/stats');
-      if (stats.success) document.getElementById('profileJobs').textContent = stats.stats.total || 0;
+      const stats=await API('/api/jobs/stats'); if(stats.success) document.getElementById('profileJobs').textContent=stats.stats.total||0;
     }
-  } catch(e) {
-    document.getElementById('editName').value  = USER.name  || '';
-    document.getElementById('editEmail').value = USER.email || '';
-    document.getElementById('profileName').textContent  = USER.name  || '—';
-    document.getElementById('profileEmail').textContent = USER.email || '—';
-  }
+  }catch(e){ document.getElementById('editName').value=USER.name||''; document.getElementById('editEmail').value=USER.email||''; document.getElementById('profileName').textContent=USER.name||'—'; document.getElementById('profileEmail').textContent=USER.email||'—'; }
 }
-
-function switchFormTab(tab, btn) {
-  document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.ts-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('fs-' + tab).classList.add('active');
-  btn.classList.add('active');
-}
-
-async function saveProfile() {
-  const name     = document.getElementById('editName').value.trim();
-  const phone    = document.getElementById('editPhone').value.trim();
-  const location = document.getElementById('editLocation').value.trim();
-  const bio      = document.getElementById('editBio').value.trim();
-  if (!name) { showFA('infoAlert','error','Name cannot be empty'); return; }
-  const btn = document.getElementById('saveInfoBtn');
-  const sp  = document.getElementById('saveInfoSpin');
-  btn.disabled = true; sp.style.display = 'inline-block';
-  try {
-    const d = await fetch('/api/auth/profile', { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}, body:JSON.stringify({name,phone,location,bio}) }).then(r => r.json());
-    if (d.success) {
-      USER = { ...USER, name, phone, location, bio };
-      localStorage.setItem('kc_user', JSON.stringify(USER));
-      showFA('infoAlert','success','Profile updated!');
-      document.getElementById('profileName').textContent     = name;
-      document.getElementById('profilePhone').textContent    = phone    || 'Not set';
-      document.getElementById('profileLocation').textContent = location || 'Not set';
-      if (!USER.avatar) document.getElementById('profileAvatar').textContent = name[0].toUpperCase();
-      initUI(); showToast('Profile saved!', '✅');
-    } else showFA('infoAlert','error',d.message||'Update failed');
-  } catch { showFA('infoAlert','error','Server error.'); }
-  btn.disabled = false; sp.style.display = 'none';
-}
-
-async function changePassword() {
-  const current = document.getElementById('currentPw').value;
-  const newPw   = document.getElementById('newPw').value;
-  const confirm = document.getElementById('confirmPw').value;
-  if (!current || !newPw || !confirm) { showFA('pwAlert','error','Fill in all fields'); return; }
-  if (newPw.length < 6) { showFA('pwAlert','error','Min 6 characters'); return; }
-  if (newPw !== confirm) { showFA('pwAlert','error','Passwords do not match'); return; }
-  const btn = document.getElementById('savePwBtn');
-  const sp  = document.getElementById('savePwSpin');
-  btn.disabled = true; sp.style.display = 'inline-block';
-  try {
-    const d = await fetch('/api/auth/change-password', { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN}, body:JSON.stringify({currentPassword:current,newPassword:newPw}) }).then(r => r.json());
-    if (d.success) {
-      showFA('pwAlert','success','Password changed!');
-      ['currentPw','newPw','confirmPw'].forEach(id => document.getElementById(id).value = '');
-      for(let i=1;i<=4;i++) document.getElementById('pwb'+i).style.background='var(--ink-06)';
-      showToast('Password updated!', '🔒');
-    } else showFA('pwAlert','error',d.message||'Failed');
-  } catch { showFA('pwAlert','error','Server error.'); }
-  btn.disabled = false; sp.style.display = 'none';
-}
-
-function checkPwStrength(v) {
-  const c    = [v.length>=6, v.length>=8, /[A-Z0-9]/.test(v), /[^A-Za-z0-9]/.test(v)];
-  const cols = ['#DC2626','#F59E0B','#2E7D5E','#15803D'];
-  const n    = c.filter(Boolean).length;
-  for(let i=0;i<4;i++) document.getElementById('pwb'+(i+1)).style.background = i<n ? cols[Math.min(n-1,3)] : 'var(--ink-06)';
-}
-
-function showFA(id, t, m) {
-  const a = document.getElementById(id);
-  a.style.display = 'flex'; a.className = 'alert ' + (t==='error'?'ae':'as');
-  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
-  setTimeout(() => a.style.display = 'none', 4000);
-}
-
-function logout() { localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href = 'login.html'; }
+function switchFormTab(tab,btn){ document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.ts-btn').forEach(b=>b.classList.remove('active')); document.getElementById('fs-'+tab).classList.add('active'); btn.classList.add('active'); }
+async function saveProfile(){ const name=document.getElementById('editName').value.trim(); const phone=document.getElementById('editPhone').value.trim(); const location=document.getElementById('editLocation').value.trim(); const bio=document.getElementById('editBio').value.trim(); if(!name){ showFA('infoAlert','error','Name cannot be empty'); return; } const btn=document.getElementById('saveInfoBtn'); const sp=document.getElementById('saveInfoSpin'); btn.disabled=true; sp.style.display='inline-block'; try{ const d=await fetch('/api/auth/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({name,phone,location,bio})}).then(r=>r.json()); if(d.success){ USER={...USER,name,phone,location,bio}; localStorage.setItem('kc_user',JSON.stringify(USER)); showFA('infoAlert','success','Profile updated!'); document.getElementById('profileName').textContent=name; document.getElementById('profilePhone').textContent=phone||'Not set'; document.getElementById('profileLocation').textContent=location||'Not set'; if(!USER.avatar) document.getElementById('profileAvatar').textContent=name[0].toUpperCase(); initUI(); showToast('Profile saved!','✅'); }else showFA('infoAlert','error',d.message||'Update failed'); }catch{ showFA('infoAlert','error','Server error.'); } btn.disabled=false; sp.style.display='none'; }
+async function changePassword(){ const current=document.getElementById('currentPw').value; const newPw=document.getElementById('newPw').value; const confirm=document.getElementById('confirmPw').value; if(!current||!newPw||!confirm){ showFA('pwAlert','error','Fill in all fields'); return; } if(newPw.length<6){ showFA('pwAlert','error','Min 6 characters'); return; } if(newPw!==confirm){ showFA('pwAlert','error','Passwords do not match'); return; } const btn=document.getElementById('savePwBtn'); const sp=document.getElementById('savePwSpin'); btn.disabled=true; sp.style.display='inline-block'; try{ const d=await fetch('/api/auth/change-password',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({currentPassword:current,newPassword:newPw})}).then(r=>r.json()); if(d.success){ showFA('pwAlert','success','Password changed!'); ['currentPw','newPw','confirmPw'].forEach(id=>document.getElementById(id).value=''); for(let i=1;i<=4;i++) document.getElementById('pwb'+i).style.background='var(--ink-06)'; showToast('Password updated!','🔒'); }else showFA('pwAlert','error',d.message||'Failed'); }catch{ showFA('pwAlert','error','Server error.'); } btn.disabled=false; sp.style.display='none'; }
+function checkPwStrength(v){ const c=[v.length>=6,v.length>=8,/[A-Z0-9]/.test(v),/[^A-Za-z0-9]/.test(v)]; const cols=['#DC2626','#F59E0B','#2E7D5E','#15803D']; const n=c.filter(Boolean).length; for(let i=0;i<4;i++) document.getElementById('pwb'+(i+1)).style.background=i<n?cols[Math.min(n-1,3)]:'var(--ink-06)'; }
+function showFA(id,t,m){ const a=document.getElementById(id); a.style.display='flex'; a.className='alert '+(t==='error'?'ae':'as'); a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`; setTimeout(()=>a.style.display='none',4000); }
+function logout(){ localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href='login.html'; }
 
 // ── Mobile sidebar ────────────────────────────────────────
-const mobBtn    = document.getElementById('mobMenuBtn');
-const sbOverlay = document.getElementById('sbOverlay');
-const sidebar   = document.getElementById('sidebarEl');
-
-function closeMobileMenu() {
-  mobBtn?.classList.remove('open');
-  sidebar?.classList.remove('mobile-open');
-  sbOverlay?.classList.remove('open');
-}
-
-if (mobBtn) {
-  mobBtn.addEventListener('click', () => {
-    mobBtn.classList.toggle('open');
-    sidebar.classList.toggle('mobile-open');
-    sbOverlay.classList.toggle('open');
-  });
-  sbOverlay.addEventListener('click', closeMobileMenu);
-}
+const mobBtn=document.getElementById('mobMenuBtn'); const sbOverlay=document.getElementById('sbOverlay'); const sidebar=document.getElementById('sidebarEl');
+function closeMobileMenu(){ mobBtn?.classList.remove('open'); sidebar?.classList.remove('mobile-open'); sbOverlay?.classList.remove('open'); }
+if(mobBtn){ mobBtn.addEventListener('click',()=>{ mobBtn.classList.toggle('open'); sidebar.classList.toggle('mobile-open'); sbOverlay.classList.toggle('open'); }); sbOverlay.addEventListener('click',closeMobileMenu); }
 
 // ── Negotiate modal ───────────────────────────────────────
-let negotiateJobId = null;
+let negotiateJobId=null;
+function openNegotiate(jobId,workerId,workerName,workerPrice,myBudget,status){ negotiateJobId=jobId; document.getElementById('ngWorkerName').textContent=workerName; document.getElementById('ngWorkerPrice').textContent='₹'+workerPrice; document.getElementById('ngMyBudget').textContent='₹'+myBudget; document.getElementById('ngCounterAmt').value=''; document.getElementById('ngNote').value=''; document.getElementById('ngAlert').style.display='none'; document.getElementById('negotiateModal').classList.add('open'); }
+function closeNegotiate(){ document.getElementById('negotiateModal').classList.remove('open'); }
+async function sendCounterOffer(){ const amount=parseFloat(document.getElementById('ngCounterAmt').value); const note=document.getElementById('ngNote').value.trim(); if(!amount||amount<1){ showNgAlert('error','Enter a valid amount'); return; } const btn=document.getElementById('ngSubmitBtn'); btn.disabled=true; btn.innerHTML='<i class="bi bi-arrow-repeat" style="display:inline-block;animation:spin .8s linear infinite"></i> Sending…'; try{ const d=await fetch('/api/jobs/offer',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:negotiateJobId,amount,note})}).then(r=>r.json()); if(d.success){ showToast('Counter offer sent: ₹'+amount,'💬'); closeNegotiate(); showTab('jobs'); }else showNgAlert('error',d.message||'Failed to send offer'); }catch{ showNgAlert('error','Server error. Try again.'); } btn.disabled=false; btn.innerHTML='<i class="bi bi-send-fill"></i> Send Counter Offer'; }
+async function acceptWorkerPrice(jobId,price,btn){ if(!confirm(`Accept worker's price of ₹${price}?`)) return; if(btn){ btn.disabled=true; btn.innerHTML='<i class="bi bi-arrow-repeat" style="display:inline-block;animation:spin .8s linear infinite"></i>'; } try{ const d=await fetch('/api/jobs/accept-price',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:jobId})}).then(r=>r.json()); if(d.success){ showToast('Price agreed ₹'+price+'! Worker will start soon 🎉','✅'); setTimeout(()=>loadAllJobs(),800); }else{ showToast(d.message||'Failed to accept','❌'); if(btn){ btn.disabled=false; btn.innerHTML='<i class="bi bi-check-circle-fill"></i> Accept ₹'+price; } } }catch{ if(btn){ btn.disabled=false; btn.innerHTML='<i class="bi bi-check-circle-fill"></i> Accept ₹'+price; } showToast('Server error','❌'); } }
+function showNgAlert(t,m){ const el=document.getElementById('ngAlert'); el.style.display='flex'; el.className='alert '+(t==='error'?'ae':'as'); el.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`; }
+document.getElementById('negotiateModal').addEventListener('click',e=>{ if(e.target===document.getElementById('negotiateModal')) closeNegotiate(); });
 
-function openNegotiate(jobId, workerId, workerName, workerPrice, myBudget, status) {
-  negotiateJobId = jobId;
-  document.getElementById('ngWorkerName').textContent  = workerName;
-  document.getElementById('ngWorkerPrice').textContent = '₹' + workerPrice;
-  document.getElementById('ngMyBudget').textContent    = '₹' + myBudget;
-  document.getElementById('ngCounterAmt').value = '';
-  document.getElementById('ngNote').value = '';
-  document.getElementById('ngAlert').style.display = 'none';
-  document.getElementById('negotiateModal').classList.add('open');
-}
-function closeNegotiate() { document.getElementById('negotiateModal').classList.remove('open'); }
-
-async function sendCounterOffer() {
-  const amount = parseFloat(document.getElementById('ngCounterAmt').value);
-  const note   = document.getElementById('ngNote').value.trim();
-  if (!amount || amount < 1) { showNgAlert('error','Enter a valid amount'); return; }
-  const btn = document.getElementById('ngSubmitBtn');
-  btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat spin-sm" style="display:inline-block;animation:spin .8s linear infinite"></i> Sending…';
-  try {
-    const d = await fetch('/api/jobs/offer', {
-      method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
-      body: JSON.stringify({ job_id: negotiateJobId, amount, note })
-    }).then(r => r.json());
-    if (d.success) {
-      showToast('Counter offer sent: ₹' + amount, '💬');
-      closeNegotiate(); showTab('jobs');
-    } else showNgAlert('error', d.message || 'Failed to send offer');
-  } catch { showNgAlert('error','Server error. Try again.'); }
-  btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i> Send Counter Offer';
-}
-
-async function acceptWorkerPrice(jobId, price, btn) {
-  if (!confirm(`Accept worker's price of ₹${price}?`)) return;
-  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="bi bi-arrow-repeat" style="display:inline-block;animation:spin .8s linear infinite"></i>'; }
-  try {
-    const d = await fetch('/api/jobs/accept-price', {
-      method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
-      body: JSON.stringify({ job_id: jobId })
-    }).then(r => r.json());
-    if (d.success) {
-      showToast('Price agreed ₹' + price + '! Worker will start soon 🎉', '✅');
-      setTimeout(() => loadAllJobs(), 800);
-    } else {
-      showToast(d.message || 'Failed to accept', '❌');
-      if (btn) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Accept ₹' + price; }
-    }
-  } catch {
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Accept ₹' + price; }
-    showToast('Server error', '❌');
-  }
-}
-
-function showNgAlert(t, m) {
-  const el = document.getElementById('ngAlert');
-  el.style.display = 'flex'; el.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
-  el.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
-}
-document.getElementById('negotiateModal').addEventListener('click', e => { if (e.target === document.getElementById('negotiateModal')) closeNegotiate(); });
-
-// ═══ REBOOK — FIXED IMPLEMENTATION ═══════════════════════
-let _rbJobId = null, _rbWorkerName = '', _rbLastPrice = 0, _rbWorkerId = null, _rbSkill = '';
-
-function openRebook(jobId, workerName, lastPrice, workerId, skill) {
-  _rbJobId      = jobId;
-  _rbWorkerName = workerName;
-  _rbLastPrice  = lastPrice;
-  _rbWorkerId   = workerId;
-  _rbSkill      = skill;
-
-  // Populate modal
-  document.getElementById('rbWorkerNameDisplay').textContent = workerName;
-  document.getElementById('rbLastPriceHint').textContent     = lastPrice ? '₹' + lastPrice : 'Unknown';
-  document.getElementById('rbPrice').value                   = lastPrice || '';
-  document.getElementById('rbDate').value                    = '';
-  document.getElementById('rbDesc').value                    = '';
-  document.getElementById('rbAlert').style.display           = 'none';
-  document.getElementById('rbSubmitBtn').disabled            = false;
-  document.getElementById('rbSpin').style.display            = 'none';
-  document.getElementById('rbSubmitBtn').innerHTML           = '<i class="bi bi-arrow-repeat"></i> Send Re-book Request';
-
-  document.getElementById('rebookModal').classList.add('open');
-}
-
-function closeRebook() {
-  document.getElementById('rebookModal').classList.remove('open');
-}
-
-async function confirmRebook() {
-  const priceVal = document.getElementById('rbPrice').value;
-  const price    = parseFloat(priceVal);
-
-  if (!price || price < 1) {
-    showRbAlert('error', 'Please enter a valid budget amount');
-    return;
-  }
-
-  const btn  = document.getElementById('rbSubmitBtn');
-  const spin = document.getElementById('rbSpin');
-  btn.disabled = true;
-  spin.style.display = 'inline-block';
-  btn.childNodes[0].textContent = ' Sending…';
-
-  const payload = {
-    original_job_id: _rbJobId,
-    price:           price,
-    scheduled_date:  document.getElementById('rbDate').value || undefined,
-    description:     document.getElementById('rbDesc').value.trim() || undefined,
-  };
-
-  try {
-    const res = await fetch('/api/jobs/rebook', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-      body: JSON.stringify(payload)
-    });
-
-    // Safe JSON parse
-    let d;
-    try { d = await res.json(); }
-    catch { d = { success: false, message: 'Invalid server response' }; }
-
-    if (res.ok && d.success) {
-      closeRebook();
-      showToast('Re-book sent to ' + _rbWorkerName + '! 🔄', '✅');
-      loadAllJobs();
-    } else {
-      showRbAlert('error', d.message || 'Re-book failed. Please try again.');
-      btn.disabled = false;
-      spin.style.display = 'none';
-      btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Send Re-book Request';
-    }
-  } catch (e) {
-    showRbAlert('error', 'Cannot connect to server. Please try again.');
-    btn.disabled = false;
-    spin.style.display = 'none';
-    btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Send Re-book Request';
-  }
-}
-
-function showRbAlert(t, m) {
-  const a = document.getElementById('rbAlert');
-  a.style.display = 'flex';
-  a.className = 'alert ' + (t === 'error' ? 'ae' : 'as');
-  a.innerHTML = `<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`;
-}
-
-document.getElementById('rebookModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('rebookModal')) closeRebook();
-});
+// ── Rebook modal ──────────────────────────────────────────
+let _rbJobId=null,_rbWorkerName='',_rbLastPrice=0,_rbWorkerId=null,_rbSkill='';
+function openRebook(jobId,workerName,lastPrice,workerId,skill){ _rbJobId=jobId; _rbWorkerName=workerName; _rbLastPrice=lastPrice; _rbWorkerId=workerId; _rbSkill=skill; document.getElementById('rbWorkerNameDisplay').textContent=workerName; document.getElementById('rbLastPriceHint').textContent=lastPrice?'₹'+lastPrice:'Unknown'; document.getElementById('rbPrice').value=lastPrice||''; document.getElementById('rbDate').value=''; document.getElementById('rbDesc').value=''; document.getElementById('rbAlert').style.display='none'; document.getElementById('rbSubmitBtn').disabled=false; document.getElementById('rbSpin').style.display='none'; document.getElementById('rbSubmitBtn').innerHTML='<i class="bi bi-arrow-repeat"></i> Send Re-book Request'; document.getElementById('rebookModal').classList.add('open'); }
+function closeRebook(){ document.getElementById('rebookModal').classList.remove('open'); }
+async function confirmRebook(){ const price=parseFloat(document.getElementById('rbPrice').value); if(!price||price<1){ showRbAlert('error','Please enter a valid budget amount'); return; } const btn=document.getElementById('rbSubmitBtn'); const spin=document.getElementById('rbSpin'); btn.disabled=true; spin.style.display='inline-block'; btn.childNodes[0].textContent=' Sending…'; const payload={original_job_id:_rbJobId,price,scheduled_date:document.getElementById('rbDate').value||undefined,description:document.getElementById('rbDesc').value.trim()||undefined}; try{ const res=await fetch('/api/jobs/rebook',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(payload)}); let d; try{ d=await res.json(); }catch{ d={success:false,message:'Invalid server response'}; } if(res.ok&&d.success){ closeRebook(); showToast('Re-book sent to '+_rbWorkerName+'! 🔄','✅'); loadAllJobs(); }else{ showRbAlert('error',d.message||'Re-book failed. Please try again.'); btn.disabled=false; spin.style.display='none'; btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Send Re-book Request'; } }catch(e){ showRbAlert('error','Cannot connect to server.'); btn.disabled=false; spin.style.display='none'; btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Send Re-book Request'; } }
+function showRbAlert(t,m){ const a=document.getElementById('rbAlert'); a.style.display='flex'; a.className='alert '+(t==='error'?'ae':'as'); a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`; }
+document.getElementById('rebookModal').addEventListener('click',e=>{ if(e.target===document.getElementById('rebookModal')) closeRebook(); });
 </script>
 </body>
 </html>
