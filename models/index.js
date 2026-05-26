@@ -129,6 +129,8 @@ const jobSchema = new mongoose.Schema(
     review:            { type: String },
     razorpayOrderId:   { type: String },
     razorpayPaymentId: { type: String },
+    paymentMethod:     { type: String, enum: ["razorpay","upi","card","netbanking","wallet","cod",null], default: null },
+    codConfirmedAt:    { type: Date, default: null },
   },
   { timestamps: true }
 );

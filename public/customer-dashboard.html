@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TWZGCR7DB"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-0TWZGCR7DB');</script>
@@ -419,6 +420,21 @@ textarea.fi { min-height:80px; resize:vertical; padding:10px 12px; line-height:1
 .m-submit:hover { transform:translateY(-2px); box-shadow:0 8px 26px rgba(232,96,28,.45); }
 .m-submit:disabled { opacity:.6; cursor:not-allowed; transform:none; }
 
+
+/* ── Payment Method Grid ─────────────────────────── */
+.pay-methods-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+@media(max-width:480px){ .pay-methods-grid { grid-template-columns:repeat(3,1fr); } }
+.pay-method-card { cursor:pointer; border:1.5px solid var(--border); border-radius:11px; transition:all .18s; position:relative; }
+.pay-method-card input[type="radio"] { position:absolute; opacity:0; width:0; height:0; }
+.pay-method-card:has(input:checked) { border-color:var(--saffron); background:rgba(232,96,28,.06); box-shadow:0 0 0 3px rgba(232,96,28,.12); }
+.pm-inner { display:flex; flex-direction:column; align-items:center; padding:10px 6px 8px; gap:3px; }
+.pm-icon { font-size:20px; line-height:1; }
+.pm-label { font-size:11px; font-weight:700; color:var(--forest); text-align:center; }
+.pm-sub { font-size:9.5px; color:var(--ink-40); text-align:center; }
+.pm-info-panel { display:flex; align-items:flex-start; gap:8px; padding:10px 12px; background:rgba(232,96,28,.05); border:1px solid rgba(232,96,28,.15); border-radius:9px; font-size:12px; color:var(--ink-60); margin-bottom:14px; }
+/* Payment method badge on job card */
+.pay-method-tag { display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px; background:#ECFDF5; color:#065F46; }
+.pay-method-tag.cod { background:#FFFBEB; color:#92400E; }
 .rb-highlight { background:linear-gradient(135deg,rgba(232,96,28,.08),rgba(240,120,64,.04)); border:1.5px solid rgba(232,96,28,.2); border-radius:13px; padding:14px; margin-bottom:18px; display:flex; align-items:center; gap:12px; }
 .rb-highlight-icon { width:42px; height:42px; border-radius:11px; background:var(--saffron); display:grid; place-items:center; font-size:19px; flex-shrink:0; }
 .rb-highlight-text strong { font-family:'Syne',sans-serif; font-size:13.5px; font-weight:700; color:var(--forest); display:block; margin-bottom:2px; }
@@ -827,6 +843,38 @@ textarea.fi { min-height:80px; resize:vertical; padding:10px 12px; line-height:1
   </div>
 </div>
 
+<!-- ═══ PAY NOW MODAL ═══ -->
+<div class="modal-backdrop" id="payModal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-head"><h3><i class="bi bi-credit-card-2-front-fill" style="color:var(--saffron)"></i> Pay for Job</h3><button class="modal-close" onclick="closePayModal()"><i class="bi bi-x"></i></button></div>
+    <div class="modal-body">
+      <div id="payAlert" style="display:none"></div>
+      <div class="rb-highlight" style="margin-bottom:18px"><div class="rb-highlight-icon">💼</div><div class="rb-highlight-text"><strong id="payJobTitle">Job</strong><span>Worker: <span id="payWorkerName">—</span></span></div></div>
+      <div style="background:linear-gradient(135deg,#FFF7ED,#FFFBF5);border:1.5px solid #FED7AA;border-radius:12px;padding:14px 16px;margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-size:13px;color:var(--ink-60)">Agreed Price</span><span id="payAmount" style="font-size:20px;font-weight:800;color:var(--saffron)">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--ink-40)"><span><i class="bi bi-info-circle"></i> Platform fee (10%) deducted from worker</span><span id="payWorkerGets" style="color:var(--sage);font-weight:700"></span></div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label class="fl" style="margin-bottom:10px">Choose Payment Method</label>
+        <div class="pay-methods-grid">
+          <label class="pay-method-card" id="pm-razorpay"><input type="radio" name="payMethod" value="razorpay" checked onchange="onPayMethodChange(this)"><div class="pm-inner"><span class="pm-icon">💳</span><span class="pm-label">Card / UPI</span><span class="pm-sub">via Razorpay</span></div></label>
+          <label class="pay-method-card" id="pm-upi"><input type="radio" name="payMethod" value="upi" onchange="onPayMethodChange(this)"><div class="pm-inner"><span class="pm-icon">📲</span><span class="pm-label">UPI Direct</span><span class="pm-sub">PhonePe / GPay</span></div></label>
+          <label class="pay-method-card" id="pm-netbanking"><input type="radio" name="payMethod" value="netbanking" onchange="onPayMethodChange(this)"><div class="pm-inner"><span class="pm-icon">🏦</span><span class="pm-label">Net Banking</span><span class="pm-sub">All banks</span></div></label>
+          <label class="pay-method-card" id="pm-wallet"><input type="radio" name="payMethod" value="wallet" onchange="onPayMethodChange(this)"><div class="pm-inner"><span class="pm-icon">👜</span><span class="pm-label">Wallet</span><span class="pm-sub">Paytm / etc.</span></div></label>
+          <label class="pay-method-card" id="pm-cod"><input type="radio" name="payMethod" value="cod" onchange="onPayMethodChange(this)"><div class="pm-inner"><span class="pm-icon">💵</span><span class="pm-label">Cash (COD)</span><span class="pm-sub">Pay to worker</span></div></label>
+        </div>
+      </div>
+      <div id="pm-info-razorpay" class="pm-info-panel" style="display:flex"><i class="bi bi-shield-check" style="color:var(--sage);font-size:15px;flex-shrink:0"></i><span>Secure Razorpay checkout — supports all cards, UPI, wallets &amp; netbanking</span></div>
+      <div id="pm-info-upi" class="pm-info-panel" style="display:none"><i class="bi bi-phone" style="color:var(--saffron);font-size:15px;flex-shrink:0"></i><span>Opens Razorpay with UPI pre-selected (PhonePe, GPay, Paytm UPI).</span></div>
+      <div id="pm-info-netbanking" class="pm-info-panel" style="display:none"><i class="bi bi-bank" style="color:#6366F1;font-size:15px;flex-shrink:0"></i><span>Opens Razorpay with Net Banking pre-selected. All major Indian banks.</span></div>
+      <div id="pm-info-wallet" class="pm-info-panel" style="display:none"><i class="bi bi-wallet2" style="color:#F59E0B;font-size:15px;flex-shrink:0"></i><span>Opens Razorpay with Wallets pre-selected (Paytm, Amazon Pay, Mobikwik).</span></div>
+      <div id="pm-info-cod" class="pm-info-panel" style="display:none;border-color:#FDE68A;background:#FFFBEB"><i class="bi bi-cash-coin" style="color:#D97706;font-size:15px;flex-shrink:0"></i><span>Pay cash directly to worker. Click confirm and the worker will be notified.</span></div>
+      <button id="paySubmitBtn" onclick="processPayment()" class="m-submit" style="margin-top:4px"><span id="payBtnText"><i class="bi bi-lock-fill"></i> Pay Securely</span><i class="bi bi-arrow-repeat spin-sm" id="paySpin" style="display:none"></i></button>
+      <p style="text-align:center;font-size:11px;color:var(--ink-40);margin-top:10px"><i class="bi bi-shield-lock"></i> 256-bit SSL encrypted &nbsp;|&nbsp; Powered by Razorpay</p>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ REBOOK MODAL ═══ -->
 <div class="modal-backdrop" id="rebookModal">
   <div class="modal">
@@ -1038,7 +1086,9 @@ function jobCard(j){
     const lastPrice=j.agreedPrice||j.price||0;
     const alreadyReviewed=j.rating&&j.rating>0;
     const reviewBtn=alreadyReviewed?`<div style="display:flex;align-items:center;gap:6px"><div style="font-size:11.5px;color:var(--sage);font-weight:800"><i class="bi bi-star-fill"></i> ${j.rating}★</div><button class="jc-btn btn-cancel" style="font-size:10.5px;padding:4px 9px" onclick="deleteReview('${j._id}',this)"><i class="bi bi-trash3"></i></button></div>`:`<button class="jc-btn btn-review" onclick="openReview('${j._id}','${wid}')"><i class="bi bi-star"></i> Review</button>`;
-    actions=reviewBtn+`<button class="jc-btn btn-rebook" onclick="openRebook('${j._id}','${wName}',${lastPrice},'${j.workerId?._id||''}','${j.skill||''}')"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
+    const payMethodTag = j.paymentMethod ? `<span class="pay-method-tag ${j.paymentMethod==='cod'?'cod':''}">${j.paymentMethod==='cod'?'💵 Cash':'💳 '+j.paymentMethod.charAt(0).toUpperCase()+j.paymentMethod.slice(1)}</span>` : '';
+    const payBtn = st==='completed' ? `<button class="jc-btn btn-accept-price" onclick="openPayModal('${j._id}','${j.title||j.skill||'Job'}','${wName}',${lastPrice})"><i class="bi bi-credit-card-fill"></i> Pay ₹${lastPrice}</button>` : payMethodTag;
+    actions=payBtn+reviewBtn+`<button class="jc-btn btn-rebook" onclick="openRebook('${j._id}','${wName}',${lastPrice},'${j.workerId?._id||''}','${j.skill||''}')"><i class="bi bi-arrow-repeat"></i> Re-book</button>`;
   }
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
@@ -1213,6 +1263,114 @@ function closeRebook(){ document.getElementById('rebookModal').classList.remove(
 async function confirmRebook(){ const price=parseFloat(document.getElementById('rbPrice').value); if(!price||price<1){ showRbAlert('error','Please enter a valid budget amount'); return; } const btn=document.getElementById('rbSubmitBtn'); const spin=document.getElementById('rbSpin'); btn.disabled=true; spin.style.display='inline-block'; btn.childNodes[0].textContent=' Sending…'; const payload={original_job_id:_rbJobId,price,scheduled_date:document.getElementById('rbDate').value||undefined,description:document.getElementById('rbDesc').value.trim()||undefined}; try{ const res=await fetch('/api/jobs/rebook',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify(payload)}); let d; try{ d=await res.json(); }catch{ d={success:false,message:'Invalid server response'}; } if(res.ok&&d.success){ closeRebook(); showToast('Re-book sent to '+_rbWorkerName+'! 🔄','✅'); loadAllJobs(); }else{ showRbAlert('error',d.message||'Re-book failed. Please try again.'); btn.disabled=false; spin.style.display='none'; btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Send Re-book Request'; } }catch(e){ showRbAlert('error','Cannot connect to server.'); btn.disabled=false; spin.style.display='none'; btn.innerHTML='<i class="bi bi-arrow-repeat"></i> Send Re-book Request'; } }
 function showRbAlert(t,m){ const a=document.getElementById('rbAlert'); a.style.display='flex'; a.className='alert '+(t==='error'?'ae':'as'); a.innerHTML=`<i class="bi bi-${t==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${m}`; }
 document.getElementById('rebookModal').addEventListener('click',e=>{ if(e.target===document.getElementById('rebookModal')) closeRebook(); });
+
+// ── Payment Modal ─────────────────────────────────────────
+let _payJobId=null, _payAmount=0;
+
+function openPayModal(jobId, title, workerName, amount){
+  _payJobId=jobId; _payAmount=parseFloat(amount)||0;
+  document.getElementById('payJobTitle').textContent=title;
+  document.getElementById('payWorkerName').textContent=workerName;
+  document.getElementById('payAmount').textContent='₹'+_payAmount;
+  const workerGets = (_payAmount*(1-0.10)).toFixed(0);
+  document.getElementById('payWorkerGets').textContent='Worker gets: ₹'+workerGets;
+  document.getElementById('payAlert').style.display='none';
+  document.getElementById('paySubmitBtn').disabled=false;
+  document.getElementById('paySpin').style.display='none';
+  document.getElementById('payBtnText').innerHTML='<i class="bi bi-lock-fill"></i> Pay Securely';
+  // Reset to razorpay
+  document.querySelector('input[name="payMethod"][value="razorpay"]').checked=true;
+  onPayMethodChange({value:'razorpay'});
+  document.getElementById('payModal').classList.add('open');
+}
+function closePayModal(){ document.getElementById('payModal').classList.remove('open'); }
+
+function onPayMethodChange(radio){
+  const val=radio.value||document.querySelector('input[name="payMethod"]:checked')?.value||'razorpay';
+  ['razorpay','upi','netbanking','wallet','cod'].forEach(m=>{
+    document.getElementById('pm-info-'+m).style.display=m===val?'flex':'none';
+    const card=document.getElementById('pm-'+m);
+    if(card) card.style.borderColor=(m===val)?'var(--saffron)':'';
+  });
+  const btn=document.getElementById('payBtnText');
+  if(val==='cod') btn.innerHTML='<i class="bi bi-cash-coin"></i> Confirm Cash Payment';
+  else btn.innerHTML='<i class="bi bi-lock-fill"></i> Pay ₹'+_payAmount+' Securely';
+}
+
+function showPayAlert(type,msg){ const el=document.getElementById('payAlert'); el.style.display='flex'; el.className='alert '+(type==='error'?'ae':'as'); el.innerHTML=`<i class="bi bi-${type==='error'?'exclamation-circle-fill':'check-circle-fill'}"></i> ${msg}`; }
+
+async function processPayment(){
+  const method=document.querySelector('input[name="payMethod"]:checked')?.value||'razorpay';
+  const btn=document.getElementById('paySubmitBtn');
+  const spin=document.getElementById('paySpin');
+  btn.disabled=true; spin.style.display='inline-block';
+
+  if(method==='cod'){
+    await processCOD();
+    return;
+  }
+
+  // Razorpay-based (razorpay / upi / netbanking / wallet)
+  try{
+    const orderRes=await fetch('/api/payment/create-order',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({amount:_payAmount,job_id:_payJobId})}).then(r=>r.json());
+    if(!orderRes.success){ showPayAlert('error',orderRes.message||'Failed to initiate payment'); btn.disabled=false; spin.style.display='none'; return; }
+
+    if(orderRes.demo){
+      // Demo/test mode — simulate payment success
+      const vRes=await fetch('/api/payment/verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:_payJobId,razorpay_payment_id:'pay_demo_'+Date.now(),razorpay_order_id:orderRes.order.id,amount:_payAmount,payment_method:method})}).then(r=>r.json());
+      if(vRes.success){ closePayModal(); showToast('Payment successful! ₹'+_payAmount+' paid 🎉','💳'); setTimeout(()=>loadAllJobs(),800); }
+      else showPayAlert('error',vRes.message||'Payment verification failed');
+      btn.disabled=false; spin.style.display='none'; return;
+    }
+
+    // Live Razorpay checkout
+    const methodMap={razorpay:undefined,upi:'upi',netbanking:'netbanking',wallet:'wallet'};
+    const rzpOptions={
+      key: orderRes.key,
+      amount: orderRes.order.amount,
+      currency: 'INR',
+      order_id: orderRes.order.id,
+      name: 'KaamConnect',
+      description: 'Job Payment',
+      prefill: {},
+      config: methodMap[method]?{display:{blocks:{[method]:{name:method,instruments:[{method:methodMap[method]}]}},sequence:['block.'+method],preferences:{show_default_blocks:true}}}:undefined,
+      handler: async function(response){
+        spin.style.display='inline-block'; btn.disabled=true;
+        const vRes=await fetch('/api/payment/verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:_payJobId,razorpay_payment_id:response.razorpay_payment_id,razorpay_order_id:response.razorpay_order_id,razorpay_signature:response.razorpay_signature,amount:_payAmount,payment_method:method})}).then(r=>r.json());
+        spin.style.display='none';
+        if(vRes.success){ closePayModal(); showToast('Payment of ₹'+_payAmount+' successful! 🎉','💳'); setTimeout(()=>loadAllJobs(),800); }
+        else { showPayAlert('error',vRes.message||'Payment verification failed'); btn.disabled=false; }
+      },
+      modal: { ondismiss: function(){ btn.disabled=false; spin.style.display='none'; } }
+    };
+    if(typeof Razorpay!=='undefined'){
+      const rzp=new Razorpay(rzpOptions);
+      rzp.on('payment.failed',function(resp){ showPayAlert('error','Payment failed: '+resp.error.description); btn.disabled=false; spin.style.display='none'; });
+      rzp.open();
+    } else {
+      // Razorpay SDK not loaded — lazy load
+      const script=document.createElement('script');
+      script.src='https://checkout.razorpay.com/v1/checkout.js';
+      script.onload=function(){ new Razorpay(rzpOptions).open(); };
+      document.head.appendChild(script);
+    }
+  }catch(e){ showPayAlert('error','Network error. Please try again.'); btn.disabled=false; spin.style.display='none'; }
+}
+
+async function processCOD(){
+  const btn=document.getElementById('paySubmitBtn');
+  const spin=document.getElementById('paySpin');
+  if(!confirm('Confirm cash payment of ₹'+_payAmount+' to the worker?')){ btn.disabled=false; spin.style.display='none'; return; }
+  try{
+    const res=await fetch('/api/payment/cod',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:_payJobId})}).then(r=>r.json());
+    if(res.success){ closePayModal(); showToast('Cash payment confirmed! Worker notified 💵','✅'); setTimeout(()=>loadAllJobs(),800); }
+    else showPayAlert('error',res.message||'COD confirmation failed');
+  }catch(e){ showPayAlert('error','Network error'); }
+  btn.disabled=false; spin.style.display='none';
+}
+
+document.getElementById('payModal').addEventListener('click',e=>{ if(e.target===document.getElementById('payModal')) closePayModal(); });
+
 </script>
 </body>
 </html>

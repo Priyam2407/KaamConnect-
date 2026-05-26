@@ -1343,7 +1343,7 @@ const API = url => fetch(url, {headers:{'Authorization':'Bearer '+TOKEN}}).then(
 
 const skillEmoji = { electrician:'⚡', plumber:'🔧', painter:'🎨', carpenter:'🪚', labour:'👷', mason:'🧱', 'ac technician':'❄️', driver:'🚗' };
 const statusBadge = { pending_offer:'badge-pending', negotiating:'badge-negotiating', price_agreed:'badge-agreed', pending:'badge-pending', accepted:'badge-accepted', in_progress:'badge-inprogress', completed:'badge-completed', cancelled:'badge-cancelled', paid:'badge-paid' };
-const statusLabel = { pending_offer:'New Offer 🔔', negotiating:'Negotiating 💬', price_agreed:'Price Agreed ✅', pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Completed', cancelled:'Cancelled', paid:'Paid ✅' };
+const statusLabel = { pending_offer:'New Offer 🔔', negotiating:'Negotiating 💬', price_agreed:'Price Agreed ✅', pending:'Pending', accepted:'Accepted', in_progress:'In Progress', completed:'Done — Awaiting Payment ⏳', cancelled:'Cancelled', paid:'Paid ✅' };
 
 // ══ INIT UI ══
 function initUI(){
@@ -1522,6 +1522,16 @@ function jobCard(j){
   let actions = '';
   if(st==='accepted')    actions=`<button class="jc-btn jc-progress" id="btn-${j._id}" onclick="handleUpdate('${j._id}','in_progress',this)"><i class="bi bi-play-fill"></i> Start Work</button>`;
   if(st==='in_progress') actions=`<button class="jc-btn jc-complete" id="btn-${j._id}" onclick="handleUpdate('${j._id}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
+  if(st==='completed')   actions=`<div style="font-size:11.5px;color:#D97706;font-weight:800;padding:3px 0"><i class="bi bi-hourglass-split"></i> Awaiting customer payment</div>`;
+  if(st==='paid'){
+    const pmIcon = j.paymentMethod==='cod'?'💵 Cash':'💳 '+((j.paymentMethod||'online').charAt(0).toUpperCase()+(j.paymentMethod||'online').slice(1));
+    const isCOD = j.paymentMethod==='cod';
+    actions = `<div style="display:flex;flex-direction:column;gap:5px">
+      <div style="font-size:11px;font-weight:700;color:var(--sage)"><i class="bi bi-check-circle-fill"></i> Paid via ${pmIcon}</div>
+      ${isCOD && !j.codConfirmedAt ? `<button class="jc-btn" style="font-size:10.5px;background:#FFFBEB;color:#92400E;border:1px solid #FDE68A" onclick="confirmCODReceipt('${j._id}',this)"><i class="bi bi-cash-coin"></i> Confirm Cash Received</button>` : ''}
+    </div>`;
+  }
+  const earningsNote = (st==='paid') ? `<div style="font-size:11px;margin-top:4px;color:var(--sage);font-weight:700"><i class="bi bi-wallet2"></i> Your share: ₹${j.workerAmount||0}</div>` : '';
   return `<div class="job-card" id="jcard-${j._id}">
     <div class="jc-ico">${em}</div>
     <div class="jc-info">
@@ -1532,8 +1542,9 @@ function jobCard(j){
         <span><i class="bi bi-calendar3"></i> ${new Date(j.createdAt).toLocaleDateString('en-IN')}</span>
         <span><i class="bi bi-currency-rupee"></i> Agreed: ₹${agreedAmt}</span>
       </div>
+      ${earningsNote}
     </div>
-    <div class="jc-price">₹${j.workerAmount||0} <span style="font-size:10.5px;color:var(--ink-40);font-weight:400">yours</span></div>
+    <div class="jc-price">₹${j.workerAmount||agreedAmt} <span style="font-size:10.5px;color:var(--ink-40);font-weight:400">yours</span></div>
     <span class="badge ${statusBadge[st]||''}" id="badge-${j._id}">${statusLabel[st]||st}</span>
     ${actions?`<div class="jc-actions">${actions}</div>`:''}
   </div>`;
@@ -1584,7 +1595,7 @@ async function handleUpdate(jobId, newStatus, btn){
     const acts = btn.closest('.jc-actions');
     if(acts){
       if(newStatus==='in_progress') acts.innerHTML=`<button class="jc-btn jc-complete" id="btn-${jobId}" onclick="handleUpdate('${jobId}','completed',this)"><i class="bi bi-check-circle"></i> Mark Done</button>`;
-      else if(newStatus==='completed') acts.innerHTML='';
+      else if(newStatus==='completed') acts.innerHTML=`<div style="font-size:11.5px;color:#D97706;font-weight:800;padding:3px 0"><i class="bi bi-hourglass-split"></i> Awaiting payment from customer</div>`;
     }
     playNotifSound('success');
     showToast({in_progress:'Work started! 🔧',completed:'Job completed! 🎉',accepted:'Job accepted!'}[newStatus]||'Updated!','✅');
@@ -1685,6 +1696,18 @@ function closeMobile(){ document.getElementById('sidebar').classList.remove('mob
 
 // ══ LOGOUT ══
 function logout(){ localStorage.removeItem('kc_token'); localStorage.removeItem('kc_user'); location.href='login.html'; }
+
+
+// ── COD Receipt Confirmation ──────────────────────────────
+async function confirmCODReceipt(jobId, btn){
+  if(!confirm('Confirm you have received cash from the customer?')) return;
+  btn.disabled=true; btn.innerHTML='<i class="bi bi-arrow-repeat" style="animation:spin .8s linear infinite;display:inline-block"></i>';
+  try{
+    const d=await fetch('/api/payment/worker-cod-confirm',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:jobId})}).then(r=>r.json());
+    if(d.success){ btn.closest('.jc-actions').innerHTML='<div style="font-size:11px;color:var(--sage);font-weight:800"><i class="bi bi-check-circle-fill"></i> Cash received confirmed</div>'; showToast('Cash receipt confirmed 💵','✅'); }
+    else { showToast(d.message||'Failed','❌'); btn.disabled=false; btn.innerHTML='<i class="bi bi-cash-coin"></i> Confirm Cash Received'; }
+  }catch(e){ showToast('Network error','❌'); btn.disabled=false; btn.innerHTML='<i class="bi bi-cash-coin"></i> Confirm Cash Received'; }
+}
 
 // ══ INIT ══
 loadOverview();
