@@ -1304,68 +1304,150 @@ async function processPayment(){
   const btn=document.getElementById('paySubmitBtn');
   const spin=document.getElementById('paySpin');
   btn.disabled=true; spin.style.display='inline-block';
+  document.getElementById('payAlert').style.display='none';
 
   if(method==='cod'){
     await processCOD();
     return;
   }
 
-  // Razorpay-based (razorpay / upi / netbanking / wallet)
+  // ── Live Razorpay checkout (Card / UPI / Net Banking / Wallet) ──
   try{
-    const orderRes=await fetch('/api/payment/create-order',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({amount:_payAmount,job_id:_payJobId})}).then(r=>r.json());
-    if(!orderRes.success){ showPayAlert('error',orderRes.message||'Failed to initiate payment'); btn.disabled=false; spin.style.display='none'; return; }
+    // Step 1: Create order on server
+    const orderRes = await fetch('/api/payment/create-order',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+      body: JSON.stringify({amount:_payAmount, job_id:_payJobId})
+    }).then(r=>r.json());
 
-    if(orderRes.demo){
-      // Demo/test mode — simulate payment success
-      const vRes=await fetch('/api/payment/verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:_payJobId,razorpay_payment_id:'pay_demo_'+Date.now(),razorpay_order_id:orderRes.order.id,amount:_payAmount,payment_method:method})}).then(r=>r.json());
-      if(vRes.success){ closePayModal(); showToast('Payment successful! ₹'+_payAmount+' paid 🎉','💳'); setTimeout(()=>loadAllJobs(),800); }
-      else showPayAlert('error',vRes.message||'Payment verification failed');
-      btn.disabled=false; spin.style.display='none'; return;
+    if(!orderRes.success){
+      showPayAlert('error', orderRes.message||'Could not initiate payment. Please try again.');
+      btn.disabled=false; spin.style.display='none';
+      return;
     }
 
-    // Live Razorpay checkout
-    const methodMap={razorpay:undefined,upi:'upi',netbanking:'netbanking',wallet:'wallet'};
-    const rzpOptions={
-      key: orderRes.key,
-      amount: orderRes.order.amount,
-      currency: 'INR',
-      order_id: orderRes.order.id,
-      name: 'KaamConnect',
+    spin.style.display='none'; // hide spinner while Razorpay popup is open
+
+    // Step 2: Build Razorpay options
+    const methodMap = {upi:'upi', netbanking:'netbanking', wallet:'wallet'};
+    const rzpOptions = {
+      key:         orderRes.key,
+      amount:      orderRes.order.amount,   // in paise
+      currency:    'INR',
+      order_id:    orderRes.order.id,
+      name:        'KaamConnect',
       description: 'Job Payment',
-      prefill: {},
-      config: methodMap[method]?{display:{blocks:{[method]:{name:method,instruments:[{method:methodMap[method]}]}},sequence:['block.'+method],preferences:{show_default_blocks:true}}}:undefined,
+      image:       'https://kaamconnect-im6s.onrender.com/logo.png',
+      prefill: {
+        name:    USER.name  || '',
+        email:   USER.email || '',
+        contact: USER.phone || ''
+      },
+      notes: { job_id: _payJobId },
+      theme: { color: '#E8601C' },
+      // Pre-select method if not default
+      config: methodMap[method] ? {
+        display:{
+          blocks:{ [method]:{ name: method, instruments:[{method:methodMap[method]}] } },
+          sequence: ['block.'+method],
+          preferences: { show_default_blocks: true }
+        }
+      } : undefined,
+
+      // Step 3: On success — verify signature on server
       handler: async function(response){
         spin.style.display='inline-block'; btn.disabled=true;
-        const vRes=await fetch('/api/payment/verify',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:_payJobId,razorpay_payment_id:response.razorpay_payment_id,razorpay_order_id:response.razorpay_order_id,razorpay_signature:response.razorpay_signature,amount:_payAmount,payment_method:method})}).then(r=>r.json());
-        spin.style.display='none';
-        if(vRes.success){ closePayModal(); showToast('Payment of ₹'+_payAmount+' successful! 🎉','💳'); setTimeout(()=>loadAllJobs(),800); }
-        else { showPayAlert('error',vRes.message||'Payment verification failed'); btn.disabled=false; }
+        try{
+          const vRes = await fetch('/api/payment/verify',{
+            method:'POST',
+            headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+            body: JSON.stringify({
+              job_id:               _payJobId,
+              razorpay_payment_id:  response.razorpay_payment_id,
+              razorpay_order_id:    response.razorpay_order_id,
+              razorpay_signature:   response.razorpay_signature,
+              amount:               _payAmount,
+              payment_method:       method
+            })
+          }).then(r=>r.json());
+          spin.style.display='none';
+          if(vRes.success){
+            closePayModal();
+            showToast('Payment of ₹'+_payAmount+' successful! 🎉','💳');
+            setTimeout(()=>loadAllJobs(), 800);
+          } else {
+            showPayAlert('error', vRes.message||'Payment verification failed. Contact support.');
+            btn.disabled=false;
+          }
+        }catch(e){
+          spin.style.display='none';
+          showPayAlert('error','Verification error. Contact support with payment ID: '+response.razorpay_payment_id);
+          btn.disabled=false;
+        }
       },
-      modal: { ondismiss: function(){ btn.disabled=false; spin.style.display='none'; } }
+
+      modal: {
+        ondismiss: function(){
+          // User closed the popup without paying
+          btn.disabled=false;
+          spin.style.display='none';
+        }
+      }
     };
-    if(typeof Razorpay!=='undefined'){
-      const rzp=new Razorpay(rzpOptions);
-      rzp.on('payment.failed',function(resp){ showPayAlert('error','Payment failed: '+resp.error.description); btn.disabled=false; spin.style.display='none'; });
+
+    // Step 4: Open Razorpay — load SDK if not already present
+    function openRzp(){
+      const rzp = new Razorpay(rzpOptions);
+      rzp.on('payment.failed', function(resp){
+        showPayAlert('error','Payment failed: '+(resp.error.description||'Unknown error'));
+        btn.disabled=false;
+        spin.style.display='none';
+      });
       rzp.open();
+    }
+
+    if(typeof Razorpay !== 'undefined'){
+      openRzp();
     } else {
-      // Razorpay SDK not loaded — lazy load
-      const script=document.createElement('script');
-      script.src='https://checkout.razorpay.com/v1/checkout.js';
-      script.onload=function(){ new Razorpay(rzpOptions).open(); };
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = openRzp;
+      script.onerror = function(){
+        showPayAlert('error','Could not load payment gateway. Check your internet connection.');
+        btn.disabled=false; spin.style.display='none';
+      };
       document.head.appendChild(script);
     }
-  }catch(e){ showPayAlert('error','Network error. Please try again.'); btn.disabled=false; spin.style.display='none'; }
+
+  }catch(e){
+    console.error('processPayment error:',e);
+    showPayAlert('error','Network error. Please check your connection and try again.');
+    btn.disabled=false; spin.style.display='none';
+  }
 }
 
 async function processCOD(){
   const btn=document.getElementById('paySubmitBtn');
   const spin=document.getElementById('paySpin');
-  if(!confirm('Confirm cash payment of ₹'+_payAmount+' to the worker?')){ btn.disabled=false; spin.style.display='none'; return; }
+  if(!confirm('Confirm cash payment of ₹'+_payAmount+' to the worker?\n\nThe worker will be notified to collect cash from you.')){
+    btn.disabled=false; spin.style.display='none'; return;
+  }
   try{
-    const res=await fetch('/api/payment/cod',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},body:JSON.stringify({job_id:_payJobId})}).then(r=>r.json());
-    if(res.success){ closePayModal(); showToast('Cash payment confirmed! Worker notified 💵','✅'); setTimeout(()=>loadAllJobs(),800); }
-    else showPayAlert('error',res.message||'COD confirmation failed');
-  }catch(e){ showPayAlert('error','Network error'); }
+    const res = await fetch('/api/payment/cod',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+TOKEN},
+      body: JSON.stringify({job_id:_payJobId})
+    }).then(r=>r.json());
+    if(res.success){
+      closePayModal();
+      showToast('Cash payment confirmed! Worker notified 💵','✅');
+      setTimeout(()=>loadAllJobs(), 800);
+    } else {
+      showPayAlert('error', res.message||'COD confirmation failed');
+    }
+  }catch(e){
+    showPayAlert('error','Network error. Please try again.');
+  }
   btn.disabled=false; spin.style.display='none';
 }
 
