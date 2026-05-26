@@ -38,7 +38,7 @@ router.post("/create-order", authenticateToken, async (req, res) => {
     const order = await razorpay.orders.create({
       amount:   Math.round(parseFloat(amount) * 100), // paise
       currency: "INR",
-      receipt:  `job_${job_id}_${Date.now()}`,
+      receipt:  `j_${job_id.toString().slice(-16)}_${Date.now().toString().slice(-10)}`,
       notes:    { job_id: job_id.toString(), customer_id: req.user.id.toString() },
     });
 
@@ -172,7 +172,7 @@ router.post("/subscription-order", authenticateToken, async (req, res) => {
     const order = await razorpay.orders.create({
       amount:   price * 100,
       currency: "INR",
-      receipt:  `sub_${plan}_${req.user.id}_${Date.now()}`,
+      receipt:  `s_${plan}_${req.user.id.toString().slice(-10)}_${Date.now().toString().slice(-8)}`,
       notes:    { plan, user_id: req.user.id.toString(), credits_used: creditsUsed.toString() },
     });
 
