@@ -2,14 +2,26 @@ const express = require("express");
 const router  = express.Router();
 const crypto  = require("crypto");
 const { authenticateToken } = require("../middleware/authMiddleware");
-const { Job, Notification } = require("../models");
+const { Job, Notification, User } = require("../models");
 
 // ─── Helper: notify ──────────────────────────────────────────
 async function notify(userId, title, message, type, jobId = null) {
   try { await Notification.create({ userId, title, message, type, jobId, isRead: false }); } catch (e) {}
 }
 
-// ─── POST /api/payments/create-order (Razorpay) ──────────────
+// ─── Helper: get live Razorpay instance ──────────────────────
+function getRazorpay() {
+  const keyId     = process.env.RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+  if (!keyId || keyId.includes("xxxx") || !keySecret || keySecret.includes("xxxx")) {
+    return null; // demo/unconfigured
+  }
+  const Razorpay = require("razorpay");
+  return new Razorpay({ key_id: keyId, key_secret: keySecret });
+}
+
+// ─── POST /api/payment/create-order ──────────────────────────
+// Create a Razorpay order for job payment
 router.post("/create-order", authenticateToken, async (req, res) => {
   try {
     const { amount, job_id } = req.body;
@@ -21,26 +33,25 @@ router.post("/create-order", authenticateToken, async (req, res) => {
     if (!["completed","price_agreed","in_progress"].includes(job.status))
       return res.status(400).json({ success: false, message: "Job not eligible for payment" });
 
+    const razorpay = getRazorpay();
+
     // Demo / test key fallback
-    if (!process.env.RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID.includes("xxxx")) {
+    if (!razorpay) {
       return res.json({
         success: true,
-        order:   { id: "order_mock_" + Date.now(), amount: amount * 100, currency: "INR" },
+        order:   { id: "order_mock_" + Date.now(), amount: Math.round(amount * 100), currency: "INR" },
         key:     process.env.RAZORPAY_KEY_ID || "rzp_test_demo",
         demo:    true,
       });
     }
 
-    const Razorpay = require("razorpay");
-    const razorpay = new Razorpay({
-      key_id:     process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
-    });
     const order = await razorpay.orders.create({
-      amount:   Math.round(amount * 100),
+      amount:   Math.round(amount * 100), // paise
       currency: "INR",
       receipt:  `job_${job_id}_${Date.now()}`,
+      notes:    { job_id: job_id.toString(), customer_id: req.user.id.toString() },
     });
+
     res.json({ success: true, order, key: process.env.RAZORPAY_KEY_ID });
   } catch (err) {
     console.error("create-order:", err);
@@ -48,7 +59,8 @@ router.post("/create-order", authenticateToken, async (req, res) => {
   }
 });
 
-// ─── POST /api/payments/verify (Razorpay callback) ───────────
+// ─── POST /api/payment/verify ─────────────────────────────────
+// Verify Razorpay callback for job payment
 router.post("/verify", authenticateToken, async (req, res) => {
   try {
     const { job_id, razorpay_payment_id, razorpay_order_id, razorpay_signature, amount, payment_method } = req.body;
@@ -56,12 +68,13 @@ router.post("/verify", authenticateToken, async (req, res) => {
     const job = await Job.findById(job_id);
     if (!job) return res.status(404).json({ success: false, message: "Job not found" });
 
-    // Signature verification (skip in demo mode)
-    if (razorpay_signature && process.env.RAZORPAY_KEY_SECRET && !process.env.RAZORPAY_KEY_SECRET.includes("xxxx")) {
-      const body      = razorpay_order_id + "|" + razorpay_payment_id;
-      const expected  = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET).update(body).digest("hex");
+    // Signature verification (skip only in real demo mode)
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    if (razorpay_signature && keySecret && !keySecret.includes("xxxx")) {
+      const body     = razorpay_order_id + "|" + razorpay_payment_id;
+      const expected = crypto.createHmac("sha256", keySecret).update(body).digest("hex");
       if (expected !== razorpay_signature)
-        return res.status(400).json({ success: false, message: "Payment signature invalid" });
+        return res.status(400).json({ success: false, message: "Payment signature invalid — possible tamper" });
     }
 
     const paidAmt    = parseFloat(amount) || job.agreedPrice || job.price || 0;
@@ -89,7 +102,7 @@ router.post("/verify", authenticateToken, async (req, res) => {
   }
 });
 
-// ─── POST /api/payments/cod ───────────────────────────────────
+// ─── POST /api/payment/cod ────────────────────────────────────
 // Customer marks job as paid via Cash on Delivery
 router.post("/cod", authenticateToken, async (req, res) => {
   try {
@@ -107,8 +120,8 @@ router.post("/cod", authenticateToken, async (req, res) => {
     const workerAmt  = parseFloat((paidAmt - commission).toFixed(2));
 
     await Job.findByIdAndUpdate(job_id, {
-      status:        "paid",
-      paymentMethod: "cod",
+      status:         "paid",
+      paymentMethod:  "cod",
       codConfirmedAt: new Date(),
       commission,
       workerAmount: workerAmt,
@@ -125,7 +138,7 @@ router.post("/cod", authenticateToken, async (req, res) => {
   }
 });
 
-// ─── POST /api/payments/worker-cod-confirm ────────────────────
+// ─── POST /api/payment/worker-cod-confirm ─────────────────────
 // Worker confirms they received cash
 router.post("/worker-cod-confirm", authenticateToken, async (req, res) => {
   try {
@@ -133,7 +146,6 @@ router.post("/worker-cod-confirm", authenticateToken, async (req, res) => {
     const job = await Job.findOne({ _id: job_id, workerId: req.user.id, paymentMethod: "cod" });
     if (!job) return res.status(404).json({ success: false, message: "Job not found" });
 
-    // Already handled by COD endpoint; this is just worker acknowledgement
     await notify(job.customerId, "Worker Confirmed Cash Receipt 🤝",
       `Worker confirmed receiving cash for job: ${job.title || job.skill}`,
       "payment", job_id);
@@ -141,6 +153,106 @@ router.post("/worker-cod-confirm", authenticateToken, async (req, res) => {
     res.json({ success: true, message: "Cash receipt confirmed" });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// ─── POST /api/payment/subscription-order ─────────────────────
+// Create Razorpay order for worker subscription (Basic ₹299 / Premium ₹599)
+router.post("/subscription-order", authenticateToken, async (req, res) => {
+  try {
+    const { plan, use_credits } = req.body;
+    const PLANS = {
+      basic:   { price: 299, name: "Basic",   days: 30 },
+      premium: { price: 599, name: "Premium", days: 30 },
+    };
+    if (!PLANS[plan]) return res.status(400).json({ success: false, message: "Invalid plan" });
+
+    const user = await User.findById(req.user.id).select("referralCredits");
+    let price = PLANS[plan].price;
+
+    // Apply referral credits (max 50% discount)
+    let creditsUsed = 0;
+    if (use_credits && user.referralCredits > 0) {
+      creditsUsed = Math.min(user.referralCredits, Math.floor(price * 0.5));
+      price -= creditsUsed;
+    }
+
+    // If price is 0 after credits, skip payment
+    if (price <= 0) {
+      return res.json({ success: true, free: true, plan, creditsUsed, price: 0 });
+    }
+
+    const razorpay = getRazorpay();
+    if (!razorpay) {
+      // Demo mode
+      return res.json({
+        success: true, demo: true, plan, price, creditsUsed,
+        order: { id: "order_sub_mock_" + Date.now(), amount: price * 100, currency: "INR" },
+        key: process.env.RAZORPAY_KEY_ID || "rzp_test_demo",
+      });
+    }
+
+    const order = await razorpay.orders.create({
+      amount:   price * 100, // paise
+      currency: "INR",
+      receipt:  `sub_${plan}_${req.user.id}_${Date.now()}`,
+      notes:    { plan, user_id: req.user.id.toString(), credits_used: creditsUsed.toString() },
+    });
+
+    res.json({ success: true, order, key: process.env.RAZORPAY_KEY_ID, plan, price, creditsUsed });
+  } catch (err) {
+    console.error("subscription-order:", err);
+    res.status(500).json({ success: false, message: "Failed to create subscription order" });
+  }
+});
+
+// ─── POST /api/payment/subscription-verify ────────────────────
+// Verify Razorpay payment then activate the plan
+router.post("/subscription-verify", authenticateToken, async (req, res) => {
+  try {
+    const { plan, razorpay_payment_id, razorpay_order_id, razorpay_signature, price, credits_used } = req.body;
+    const PLANS = {
+      basic:   { price: 299, name: "Basic",   days: 30, features: ["Priority listing","20 bids/mo","Badge"] },
+      premium: { price: 599, name: "Premium", days: 30, features: ["Top listing","Unlimited bids","Gold badge","Analytics"] },
+    };
+    if (!PLANS[plan]) return res.status(400).json({ success: false, message: "Invalid plan" });
+
+    // Signature check
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    if (razorpay_signature && keySecret && !keySecret.includes("xxxx")) {
+      const body     = razorpay_order_id + "|" + razorpay_payment_id;
+      const expected = crypto.createHmac("sha256", keySecret).update(body).digest("hex");
+      if (expected !== razorpay_signature)
+        return res.status(400).json({ success: false, message: "Subscription payment signature invalid" });
+    }
+
+    const user = await User.findById(req.user.id).select("subscriptionStatus subscriptionExpires referralCredits");
+    const creditsUsed = parseInt(credits_used || 0, 10);
+
+    const now  = new Date();
+    const base = (user.subscriptionExpires && user.subscriptionExpires > now) ? user.subscriptionExpires : now;
+    const expiresAt = new Date(base.getTime() + PLANS[plan].days * 24 * 60 * 60 * 1000);
+
+    const update = {
+      subscriptionStatus:  plan,
+      subscriptionExpires: expiresAt,
+      subscriptionTxnId:   razorpay_payment_id || `manual_${Date.now()}`,
+    };
+    if (creditsUsed > 0) update.$inc = { referralCredits: -creditsUsed };
+
+    await User.findByIdAndUpdate(req.user.id, update);
+
+    await Notification.create({
+      userId:  req.user.id,
+      title:   `${PLANS[plan].name} Plan Activated! 🚀`,
+      message: `Your ${PLANS[plan].name} subscription is active until ${expiresAt.toLocaleDateString("en-IN")}.${creditsUsed > 0 ? ` ₹${creditsUsed} credits used.` : ""}`,
+      type:    "subscription_activated",
+    });
+
+    res.json({ success: true, message: `${PLANS[plan].name} plan activated!`, plan, expiresAt, creditsUsed, pricePaid: price });
+  } catch (err) {
+    console.error("subscription-verify:", err);
+    res.status(500).json({ success: false, message: "Failed to activate plan" });
   }
 });
 
