@@ -750,29 +750,6 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 </head>
 <body>
 
-<style>
-#platformBanner{
-  display:none;
-  width:100%;
-  padding:12px 20px;
-  text-align:center;
-  font-size:13.5px;
-  font-weight:600;
-  letter-spacing:.2px;
-  position:relative;
-  z-index:9999;
-}
-#platformBanner.maintenance{
-  background:linear-gradient(90deg,#f97316,#ea580c);
-  color:#fff;
-}
-#platformBanner.paused{
-  background:linear-gradient(90deg,#6366f1,#4f46e5);
-  color:#fff;
-}
-</style>
-<div id="platformBanner"></div>
-
 <!-- ══ NAV ══ -->
 <nav id="nav">
   <div class="nav-in">
@@ -1406,36 +1383,6 @@ const fmtK  = n => n > 999 ? Math.round(n / 1000) + 'K+' : n;
       if (d.avgRating) document.getElementById('heroRating').textContent = d.avgRating.toFixed(1);
       document.getElementById('heroBadge').textContent = fmt(d.workers) + ' verified workers • Live now';
       document.getElementById('heroJobs').textContent  = fmt(d.completedJobs || 1200);
-
-      // ── Platform Status Banner ──────────────────────────
-      const banner = document.getElementById('platformBanner');
-      if (d.platformStatus === 'maintenance') {
-        banner.className = 'maintenance';
-        banner.innerHTML = '🔧 KaamConnect is currently under maintenance. Services may be temporarily unavailable. We'll be back soon!';
-        banner.style.display = 'block';
-        // Disable booking buttons
-        document.querySelectorAll('.book-btn, [onclick*="bookWorker"], [onclick*="openBooking"]').forEach(b => {
-          b.disabled = true;
-          b.style.opacity = '0.5';
-          b.style.cursor = 'not-allowed';
-          b.title = 'Booking unavailable during maintenance';
-        });
-      } else if (d.platformStatus === 'paused') {
-        banner.className = 'paused';
-        banner.innerHTML = '⏸️ KaamConnect job bookings are temporarily paused. Browse workers and check back soon!';
-        banner.style.display = 'block';
-        document.querySelectorAll('.book-btn, [onclick*="bookWorker"], [onclick*="openBooking"]').forEach(b => {
-          b.disabled = true;
-          b.style.opacity = '0.5';
-          b.style.cursor = 'not-allowed';
-          b.title = 'Bookings are paused';
-        });
-      } else {
-        banner.style.display = 'none';
-      }
-
-      // ── Platform Fee in chatbot ─────────────────────────
-      window._platformFee = d.platformFee || 10;
     }
   } catch (e) {
     // API offline — show placeholder stats
@@ -1446,7 +1393,6 @@ const fmtK  = n => n > 999 ? Math.round(n / 1000) + 'K+' : n;
     document.getElementById('nb1').textContent   = '2,400+';
     document.getElementById('nb2').textContent   = '800+';
     document.getElementById('nb3').textContent   = '5K+';
-    window._platformFee = 10;
   }
   setTimeout(() => { document.getElementById('heroBar').style.width = '74%'; }, 500);
   setTimeout(() => { document.getElementById('mockProgress').style.width = '85%'; }, 800);
@@ -1793,7 +1739,7 @@ const BOT_RESPONSES = {
     { keys:['electrician','wiring','fuse','electric'],  reply:'We have verified electricians available! Use the search bar above or click "⚡ Electrician" in services to find one near you.',  chips:['Plumber','Painter','How it works?'] },
     { keys:['plumber','pipe','leak','water'],            reply:'Our verified plumbers are available across major cities. Search by your city to find one now!',                                    chips:['Electrician','Carpenter','Pricing info'] },
     { keys:['painter','paint','wall'],                   reply:'Professional painters available for interior, exterior & texture work. Browse the Workers section!',                                chips:['Electrician','Plumber','How it works?'] },
-    { keys:['price','cost','fee','charge','pay'],        get reply(){ return 'Workers set their own base price and you can negotiate! KaamConnect charges only a ' + (window._platformFee||10) + '% platform fee. Payment is held in escrow until the job is done.'; },  chips:['Find Electrician','How it works?'] },
+    { keys:['price','cost','fee','charge','pay'],        reply:'Workers set their own base price and you can negotiate! KaamConnect charges only a 10% platform fee. Payment is held in escrow until the job is done.',  chips:['Find Electrician','How it works?'] },
     { keys:['work','how','steps','process','book'],      reply:'It\'s simple: 1️⃣ Search worker 2️⃣ Browse profiles 3️⃣ Negotiate price 4️⃣ Pay only after job done. Secure escrow via Razorpay!', chips:['Find Electrician','Pricing info'] },
     { keys:['safe','secure','trust','verify','verified'],reply:'All workers are admin-verified with ID & background checks. Your payment stays in escrow until you confirm job completion. 100% safe!', chips:['How it works?','Find Electrician'] },
   ],
