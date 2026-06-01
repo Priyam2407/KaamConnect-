@@ -101,7 +101,8 @@ app.get("/api/health", (req, res) => {
 // ── Platform analytics ──────────────────────────────────────
 app.get("/api/analytics/platform", async (req, res) => {
   try {
-    const [customers, workers, completedJobs, revenueData] =
+    const { PlatformSettings } = require("./models");
+    const [customers, workers, completedJobs, revenueData, settings] =
       await Promise.all([
         User.countDocuments({ role: "customer" }),
         User.countDocuments({ role: "worker" }),
@@ -110,6 +111,7 @@ app.get("/api/analytics/platform", async (req, res) => {
           { $match: { status: { $in: ["completed", "paid"] } } },
           { $group: { _id: null, total: { $sum: "$commission" } } },
         ]),
+        PlatformSettings.findOne({ singletonKey: "global" }),
       ]);
 
     res.json({
@@ -118,17 +120,19 @@ app.get("/api/analytics/platform", async (req, res) => {
       workers,
       completedJobs,
       revenue: revenueData[0]?.total || 0,
+      platformStatus: settings?.platformStatus || "active",
+      platformFee:    settings?.platformFee    || 10,
     });
   } catch (err) {
     console.error("Analytics error:", err.message);
-
-    // fallback demo data
     res.json({
       success: true,
       customers: 2847,
       workers: 743,
       completedJobs: 15832,
       revenue: 284750,
+      platformStatus: "active",
+      platformFee: 10,
     });
   }
 });
