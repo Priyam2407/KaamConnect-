@@ -841,17 +841,18 @@ textarea.fi{min-height:80px;resize:vertical}
         <div class="panel">
           <div class="panel-head"><span class="panel-title">⚙️ Platform Config</span></div>
           <div class="panel-body">
-            <div class="fg"><label class="fl">Platform Fee (%)</label><input class="fi" type="number" value="10" min="1" max="50" placeholder="10"></div>
-            <div class="fg"><label class="fl">Max Workers Per City</label><input class="fi" type="number" value="500" placeholder="500"></div>
-            <div class="fg"><label class="fl">Verification Timeout (hours)</label><input class="fi" type="number" value="24" placeholder="24"></div>
+            <div class="fg"><label class="fl">Platform Fee (%)</label><input class="fi" id="settingsFee" type="number" value="10" min="1" max="50" placeholder="10"></div>
+            <div class="fg"><label class="fl">Max Workers Per City</label><input class="fi" id="settingsMaxWorkers" type="number" value="500" placeholder="500"></div>
+            <div class="fg"><label class="fl">Verification Timeout (hours)</label><input class="fi" id="settingsTimeout" type="number" value="24" placeholder="24"></div>
             <div class="fg"><label class="fl">Platform Status</label>
-              <select class="fi">
+              <select class="fi" id="settingsStatus">
                 <option value="active">✅ Active — Accepting jobs</option>
                 <option value="maintenance">🔧 Maintenance Mode</option>
                 <option value="paused">⏸️ Paused</option>
               </select>
             </div>
-            <button class="btn btn-primary" style="margin-top:8px"><i class="bi bi-check-circle-fill"></i> Save Changes</button>
+            <div id="settingsAlert" style="display:none;margin-bottom:8px"></div>
+            <button class="btn btn-primary" style="margin-top:8px" onclick="saveSettings()"><i class="bi bi-check-circle-fill"></i> Save Changes</button>
           </div>
         </div>
         <div class="panel">
@@ -859,12 +860,13 @@ textarea.fi{min-height:80px;resize:vertical}
           <div class="panel-body">
             <div class="fg"><label class="fl">Admin Name</label><input class="fi" type="text" id="settingsName" placeholder="Admin"></div>
             <div class="fg"><label class="fl">Admin Email</label><input class="fi" type="email" id="settingsEmail" placeholder="admin@kaamconnect.in"></div>
-            <div class="fg"><label class="fl">New Password</label><input class="fi" type="password" placeholder="Leave blank to keep current"></div>
+            <div class="fg"><label class="fl">New Password</label><input class="fi" id="settingsPassword" type="password" placeholder="Leave blank to keep current"></div>
             <div style="margin-bottom:20px;padding:14px;background:var(--amber-pale);border:1px solid rgba(251,191,36,.2);border-radius:10px;font-size:12.5px;color:var(--amber-s);display:flex;gap:8px">
               <i class="bi bi-info-circle-fill" style="flex-shrink:0;margin-top:1px"></i>
               <span>Keep your admin credentials secure. Do not share access with unverified people.</span>
             </div>
-            <button class="btn btn-gold"><i class="bi bi-save"></i> Update Profile</button>
+            <div id="profileAlert" style="display:none;margin-bottom:8px"></div>
+            <button class="btn btn-gold" onclick="updateAdminProfile()"><i class="bi bi-save"></i> Update Profile</button>
           </div>
         </div>
       </div>
@@ -985,6 +987,7 @@ function show(page,el){
   else if(page==='verifications')loadVerifications();
   else if(page==='revenue')loadRevenue();
   else if(page==='activity')loadActivity();
+  else if(page==='settings')loadSettings();
 }
 
 function refreshAll(){loadStats();loadPendingVer();loadRecentJobs();toast('🔄 Dashboard refreshed','ok');}
@@ -1434,8 +1437,93 @@ function showIdAlert(t,m){
 
 function logout(){localStorage.clear();location.href='login.html';}
 
+
+// ══ SETTINGS ══
+async function loadSettings(){
+  try {
+    const r = await fetch('/api/admin/settings', {headers: H});
+    const d = await r.json();
+    if(!d.success) return;
+    const s = d.settings;
+    document.getElementById('settingsFee').value        = s.platformFee        ?? 10;
+    document.getElementById('settingsMaxWorkers').value = s.maxWorkersPerCity  ?? 500;
+    document.getElementById('settingsTimeout').value    = s.verificationTimeout ?? 24;
+    document.getElementById('settingsStatus').value     = s.platformStatus      ?? 'active';
+  } catch(e){ console.error('loadSettings error', e); }
+}
+
+async function saveSettings(){
+  const fee     = parseInt(document.getElementById('settingsFee').value);
+  const maxW    = parseInt(document.getElementById('settingsMaxWorkers').value);
+  const timeout = parseInt(document.getElementById('settingsTimeout').value);
+  const status  = document.getElementById('settingsStatus').value;
+  const alertEl = document.getElementById('settingsAlert');
+
+  if(!fee||fee<1||fee>50){ showSettingsAlert(alertEl,'Platform fee must be 1–50%','err'); return; }
+  if(!maxW||maxW<1)       { showSettingsAlert(alertEl,'Max workers must be at least 1','err'); return; }
+  if(!timeout||timeout<1) { showSettingsAlert(alertEl,'Verification timeout must be at least 1 hour','err'); return; }
+
+  try {
+    const r = await fetch('/api/admin/settings',{
+      method:'PUT', headers: H,
+      body: JSON.stringify({ platformFee:fee, maxWorkersPerCity:maxW, verificationTimeout:timeout, platformStatus:status })
+    });
+    const d = await r.json();
+    if(d.success){
+      showSettingsAlert(alertEl,'✅ Settings saved successfully','ok');
+      toast('⚙️ Platform settings updated','ok');
+    } else {
+      showSettingsAlert(alertEl, d.message||'Save failed','err');
+    }
+  } catch(e){ showSettingsAlert(alertEl,'Network error — try again','err'); }
+}
+
+async function updateAdminProfile(){
+  const name     = document.getElementById('settingsName').value.trim();
+  const email    = document.getElementById('settingsEmail').value.trim();
+  const password = document.getElementById('settingsPassword').value;
+  const alertEl  = document.getElementById('profileAlert');
+
+  if(!name)  { showSettingsAlert(alertEl,'Name cannot be empty','err'); return; }
+  if(!email) { showSettingsAlert(alertEl,'Email cannot be empty','err'); return; }
+  if(password && password.length < 6){ showSettingsAlert(alertEl,'Password must be at least 6 characters','err'); return; }
+
+  const body = { name, email };
+  if(password) body.password = password;
+
+  try {
+    const r = await fetch('/api/admin/admin-profile',{
+      method:'PUT', headers: H, body: JSON.stringify(body)
+    });
+    const d = await r.json();
+    if(d.success){
+      // Update localStorage so name reflects immediately
+      const meUp = {...ME, name: d.user.name, email: d.user.email};
+      localStorage.setItem('kc_user', JSON.stringify(meUp));
+      document.getElementById('sbAdminName').textContent = d.user.name;
+      document.getElementById('settingsPassword').value = '';
+      showSettingsAlert(alertEl,'✅ Profile updated successfully','ok');
+      toast('👤 Admin profile updated','ok');
+    } else {
+      showSettingsAlert(alertEl, d.message||'Update failed','err');
+    }
+  } catch(e){ showSettingsAlert(alertEl,'Network error — try again','err'); }
+}
+
+function showSettingsAlert(el, msg, type){
+  el.style.display = 'block';
+  const isOk = type==='ok';
+  el.style.cssText = `display:block;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:500;
+    background:${isOk?'rgba(34,197,94,.12)':'rgba(239,68,68,.1)'};
+    color:${isOk?'#16a34a':'#dc2626'};
+    border:1px solid ${isOk?'rgba(34,197,94,.25)':'rgba(239,68,68,.25)'}`;
+  el.textContent = msg;
+  if(isOk) setTimeout(()=>{ el.style.display='none'; }, 3500);
+}
+
 // ══ INIT ══
 loadStats();
+loadSettings();
 loadPendingVer();
 loadRecentJobs();
 </script>

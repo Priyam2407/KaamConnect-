@@ -16,4 +16,8 @@ router.put("/user-status",           adminAuth, admin.toggleUserStatus);
 router.get("/revenue",               adminAuth, admin.getRevenue);
 router.delete("/user/:id",           adminAuth, admin.deleteUser);
 
+router.get("/settings",           adminAuth, admin.getSettings);
+router.put("/settings",           adminAuth, admin.updateSettings);
+router.put("/admin-profile",      adminAuth, admin.updateAdminProfile);
+
 module.exports = router;

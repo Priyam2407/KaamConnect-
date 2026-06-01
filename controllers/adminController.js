@@ -245,3 +245,51 @@ exports.getPendingVerifications = async (req, res) => {
     res.status(500).json({ success: false, message: "Database error" });
   }
 };
+
+// ─── PLATFORM SETTINGS ────────────────────────────────────
+const { PlatformSettings } = require("../models");
+
+exports.getSettings = async (req, res) => {
+  try {
+    let settings = await PlatformSettings.findOne({ singletonKey: "global" });
+    if (!settings) settings = await PlatformSettings.create({ singletonKey: "global" });
+    res.json({ success: true, settings });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error fetching settings" });
+  }
+};
+
+exports.updateSettings = async (req, res) => {
+  try {
+    const { platformFee, maxWorkersPerCity, verificationTimeout, platformStatus } = req.body;
+    const settings = await PlatformSettings.findOneAndUpdate(
+      { singletonKey: "global" },
+      { platformFee, maxWorkersPerCity, verificationTimeout, platformStatus },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    res.json({ success: true, message: "Settings saved successfully", settings });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error saving settings" });
+  }
+};
+
+exports.updateAdminProfile = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const { User } = require("../models");
+    const admin = await User.findById(req.user._id);
+    if (!admin || admin.role !== "admin")
+      return res.status(403).json({ success: false, message: "Not authorized" });
+
+    if (name)  admin.name  = name.trim();
+    if (email) admin.email = email.toLowerCase().trim();
+    if (password && password.length >= 6) admin.password = password;
+
+    await admin.save();
+    const safe = { _id: admin._id, name: admin.name, email: admin.email, role: admin.role };
+    res.json({ success: true, message: "Profile updated successfully", user: safe });
+  } catch (err) {
+    if (err.code === 11000) return res.status(400).json({ success: false, message: "Email already in use" });
+    res.status(500).json({ success: false, message: "Error updating profile" });
+  }
+};
