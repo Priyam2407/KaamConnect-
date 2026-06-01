@@ -226,6 +226,19 @@ const pendingUserSchema = new mongoose.Schema(
 pendingUserSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 const PendingUser = mongoose.models.PendingUser || mongoose.model("PendingUser", pendingUserSchema);
 
+// ─── PLATFORM SETTINGS MODEL ──────────────────────────────
+const platformSettingsSchema = new mongoose.Schema(
+  {
+    singletonKey:        { type: String, default: "global", unique: true },
+    platformFee:         { type: Number, default: 10, min: 1, max: 50 },
+    maxWorkersPerCity:   { type: Number, default: 500 },
+    verificationTimeout: { type: Number, default: 24 },
+    platformStatus:      { type: String, enum: ["active", "maintenance", "paused"], default: "active" },
+  },
+  { timestamps: true }
+);
+const PlatformSettings = mongoose.models.PlatformSettings || mongoose.model("PlatformSettings", platformSettingsSchema);
+
 module.exports = {
   PlatformSettings,
   User:         mongoose.model("User",         userSchema),
@@ -237,15 +250,3 @@ module.exports = {
   Review:       mongoose.model("Review",       reviewSchema),
   Notification: mongoose.model("Notification", notificationSchema),
 };
-// ─── PLATFORM SETTINGS MODEL ──────────────────────────────
-const platformSettingsSchema = new mongoose.Schema(
-  {
-    singletonKey:       { type: String, default: "global", unique: true },
-    platformFee:        { type: Number, default: 10, min: 1, max: 50 },
-    maxWorkersPerCity:  { type: Number, default: 500 },
-    verificationTimeout:{ type: Number, default: 24 },
-    platformStatus:     { type: String, enum: ["active", "maintenance", "paused"], default: "active" },
-  },
-  { timestamps: true }
-);
-const PlatformSettings = mongoose.models.PlatformSettings || mongoose.model("PlatformSettings", platformSettingsSchema);
