@@ -33,6 +33,14 @@
   --ink-40:       rgba(12,23,20,.4);
   --ink-12:       rgba(12,23,20,.12);
   --ink-06:       rgba(12,23,20,.06);
+
+  /* ── TYPEWRITER COLOR PALETTE ── */
+  --tw-color-0: #E8601C;   /* saffron orange */
+  --tw-color-1: #3D7A6E;   /* sage teal */
+  --tw-color-2: #D4A017;   /* gold */
+  --tw-color-3: #C94A8A;   /* magenta-pink */
+  --tw-color-4: #2E86DE;   /* bright blue */
+  --tw-color-5: #27AE60;   /* green */
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -192,7 +200,7 @@ img{max-width:100%;display:block}
   color:var(--forest);margin-bottom:24px;
   animation:fadeUp .9s ease both .35s;
 }
-.hero-h em{font-style:italic;color:var(--saffron);display:block;min-height:1.1em}
+.hero-h em{font-style:italic;display:block;min-height:1.1em}
 .hero-h-sub{
   font-size:clamp(18px,2vw,28px);font-style:normal;font-weight:700;
   letter-spacing:-1px;color:var(--ink-40);display:block;margin-top:8px;
@@ -244,15 +252,34 @@ img{max-width:100%;display:block}
 .trust-item i{color:var(--saffron);font-size:14px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
-/* ══ TYPEWRITER ══ */
-#typewriter{
-  border-right:3px solid var(--saffron);
-  padding-right:4px;
-  animation:cursorBlink .7s step-end infinite;
+/* ══ TYPEWRITER — MULTI-COLOR ══ */
+#typewriter-wrap {
+  display: inline-block;
+  position: relative;
 }
-@keyframes cursorBlink{
-  0%,100%{border-color:var(--saffron)}
-  50%{border-color:transparent}
+#typewriter {
+  display: inline;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -1px;
+  /* color set dynamically by JS */
+  transition: color 0.6s ease;
+}
+.tw-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-left: 4px;
+  background: var(--saffron);
+  animation: cursorBlink .7s step-end infinite;
+  position: relative;
+  top: -2px;
+}
+@keyframes cursorBlink {
+  0%,100%{opacity:1}
+  50%{opacity:0}
 }
 
 /* hero visual — floating cards */
@@ -807,7 +834,11 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 
       <h1 class="hero-h">
         India's most trusted
-        <em><span id="typewriter"></span></em>
+        <em>
+          <span id="typewriter-wrap">
+            <span id="typewriter"></span><span class="tw-cursor"></span>
+          </span>
+        </em>
         <span class="hero-h-sub">Book. Negotiate. Done.</span>
       </h1>
 
@@ -1752,48 +1783,73 @@ function sendChip(el) {
 }
 
 /* ════════════════════════════════
-   TYPEWRITER ANIMATION
+   TYPEWRITER  — MULTI-COLOR EDITION
+   Each word gets its own color.
+   The cursor block inherits the current color.
 ════════════════════════════════ */
 (function () {
-  const words = [
-    'worker marketplace',
-    'electricians hub',
-    'plumbers network',
-    'skilled talent pool',
-    'home services platform',
-    'verified professionals'
+  /* ── words paired with their accent color ── */
+  const WORDS = [
+    { text: 'worker marketplace',       color: '#E8601C' }, /* saffron   */
+    { text: 'electricians hub',          color: '#2E86DE' }, /* blue      */
+    { text: 'plumbers network',          color: '#3D7A6E' }, /* teal      */
+    { text: 'skilled talent pool',       color: '#D4A017' }, /* gold      */
+    { text: 'home services platform',    color: '#C94A8A' }, /* magenta   */
+    { text: 'verified professionals',    color: '#27AE60' }, /* green     */
   ];
 
-  const el = document.getElementById('typewriter');
+  const el     = document.getElementById('typewriter');
+  const cursor = document.querySelector('.tw-cursor');
   if (!el) return;
 
-  const TYPING_SPEED   = 80;
-  const DELETING_SPEED = 40;
-  const PAUSE_END      = 1800;
-  const PAUSE_START    = 300;
+  const TYPING_SPEED   = 75;   /* ms per character while typing  */
+  const DELETING_SPEED = 38;   /* ms per character while deleting */
+  const PAUSE_END      = 1800; /* ms to wait at end of word       */
+  const PAUSE_START    = 280;  /* ms to wait before typing next   */
 
-  let wIndex = 0, cIndex = 0, deleting = false;
+  let wIndex   = 0;
+  let cIndex   = 0;
+  let deleting = false;
+
+  function setColor(color) {
+    el.style.color     = color;
+    cursor.style.background = color;
+  }
+
+  /* Start with the first color immediately */
+  setColor(WORDS[0].color);
 
   function tick() {
-    const word = words[wIndex];
+    const { text, color } = WORDS[wIndex];
+
     if (!deleting) {
+      /* ── typing phase ── */
       cIndex++;
-      el.textContent = word.slice(0, cIndex);
-      if (cIndex === word.length) {
+      el.textContent = text.slice(0, cIndex);
+      setColor(color);
+
+      if (cIndex === text.length) {
+        /* word fully typed — pause, then start deleting */
         deleting = true;
         setTimeout(tick, PAUSE_END);
         return;
       }
     } else {
+      /* ── deleting phase ── */
       cIndex--;
-      el.textContent = word.slice(0, cIndex);
+      el.textContent = text.slice(0, cIndex);
+
       if (cIndex === 0) {
+        /* word fully deleted — move to next word */
         deleting = false;
-        wIndex = (wIndex + 1) % words.length;
+        wIndex   = (wIndex + 1) % WORDS.length;
+        /* Pre-set cursor color for the upcoming word */
+        setColor(WORDS[wIndex].color);
         setTimeout(tick, PAUSE_START);
         return;
       }
     }
+
     setTimeout(tick, deleting ? DELETING_SPEED : TYPING_SPEED);
   }
 
