@@ -192,7 +192,7 @@ img{max-width:100%;display:block}
   color:var(--forest);margin-bottom:24px;
   animation:fadeUp .9s ease both .35s;
 }
-.hero-h em{font-style:italic;color:var(--saffron);display:block}
+.hero-h em{font-style:italic;color:var(--saffron);display:block;min-height:1.1em}
 .hero-h-sub{
   font-size:clamp(18px,2vw,28px);font-style:normal;font-weight:700;
   letter-spacing:-1px;color:var(--ink-40);display:block;margin-top:8px;
@@ -243,6 +243,17 @@ img{max-width:100%;display:block}
 .trust-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink-70)}
 .trust-item i{color:var(--saffron);font-size:14px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ══ TYPEWRITER ══ */
+#typewriter{
+  border-right:3px solid var(--saffron);
+  padding-right:4px;
+  animation:cursorBlink .7s step-end infinite;
+}
+@keyframes cursorBlink{
+  0%,100%{border-color:var(--saffron)}
+  50%{border-color:transparent}
+}
 
 /* hero visual — floating cards */
 .hero-visual{position:relative;height:520px}
@@ -458,7 +469,6 @@ img{max-width:100%;display:block}
 }
 .btn-hire:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(232,96,28,.5)}
 
-/* demo workers shown when API offline */
 .demo-badge{
   display:inline-block;font-size:10px;font-weight:700;
   background:rgba(212,160,23,.15);color:var(--gold);
@@ -675,16 +685,6 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
 .cw-send{background:var(--saffron);border:none;width:36px;height:36px;border-radius:9px;color:#fff;font-size:15px;cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all .2s}
 .cw-send:hover{background:var(--saffron-2)}
 
-/* ══ WORD SLOT ANIMATION ══ */
-.word-slot{
-  display:inline-block;position:relative;
-  height:1.1em;overflow:hidden;vertical-align:top;
-  transition:width 0.4s cubic-bezier(.4,0,.2,1);
-}
-.word-track{display:flex;flex-direction:column;transition:transform 0s}
-.word-track.animating{transition:transform 0.52s cubic-bezier(.77,0,.18,1)}
-.word-item{white-space:nowrap;line-height:1.1;display:block}
-
 /* ══ RESPONSIVE ══ */
 @media(max-width:1100px){
   .svc-grid{grid-template-columns:repeat(2,1fr)}
@@ -746,16 +746,6 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
   .tgrid{gap:12px}
   .hero-body{padding:90px 16px 40px}
 }
-/* ══ TYPEWRITER ══ */
-#typewriter {
-  border-right: 3px solid var(--saffron);
-  padding-right: 4px;
-  animation: cursorBlink 0.7s step-end infinite;
-}
-@keyframes cursorBlink {
-  0%, 100% { border-color: var(--saffron); }
-  50%       { border-color: transparent; }
-}
 </style>
 </head>
 <body>
@@ -816,10 +806,10 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
       </div>
 
       <h1 class="hero-h">
-  India's most trusted
-  <em><span id="typewriter"></span></em>
-  <span class="hero-h-sub">Book. Negotiate. Done.</span>
-</h1>
+        India's most trusted
+        <em><span id="typewriter"></span></em>
+        <span class="hero-h-sub">Book. Negotiate. Done.</span>
+      </h1>
 
       <p class="hero-p">Find verified electricians, plumbers, painters and more in your city — instantly. Negotiate fair prices. Pay only after the job is done.</p>
 
@@ -1391,7 +1381,6 @@ const fmtK  = n => n > 999 ? Math.round(n / 1000) + 'K+' : n;
       document.getElementById('heroJobs').textContent  = fmt(d.completedJobs || 1200);
     }
   } catch (e) {
-    // API offline — show placeholder stats
     document.getElementById('statC').textContent = '2,400+';
     document.getElementById('statW').textContent = '800+';
     document.getElementById('statJ').textContent = '5,000+';
@@ -1445,15 +1434,15 @@ const fmtK  = n => n > 999 ? Math.round(n / 1000) + 'K+' : n;
 })();
 
 /* ════════════════════════════════
-   DEMO WORKERS (shown when API is offline)
+   DEMO WORKERS
 ════════════════════════════════ */
 const DEMO_WORKERS = [
-  { _id:'d1', name:'Ravi Kumar',    skill:'electrician',    location:'Chandigarh', rating:4.9, totalJobs:87,  verified:true, isAvailable:true,  basePrice:500, priceUnit:'job', bio:'10+ years handling residential & commercial wiring. Quick, clean, reliable.' },
-  { _id:'d2', name:'Sanjay Sharma', skill:'painter',        location:'Ludhiana',   rating:4.7, totalJobs:62,  verified:true, isAvailable:true,  basePrice:400, priceUnit:'day', bio:'Interior & exterior painter with 8 years experience. Uses premium Berger paints.' },
-  { _id:'d3', name:'Mohan Singh',   skill:'plumber',        location:'Amritsar',   rating:4.8, totalJobs:115, verified:true, isAvailable:false, basePrice:350, priceUnit:'job', bio:'Expert in pipe fitting, leakage repair and bathroom renovation.' },
-  { _id:'d4', name:'Deepak Thakur', skill:'carpenter',      location:'Delhi',      rating:4.6, totalJobs:43,  verified:true, isAvailable:true,  basePrice:600, priceUnit:'day', bio:'Custom furniture, modular kitchens and door installation specialist.' },
-  { _id:'d5', name:'Amit Verma',    skill:'mason',          location:'Jaipur',     rating:4.5, totalJobs:31,  verified:true, isAvailable:true,  basePrice:450, priceUnit:'day', bio:'Tiling, plastering and brick work done with precision.' },
-  { _id:'d6', name:'Suresh Patel',  skill:'ac technician',  location:'Surat',      rating:4.8, totalJobs:98,  verified:true, isAvailable:true,  basePrice:700, priceUnit:'visit', bio:'Certified AC technician — installation, servicing and gas refill for all brands.' }
+  { _id:'d1', name:'Ravi Kumar',    skill:'electrician',   location:'Chandigarh', rating:4.9, totalJobs:87,  verified:true, isAvailable:true,  basePrice:500, priceUnit:'job',   bio:'10+ years handling residential & commercial wiring. Quick, clean, reliable.' },
+  { _id:'d2', name:'Sanjay Sharma', skill:'painter',       location:'Ludhiana',   rating:4.7, totalJobs:62,  verified:true, isAvailable:true,  basePrice:400, priceUnit:'day',   bio:'Interior & exterior painter with 8 years experience. Uses premium Berger paints.' },
+  { _id:'d3', name:'Mohan Singh',   skill:'plumber',       location:'Amritsar',   rating:4.8, totalJobs:115, verified:true, isAvailable:false, basePrice:350, priceUnit:'job',   bio:'Expert in pipe fitting, leakage repair and bathroom renovation.' },
+  { _id:'d4', name:'Deepak Thakur', skill:'carpenter',     location:'Delhi',      rating:4.6, totalJobs:43,  verified:true, isAvailable:true,  basePrice:600, priceUnit:'day',   bio:'Custom furniture, modular kitchens and door installation specialist.' },
+  { _id:'d5', name:'Amit Verma',    skill:'mason',         location:'Jaipur',     rating:4.5, totalJobs:31,  verified:true, isAvailable:true,  basePrice:450, priceUnit:'day',   bio:'Tiling, plastering and brick work done with precision.' },
+  { _id:'d6', name:'Suresh Patel',  skill:'ac technician', location:'Surat',      rating:4.8, totalJobs:98,  verified:true, isAvailable:true,  basePrice:700, priceUnit:'visit', bio:'Certified AC technician — installation, servicing and gas refill for all brands.' }
 ];
 
 function renderWorkerCard(w, isDemo = false) {
@@ -1508,16 +1497,15 @@ async function loadWorkers(skill = 'all') {
     let workers = d.workers || [];
     if (skill !== 'all') workers = workers.filter(w => (w.skill || '').toLowerCase() === skill.toLowerCase());
     if (!workers.length) {
-      grid.innerHTML = `<div class="empty-state"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>`;
+      grid.innerHTML = '<div class="empty-state"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>';
       return;
     }
     grid.innerHTML = workers.slice(0, 6).map(w => renderWorkerCard(w, false)).join('');
   } catch {
-    // API offline — show demo workers
     let demo = DEMO_WORKERS;
     if (skill && skill !== 'all') demo = DEMO_WORKERS.filter(w => w.skill === skill);
     if (!demo.length) {
-      grid.innerHTML = `<div class="empty-state"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>`;
+      grid.innerHTML = '<div class="empty-state"><i class="bi bi-people"></i><h3>No workers found</h3><p>Try a different category</p></div>';
       return;
     }
     grid.innerHTML = demo.map(w => renderWorkerCard(w, true)).join('');
@@ -1560,7 +1548,6 @@ async function runSearch(skill, location) {
       ? workers.map(w => renderWorkerCard(w, false)).join('')
       : '<div class="empty-state"><i class="bi bi-search"></i><h3>No workers found</h3><p>Try different search terms</p></div>';
   } catch {
-    // Demo fallback
     let demo = DEMO_WORKERS;
     if (skill && skill !== 'all') demo = DEMO_WORKERS.filter(w => w.skill === skill);
     if (location) demo = demo.filter(w => w.location.toLowerCase().includes(location.toLowerCase()));
@@ -1583,14 +1570,14 @@ function openHire(id, name, skill, em) {
   }
   document.getElementById('modalWorkerId').value = id;
   document.getElementById('modalWorkerInfo').innerHTML =
-    `<div class="m-worker-av">${em}</div><div><div class="m-worker-name">${name}</div><div class="m-worker-skill">${skill}</div></div>`;
+    '<div class="m-worker-av">' + em + '</div><div><div class="m-worker-name">' + name + '</div><div class="m-worker-skill">' + skill + '</div></div>';
   document.getElementById('jobSkill').value = skill;
   ['jobPrice', 'jobLocation', 'jobDate', 'jobTime', 'jobDesc'].forEach(i => {
     document.getElementById(i).value = '';
   });
   document.getElementById('modalAlert').style.display = 'none';
   document.getElementById('hireModal').classList.add('open');
-  document.body.style.overflow = 'hidden'; // prevent bg scroll
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
@@ -1598,12 +1585,10 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-// Close modal on backdrop click
 document.getElementById('hireModal').addEventListener('click', e => {
   if (e.target === document.getElementById('hireModal')) closeModal();
 });
 
-// Close modal on Escape key
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('hireModal').classList.contains('open')) closeModal();
 });
@@ -1655,7 +1640,7 @@ function showMA(t, m) {
   const a = document.getElementById('modalAlert');
   a.style.display = 'flex';
   a.className = 'alert ' + (t === 'error' ? 'alert-err' : 'alert-ok');
-  a.innerHTML = `<i class="bi bi-${t === 'error' ? 'exclamation-circle' : 'check-circle-fill'}"></i> ${m}`;
+  a.innerHTML = '<i class="bi bi-' + (t === 'error' ? 'exclamation-circle' : 'check-circle-fill') + '"></i> ' + m;
 }
 
 /* ════════════════════════════════
@@ -1676,31 +1661,14 @@ const DEMO_REVIEWS = [
     grid.innerHTML = reviews.map(rv => {
       const inits = rv.customerName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
       const sk = rv.workerSkill ? rv.workerSkill.charAt(0).toUpperCase() + rv.workerSkill.slice(1) : 'Service';
-      return `<div class="tcard reveal">
-        <div class="tcard-quote">"</div>
-        <p class="tcard-text">${rv.review}</p>
-        <div class="tcard-person">
-          <div class="tcp-av">${inits}</div>
-          <div><div class="tcp-name">${rv.customerName}</div><div class="tcp-role">Customer · ${rv.customerCity || 'India'} · ${sk}</div></div>
-          <div class="tcp-stars">${stars(rv.rating)}</div>
-        </div>
-      </div>`;
+      return '<div class="tcard reveal"><div class="tcard-quote">"</div><p class="tcard-text">' + rv.review + '</p><div class="tcard-person"><div class="tcp-av">' + inits + '</div><div><div class="tcp-name">' + rv.customerName + '</div><div class="tcp-role">Customer · ' + (rv.customerCity || 'India') + ' · ' + sk + '</div></div><div class="tcp-stars">' + stars(rv.rating) + '</div></div></div>';
     }).join('');
     document.querySelectorAll('.tcard.reveal').forEach(el => revealObs.observe(el));
   } catch {
-    // Demo fallback
     grid.innerHTML = DEMO_REVIEWS.map(rv => {
       const inits = rv.customerName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
       const sk = rv.workerSkill.charAt(0).toUpperCase() + rv.workerSkill.slice(1);
-      return `<div class="tcard reveal">
-        <div class="tcard-quote">"</div>
-        <p class="tcard-text">${rv.review}</p>
-        <div class="tcard-person">
-          <div class="tcp-av">${inits}</div>
-          <div><div class="tcp-name">${rv.customerName}</div><div class="tcp-role">Customer · ${rv.customerCity} · ${sk}</div></div>
-          <div class="tcp-stars">${stars(rv.rating)}</div>
-        </div>
-      </div>`;
+      return '<div class="tcard reveal"><div class="tcard-quote">"</div><p class="tcard-text">' + rv.review + '</p><div class="tcard-person"><div class="tcp-av">' + inits + '</div><div><div class="tcp-name">' + rv.customerName + '</div><div class="tcp-role">Customer · ' + rv.customerCity + ' · ' + sk + '</div></div><div class="tcp-stars">' + stars(rv.rating) + '</div></div></div>';
     }).join('');
     document.querySelectorAll('.tcard.reveal').forEach(el => revealObs.observe(el));
   }
@@ -1718,7 +1686,6 @@ function toggleChat() {
   document.getElementById('chatBubble').style.display = chatOpen ? 'none' : 'block';
 }
 
-// Hide bubble tooltip after 6s
 setTimeout(() => {
   const b = document.getElementById('chatBubble');
   if (b && !chatOpen) b.style.opacity = '0';
@@ -1735,19 +1702,18 @@ function addMsg(txt, who) {
 
 function setChips(arr) {
   document.getElementById('chatChips').innerHTML = arr
-    .map(s => `<span class="cw-chip" onclick="sendChip(this)">${s}</span>`)
+    .map(s => '<span class="cw-chip" onclick="sendChip(this)">' + s + '</span>')
     .join('');
 }
 
-// Simple offline chatbot responses
 const BOT_RESPONSES = {
   keywords: [
-    { keys:['electrician','wiring','fuse','electric'],  reply:'We have verified electricians available! Use the search bar above or click "⚡ Electrician" in services to find one near you.',  chips:['Plumber','Painter','How it works?'] },
-    { keys:['plumber','pipe','leak','water'],            reply:'Our verified plumbers are available across major cities. Search by your city to find one now!',                                    chips:['Electrician','Carpenter','Pricing info'] },
-    { keys:['painter','paint','wall'],                   reply:'Professional painters available for interior, exterior & texture work. Browse the Workers section!',                                chips:['Electrician','Plumber','How it works?'] },
-    { keys:['price','cost','fee','charge','pay'],        reply:'Workers set their own base price and you can negotiate! KaamConnect charges only a 10% platform fee. Payment is held in escrow until the job is done.',  chips:['Find Electrician','How it works?'] },
-    { keys:['work','how','steps','process','book'],      reply:'It\'s simple: 1️⃣ Search worker 2️⃣ Browse profiles 3️⃣ Negotiate price 4️⃣ Pay only after job done. Secure escrow via Razorpay!', chips:['Find Electrician','Pricing info'] },
-    { keys:['safe','secure','trust','verify','verified'],reply:'All workers are admin-verified with ID & background checks. Your payment stays in escrow until you confirm job completion. 100% safe!', chips:['How it works?','Find Electrician'] },
+    { keys:['electrician','wiring','fuse','electric'],   reply:'We have verified electricians available! Use the search bar above or click "⚡ Electrician" in services to find one near you.',  chips:['Plumber','Painter','How it works?'] },
+    { keys:['plumber','pipe','leak','water'],             reply:'Our verified plumbers are available across major cities. Search by your city to find one now!',                                    chips:['Electrician','Carpenter','Pricing info'] },
+    { keys:['painter','paint','wall'],                    reply:'Professional painters available for interior, exterior & texture work. Browse the Workers section!',                                chips:['Electrician','Plumber','How it works?'] },
+    { keys:['price','cost','fee','charge','pay'],         reply:'Workers set their own base price and you can negotiate! KaamConnect charges only a 10% platform fee. Payment is held in escrow until the job is done.',  chips:['Find Electrician','How it works?'] },
+    { keys:['work','how','steps','process','book'],       reply:"It's simple: 1️⃣ Search worker 2️⃣ Browse profiles 3️⃣ Negotiate price 4️⃣ Pay only after job done. Secure escrow via Razorpay!", chips:['Find Electrician','Pricing info'] },
+    { keys:['safe','secure','trust','verify','verified'], reply:'All workers are admin-verified with ID & background checks. Your payment stays in escrow until you confirm job completion. 100% safe!', chips:['How it works?','Find Electrician'] },
   ],
   default: { reply:'I can help you find workers, understand pricing, or explain how KaamConnect works. What would you like to know?', chips:['Find Electrician','How it works?','Pricing info'] }
 };
@@ -1760,7 +1726,6 @@ async function sendChat() {
   addMsg(msg, 'user');
   document.getElementById('chatChips').innerHTML = '';
 
-  // Try API first
   try {
     const r = await fetch('/api/chat/message', {
       method: 'POST',
@@ -1775,7 +1740,6 @@ async function sendChat() {
     }
   } catch {}
 
-  // Offline fallback
   const lower = msg.toLowerCase();
   const match = BOT_RESPONSES.keywords.find(k => k.keys.some(kw => lower.includes(kw)));
   const res   = match || BOT_RESPONSES.default;
@@ -1787,9 +1751,6 @@ function sendChip(el) {
   sendChat();
 }
 
-/* ════════════════════════════════
-   WORD SLOT ANIMATION
-════════════════════════════════ */
 /* ════════════════════════════════
    TYPEWRITER ANIMATION
 ════════════════════════════════ */
@@ -1806,16 +1767,15 @@ function sendChip(el) {
   const el = document.getElementById('typewriter');
   if (!el) return;
 
-  const TYPING_SPEED   = 80;   // ms per character while typing
-  const DELETING_SPEED = 40;   // ms per character while deleting
-  const PAUSE_END      = 1800; // ms to pause at full word
-  const PAUSE_START    = 300;  // ms to pause before typing next word
+  const TYPING_SPEED   = 80;
+  const DELETING_SPEED = 40;
+  const PAUSE_END      = 1800;
+  const PAUSE_START    = 300;
 
   let wIndex = 0, cIndex = 0, deleting = false;
 
   function tick() {
     const word = words[wIndex];
-
     if (!deleting) {
       cIndex++;
       el.textContent = word.slice(0, cIndex);
@@ -1834,21 +1794,10 @@ function sendChip(el) {
         return;
       }
     }
-
     setTimeout(tick, deleting ? DELETING_SPEED : TYPING_SPEED);
   }
 
   tick();
-})();
-
-  // Init after fonts load
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => { setTimeout(init, 100); });
-  } else {
-    setTimeout(init, 400);
-  }
-
-  setTimeout(() => setInterval(step, 2400), 1800);
 })();
 </script>
 </body>
