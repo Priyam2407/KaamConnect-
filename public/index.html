@@ -746,6 +746,16 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
   .tgrid{gap:12px}
   .hero-body{padding:90px 16px 40px}
 }
+/* ══ TYPEWRITER ══ */
+#typewriter {
+  border-right: 3px solid var(--saffron);
+  padding-right: 4px;
+  animation: cursorBlink 0.7s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%, 100% { border-color: var(--saffron); }
+  50%       { border-color: transparent; }
+}
 </style>
 </head>
 <body>
@@ -806,14 +816,10 @@ textarea.fi{min-height:80px;resize:vertical;padding:12px 14px}
       </div>
 
       <h1 class="hero-h">
-        India's most<br>trusted
-        <em>
-          <span class="word-slot" id="wordSlot">
-            <span class="word-track" id="wordTrack"></span>
-          </span>
-        </em>
-        <span class="hero-h-sub">Book. Negotiate. Done.</span>
-      </h1>
+  India's most trusted
+  <em><span id="typewriter"></span></em>
+  <span class="hero-h-sub">Book. Negotiate. Done.</span>
+</h1>
 
       <p class="hero-p">Find verified electricians, plumbers, painters and more in your city — instantly. Negotiate fair prices. Pay only after the job is done.</p>
 
@@ -1784,6 +1790,9 @@ function sendChip(el) {
 /* ════════════════════════════════
    WORD SLOT ANIMATION
 ════════════════════════════════ */
+/* ════════════════════════════════
+   TYPEWRITER ANIMATION
+════════════════════════════════ */
 (function () {
   const words = [
     'worker marketplace',
@@ -1794,52 +1803,43 @@ function sendChip(el) {
     'verified professionals'
   ];
 
-  const slot  = document.getElementById('wordSlot');
-  const track = document.getElementById('wordTrack');
-  if (!slot || !track) return;
+  const el = document.getElementById('typewriter');
+  if (!el) return;
 
-  // Build items (extended for seamless loop)
-  [...words, words[0]].forEach(w => {
-    const span = document.createElement('span');
-    span.className = 'word-item';
-    span.textContent = w;
-    track.appendChild(span);
-  });
+  const TYPING_SPEED   = 80;   // ms per character while typing
+  const DELETING_SPEED = 40;   // ms per character while deleting
+  const PAUSE_END      = 1800; // ms to pause at full word
+  const PAUSE_START    = 300;  // ms to pause before typing next word
 
-  let current = 0;
-  let itemH   = 0;
+  let wIndex = 0, cIndex = 0, deleting = false;
 
-  function init() {
-    itemH = track.firstChild ? track.firstChild.getBoundingClientRect().height : 82;
-    slot.style.height = itemH + 'px';
-    updateWidth();
-  }
+  function tick() {
+    const word = words[wIndex];
 
-  function updateWidth() {
-    let maxW = 0;
-    track.querySelectorAll('.word-item').forEach(item => {
-      const w = item.getBoundingClientRect().width;
-      if (w > maxW) maxW = w;
-    });
-    if (maxW > 0) slot.style.width = maxW + 'px';
-  }
-
-  function step() {
-    current++;
-    itemH = (track.firstChild ? track.firstChild.getBoundingClientRect().height : null) || itemH;
-    slot.style.height = itemH + 'px';
-    track.classList.add('animating');
-    track.style.transform = `translateY(-${current * itemH}px)`;
-    updateWidth();
-
-    if (current >= words.length) {
-      setTimeout(() => {
-        track.classList.remove('animating');
-        track.style.transform = 'translateY(0)';
-        current = 0;
-      }, 560);
+    if (!deleting) {
+      cIndex++;
+      el.textContent = word.slice(0, cIndex);
+      if (cIndex === word.length) {
+        deleting = true;
+        setTimeout(tick, PAUSE_END);
+        return;
+      }
+    } else {
+      cIndex--;
+      el.textContent = word.slice(0, cIndex);
+      if (cIndex === 0) {
+        deleting = false;
+        wIndex = (wIndex + 1) % words.length;
+        setTimeout(tick, PAUSE_START);
+        return;
+      }
     }
+
+    setTimeout(tick, deleting ? DELETING_SPEED : TYPING_SPEED);
   }
+
+  tick();
+})();
 
   // Init after fonts load
   if (document.fonts && document.fonts.ready) {
